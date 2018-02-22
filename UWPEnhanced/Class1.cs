@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UWPEnhanced
 {
-    public class Class11
+    public class Class111
     {
     }
 }
