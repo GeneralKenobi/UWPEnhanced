@@ -38,5 +38,44 @@ namespace UWPEnhanced.Controls
 			DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(Icon), new PropertyMetadata(string.Empty));
 
 		#endregion
+
+		#region ImageSource Dependency Property
+
+		/// <summary>
+		/// Image source for the image presenter
+		/// </summary>
+		public ImageSource ImageSource
+		{
+			get => (ImageSource)GetValue(ImageSourceProperty);
+			set => SetValue(ImageSourceProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="ImageSource"/>
+		/// </summary>
+		public static readonly DependencyProperty ImageSourceProperty =
+			DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(Icon), new PropertyMetadata(null));
+
+		#endregion
+
+		#region Image Stretch
+
+		/// <summary>
+		/// Image stretch
+		/// </summary>
+		public Stretch ImageStretch
+		{
+			get => (Stretch)GetValue(ImageStretchProperty);
+			set => SetValue(ImageStretchProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="ImageStretch"/>
+		/// </summary>
+		public static readonly DependencyProperty ImageStretchProperty =
+			DependencyProperty.Register(nameof(ImageStretch), typeof(Stretch),
+				typeof(Icon), new PropertyMetadata(Stretch.None));
+
+		#endregion
 	}
 }

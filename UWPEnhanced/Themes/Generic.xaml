@@ -5,7 +5,50 @@
 	xmlns:controls="using:UWPEnhanced.Controls">
 
 
-    
+	<!-- Default style for an Icon -->
+	<Style TargetType="controls:Icon">
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="FontFamily" Value="{ThemeResource SymbolThemeFontFamily}"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:Icon">
 
-    
+					<!-- Grid containing both image and font icon, it also provides a background and border -->
+					<Grid Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						Padding="{TemplateBinding Padding}"
+						Margin="{TemplateBinding Margin}"
+						Width="{TemplateBinding Width}"
+						Height="{TemplateBinding Height}">
+
+
+						<!-- Image on the bottom of the control which may also act as a background -->
+						<Image Name="RootImage"
+							Source="{TemplateBinding ImageSource}"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
+							Stretch="{TemplateBinding ImageStretch}"/>
+
+						<!--Font Icon visible on the top-->
+						<FontIcon Name="RootFontIcon"
+							Glyph="{TemplateBinding Glyph}"
+							FontFamily="{TemplateBinding FontFamily}"
+							FontSize="{TemplateBinding FontSize}"
+							Foreground="{TemplateBinding Foreground}"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
+							/>
+
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+
+
+
+
 </ResourceDictionary>

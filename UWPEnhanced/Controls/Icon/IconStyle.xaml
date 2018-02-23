@@ -4,34 +4,4 @@
     xmlns:local="using:UWPEnhanced"
     xmlns:controls="using:UWPEnhanced.Controls">
 
-	<!-- Default style for an Icon -->
-	<Style TargetType="controls:Icon">
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="controls:Icon">
-					<!--<Grid Background="{TemplateBinding Background}"
-						BorderBrush="{TemplateBinding BorderBrush}"
-						BorderThickness="{TemplateBinding BorderThickness}"
-						Padding="{TemplateBinding Padding}"
-						Margin="{TemplateBinding Margin}">-->
-
-
-						<!-- Image on the bottom of the control -->
-						<!--<Image Name="RootImage"/>-->
-						<FontIcon Glyph="&#57651;" Foreground="Black"
-							FontSize="100" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
-						<!-- Font Icon visible on the top --><!--
-						<FontIcon Name="RootFontIcon"
-							Glyph="{TemplateBinding Glyph}"
-							FontFamily="{TemplateBinding FontFamily}"
-							FontSize="{TemplateBinding FontSize}"
-							Foreground="{TemplateBinding Foreground}"
-							/>-->
-					<!--</Grid>-->					
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
-
 </ResourceDictionary>
