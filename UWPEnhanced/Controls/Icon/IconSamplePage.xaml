@@ -8,7 +8,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		>
+		<!--<FontIcon Glyph="&#57651;" Foreground="Black"
+		FontSize="100" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>-->
+		<controls:Icon Foreground="Black" Glyph="&#57651;"
+		FontFamily="{ThemeResource SymbolThemeFontFamily}"
+		FontSize="100"/>
+		
+	</StackPanel>
 </Page>

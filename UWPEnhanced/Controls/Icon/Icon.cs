@@ -19,5 +19,24 @@ namespace UWPEnhanced.Controls
 		{
 			this.DefaultStyleKey = typeof(Icon);
 		}
+
+		#region Glyph Dependency Property
+
+		/// <summary>
+		/// Glyph shown by this Icon
+		/// </summary>
+		public string Glyph
+		{
+			get => (string)GetValue(GlyphProperty);
+			set => SetValue(GlyphProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="Glyph"/>
+		/// </summary>
+		public static readonly DependencyProperty GlyphProperty =
+			DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(Icon), new PropertyMetadata(string.Empty));
+
+		#endregion
 	}
 }
