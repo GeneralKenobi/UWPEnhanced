@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -15,10 +17,17 @@ namespace UWPEnhanced.Controls
 {
 	public sealed class Icon : Control
 	{
+		#region Constructor
+
+		/// <summary>
+		/// Default constructor
+		/// </summary>
 		public Icon()
 		{
 			this.DefaultStyleKey = typeof(Icon);
 		}
+
+		#endregion		
 
 		#region Glyph Dependency Property
 
@@ -54,10 +63,11 @@ namespace UWPEnhanced.Controls
 		/// Backing store for <see cref="ImageSource"/>
 		/// </summary>
 		public static readonly DependencyProperty ImageSourceProperty =
-			DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(Icon), new PropertyMetadata(null));
+			DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource),
+				typeof(Icon), new PropertyMetadata(null));
 
 		#endregion
-
+		
 		#region Image Stretch
 
 		/// <summary>
@@ -76,6 +86,7 @@ namespace UWPEnhanced.Controls
 			DependencyProperty.Register(nameof(ImageStretch), typeof(Stretch),
 				typeof(Icon), new PropertyMetadata(Stretch.None));
 
-		#endregion
+
+		#endregion	
 	}
 }
