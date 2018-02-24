@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Media;
 
 namespace UWPEnhanced.Controls
 {
-	public sealed class Icon : Control
+	public sealed class Icon : Control, INotifyPropertyChanged
 	{
 		#region Constructor
 
@@ -25,6 +25,13 @@ namespace UWPEnhanced.Controls
 		public Icon()
 		{
 			this.DefaultStyleKey = typeof(Icon);
+
+			// Whenever size changed notify that scale center also changes
+			this.SizeChanged += (s, e) =>
+			{
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterX"));
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterY"));
+			};
 		}
 
 		#endregion		
@@ -86,7 +93,29 @@ namespace UWPEnhanced.Controls
 			DependencyProperty.Register(nameof(ImageStretch), typeof(Stretch),
 				typeof(Icon), new PropertyMetadata(Stretch.None));
 
+		#endregion
 
-		#endregion	
+		#region Property Changed Event
+
+		/// <summary>
+		/// Event to fire when observed property changes
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		#endregion
+
+		#region Public Properties
+
+		/// <summary>
+		/// X center for scale transform
+		/// </summary>
+		public double ScaleCenterX => ActualWidth / 2;
+
+		/// <summary>
+		/// Y center for scale transform
+		/// </summary>
+		public double ScaleCenterY => ActualHeight / 2;
+
+		#endregion
 	}
 }
