@@ -17,10 +17,11 @@
 		<Setter Property="ImageStretch" Value="None"/>
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="controls:Icon">					
+				<ControlTemplate TargetType="controls:Icon">
 
 					<!-- Grid containing both image and font icon, it also provides a background and border -->
-					<Grid Background="{TemplateBinding Background}"
+					<Grid x:Name="RootGrid"
+						Background="{TemplateBinding Background}"
 						BorderBrush="{TemplateBinding BorderBrush}"
 						BorderThickness="{TemplateBinding BorderThickness}"
 						Padding="{TemplateBinding Padding}"
@@ -29,34 +30,39 @@
 						Height="{TemplateBinding Height}">
 
 						<Grid.Resources>
-
 							<x:Double x:Key="ScaleTo">0.94</x:Double>
-
-							<!-- Stops the scaling (returns to standard scale of 1) -->
-							<Storyboard x:Name="StopScaling">
-								<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
-									Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-									To="1"
-									Duration="0:0:0.05"/>
-								<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
-									Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
-									To="1"
-									Duration="0:0:0.05"/>
-							</Storyboard>
-
-							<!-- Scales the grid to 0.94 of normal scale -->
-							<Storyboard x:Name="StartScaling">
-								<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
-									Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-									To="{StaticResource ScaleTo}"
-									Duration="0:0:0.05"/>
-								<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
-									Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
-									To="{StaticResource ScaleTo}"
-									Duration="0:0:0.05"/>
-							</Storyboard>
-							
+							<Duration x:Key="ScaleDuration">0:0:0.05</Duration>
 						</Grid.Resources>
+
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal">
+									<Storyboard x:Name="StopScaling">
+										<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+											Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+											To="1"
+											Duration="{StaticResource ScaleDuration}"/>
+										<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+											Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+											To="1"
+											Duration="{StaticResource ScaleDuration}"/>
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Pressed">
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+											Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+											To="{StaticResource ScaleTo}"
+											Duration="{StaticResource ScaleDuration}"/>
+										<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+											Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+											To="{StaticResource ScaleTo}"
+											Duration="{StaticResource ScaleDuration}"/>
+									</Storyboard>
+								</VisualState>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+						
 
 						<!-- Render transforms of the whole control -->
 						<Grid.RenderTransform>
@@ -69,31 +75,31 @@
 						<!-- Triggers for the control -->
 						<Interactivity:Interaction.Behaviors>
 
-							<!-- Pointer Pressed Trigger: Invokes Command and scales down the FontIcon -->
+							<!-- Pointer Pressed Trigger: Goes to Pressed State -->
 							<Core:EventTriggerBehavior EventName="PointerPressed">
-								<Media:ControlStoryboardAction Storyboard="{StaticResource StartScaling}"/>							
+								<Core:GoToStateAction StateName="Pressed"/>
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Released Trigger: Scales back the FontIcon-->
+							<!-- Pointer Released Trigger: Goes to Normal state and invokes the command -->
 							<Core:EventTriggerBehavior EventName="PointerReleased">
-								<Media:ControlStoryboardAction Storyboard="{StaticResource StopScaling}"/>
+								<Core:GoToStateAction StateName="Normal"/>								
 								<!--<Core:InvokeCommandAction CommandParameter="{x:Bind CommandParameter, Mode=OneWay}"
 									Command="{x:Bind Command, Mode=OneWay}"/>-->
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Exited Trigger: Scales back the FontIcon-->
+							<!-- Pointer Exited Trigger: Goes to Normal state -->
 							<Core:EventTriggerBehavior EventName="PointerExited">
-								<Media:ControlStoryboardAction Storyboard="{StaticResource StopScaling}"/>								
+								<Core:GoToStateAction StateName="Normal"/>
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Cancelled Trigger: Scales back the FontIcon-->
+							<!-- Pointer Cancelled Trigger: Goes to Normal state -->
 							<Core:EventTriggerBehavior EventName="PointerCanceled">
-								<Media:ControlStoryboardAction Storyboard="{StaticResource StopScaling}"/>							
+								<Core:GoToStateAction StateName="Normal"/>
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Capture Lost Trigger: Scales back the FontIcon-->
+							<!-- Pointer Capture Lost Trigger: Goes to Normal state -->
 							<Core:EventTriggerBehavior EventName="PointerCaptureLost">
-								<Media:ControlStoryboardAction Storyboard="{StaticResource StopScaling}"/>								
+								<Core:GoToStateAction StateName="Normal"/>
 							</Core:EventTriggerBehavior>
 
 						</Interactivity:Interaction.Behaviors>

@@ -21,7 +21,15 @@
 			BorderThickness="1"			
 			Glyph="&#xf0e2;"
 			FontFamily="{StaticResource FontAwesome}"/>
-		
-			
+
+		<controls:Icon Background="Transparent"			
+			ImageStretch="None"
+			Foreground="Black"
+			BorderBrush="Red"
+			BorderThickness="1"			
+			Glyph="&#xf0e2;"
+			FontFamily="{StaticResource FontAwesome}"/>
+
+
 	</StackPanel>
 </Page>
