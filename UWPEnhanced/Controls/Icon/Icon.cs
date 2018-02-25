@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -17,6 +20,15 @@ namespace UWPEnhanced.Controls
 {
 	public sealed class Icon : Control, INotifyPropertyChanged
 	{
+		#region Private Members
+
+		/// <summary>
+		/// Container for main visual elements that is needed to determine the center of scale transform
+		/// </summary>
+		private FrameworkElement _Container = null;
+
+		#endregion
+
 		#region Constructor
 
 		/// <summary>
@@ -27,14 +39,68 @@ namespace UWPEnhanced.Controls
 			this.DefaultStyleKey = typeof(Icon);
 
 			// Whenever size changed notify that scale center also changes
-			this.SizeChanged += (s, e) =>
-			{
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterX"));
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterY"));
-			};
+			FindContainerGrid();
 		}
 
-		#endregion		
+		#endregion
+
+		#region Private Methods
+
+		/// <summary>
+		/// Method which finds Container from the visual tree which is needed to determine the scale transform center.
+		/// Additionally subsribes to its SizeChanged event in order to fire INotifyPropertyChanged for
+		/// <see cref="ScaleCenterX"/> and <see cref="ScaleCenterY"/>
+		/// </summary>
+		/// <returns></returns>
+		private async Task FindContainerGrid()
+		{
+			// Await so that the constructor ends and we can get the container grid
+			await Task.Delay(20);
+
+			// Try to get the Container element
+			DependencyObject obj = GetTemplateChild("Container");
+
+			// If the operation failed
+			if (obj == null)
+			{
+				// Wait an additional second
+				await Task.Delay(1000);
+
+				// Try again
+				obj = GetTemplateChild("Container");
+
+				// If failed again, throw an exception to notify about that
+				if(obj == null)
+				{
+					throw new Exception("Can't find \"Container\", visual structure may have been violated");	
+				}
+			}			
+
+			// If operation succeeded try to cast it to a FrameworkElement
+			if(obj is FrameworkElement element)
+			{
+				// If success, assign it to private member
+				_Container = element;
+
+				// Subscribe to size changed
+				element.SizeChanged+= (s, e) =>
+				{
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterX"));
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterY"));
+				};
+
+				// Fire event in order to notify for the first value
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterX"));
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterY"));
+			}
+			else
+			{
+				// If failed, throw an exception to notify about that
+				throw new Exception("\"Container\" is not a FrameworkElement - visual structure may have been violated");
+			}
+		}
+
+		#endregion	
 
 		#region Glyph Dependency Property
 
@@ -104,17 +170,77 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region Command Dependency Property
+
+		/// <summary>
+		/// Command invoked when pointer is released on the icon
+		/// </summary>
+		public ICommand Command
+		{
+			get => (ICommand)GetValue(CommandProperty);
+			set => SetValue(CommandProperty, value);
+		}
+
+		/// <summary>
+		/// Command invoked when pointer is released on the icon
+		/// </summary>
+		public static readonly DependencyProperty CommandProperty =
+			DependencyProperty.Register(nameof(Command), typeof(ICommand),
+			typeof(Icon), new PropertyMetadata(default(ICommand)));
+
+		#endregion
+
+		#region CommandParameter Dependency Property
+
+		/// <summary>
+		/// Parameter for <see cref="Command"/>
+		/// </summary>
+		public object CommandParameter
+		{
+			get => GetValue(CommandParameterProperty);
+			set => SetValue(CommandParameterProperty, value);
+		}
+
+		/// <summary>
+		/// Parameter for <see cref="Command"/>
+		/// </summary>
+		public static readonly DependencyProperty CommandParameterProperty =
+			DependencyProperty.Register(nameof(CommandParameter), typeof(object),
+			typeof(Icon), new PropertyMetadata(default(object)));
+
+		#endregion
+
+		#region HighlightBrush Dependency Property
+
+		/// <summary>
+		/// Brush presented when the Icon is highlighted, default is white
+		/// </summary>
+		public SolidColorBrush HighlightBrush
+		{
+			get => (SolidColorBrush)GetValue(HighlightBrushProperty);
+			set => SetValue(HighlightBrushProperty, value);
+		}
+
+		/// <summary>
+		/// Brush presented when the Icon is highlighted, default is white
+		/// </summary>
+		public static readonly DependencyProperty HighlightBrushProperty =
+			DependencyProperty.Register(nameof(HighlightBrush), typeof(SolidColorBrush),
+			typeof(Icon), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 255, 255, 255))));
+
+		#endregion
+
 		#region Public Properties
 
 		/// <summary>
 		/// X center for scale transform
 		/// </summary>
-		public double ScaleCenterX => ActualWidth / 2;
+		public double ScaleCenterX => _Container == null ? 0 : _Container.ActualWidth / 2;
 
 		/// <summary>
 		/// Y center for scale transform
 		/// </summary>
-		public double ScaleCenterY => ActualHeight / 2;
+		public double ScaleCenterY => _Container == null ? 0 : _Container.ActualHeight/ 2;
 
 		#endregion
 	}

@@ -7,27 +7,37 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="using:UWPEnhanced.Controls"
 	xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+	xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+	xmlns:Animations="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+	xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
     mc:Ignorable="d">
 
+	
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		
-		
-		<controls:Icon Background="Transparent"
-			DataContext="{x:Bind ActualHeight, Mode=OneWay}"
-			ImageSource="ms-appx:///Assets/StoreLogo.png"
-			ImageStretch="None"
-			Foreground="Black"
-			BorderBrush="Red"
-			BorderThickness="1"			
-			Glyph="&#xf0e2;"
-			FontFamily="{StaticResource FontAwesome}"/>
 
-		<controls:Icon Background="Transparent"			
-			ImageStretch="None"
+
+		<controls:Icon Background="Red"		
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			ImageStretch="UniformToFill"
 			Foreground="Black"
 			BorderBrush="Red"
-			BorderThickness="1"			
-			Glyph="&#xf0e2;"
+			BorderThickness="0"			
+			Glyph="&#xf0e2;"			
+			HighlightBrush="White"
+			Margin="10"
+			Padding="100"
+			
+			FontFamily="{StaticResource FontAwesome}"/>
+		<controls:Icon Background="Red"		
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			ImageStretch="UniformToFill"
+			Foreground="Black"
+			BorderBrush="Red"
+			BorderThickness="0"			
+			Glyph="&#xf0e2;"			
+			HighlightBrush="White"
 			FontFamily="{StaticResource FontAwesome}"/>
 
 
