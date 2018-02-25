@@ -26,7 +26,7 @@
 			Glyph="&#xf0e2;"			
 			HighlightBrush="White"
 			Margin="10"
-			Padding="100"
+			Padding="10"
 			
 			FontFamily="{StaticResource FontAwesome}"/>
 		<controls:Icon Background="Red"		
