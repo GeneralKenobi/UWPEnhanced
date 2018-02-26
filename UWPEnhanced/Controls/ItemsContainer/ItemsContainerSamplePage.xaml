@@ -22,6 +22,7 @@
 			<Rectangle Fill="Red" Width="200" Height="200"/>
 		</ListView>
 				
+		
 
     </StackPanel>
 </Page>

@@ -12,9 +12,12 @@
 		<!-- Default Icon style -->
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Icon/IconStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ItemsContainer/ItemsContainerStyle.xaml"/>
+		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Menu/MenuStyle.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 
 
+
+    
 
     
 </ResourceDictionary>

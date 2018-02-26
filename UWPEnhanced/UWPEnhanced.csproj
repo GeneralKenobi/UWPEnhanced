@@ -114,6 +114,11 @@
     <Compile Include="Controls\ItemsContainer\ItemsContainerSamplePage.xaml.cs">
       <DependentUpon>ItemsContainerSamplePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Menu\Enums\Enums.cs" />
+    <Compile Include="Controls\Menu\Menu.cs" />
+    <Compile Include="Controls\Menu\MenuSamplePage.xaml.cs">
+      <DependentUpon>MenuSamplePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\UWPEnhanced.rd.xml" />
   </ItemGroup>
@@ -153,11 +158,21 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Controls\Menu\MenuSamplePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Menu\MenuStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
