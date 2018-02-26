@@ -16,30 +16,6 @@
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
-		<controls:Icon Background="Red"		
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			ImageStretch="UniformToFill"
-			Foreground="Black"
-			BorderBrush="Red"
-			BorderThickness="0"			
-			Glyph="&#xf0e2;"			
-			HighlightBrush="White"
-			Margin="10"
-			Padding="10"
-			
-			FontFamily="{StaticResource FontAwesome}"/>
-		<controls:Icon Background="Red"		
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			ImageStretch="UniformToFill"
-			Foreground="Black"
-			BorderBrush="Red"
-			BorderThickness="0"			
-			Glyph="&#xf0e2;"			
-			HighlightBrush="White"
-			FontFamily="{StaticResource FontAwesome}"/>
-
 
 	</StackPanel>
 </Page>

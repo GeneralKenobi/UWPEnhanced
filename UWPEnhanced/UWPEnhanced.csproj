@@ -110,6 +110,10 @@
     <Compile Include="Controls\Icon\IconSamplePage.xaml.cs">
       <DependentUpon>IconSamplePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ItemsContainer\ItemsContainer.cs" />
+    <Compile Include="Controls\ItemsContainer\ItemsContainerSamplePage.xaml.cs">
+      <DependentUpon>ItemsContainerSamplePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\UWPEnhanced.rd.xml" />
   </ItemGroup>
@@ -136,6 +140,15 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Icon\IconStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Controls\ItemsContainer\ItemsContainerSamplePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ItemsContainer\ItemsContainerStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
