@@ -15,7 +15,11 @@
 	
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
+		<controls:ItemsContainer>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+		</controls:ItemsContainer>
 
 	</StackPanel>
 </Page>

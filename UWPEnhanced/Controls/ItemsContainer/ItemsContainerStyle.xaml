@@ -4,17 +4,18 @@
 	xmlns:controls="using:UWPEnhanced.Controls">
 
 
-	<Style TargetType="controls:ItemsContainer">
+	<Style TargetType="controls:ItemsContainer">		
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<ItemsStackPanel Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ItemsContainer">
-					<Border
-                        Background="Red"
-						Width="200"
-						Height="200"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-					</Border>
+					<ItemsStackPanel Orientation="Horizontal"/>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>

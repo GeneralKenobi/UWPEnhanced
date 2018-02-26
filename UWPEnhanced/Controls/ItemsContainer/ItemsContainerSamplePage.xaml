@@ -7,8 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		Orientation="Horizontal">
 
+		<controls:ItemsContainer>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+		</controls:ItemsContainer>
 
-    </Grid>
+		<ListView>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+			<Rectangle Fill="Red" Width="200" Height="200"/>
+		</ListView>
+				
+
+    </StackPanel>
 </Page>

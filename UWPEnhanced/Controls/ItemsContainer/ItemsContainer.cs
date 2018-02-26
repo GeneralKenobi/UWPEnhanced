@@ -18,6 +18,6 @@ namespace UWPEnhanced.Controls
         public ItemsContainer()
         {
             this.DefaultStyleKey = typeof(ItemsControl);
-        }		
+        }
     }
 }
