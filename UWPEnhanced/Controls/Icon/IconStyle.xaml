@@ -32,17 +32,55 @@
 
 						<!-- Resources - all cosntant values used below are here -->
 						<Grid.Resources>
-							<x:Double x:Key="ScaleTo">0.94</x:Double>
+							<x:Double x:Key="ScaleTo">0.64</x:Double>
 							<Duration x:Key="ScaleDuration">0:0:0.05</Duration>
-							<Duration x:Key="HighlightChangeDuration">0:0:0.1</Duration>
-							<x:Double x:Key="HighlightPresentOpacity">0.2</x:Double>
+							<Duration x:Key="HighlightChangeDuration">0:0:1</Duration>
+							<x:Double x:Key="HighlightPresentOpacity">0.7</x:Double>
 							<x:Double x:Key="HighlightHiddenOpacity">0</x:Double>
 						</Grid.Resources>
 
+
 						<!-- Visual states-->
 						<VisualStateManager.VisualStateGroups>
+							
 							<VisualStateGroup x:Name="CommonStates">
+								<VisualStateGroup.Transitions>
+									<VisualTransition To="PointerOver"
+										GeneratedDuration="0:0:1">
+										<Storyboard>
+											<Storyboard>
+												<!-- Change highlight opacity to present opacity -->
+												<DoubleAnimation Storyboard.TargetName="HighlightRectangle"
+													Storyboard.TargetProperty="(Rectangle.Opacity)"
+													To="{StaticResource HighlightPresentOpacity}"
+													Duration="{StaticResource HighlightChangeDuration}"/>
+											</Storyboard>
+										</Storyboard>	
+									</VisualTransition>
 
+									<VisualTransition To="Pressed"
+										GeneratedDuration="0:0:1">
+										<Storyboard>
+											<Storyboard>
+												<!-- Change highlight opacity to present opacity -->
+												<DoubleAnimation Storyboard.TargetName="HighlightRectangle"
+													Storyboard.TargetProperty="(Rectangle.Opacity)"
+													To="{StaticResource HighlightPresentOpacity}"
+													Duration="{StaticResource HighlightChangeDuration}"/>
+												<!-- Scale the child elements down to simulate press -->
+												<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+													Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+													To="{StaticResource ScaleTo}"
+													Duration="{StaticResource ScaleDuration}"/>
+												<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+													Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+													To="{StaticResource ScaleTo}"
+													Duration="{StaticResource ScaleDuration}"/>
+											</Storyboard>
+										</Storyboard>
+									</VisualTransition>
+
+								</VisualStateGroup.Transitions>
 								<!-- Normal - pointer is outisde of the font icon -->
 								<VisualState x:Name="Normal">
 									<Storyboard>
@@ -56,40 +94,48 @@
 
 								<!-- Pointer is hovering over the icon -->
 								<VisualState x:Name="PointerOver">
+									<VisualState.StateTriggers>
+									
+									</VisualState.StateTriggers>
+
 									<Storyboard>
-										<!-- Change highlight opacity to present opacity -->
-										<DoubleAnimation Storyboard.TargetName="HighlightRectangle"
-											Storyboard.TargetProperty="(Rectangle.Opacity)"
-											To="{StaticResource HighlightPresentOpacity}"
-											Duration="{StaticResource HighlightChangeDuration}"/>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HighlightRectangle"
+											Storyboard.TargetProperty="(Rectangle.Opacity)">
+											<DiscreteObjectKeyFrame Value="{StaticResource HighlightPresentOpacity}" KeyTime="0:0:1"/>
+										</ObjectAnimationUsingKeyFrames>
 									</Storyboard>
+									
 								</VisualState>
 
 								<!-- Pointer is pressed on the icon -->
 								<VisualState x:Name="Pressed">
 									<VisualState.StateTriggers>
-										<xaml:PointerOverST Owner="{Binding ElementName=RootGrid}"/>
+										
 									</VisualState.StateTriggers>
 									<Storyboard>
 										<!-- Scale the child elements down to simulate press -->
-										<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
-											Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-											To="{StaticResource ScaleTo}"
-											Duration="{StaticResource ScaleDuration}"/>
-										<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
-											Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
-											To="{StaticResource ScaleTo}"
-											Duration="{StaticResource ScaleDuration}"/>
-										<!-- Change highlight opacity to present opacity -->
-										<DoubleAnimation Storyboard.TargetName="HighlightRectangle"
-											Storyboard.TargetProperty="(Rectangle.Opacity)"
-											To="{StaticResource HighlightPresentOpacity}"
-											Duration="{StaticResource HighlightChangeDuration}"/>
+										<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridScaleTransform"
+													Storyboard.TargetProperty="(ScaleTransform.ScaleX)">
+											<DiscreteDoubleKeyFrame Value="{StaticResource ScaleTo}" KeyTime="0:0:1"/>
+										</DoubleAnimationUsingKeyFrames>
+										<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridScaleTransform"
+													Storyboard.TargetProperty="(ScaleTransform.ScaleY)">
+											<DiscreteDoubleKeyFrame Value="{StaticResource ScaleTo}" KeyTime="0:0:1"/>
+										</DoubleAnimationUsingKeyFrames>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HighlightRectangle"
+											Storyboard.TargetProperty="(Rectangle.Opacity)">
+											<DiscreteObjectKeyFrame Value="{StaticResource HighlightPresentOpacity}" KeyTime="0:0:1"/>
+										</ObjectAnimationUsingKeyFrames>
 									</Storyboard>
 								</VisualState>
-
+								
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
+
+						<xaml:VisualStateNavigator.Navigations>
+							<xaml:VisualStateNavigation TransferToState="test"/>
+							
+						</xaml:VisualStateNavigator.Navigations>
 
 						<!-- Triggers for the control -->
 						<!--<Interactivity:Interaction.Behaviors>
@@ -127,7 +173,7 @@
 							</Core:EventTriggerBehavior>
 
 						</Interactivity:Interaction.Behaviors>-->
-
+						
 						<!-- Serves as highlight -->
 						<Rectangle Name="HighlightRectangle"
 								Fill="{TemplateBinding HighlightBrush}"

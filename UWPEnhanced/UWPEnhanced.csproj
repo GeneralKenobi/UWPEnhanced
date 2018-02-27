@@ -120,8 +120,8 @@
       <DependentUpon>MenuSamplePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Xaml\AdaptiveTriggers\PointerEventTriggers\BaseStructure\PointerEventStateTrigger.cs" />
-    <Compile Include="Xaml\AdaptiveTriggers\PointerOverST.cs" />
+    <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigation.cs" />
+    <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigator.cs" />
     <EmbeddedResource Include="Properties\UWPEnhanced.rd.xml" />
   </ItemGroup>
   <ItemGroup>

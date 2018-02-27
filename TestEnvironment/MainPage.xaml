@@ -15,9 +15,10 @@
 	
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-		<controls:Icon Width="200" Height="200" Background="Red"/>
+		<controls:Icon Background="Red"
+			Glyph="&#xE700;" FontSize="60"/>
 
-		<controls:Menu Width="200" Height="200"/>
+		
 
 	</StackPanel>
 </Page>
