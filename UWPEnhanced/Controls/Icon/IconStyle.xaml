@@ -5,7 +5,8 @@
 	xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
 	xmlns:Animations="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
 	xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
-    xmlns:controls="using:UWPEnhanced.Controls">
+    xmlns:controls="using:UWPEnhanced.Controls"
+    xmlns:xaml="using:UWPEnhanced.Xaml">
 
 
 	<!-- Default style for an Icon -->
@@ -66,6 +67,9 @@
 
 								<!-- Pointer is pressed on the icon -->
 								<VisualState x:Name="Pressed">
+									<VisualState.StateTriggers>
+										<xaml:PointerOverST Owner="{Binding ElementName=RootGrid}"/>
+									</VisualState.StateTriggers>
 									<Storyboard>
 										<!-- Scale the child elements down to simulate press -->
 										<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
@@ -88,41 +92,41 @@
 						</VisualStateManager.VisualStateGroups>
 
 						<!-- Triggers for the control -->
-						<Interactivity:Interaction.Behaviors>
+						<!--<Interactivity:Interaction.Behaviors>
 
-							<!-- Pointer entered - transition to PointerOver state -->
+							--><!-- Pointer entered - transition to PointerOver state --><!--
 							<Core:EventTriggerBehavior EventName="PointerEntered">
 								<Core:GoToStateAction StateName="PointerOver"/>
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Pressed Trigger: Goes to Pressed State -->
+							--><!-- Pointer Pressed Trigger: Goes to Pressed State --><!--
 							<Core:EventTriggerBehavior EventName="PointerPressed">
 								<Core:GoToStateAction StateName="Pressed"/>
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Released Trigger: Returns to PointerOver state and invokes the command -->
+							--><!-- Pointer Released Trigger: Returns to PointerOver state and invokes the command --><!--
 							<Core:EventTriggerBehavior EventName="PointerReleased">
 								<Core:GoToStateAction StateName="PointerOver"/>
-								<Core:InvokeCommandAction CommandParameter="{Binding CommandParameter, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-									Command="{Binding Command, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+								--><!--<Core:InvokeCommandAction CommandParameter="{Binding CommandParameter, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+									Command="{Binding Command, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>--><!--
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Exited Trigger: Goes to Normal state -->
+							--><!-- Pointer Exited Trigger: Goes to Normal state --><!--
 							<Core:EventTriggerBehavior EventName="PointerExited">
 								<Core:GoToStateAction StateName="Normal"/>
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Cancelled Trigger: Goes to Normal state -->
+							--><!-- Pointer Cancelled Trigger: Goes to Normal state --><!--
 							<Core:EventTriggerBehavior EventName="PointerCanceled">
 								<Core:GoToStateAction StateName="Normal"/>
 							</Core:EventTriggerBehavior>
 
-							<!-- Pointer Capture Lost Trigger: Goes to Normal state -->
+							--><!-- Pointer Capture Lost Trigger: Goes to Normal state --><!--
 							<Core:EventTriggerBehavior EventName="PointerCaptureLost">
 								<Core:GoToStateAction StateName="Normal"/>
 							</Core:EventTriggerBehavior>
 
-						</Interactivity:Interaction.Behaviors>
+						</Interactivity:Interaction.Behaviors>-->
 
 						<!-- Serves as highlight -->
 						<Rectangle Name="HighlightRectangle"

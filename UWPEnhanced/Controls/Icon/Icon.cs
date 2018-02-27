@@ -37,6 +37,7 @@ namespace UWPEnhanced.Controls
 		public Icon()
 		{
 			this.DefaultStyleKey = typeof(Icon);
+			this.PointerPressed += (s, e) => Command?.Execute(CommandParameter);
 
 			// Whenever size changed notify that scale center also changes
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
