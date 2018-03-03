@@ -131,9 +131,24 @@
 								
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
+						
+
 
 						<xaml:VisualStateNavigator.Navigations>
-							<xaml:VisualStateNavigation TransferToState="test"/>
+							<xaml:VisualStateNavigation TransferToState="test">
+								<xaml:VisualStateNavigation.VisualStateNavigationTriggers>
+									<xaml:VisualStateNavigationPointerTrigger TriggerFor="{Binding ElementName=RootGrid}">
+										<xaml:VisualStateNavigationPointerTrigger.TriggerTypes>
+											<xaml:VisualStateNavigationPointerTriggerEventType>
+												<xaml:VisualStateNavigationPointerTriggerEventType.PointerEventType>
+													<xaml:PointerEventType>PointerPressed</xaml:PointerEventType>
+													<xaml:PointerEventType>PointerPressed</xaml:PointerEventType>
+												</xaml:VisualStateNavigationPointerTriggerEventType.PointerEventType>
+											</xaml:VisualStateNavigationPointerTriggerEventType>
+										</xaml:VisualStateNavigationPointerTrigger.TriggerTypes>
+									</xaml:VisualStateNavigationPointerTrigger>								
+								</xaml:VisualStateNavigation.VisualStateNavigationTriggers>
+							</xaml:VisualStateNavigation>
 							
 						</xaml:VisualStateNavigator.Navigations>
 

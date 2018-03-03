@@ -9,8 +9,7 @@ using Windows.UI.Xaml;
 namespace UWPEnhanced.Xaml
 {
 	public class VisualStateNavigator : DependencyObject
-	{
-		
+	{		
 		#region Navigations
 
 		/// <summary>
@@ -28,7 +27,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty NavigationsProperty =
 			DependencyProperty.RegisterAttached("Navigations", typeof(ObservableCollection<VisualStateNavigation>),
-			 typeof(VisualStateNavigator), new PropertyMetadata(default(ObservableCollection<VisualStateNavigation>)));
+			 typeof(VisualStateNavigator), new PropertyMetadata(new ObservableCollection<VisualStateNavigation>()));
 
 		#endregion
 	}

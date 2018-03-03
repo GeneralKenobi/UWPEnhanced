@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,27 @@ namespace UWPEnhanced.Xaml
 			DependencyProperty.Register(nameof(TransferToState), typeof(string),
 			typeof(VisualStateNavigation), new PropertyMetadata(default(string)));
 
-		#endregion	
+		#endregion
+
+		#region VisualStateNavigationTriggers Dependency Property
+
+		/// <summary>
+		/// Triggers for this VisualStateNavigation
+		/// </summary>
+		public ObservableCollection<VisualStateNavigationTrigger> VisualStateNavigationTriggers
+		{
+			get => (ObservableCollection<VisualStateNavigationTrigger>)GetValue(VisualStateNavigationTriggersProperty);
+			set => SetValue(VisualStateNavigationTriggersProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="VisualStateNavigationTriggers"/>
+		/// </summary>
+		public static readonly DependencyProperty VisualStateNavigationTriggersProperty =
+			DependencyProperty.Register(nameof(VisualStateNavigationTriggers), typeof(ObservableCollection<VisualStateNavigationTrigger>),
+			typeof(VisualStateNavigation), new PropertyMetadata(new ObservableCollection<VisualStateNavigationTrigger>()));
+
+		#endregion
+
 	}
 }
