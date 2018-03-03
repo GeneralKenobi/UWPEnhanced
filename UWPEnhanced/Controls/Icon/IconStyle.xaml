@@ -20,7 +20,7 @@
 		<Setter Property="HighlightBrush" Value="White"/>
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="controls:Icon">
+				<ControlTemplate TargetType="controls:Icon" x:Name="Template">
 
 					<!-- Main container, presents background and border brush -->
 					<Grid x:Name="RootGrid"
@@ -135,21 +135,15 @@
 
 
 						<xaml:VisualStateNavigator.Navigations>
-							<xaml:VisualStateNavigation TransferToState="test">
+							<xaml:VisualStateNavigation NavigateFor="{Binding ElementName=RootGrid}" TransferToState="PointerOver">
 								<xaml:VisualStateNavigation.VisualStateNavigationTriggers>
-									<xaml:VisualStateNavigationPointerTrigger TriggerFor="{Binding ElementName=RootGrid}">
+									<xaml:VisualStateNavigationPointerTrigger >
 										<xaml:VisualStateNavigationPointerTrigger.TriggerTypes>
-											<xaml:VisualStateNavigationPointerTriggerEventType>
-												<xaml:VisualStateNavigationPointerTriggerEventType.PointerEventType>
-													<xaml:PointerEventType>PointerPressed</xaml:PointerEventType>
-													<xaml:PointerEventType>PointerPressed</xaml:PointerEventType>
-												</xaml:VisualStateNavigationPointerTriggerEventType.PointerEventType>
-											</xaml:VisualStateNavigationPointerTriggerEventType>
+											<xaml:PointerTriggerEvent>PointerPressed</xaml:PointerTriggerEvent>
 										</xaml:VisualStateNavigationPointerTrigger.TriggerTypes>
-									</xaml:VisualStateNavigationPointerTrigger>								
+									</xaml:VisualStateNavigationPointerTrigger>
 								</xaml:VisualStateNavigation.VisualStateNavigationTriggers>
-							</xaml:VisualStateNavigation>
-							
+							</xaml:VisualStateNavigation>							
 						</xaml:VisualStateNavigator.Navigations>
 
 						<!-- Triggers for the control -->

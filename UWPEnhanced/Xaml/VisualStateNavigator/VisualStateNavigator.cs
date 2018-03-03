@@ -8,8 +8,18 @@ using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
-	public class VisualStateNavigator : DependencyObject
-	{		
+	public static class VisualStateNavigator
+	{
+
+		/// <summary>
+		/// Default Constructor
+		/// </summary>
+		static VisualStateNavigator()
+		{
+
+		}
+
+
 		#region Navigations
 
 		/// <summary>
@@ -27,7 +37,19 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty NavigationsProperty =
 			DependencyProperty.RegisterAttached("Navigations", typeof(ObservableCollection<VisualStateNavigation>),
-			 typeof(VisualStateNavigator), new PropertyMetadata(new ObservableCollection<VisualStateNavigation>()));
+			 typeof(VisualStateNavigator), new PropertyMetadata(gen()));
+
+		private static ObservableCollection<VisualStateNavigation> gen()
+		{
+			ObservableCollection<VisualStateNavigation> x = new ObservableCollection<VisualStateNavigation>();
+			x.CollectionChanged += t;
+			return x;
+		}
+
+		private static void t(object a, object b)
+		{
+
+		}
 
 		#endregion
 	}

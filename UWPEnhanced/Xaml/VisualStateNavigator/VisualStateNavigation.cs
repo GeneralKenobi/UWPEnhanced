@@ -1,15 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace UWPEnhanced.Xaml
 {
 	public class VisualStateNavigation : DependencyObject
 	{
+		private async Task t()
+		{
+			await Task.Delay(3000);
+		}
+
+		/// <summary>
+		/// Default Constructor
+		/// </summary>
+		public VisualStateNavigation()
+		{
+			VisualStateNavigationTriggers = new ObservableCollection<VisualStateNavigationTrigger>();
+			VisualStateNavigationTriggers.CollectionChanged += VisualStateNavigationTriggersCollectionChanged;
+			t();
+		}
+
+		private void VisualStateNavigationTriggersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			foreach(var item in e.NewItems)
+			{
+				if(item is VisualStateNavigationTrigger t)
+				{
+					//t.Navigate += (s) => VisualStateManager.GoToState(NavigateFor, TransferToState, true);
+				}
+			}
+		}
+
 		#region TransferToState Dependency Property
 
 		/// <summary>
@@ -46,9 +74,28 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty VisualStateNavigationTriggersProperty =
 			DependencyProperty.Register(nameof(VisualStateNavigationTriggers), typeof(ObservableCollection<VisualStateNavigationTrigger>),
-			typeof(VisualStateNavigation), new PropertyMetadata(new ObservableCollection<VisualStateNavigationTrigger>()));
+			typeof(VisualStateNavigation), new PropertyMetadata(null));
 
 		#endregion
 
+		#region NavigateFor Dependency Property
+
+		/// <summary>
+		/// Navigate the given control
+		/// </summary>
+		public UIElement NavigateFor
+		{
+			get => (UIElement)GetValue(NavigateForProperty);
+			set => SetValue(NavigateForProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="NavigateFor"/>
+		/// </summary>
+		public static readonly DependencyProperty NavigateForProperty =
+			DependencyProperty.Register(nameof(NavigateFor), typeof(UIElement),
+			typeof(VisualStateNavigation), new PropertyMetadata(default(UIElement)));
+
+		#endregion
 	}
 }

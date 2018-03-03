@@ -8,45 +8,46 @@ using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
-	public class VisualStateNavigationPointerTriggerEventType : DependencyObject
-	{
-		#region PointerEventType Dependency Property
 
-		/// <summary>
-		/// Pointer Events that trigger the owning <see cref="VisualStateNavigationPointerTrigger"/>
-		/// </summary>
-		public ObservableCollection<PointerEventType> PointerEventType
-		{
-			get => (ObservableCollection<PointerEventType>)GetValue(PointerEventTypeProperty);
-			set => SetValue(PointerEventTypeProperty, value);
-		}
+	//public class VisualStateNavigationPointerTriggerEventType : DependencyObject
+	//{
+	//	#region PointerEventType Dependency Property
 
-		/// <summary>
-		/// Backing store for <see cref="PointerEventType"/>
-		/// </summary>
-		public static readonly DependencyProperty PointerEventTypeProperty =
-			DependencyProperty.Register(nameof(PointerEventType), typeof(ObservableCollection<PointerEventType>),
-			typeof(VisualStateNavigationPointerTriggerEventType), new PropertyMetadata(new ObservableCollection<PointerEventType>(),
-				new PropertyChangedCallback(PointerEventTypePropertyChanged)));
+	//	/// <summary>
+	//	/// Pointer Events that trigger the owning <see cref="VisualStateNavigationPointerTrigger"/>
+	//	/// </summary>
+	//	public ObservableCollection<PointerEventType> PointerEventType
+	//	{
+	//		get => (ObservableCollection<PointerEventType>)GetValue(PointerEventTypeProperty);
+	//		set => SetValue(PointerEventTypeProperty, value);
+	//	}
 
-		private static void PointerEventTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-		{
+	//	/// <summary>
+	//	/// Backing store for <see cref="PointerEventType"/>
+	//	/// </summary>
+	//	public static readonly DependencyProperty PointerEventTypeProperty =
+	//		DependencyProperty.Register(nameof(PointerEventType), typeof(ObservableCollection<PointerEventType>),
+	//		typeof(VisualStateNavigationPointerTriggerEventType), new PropertyMetadata(new ObservableCollection<PointerEventType>(),
+	//			new PropertyChangedCallback(PointerEventTypePropertyChanged)));
 
-		}
-		#endregion
+	//	private static void PointerEventTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+	//	{
+
+	//	}
+	//	#endregion
 
 
-	}
+	//}
 
-	public enum PointerEventType
-	{
-		PointerCanceled = 0,
-		PointerCaptureLost = 1,
-		PointerEntered = 2,
-		PointerExited = 3,
-		PointerMoved = 4,
-		PointerPressed = 5,
-		PointerReleased = 6,
-		PointerWheelChanged = 7,
-	}
+	//public enum PointerEventType
+	//{
+	//	PointerCanceled = 0,
+	//	PointerCaptureLost = 1,
+	//	PointerEntered = 2,
+	//	PointerExited = 3,
+	//	PointerMoved = 4,
+	//	PointerPressed = 5,
+	//	PointerReleased = 6,
+	//	PointerWheelChanged = 7,
+	//}
 }
