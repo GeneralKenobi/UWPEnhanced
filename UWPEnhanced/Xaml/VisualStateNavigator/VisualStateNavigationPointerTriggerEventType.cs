@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Animations.Behaviors;
+using Microsoft.Xaml.Interactivity;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,6 +10,7 @@ using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
+
 
 	//public class VisualStateNavigationPointerTriggerEventType : DependencyObject
 	//{

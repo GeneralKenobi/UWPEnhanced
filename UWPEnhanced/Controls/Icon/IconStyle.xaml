@@ -131,11 +131,12 @@
 								
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
+
+
 						
 
-
 						<xaml:VisualStateNavigator.Navigations>
-							<xaml:VisualStateNavigation NavigateFor="{Binding ElementName=RootGrid}" TransferToState="PointerOver">
+							<xaml:VisualStateNavigation TransferToState="PointerOver">
 								<xaml:VisualStateNavigation.VisualStateNavigationTriggers>
 									<xaml:VisualStateNavigationPointerTrigger >
 										<xaml:VisualStateNavigationPointerTrigger.TriggerTypes>
@@ -145,6 +146,10 @@
 								</xaml:VisualStateNavigation.VisualStateNavigationTriggers>
 							</xaml:VisualStateNavigation>							
 						</xaml:VisualStateNavigator.Navigations>
+										
+						
+
+					
 
 						<!-- Triggers for the control -->
 						<!--<Interactivity:Interaction.Behaviors>
@@ -195,6 +200,18 @@
 							Padding="{TemplateBinding Padding}"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Stretch">
+
+							<xaml:VisualStateNavigator.Navigations>
+								<xaml:VisualStateNavigation TransferToState="PointerOver">
+									<xaml:VisualStateNavigation.VisualStateNavigationTriggers>
+										<xaml:VisualStateNavigationPointerTrigger >
+											<xaml:VisualStateNavigationPointerTrigger.TriggerTypes>
+												<xaml:PointerTriggerEvent>PointerPressed</xaml:PointerTriggerEvent>
+											</xaml:VisualStateNavigationPointerTrigger.TriggerTypes>
+										</xaml:VisualStateNavigationPointerTrigger>
+									</xaml:VisualStateNavigation.VisualStateNavigationTriggers>
+								</xaml:VisualStateNavigation>
+							</xaml:VisualStateNavigator.Navigations>
 
 							<!-- Render transforms for child elements, composed of ScaleTransform -->
 							<Grid.RenderTransform>

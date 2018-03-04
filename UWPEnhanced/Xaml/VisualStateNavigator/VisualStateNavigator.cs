@@ -8,13 +8,13 @@ using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
-	public static class VisualStateNavigator
+	public class VisualStateNavigator
 	{
 
 		/// <summary>
 		/// Default Constructor
 		/// </summary>
-		static VisualStateNavigator()
+		public VisualStateNavigator()
 		{
 
 		}
@@ -25,7 +25,23 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Getter for <see cref="Navigations"/>
 		/// </summary>
-		public static ObservableCollection<VisualStateNavigation> GetNavigations(DependencyObject obj) => (ObservableCollection<VisualStateNavigation>)obj.GetValue(NavigationsProperty);
+		public static ObservableCollection<VisualStateNavigation> GetNavigations(DependencyObject obj)
+		{
+			var c = (ObservableCollection<VisualStateNavigation>)obj.GetValue(NavigationsProperty);
+
+			if(c==null)
+			{
+				obj.SetValue(NavigationsProperty, new ObservableCollection<VisualStateNavigation>());
+				return (ObservableCollection<VisualStateNavigation>)obj.GetValue(NavigationsProperty);
+			}
+
+			foreach(var item in c)
+			{
+				item.NavigateFor = obj as UIElement;
+			}
+
+			return c;
+		}
 
 		/// <summary>
 		/// Setter for <see cref="Navigations"/>
@@ -37,19 +53,38 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty NavigationsProperty =
 			DependencyProperty.RegisterAttached("Navigations", typeof(ObservableCollection<VisualStateNavigation>),
-			 typeof(VisualStateNavigator), new PropertyMetadata(gen()));
+			 typeof(VisualStateNavigator), new PropertyMetadata(null, new PropertyChangedCallback(t)));
 
 		private static ObservableCollection<VisualStateNavigation> gen()
 		{
 			ObservableCollection<VisualStateNavigation> x = new ObservableCollection<VisualStateNavigation>();
-			x.CollectionChanged += t;
+			//x.CollectionChanged += t;
 			return x;
 		}
 
-		private static void t(object a, object b)
+		private static void t(DependencyObject sender, DependencyPropertyChangedEventArgs e)
 		{
-
+			if(e.NewValue is ObservableCollection<VisualStateNavigation> c)
+			{
+				foreach(var item in c)
+				{
+					item.NavigateFor = sender as UIElement;
+				}
+			}
 		}
+
+
+		private void ObjLoaded(object sender, RoutedEventArgs e)
+		{
+			if(sender is DependencyObject d)
+			{
+				foreach(var item in GetNavigations(d))
+				{
+					item.NavigateFor = d as UIElement;
+				}
+			}
+		}
+
 
 		#endregion
 	}
