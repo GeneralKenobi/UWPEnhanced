@@ -12,7 +12,7 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Collection of <see cref="IAttachable"/> stored in a <see cref="VisualAttachments"/>
 	/// </summary>
-	public class VisualAttachmentCollection : DependencyObjectCollection, IAttachable
+	public class VisualAttachmentCollection : DependencyObjectCollectionOfT<IAttachable>, IAttachable
 	{
 		#region Constructor
 
@@ -28,16 +28,7 @@ namespace UWPEnhanced.Xaml
 		}
 
 		#endregion
-
-		#region Private Members
-
-		/// <summary>
-		/// Collection which serves as a control copy, it also helps with Attaching new items / Detatching removed items
-		/// </summary>
-		private readonly List<IAttachable> _ControlArchive = new List<IAttachable>();
-
-		#endregion
-
+		
 		#region Public Properties
 
 		/// <summary>
@@ -115,29 +106,22 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
-		#region Private Methods
+		#region Protected Methods
 
 		/// <summary>
 		/// Handles changes in the main collection
 		/// </summary>
 		/// <param name="s"></param>
 		/// <param name="e"></param>
-		private void OnVectorChanged(IObservableVector<DependencyObject> s, IVectorChangedEventArgs e)
+		protected override void OnVectorChanged(IObservableVector<DependencyObject> s, IVectorChangedEventArgs e)
 		{
 			switch(e.CollectionChange)
 			{
-				case CollectionChange.ItemInserted:
-					{
-						// Add the new item to the control archive using the new element check routine
-						_ControlArchive.Add(NewElementCheckRoutine(this[(int)e.Index]));
-					} break;
-
 				case CollectionChange.ItemChanged:
 					{
 						// Detatch the old item
 						_ControlArchive[(int)e.Index].Detach();
 						// Reassign the item in the control archive using the new element check routine
-						_ControlArchive[(int)e.Index] = NewElementCheckRoutine(this[(int)e.Index]);
 					} break;
 
 				case CollectionChange.ItemRemoved:
@@ -145,39 +129,16 @@ namespace UWPEnhanced.Xaml
 						// Detatch the old item
 						_ControlArchive[(int)e.Index].Detach();
 						// And remove it from the control archive
-						_ControlArchive.RemoveAt((int)e.Index);
 					} break;
 
 				case CollectionChange.Reset:
 					{
 						// Detatch every element
 						_ControlArchive.ForEach((x) => x.Detach());
-
-						// Clear the control archive
-						_ControlArchive.Clear();
-
-						foreach(DependencyObject item in this)
-						{
-							// Add items that are left to the control archive using new item check routine
-							_ControlArchive.Add(NewElementCheckRoutine(item));
-						}
-
-					} break;
-
-				default:
-					{
-						// Unsupported action - indicate by breaking if the debugger is attatched
-						if(Debugger.IsAttached)
-						{
-							// Unhandled change in the collection, possible source of errors
-							Debugger.Break();
-						}
-					}
-					break;
+					} break;				
 			}
 
-			// Check integrity (conditional on DEBUG)
-			CheckIntegrity();
+			base.OnVectorChanged(s, e);
 		}
 
 		/// <summary>
@@ -187,17 +148,9 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		private IAttachable NewElementCheckRoutine(DependencyObject item)
+		protected override IAttachable NewElementCheckRoutine(DependencyObject item)
 		{
-			// Check if the new item implements IAttachable
-			var attachable = item as IAttachable ?? throw new InvalidOperationException(
-				"VisualAttachment collection stores only " + nameof(IAttachable)+ " items");
-
-			// Check if it's already in the collection
-			if(_ControlArchive.Contains(attachable))
-			{
-				throw new InvalidOperationException("Duplicates aren't allowed");
-			}
+			var attachable = base.NewElementCheckRoutine(item);
 
 			// If this collection is attached, attach the object as well
 			if(IsAttached)
@@ -206,35 +159,7 @@ namespace UWPEnhanced.Xaml
 			}
 
 			return attachable;
-		}
-
-		/// <summary>
-		/// Checks the integrity of this collection (if the underlying collection is equal to <see cref="_ControlArchive"/>)
-		/// Dedicated for debug
-		/// </summary>
-		[Conditional("DEBUG")]
-		private void CheckIntegrity()
-		{
-			// Check the count
-			if(this.Count==_ControlArchive.Count)
-			{
-				// For each element
-				for(int i=0; i<this.Count; ++i)
-				{
-					// If one pair isn't equal signal it by breaking if a debugger is attached
-					if(this[i]!=_ControlArchive[i] && Debugger.IsAttached)
-					{
-						// Collection integrity compromised - pair of items wasn't equal
-						Debugger.Break();
-					}
-				}
-			}
-			else if(Debugger.IsAttached)
-			{
-				// Collection integrity compromised - _ControlArchive has a different number of items than underlying collection
-				Debugger.Break();
-			}
-		}
+		}		
 
 		#endregion
 	}
