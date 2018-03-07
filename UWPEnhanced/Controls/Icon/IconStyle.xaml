@@ -132,7 +132,9 @@
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 
-
+						<xaml:VisualAttachments.AttachedVisuals>
+						
+						</xaml:VisualAttachments.AttachedVisuals>
 						
 
 						<xaml:VisualStateNavigator.Navigations>

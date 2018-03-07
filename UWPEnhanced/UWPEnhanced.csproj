@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -120,10 +120,12 @@
       <DependentUpon>MenuSamplePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xaml\DependencyObjectCollectionOfT\DependencyObjectCollectionOfT.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachmentCollection\VisualAttachmentCollection.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachments.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\IAttachable.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\VisualAttachment.cs" />
+    <Compile Include="Xaml\VisualStateNavigations\VisualStateNavigations.cs" />
     <Compile Include="Xaml\VisualStateNavigator\NavigateEventHandler.cs" />
     <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigation.cs" />
     <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigationPointerTrigger.cs" />
@@ -182,7 +184,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="CSharpEnhanced">
+      <HintPath>..\..\CSharpEnhanced\CSharpEnhanced\bin\Debug\netstandard2.0\CSharpEnhanced.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
