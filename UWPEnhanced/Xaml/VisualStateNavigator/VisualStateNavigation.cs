@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace UWPEnhanced.Xaml
 {
-	public class VisualStateNavigation : DependencyObject
+	public class VisualStateNavigationaa : DependencyObject
 	{
 		private async Task t()
 		{
@@ -20,7 +20,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Default Constructor
 		/// </summary>
-		public VisualStateNavigation()
+		public VisualStateNavigationaa()
 		{
 			VisualStateNavigationTriggers = new ObservableCollection<VisualStateNavigationTrigger>();
 			VisualStateNavigationTriggers.CollectionChanged += VisualStateNavigationTriggersCollectionChanged;

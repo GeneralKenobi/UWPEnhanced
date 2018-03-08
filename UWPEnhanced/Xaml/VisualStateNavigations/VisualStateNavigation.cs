@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
 	/// <summary>
-	/// Container for <see cref="VisualStateNavigation"/>s which can be used to set them in xaml
+	/// A single navigation which can be fired by many triggers
 	/// </summary>
-	public class VisualStateNavigations : VisualAttachmentCollection
+	public class VisualStateNavigation : DependencyObjectCollectionOfT<VisualNavigationTrigger>
 	{
-
 
 	}
 }

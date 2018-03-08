@@ -121,14 +121,12 @@ namespace UWPEnhanced.Xaml
 					{
 						// Detatch the old item
 						_ControlArchive[(int)e.Index].Detach();
-						// Reassign the item in the control archive using the new element check routine
 					} break;
 
 				case CollectionChange.ItemRemoved:
 					{
 						// Detatch the old item
 						_ControlArchive[(int)e.Index].Detach();
-						// And remove it from the control archive
 					} break;
 
 				case CollectionChange.Reset:

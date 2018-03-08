@@ -11,4 +11,5 @@ namespace UWPEnhanced.Xaml
 	/// </summary>
 	/// <param name="sender"></param>
 	public delegate void NavigateEventHandler(object sender);
+	
 }

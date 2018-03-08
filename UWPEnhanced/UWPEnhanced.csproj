@@ -125,6 +125,8 @@
     <Compile Include="Xaml\VisualAttachments\VisualAttachments.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\IAttachable.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\VisualAttachment.cs" />
+    <Compile Include="Xaml\VisualStateNavigations\VisualNavigationTrigger.cs" />
+    <Compile Include="Xaml\VisualStateNavigations\VisualStateNavigation.cs" />
     <Compile Include="Xaml\VisualStateNavigations\VisualStateNavigations.cs" />
     <Compile Include="Xaml\VisualStateNavigator\NavigateEventHandler.cs" />
     <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigation.cs" />
