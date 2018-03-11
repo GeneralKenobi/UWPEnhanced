@@ -26,13 +26,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="allowDuplicates">The collection will allow/disallow duplicate items</param>
 		public DependencyObjectCollectionOfT(bool allowDuplicates = false)
-		{
-			// Check if T derives from DependencyObject
-			if (!TypeHelpers.IsDerivedOrSelf(typeof(T), typeof(DependencyObject)))
-			{
-				throw new ArgumentException(nameof(T) + " has to derive from " + nameof(DependencyObject));
-			}
-			
+		{			
 			_AllowDuplicates = allowDuplicates;
 			VectorChanged += OnVectorChanged;
 		}
