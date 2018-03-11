@@ -125,15 +125,11 @@
     <Compile Include="Xaml\VisualAttachments\VisualAttachments.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\IAttachable.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\VisualAttachment.cs" />
-    <Compile Include="Xaml\VisualStateNavigations\VisualNavigationTrigger.cs" />
-    <Compile Include="Xaml\VisualStateNavigations\VisualStateNavigation.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualPointerTrigger\PointerEventType.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualPointerTrigger\VisualPointerTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\IVisualTrigger\IVisualTrigger.cs" />
+    <Compile Include="Xaml\VisualStateNavigations\VisualStateNavigation\VisualStateNavigation.cs" />
     <Compile Include="Xaml\VisualStateNavigations\VisualStateNavigations.cs" />
-    <Compile Include="Xaml\VisualStateNavigator\NavigateEventHandler.cs" />
-    <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigation.cs" />
-    <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigationPointerTrigger.cs" />
-    <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigationPointerTriggerEventType.cs" />
-    <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigationTrigger.cs" />
-    <Compile Include="Xaml\VisualStateNavigator\VisualStateNavigator.cs" />
     <EmbeddedResource Include="Properties\UWPEnhanced.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +187,7 @@
       <HintPath>..\..\CSharpEnhanced\CSharpEnhanced\bin\Debug\netstandard2.0\CSharpEnhanced.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

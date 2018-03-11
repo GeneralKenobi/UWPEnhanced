@@ -7,7 +7,6 @@ using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
-
 	/// <summary>
 	/// Container for visual attachments in xaml (like VisualStateManager)
 	/// </summary>
@@ -27,20 +26,20 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Getter for <see cref="AttachedVisualsProperty"/>
 		/// </summary>
-		public static VisualAttachmentCollection GetAttachedVisuals(DependencyObject obj)
+		public static VisualAttachmentCollection<IAttachable> GetAttachedVisuals(DependencyObject obj)
 		{
 			if(obj == null)
 			{
 				throw new ArgumentNullException(nameof(obj));
 			}
 
-			var collection = (VisualAttachmentCollection)obj.GetValue(AttachedVisualsProperty);
+			var collection = (VisualAttachmentCollection<IAttachable>)obj.GetValue(AttachedVisualsProperty);
 
 			// If the collection wasn't yet set
 			if(collection == null)
 			{
 				// Create a new instance
-				collection = new VisualAttachmentCollection();
+				collection = new VisualAttachmentCollection<IAttachable>();
 				
 				// And set it for the object
 				obj.SetValue(AttachedVisualsProperty, collection);
@@ -61,7 +60,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Setter for <see cref="AttachedVisualsProperty"/>
 		/// </summary>
-		public static void SetAttachedVisuals(DependencyObject obj, VisualAttachmentCollection value)
+		public static void SetAttachedVisuals(DependencyObject obj, VisualAttachmentCollection<IAttachable> value)
 		{
 			if(obj == null)
 			{
@@ -72,10 +71,10 @@ namespace UWPEnhanced.Xaml
 		}
 
 		/// <summary>
-		/// 
+		/// Attached property for attached visuals
 		/// </summary>
 		public static readonly DependencyProperty AttachedVisualsProperty =
-			DependencyProperty.RegisterAttached("AttachedVisuals", typeof(VisualAttachmentCollection),
+			DependencyProperty.RegisterAttached("AttachedVisuals", typeof(VisualAttachmentCollection<IAttachable>),
 			 typeof(VisualAttachments), new PropertyMetadata(null, new PropertyChangedCallback(AttachedVisualsChanged)));
 		
 		/// <summary>
@@ -92,13 +91,13 @@ namespace UWPEnhanced.Xaml
 			}
 
 			// If old collection wasn't null, detatch it
-			if(e.OldValue is VisualAttachmentCollection cOld)
+			if(e.OldValue is VisualAttachmentCollection<IAttachable> cOld)
 			{
 				cOld.Detach();
 			}
 
 			// If the new collection isn't null and sender isn't null, attatch the new collection to the sender
-			if (e.NewValue is VisualAttachmentCollection cNew && sender != null)
+			if (e.NewValue is VisualAttachmentCollection<IAttachable> cNew && sender != null)
 			{
 				cNew.Attach(sender);
 			}

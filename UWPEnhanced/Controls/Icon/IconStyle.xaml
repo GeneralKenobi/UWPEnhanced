@@ -132,15 +132,15 @@
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 
+
 						<xaml:VisualAttachments.AttachedVisuals>
 							<xaml:VisualStateNavigations>
 								<xaml:VisualStateNavigation>
-									<xaml:VisualNavigationTrigger/>
+									<xaml:VisualPointerTrigger PointerEvent="PointerPressed"
+										Modifiers="Shift"/>
 								</xaml:VisualStateNavigation>
 							</xaml:VisualStateNavigations>
 						</xaml:VisualAttachments.AttachedVisuals>
-						
-						
 						
 										
 						

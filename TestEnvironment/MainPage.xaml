@@ -12,13 +12,42 @@
 	xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
     mc:Ignorable="d">
 
-	
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Page.Resources>
+
+		<Storyboard x:Key="sb">
+			<DoubleAnimation 							
+								Storyboard.TargetName="t"
+								Storyboard.TargetProperty="X"
+								From="0"
+								To="200"								
+								Duration="0:0:1">
+				<DoubleAnimation.EasingFunction>
+					<SineEase EasingMode="EaseInOut"/>
+				</DoubleAnimation.EasingFunction>					
+			</DoubleAnimation>
+		</Storyboard>
+
+	</Page.Resources>
+
+
+
+
+	<StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 		<controls:Icon Background="Red"
 			Glyph="&#xE700;" FontSize="60"/>
 
+
+
+		<Rectangle Width="100" Height="100" Fill="Green" Name="r">
+			<Rectangle.RenderTransform>
+				<TranslateTransform X="0" x:Name="t"/>
+			</Rectangle.RenderTransform>
+
 		
+		</Rectangle>
+
+		<Rectangle Width="100" Height="100" Fill="Blue"/>
 
 	</StackPanel>
 </Page>

@@ -1,4 +1,8 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System.Threading.Tasks;
+using Windows.System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -12,6 +16,14 @@ namespace TestEnvironment
         public MainPage()
         {
 			this.InitializeComponent();
+			task();
         }
-    }
+
+
+		private async Task task()
+		{
+			await Task.Delay(1000);
+			(this.Resources["sb"] as Storyboard)?.Begin();
+		}
+	}
 }
