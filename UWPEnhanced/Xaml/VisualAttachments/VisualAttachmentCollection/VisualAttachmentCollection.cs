@@ -10,9 +10,12 @@ using Windows.UI.Xaml;
 namespace UWPEnhanced.Xaml
 {
 	/// <summary>
-	/// Collection of <see cref="IAttachable"/> stored in a <see cref="VisualAttachments"/>
+	/// Collection of items that derive from <see cref="IAttachable"/>
 	/// </summary>
-	public class VisualAttachmentCollection : DependencyObjectCollectionOfT<IAttachable>, IAttachable
+	/// <typeparam name="T">Type of the items in the collection. It should derive from <see cref="IAttachable"/>
+	/// and, in order to ensure proper functioning, from <see cref="DependencyObject"/></typeparam>
+	public class VisualAttachmentCollection<T> : DependencyObjectCollectionOfT<T>, IAttachable
+		where T : class, IAttachable
 	{
 		#region Constructor
 
@@ -24,7 +27,6 @@ namespace UWPEnhanced.Xaml
 		public VisualAttachmentCollection(bool lockAttachedTo = true)
 		{
 			LockAttachedTo = lockAttachedTo;
-			VectorChanged += OnVectorChanged;
 		}
 
 		#endregion
@@ -67,12 +69,12 @@ namespace UWPEnhanced.Xaml
 			// Check if this VisualAttachment cna be reattached and if it's already attached
 			if (LockAttachedTo && IsAttached)
 			{
-				throw new InvalidOperationException("This " + nameof(VisualAttachmentCollection) + " can be attached only if it's not attached; " +
+				throw new InvalidOperationException("This " + nameof(VisualAttachmentCollection<T>) + " can be attached only if it's not attached; " +
 					"Current settings prevent it from being reattached");
 			}
 
 			// Debug information for null obj
-			Debug.Assert(obj == null, "Can't attach self to a null object");
+			Debug.Assert(obj != null, "Can't attach self to a null object");
 
 			// Assign the obj to AttachedTo; If obj == null, throw ArgumentException instead
 			AttachedTo = obj ?? throw new ArgumentNullException(nameof(obj));
@@ -133,7 +135,7 @@ namespace UWPEnhanced.Xaml
 					{
 						// Detatch every element
 						_ControlArchive.ForEach((x) => x.Detach());
-					} break;				
+					} break;
 			}
 
 			base.OnVectorChanged(s, e);
@@ -146,7 +148,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		protected override IAttachable NewElementCheckRoutine(DependencyObject item)
+		protected override T NewElementCheckRoutine(DependencyObject item)
 		{
 			var attachable = base.NewElementCheckRoutine(item);
 
