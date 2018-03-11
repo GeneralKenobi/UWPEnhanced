@@ -61,13 +61,15 @@ namespace UWPEnhanced.Xaml
 				case CollectionChange.ItemInserted:
 					{
 						// Add the new item to the control archive using the new element check routine
-						_ControlArchive.Add(NewElementCheckRoutine(this[(int)e.Index]));
+						_ControlArchive.Insert((int)e.Index, NewElementCheckRoutine(this[(int)e.Index]));
 					}
 					break;
 
 				case CollectionChange.ItemChanged:
 					{
-						// Reassign the item in the control archive using the new element check routine
+						// Reassign the item in the control archive using the cleanup routine on the old item
+						// and the new element check routine
+						CleanupRoutine(_ControlArchive[(int)e.Index]);
 						_ControlArchive[(int)e.Index] = NewElementCheckRoutine(this[(int)e.Index]);
 					}
 					break;
@@ -75,12 +77,16 @@ namespace UWPEnhanced.Xaml
 				case CollectionChange.ItemRemoved:
 					{
 						// Remove the old item from the control archive
+						CleanupRoutine(_ControlArchive[(int)e.Index]);
 						_ControlArchive.RemoveAt((int)e.Index);
 					}
 					break;
 
 				case CollectionChange.Reset:
 					{
+						// Cleanup after every item
+						_ControlArchive.ForEach((x) => CleanupRoutine(x));
+
 						// Clear the control archive
 						_ControlArchive.Clear();
 
@@ -131,6 +137,13 @@ namespace UWPEnhanced.Xaml
 
 			return casted;
 		}
+
+		/// <summary>
+		/// Cleanup routine ran on every item that is deleted from this collection. Default version doesn't do anything
+		/// but it can be overriden to provide necessary functionality
+		/// </summary>
+		/// <param name="item"></param>
+		protected virtual void CleanupRoutine(T item) { }
 
 		/// <summary>
 		/// Checks the integrity of this collection (if the underlying collection is equal to <see cref="_ControlArchive"/>)
