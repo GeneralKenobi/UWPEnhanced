@@ -9,11 +9,11 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Interface for triggers used in xaml
 	/// </summary>
-	public interface IVisualTrigger
+	public interface IVisualTrigger : IAttachable
 	{
 		/// <summary>
 		/// Event fired when the trigger is triggered
 		/// </summary>
-		EventHandler Triggered { get; }
+		EventHandler Triggered { get; set; }
 	}
 }
