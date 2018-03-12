@@ -21,7 +21,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:Icon" x:Name="Template">
-
+									
 					<!-- Main container, presents background and border brush -->
 					<Grid x:Name="RootGrid"
 						Background="{TemplateBinding Background}"
@@ -34,7 +34,7 @@
 						<Grid.Resources>
 							<x:Double x:Key="ScaleTo">0.64</x:Double>
 							<Duration x:Key="ScaleDuration">0:0:0.05</Duration>
-							<Duration x:Key="HighlightChangeDuration">0:0:1</Duration>
+							<Duration x:Key="HighlightChangeDuration">0:0:0.1</Duration>
 							<x:Double x:Key="HighlightPresentOpacity">0.7</x:Double>
 							<x:Double x:Key="HighlightHiddenOpacity">0</x:Double>
 						</Grid.Resources>
@@ -135,9 +135,11 @@
 
 						<xaml:VisualAttachments.AttachedVisuals>
 							<xaml:VisualStateNavigations>
-								<xaml:VisualStateNavigation>
-									<xaml:VisualPointerTrigger PointerEvent="PointerPressed"
-										Modifiers="Shift"/>
+								<xaml:VisualStateNavigation State="PointerOver">
+									<xaml:VisualPointerTrigger PointerEvent="PointerEntered"/>
+								</xaml:VisualStateNavigation>
+								<xaml:VisualStateNavigation State="Normal">
+									<xaml:VisualPointerTrigger PointerEvent="PointerExited"/>
 								</xaml:VisualStateNavigation>
 							</xaml:VisualStateNavigations>
 						</xaml:VisualAttachments.AttachedVisuals>
@@ -225,7 +227,7 @@
 
 						</Grid>
 					</Grid>
-
+					
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>

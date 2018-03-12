@@ -125,6 +125,7 @@
     <Compile Include="Xaml\VisualAttachments\VisualAttachments.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\IAttachable.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\VisualAttachment.cs" />
+    <Compile Include="Xaml\VisualTreeHelpers\VisualTreeHelpers.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualPointerTrigger\PointerEventType.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualPointerTrigger\VisualPointerTrigger.cs" />
     <Compile Include="Xaml\VisualTriggers\IVisualTrigger\IVisualTrigger.cs" />

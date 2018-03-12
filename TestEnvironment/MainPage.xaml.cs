@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using UWPEnhanced.Xaml;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
