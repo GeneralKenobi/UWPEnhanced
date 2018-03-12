@@ -58,7 +58,7 @@ namespace UWPEnhanced.Xaml
 		/// to the specified <see cref="DependencyObject"/>.
 		/// </summary>
 		/// <param name="obj"></param>
-		public void Attach(DependencyObject obj)
+		public virtual void Attach(DependencyObject obj)
 		{
 			// Skip if the obj is the same as the stored object
 			if (AttachedTo == obj)
@@ -91,7 +91,7 @@ namespace UWPEnhanced.Xaml
 		/// Detaches this <see cref="IAttachable"/> as well as all contained <see cref="IAttachable"/> <see cref="DependencyObject"/>s
 		/// from the <see cref="DependencyObject"/> they are attached to (if they're attached to begin with)
 		/// </summary>
-		public void Detach()
+		public virtual void Detach()
 		{
 			if (IsAttached)
 			{
@@ -111,37 +111,6 @@ namespace UWPEnhanced.Xaml
 		#region Protected Methods
 
 		/// <summary>
-		/// Handles changes in the main collection
-		/// </summary>
-		/// <param name="s"></param>
-		/// <param name="e"></param>
-		protected override void OnVectorChanged(IObservableVector<DependencyObject> s, IVectorChangedEventArgs e)
-		{
-			switch(e.CollectionChange)
-			{
-				case CollectionChange.ItemChanged:
-					{
-						// Detatch the old item
-						_ControlArchive[(int)e.Index].Detach();
-					} break;
-
-				case CollectionChange.ItemRemoved:
-					{
-						// Detatch the old item
-						_ControlArchive[(int)e.Index].Detach();
-					} break;
-
-				case CollectionChange.Reset:
-					{
-						// Detatch every element
-						_ControlArchive.ForEach((x) => x.Detach());
-					} break;
-			}
-
-			base.OnVectorChanged(s, e);
-		}
-
-		/// <summary>
 		/// Performs checks on new <see cref="DependencyObject"/>s added to the collection and if all are passed, returns
 		/// the object as an IAttachable.
 		/// Throws an exception if: the new object doesn't implement <see cref="IAttachable"/>, if it's already in the collection
@@ -159,7 +128,13 @@ namespace UWPEnhanced.Xaml
 			}
 
 			return attachable;
-		}		
+		}
+
+		/// <summary>
+		/// Detatches removed items
+		/// </summary>
+		/// <param name="item"></param>
+		protected override void CleanupRoutine(T item) => item.Detach();
 
 		#endregion
 	}
