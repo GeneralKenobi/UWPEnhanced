@@ -17,7 +17,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		///  Event fired when the criteria for trigger are met (appropriate pointer event with matching modifiers)
 		/// </summary>
-		public EventHandler Triggered { get; }
+		public EventHandler Triggered { get; set; }
 
 		#endregion
 
@@ -49,15 +49,21 @@ namespace UWPEnhanced.Xaml
 		{
 			if (sender is VisualPointerTrigger trigger)
 			{
-				if (e.OldValue is PointerEventType tOld)
+				try
 				{
+					// If the old value could be casted to enum, unsubscribe from the old event
+					var tOld = (PointerEventType)e.OldValue;
 					trigger.Unsubcribe(tOld);
 				}
+				catch (Exception) { }
 
-				if (e.NewValue is PointerEventType tNew)
+				try
 				{
+					// If the new value could be casted to enum, unsubscribe from the old event
+					var tNew = (PointerEventType)e.NewValue;
 					trigger.Subcribe(tNew);
 				}
+				catch(Exception) { }
 			}
 		}
 
@@ -271,6 +277,10 @@ namespace UWPEnhanced.Xaml
 				Triggered?.Invoke(this, EventArgs.Empty);
 			}
 		}
+
+		#endregion
+
+		#region Public Methods
 
 		/// <summary>
 		/// On top of the standard functionality, it unsubscribes from the old <see cref="UIElement"/> and subscribes to
