@@ -32,10 +32,10 @@
 
 						<!-- Resources - all cosntant values used below are here -->
 						<Grid.Resources>
-							<x:Double x:Key="ScaleTo">0.64</x:Double>
+							<x:Double x:Key="ScaleTo">0.94</x:Double>
 							<Duration x:Key="ScaleDuration">0:0:0.05</Duration>
 							<Duration x:Key="HighlightChangeDuration">0:0:0.1</Duration>
-							<x:Double x:Key="HighlightPresentOpacity">0.7</x:Double>
+							<x:Double x:Key="HighlightPresentOpacity">0.25</x:Double>
 							<x:Double x:Key="HighlightHiddenOpacity">0</x:Double>
 						</Grid.Resources>
 
@@ -45,8 +45,9 @@
 							
 							<VisualStateGroup x:Name="CommonStates">
 								<VisualStateGroup.Transitions>
+
 									<VisualTransition To="PointerOver"
-										GeneratedDuration="0:0:1">
+										GeneratedDuration="0:0:0.1">
 										<Storyboard>
 											<Storyboard>
 												<!-- Change highlight opacity to present opacity -->
@@ -59,7 +60,7 @@
 									</VisualTransition>
 
 									<VisualTransition To="Pressed"
-										GeneratedDuration="0:0:1">
+										GeneratedDuration="0:0:0.1">
 										<Storyboard>
 											<Storyboard>
 												<!-- Change highlight opacity to present opacity -->
@@ -81,7 +82,8 @@
 									</VisualTransition>
 
 								</VisualStateGroup.Transitions>
-								<!-- Normal - pointer is outisde of the font icon -->
+
+								<!-- Normal - pointer is outisde of thefont icon -->
 								<VisualState x:Name="Normal">
 									<Storyboard>
 										<!-- Return the highlight to hidden opacity -->
@@ -94,17 +96,12 @@
 
 								<!-- Pointer is hovering over the icon -->
 								<VisualState x:Name="PointerOver">
-									<VisualState.StateTriggers>
-									
-									</VisualState.StateTriggers>
-
 									<Storyboard>
 										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HighlightRectangle"
 											Storyboard.TargetProperty="(Rectangle.Opacity)">
-											<DiscreteObjectKeyFrame Value="{StaticResource HighlightPresentOpacity}" KeyTime="0:0:1"/>
+											<DiscreteObjectKeyFrame Value="{StaticResource HighlightPresentOpacity}"/>
 										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-									
+									</Storyboard>									
 								</VisualState>
 
 								<!-- Pointer is pressed on the icon -->
@@ -116,15 +113,15 @@
 										<!-- Scale the child elements down to simulate press -->
 										<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridScaleTransform"
 													Storyboard.TargetProperty="(ScaleTransform.ScaleX)">
-											<DiscreteDoubleKeyFrame Value="{StaticResource ScaleTo}" KeyTime="0:0:1"/>
+											<DiscreteDoubleKeyFrame Value="{StaticResource ScaleTo}"/>
 										</DoubleAnimationUsingKeyFrames>
 										<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridScaleTransform"
 													Storyboard.TargetProperty="(ScaleTransform.ScaleY)">
-											<DiscreteDoubleKeyFrame Value="{StaticResource ScaleTo}" KeyTime="0:0:1"/>
+											<DiscreteDoubleKeyFrame Value="{StaticResource ScaleTo}"/>
 										</DoubleAnimationUsingKeyFrames>
 										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HighlightRectangle"
 											Storyboard.TargetProperty="(Rectangle.Opacity)">
-											<DiscreteObjectKeyFrame Value="{StaticResource HighlightPresentOpacity}" KeyTime="0:0:1"/>
+											<DiscreteObjectKeyFrame Value="{StaticResource HighlightPresentOpacity}"/>
 										</ObjectAnimationUsingKeyFrames>
 									</Storyboard>
 								</VisualState>
@@ -133,59 +130,28 @@
 						</VisualStateManager.VisualStateGroups>
 
 
+
 						<xaml:VisualAttachments.AttachedVisuals>
-							<xaml:VisualStateNavigations>
-								<xaml:VisualStateNavigation State="PointerOver">
-									<xaml:VisualPointerTrigger PointerEvent="PointerEntered"/>
-								</xaml:VisualStateNavigation>
-								<xaml:VisualStateNavigation State="Normal">
-									<xaml:VisualPointerTrigger PointerEvent="PointerExited"/>
-								</xaml:VisualStateNavigation>
-							</xaml:VisualStateNavigations>
-						</xaml:VisualAttachments.AttachedVisuals>
-						
-										
-						
 
-					
+							<xaml:VisualStateNavigation State="Normal">
+								<xaml:VisualPointerTrigger PointerEvent="PointerExited"/>
+								<xaml:VisualPointerTrigger PointerEvent="PointerCanceled"/>
+								<xaml:VisualPointerTrigger PointerEvent="PointerCaptureLost"/>
+							</xaml:VisualStateNavigation>
 
-						<!-- Triggers for the control -->
-						<!--<Interactivity:Interaction.Behaviors>
+							<xaml:VisualStateNavigation State="PointerOver">
+								<xaml:VisualPointerTrigger PointerEvent="PointerEntered"/>
+								<xaml:VisualPointerTrigger PointerEvent="PointerReleased"/>
+							</xaml:VisualStateNavigation>
 
-							--><!-- Pointer entered - transition to PointerOver state --><!--
-							<Core:EventTriggerBehavior EventName="PointerEntered">
-								<Core:GoToStateAction StateName="PointerOver"/>
-							</Core:EventTriggerBehavior>
+							<xaml:VisualStateNavigation State="Pressed">
+								<xaml:VisualPointerTrigger PointerEvent="PointerPressed"/>
+							</xaml:VisualStateNavigation>
 
-							--><!-- Pointer Pressed Trigger: Goes to Pressed State --><!--
-							<Core:EventTriggerBehavior EventName="PointerPressed">
-								<Core:GoToStateAction StateName="Pressed"/>
-							</Core:EventTriggerBehavior>
+						</xaml:VisualAttachments.AttachedVisuals>			
+									
 
-							--><!-- Pointer Released Trigger: Returns to PointerOver state and invokes the command --><!--
-							<Core:EventTriggerBehavior EventName="PointerReleased">
-								<Core:GoToStateAction StateName="PointerOver"/>
-								--><!--<Core:InvokeCommandAction CommandParameter="{Binding CommandParameter, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-									Command="{Binding Command, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>--><!--
-							</Core:EventTriggerBehavior>
-
-							--><!-- Pointer Exited Trigger: Goes to Normal state --><!--
-							<Core:EventTriggerBehavior EventName="PointerExited">
-								<Core:GoToStateAction StateName="Normal"/>
-							</Core:EventTriggerBehavior>
-
-							--><!-- Pointer Cancelled Trigger: Goes to Normal state --><!--
-							<Core:EventTriggerBehavior EventName="PointerCanceled">
-								<Core:GoToStateAction StateName="Normal"/>
-							</Core:EventTriggerBehavior>
-
-							--><!-- Pointer Capture Lost Trigger: Goes to Normal state --><!--
-							<Core:EventTriggerBehavior EventName="PointerCaptureLost">
-								<Core:GoToStateAction StateName="Normal"/>
-							</Core:EventTriggerBehavior>
-
-						</Interactivity:Interaction.Behaviors>-->
-						
+											
 						<!-- Serves as highlight -->
 						<Rectangle Name="HighlightRectangle"
 								Fill="{TemplateBinding HighlightBrush}"
