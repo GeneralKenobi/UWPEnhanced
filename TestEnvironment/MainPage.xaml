@@ -6,10 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="using:UWPEnhanced.Controls"
-	xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
-	xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-	xmlns:Animations="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-	xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
+	xmlns:xaml="using:UWPEnhanced.Xaml"
     mc:Ignorable="d">
 
 	<Page.Resources>
@@ -33,6 +30,23 @@
 
 
 	<StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+		<Border Background="Black"
+		Width="100"
+		Height="100">
+
+			<xaml:VisualAttachments.AttachedVisuals>
+
+				<xaml:PointerTriggerCommand PointerEvent="PointerPressed"
+				Command="{x:Bind test, Mode=OneWay}"/>
+				<xaml:DataTriggerCommand Command="{x:Bind test, Mode=OneWay}"
+					Data="{x:Bind d, Mode=OneWay}"
+					CompareTo="5"
+					ComparisonType="Equal"/>
+				
+			</xaml:VisualAttachments.AttachedVisuals>
+
+		</Border>
 
 		<controls:Icon Background="Red"
 			Glyph="&#xE700;" FontSize="60"/>
