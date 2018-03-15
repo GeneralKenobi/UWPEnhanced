@@ -41,7 +41,7 @@
 				Command="{x:Bind test, Mode=OneWay}"/>
 				<xaml:DataTriggerCommand Command="{x:Bind test, Mode=OneWay}"
 					Data="{x:Bind d, Mode=OneWay}"
-					CompareTo="5"
+					CompareTo="{x:Bind dd, Mode=OneWay}"
 					ComparisonType="Equal"/>
 				
 			</xaml:VisualAttachments.AttachedVisuals>

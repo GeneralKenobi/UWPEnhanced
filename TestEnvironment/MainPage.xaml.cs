@@ -26,6 +26,7 @@ namespace TestEnvironment
         }
 
 		public int d { get; set; } = 0;
+		public int dd { get; set; } = 5;
 
 		private async Task task()
 		{

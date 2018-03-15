@@ -16,7 +16,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public DataTriggerCommand()
 		{
-			Triggered += (s, e) => Command.Execute(null);
+			Triggered += (s, e) => Command?.Execute(null);
 		}
 
 		#region Command Dependency Property
