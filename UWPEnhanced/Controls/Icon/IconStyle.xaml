@@ -29,6 +29,7 @@
 						BorderThickness="{TemplateBinding BorderThickness}"						
 						Width="{TemplateBinding Width}"
 						Height="{TemplateBinding Height}">
+						
 
 						<!-- Resources - all cosntant values used below are here -->
 						<Grid.Resources>
