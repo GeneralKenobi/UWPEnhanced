@@ -7,61 +7,69 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="using:UWPEnhanced.Controls"
 	xmlns:xaml="using:UWPEnhanced.Xaml"
-    mc:Ignorable="d">
-
-	<Page.Resources>
-
-		<Storyboard x:Key="sb">
-			<DoubleAnimation 							
-								Storyboard.TargetName="t"
-								Storyboard.TargetProperty="X"
-								From="0"
-								To="200"								
-								Duration="0:0:1">
-				<DoubleAnimation.EasingFunction>
-					<SineEase EasingMode="EaseInOut"/>
-				</DoubleAnimation.EasingFunction>					
-			</DoubleAnimation>
-		</Storyboard>
-
-	</Page.Resources>
+    mc:Ignorable="d"
+	Name="page">
 
 
 
 
-	<StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		Name="target">
 
-		<Border Background="Black"
-		Width="100"
-		Height="100">
+		<!--<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
 
-			<xaml:VisualAttachments.AttachedVisuals>
+				<VisualStateGroup.Transitions>
 
-				<xaml:PointerTriggerCommand PointerEvent="PointerPressed"
-				Command="{x:Bind test, Mode=OneWay}"/>
-				<xaml:DataTriggerCommand Command="{x:Bind test, Mode=OneWay}"
-					Data="{x:Bind d, Mode=OneWay}"
-					CompareTo="{x:Bind dd, Mode=OneWay}"
-					ComparisonType="Equal"/>
-				
-			</xaml:VisualAttachments.AttachedVisuals>
+					<VisualTransition  From="Normal" GeneratedDuration="0:0:2">
+						<Storyboard>
+							<ColorAnimationUsingKeyFrames
+							Storyboard.TargetName="target"
+							Storyboard.TargetProperty="(StackPanel.Background).(Color)">
 
-		</Border>
+								<DiscreteColorKeyFrame Value="Red"/>
+							</ColorAnimationUsingKeyFrames>
+						</Storyboard>
 
-		<controls:Icon Background="Red"
-			Glyph="&#xE700;" FontSize="60"/>
+					</VisualTransition>
+
+					<VisualTransition  To="Normal2" GeneratedDuration="0:0:4">
+						<Storyboard>
+							<ColorAnimationUsingKeyFrames
+							Storyboard.TargetName="target"
+							Storyboard.TargetProperty="(StackPanel.Background).(Color)">
+
+								<DiscreteColorKeyFrame Value="Green"/>								
+							</ColorAnimationUsingKeyFrames>
+						</Storyboard>
+						
+					</VisualTransition>
+						
+				</VisualStateGroup.Transitions>
 
 
+				<VisualState x:Name="Normal"/>
+				<VisualState x:Name="Normal2">
+					<Storyboard>
+						<ColorAnimationUsingKeyFrames
+							Storyboard.TargetName="target"
+							Storyboard.TargetProperty="(StackPanel.Background).(Color)">
 
-		<Rectangle Width="100" Height="100" Fill="Green" Name="r">
-			<Rectangle.RenderTransform>
-				<TranslateTransform X="0" x:Name="t"/>
-			</Rectangle.RenderTransform>
+							<DiscreteColorKeyFrame Value="Blue" KeyTime="0:0:0"/>
+						</ColorAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			
+			
 
-		
-		</Rectangle>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>-->
 
-		<Rectangle Width="100" Height="100" Fill="Blue"/>
+		<controls:Icon BorderThickness="1" BorderBrush="Gray"
+			Width="50" Height="50" FontSize="30"
+			Glyph="&#xE702;"/>
 
+		<controls:Menu>
+		</controls:Menu>
 	</StackPanel>
 </Page>

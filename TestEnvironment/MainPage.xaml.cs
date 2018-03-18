@@ -19,24 +19,16 @@ namespace TestEnvironment
 	public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         public MainPage()
-        {
-			test = new RelayCommand(() => Debugger.Break());
+        {			
 			this.InitializeComponent();
-			task();
+			t();
         }
 
-		public int d { get; set; } = 0;
-		public int dd { get; set; } = 5;
-
-		private async Task task()
+		private async Task t()
 		{
 			await Task.Delay(1000);
-			d = 5;
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("d"));
-			(this.Resources["sb"] as Storyboard)?.Begin();
+			VisualStateManager.GoToState(this, "Normal2", true);
 		}
-
-		public ICommand test;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
