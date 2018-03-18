@@ -20,6 +20,15 @@ namespace UWPEnhanced.Controls
 {
 	public sealed class Icon : Control, INotifyPropertyChanged
 	{
+		#region Private Static Members
+
+		/// <summary>
+		/// Name of the element scaled upon pointer press
+		/// </summary>
+		private static readonly string _ContainerName = "ScaledContainer";
+
+		#endregion
+
 		#region Private Members
 
 		/// <summary>
@@ -62,7 +71,7 @@ namespace UWPEnhanced.Controls
 			await Task.Delay(20);
 
 			// Try to get the Container element
-			DependencyObject obj = GetTemplateChild("Container");
+			DependencyObject obj = GetTemplateChild(_ContainerName);
 
 			// If the operation failed
 			if (obj == null)
@@ -71,14 +80,14 @@ namespace UWPEnhanced.Controls
 				await Task.Delay(1000);
 
 				// Try again
-				obj = GetTemplateChild("Container");
+				obj = GetTemplateChild(_ContainerName);
 
 				// If failed again, throw an exception to notify about that
 				if(obj == null)
 				{
 					throw new Exception("Can't find \"Container\", visual structure may have been violated");	
 				}
-			}			
+			}
 
 			// If operation succeeded try to cast it to a FrameworkElement
 			if(obj is FrameworkElement element)

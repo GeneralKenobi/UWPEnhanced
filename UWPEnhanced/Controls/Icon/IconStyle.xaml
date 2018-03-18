@@ -160,7 +160,8 @@
 								VerticalAlignment="Stretch"/>
 
 						<!-- Container grid which is scaled using the render transform -->
-						<Grid Name="Container"							
+						<!-- The name is used in code behind to determine the scale origin and should not be changed -->
+						<Grid Name="ScaledContainer"							
 							Padding="{TemplateBinding Padding}"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Stretch">
@@ -182,7 +183,8 @@
 								/>
 
 							<!--Font Icon visible on the top-->
-							<FontIcon Visibility="{Binding ShowFontIcon, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+							<FontIcon Name="IconPresenter"
+								Visibility="{Binding ShowFontIcon, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 								Glyph="{TemplateBinding Glyph}"
 								FontFamily="{TemplateBinding FontFamily}"
 								FontSize="{TemplateBinding FontSize}"
