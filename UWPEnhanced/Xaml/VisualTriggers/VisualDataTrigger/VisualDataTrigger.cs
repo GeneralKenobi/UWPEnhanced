@@ -78,73 +78,87 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
-		#region IgnoreNulls Dependency Property
+		#region IgnoreNull Dependency Property
 
 		/// <summary>
-		/// If true it will ignore null values in comparisons even if they match the given comparison, for example:
-		/// if <see cref="Data"/> == null, <see cref="CompareTo"/> == null and <see cref="ComparisonType"/> is
-		/// <see cref="ComparisonType.Equal"/> then the trigger won't fire
+		/// If true it will ignore null <see cref="Data"/> values in comparisons even if they match the given comparison, for example:
+		/// if <see cref="Data"/> == null, <see cref="CompareTo"/> != null and <see cref="ComparisonType"/> is
+		/// <see cref="ComparisonType.NotEqual"/> then the trigger won't fire
 		/// </summary>
-		public bool IgnoreNulls
+		public bool IgnoreNull
 		{
-			get => (bool)GetValue(IgnoreNullsProperty);
-			set => SetValue(IgnoreNullsProperty, value);
+			get => (bool)GetValue(IgnoreNullProperty);
+			set => SetValue(IgnoreNullProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="IgnoreNulls"/>
+		/// Backing store for <see cref="IgnoreNull"/>
 		/// </summary>
-		public static readonly DependencyProperty IgnoreNullsProperty =
-			DependencyProperty.Register(nameof(IgnoreNulls), typeof(bool),
+		public static readonly DependencyProperty IgnoreNullProperty =
+			DependencyProperty.Register(nameof(IgnoreNull), typeof(bool),
 			typeof(VisualDataTrigger), new PropertyMetadata(default(bool)));
 
 		#endregion
 
 		#region Private methods
 
-		//private bool AssertNull()
-		//{
+		/// <summary>
+		/// Checks if the compared value is null, and if so, carries out the comparison including <see cref="IgnoreNull"/>
+		/// Returns true if it determined the result of the comparison and taken appropriate action, false otherwise.
+		/// </summary>
+		/// <returns></returns>
+		private bool AssertNull()
+		{
+			if(Data == null)
+			{
+				if(!IgnoreNull && ((ComparisonType == ComparisonType.Equal && CompareTo==null) ||
+					(ComparisonType == ComparisonType.NotEqual && CompareTo != null)))
+				{
+					Triggered?.Invoke(this, EventArgs.Empty);
+				}
 
-		//}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
+		/// <summary>
+		/// Compares <see cref="Data"/> and <see cref="CompareTo"/> and triggers if they match the <see cref="ComparisonType"/>
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="e"></param>
 		private static void CompareValues(DependencyObject s, DependencyPropertyChangedEventArgs e)
 		{
 			if(s is VisualDataTrigger trigger)
 			{
+				// Comparison for nulls
+				if(trigger.AssertNull())
+				{
+					return;
+				}
+
 				switch (trigger.ComparisonType)
 				{
+					// Equality is a standard comparison
 					case ComparisonType.Equal:
 						{
-							if (trigger.Data == null)
-							{
-								if (trigger.CompareTo == null)
-								{
-									trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
-								}
-							}
-							else if (trigger.Data.Equals(trigger.CompareTo))
+							if(trigger.Data.Equals(trigger.CompareTo))
 							{
 								trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
 							}
-
-
 						}
 						break;
 
+					// Inequality is a standard comparison
 					case ComparisonType.NotEqual:
 						{
-							if (trigger.Data == null)
-							{
-								if (trigger.CompareTo != null)
-								{
-									trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
-								}
-							}
-							else if (!trigger.Data.Equals(trigger.CompareTo))
+							if (!trigger.Data.Equals(trigger.CompareTo))
 							{
 								trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
 							}
-
 						}
 						break;
 
@@ -153,11 +167,7 @@ namespace UWPEnhanced.Xaml
 					case ComparisonType.Smaller:
 					case ComparisonType.SmallerOrEqual:
 						{
-							if(trigger.Data==null || trigger.CompareTo==null)
-							{
-								return;
-							}
-
+							// Order comparisons require IComparable type
 							if (trigger.Data is IComparable comparableData && trigger.CompareTo is IComparable comparableTo)
 							{
 								switch (trigger.ComparisonType)
@@ -199,7 +209,7 @@ namespace UWPEnhanced.Xaml
 										break;
 								}
 							}
-							else
+							else if(trigger.CompareTo!=null)
 							{
 								throw new ArgumentException(nameof(Data) + " and " + nameof(CompareTo) + " should be " +
 									nameof(IComparable));
