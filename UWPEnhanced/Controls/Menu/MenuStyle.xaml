@@ -12,6 +12,11 @@
 
 					<Grid HorizontalAlignment="Left">
 
+						<Grid.Resources>
+				
+							
+						</Grid.Resources>
+
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*"/>
 							<RowDefinition Height="*"/>
@@ -34,7 +39,7 @@
 									<VisualState.Setters>
 										<Setter Target="IconsPresenter.Grid.Column" Value="0"/>
 										<Setter Target="ContentPresenter.Grid.Column" Value="1"/>
-										<Setter Target="ContentPresenter.Width" Value="100"/>
+										
 									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="LeftClosed">
@@ -42,6 +47,8 @@
 										<Setter Target="IconsPresenter.Grid.Column" Value="0"/>
 										<Setter Target="ContentPresenter.Grid.Column" Value="1"/>
 										<Setter Target="ContentPresenter.Width" Value="0"/>
+										<Setter Target="IconsPresenter.Width" Value="10"/>
+										<Setter Target="ContentPresenter.Width" Value="10"/>
 									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="TopOpen">
@@ -71,11 +78,11 @@
 						</VisualStateManager.VisualStateGroups>
 
 
-						<Grid Name="IconsPresenter" Background="Red" Width="200" Height="200">
+						<Grid Name="IconsPresenter" Background="Red" Width="{TemplateBinding IconsPanelLength}" Height="200">
 						
 						</Grid>
 
-						<Grid Name="ContentPresenter" Background="Green" Width="200" Height="200">
+						<Grid Name="ContentPresenter" Background="Green" Width="{TemplateBinding ContentLength}" Height="200">
 						
 						</Grid>
 

@@ -69,7 +69,9 @@
 			Width="50" Height="50" FontSize="30"
 			Glyph="&#xE702;"/>
 
-		<controls:Menu>
+		<controls:Menu
+		IconsPanelLength="100"
+		ContentLength="100">
 		</controls:Menu>
 	</StackPanel>
 </Page>

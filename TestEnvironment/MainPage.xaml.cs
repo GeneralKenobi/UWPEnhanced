@@ -20,15 +20,8 @@ namespace TestEnvironment
     {
         public MainPage()
         {			
-			this.InitializeComponent();
-			t();
+			this.InitializeComponent();		
         }
-
-		private async Task t()
-		{
-			await Task.Delay(1000);
-			VisualStateManager.GoToState(this, "Normal2", true);
-		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
