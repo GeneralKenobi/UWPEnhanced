@@ -120,6 +120,7 @@
       <DependentUpon>MenuSamplePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueConverters\EnumToIntConverter.cs" />
     <Compile Include="Xaml\DependencyObjectCollectionOfT\DependencyObjectCollectionOfT.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachmentCollection\VisualAttachmentCollection.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachments.cs" />

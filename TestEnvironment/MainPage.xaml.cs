@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UWPEnhanced.Controls;
 using UWPEnhanced.Xaml;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -20,8 +21,17 @@ namespace TestEnvironment
     {
         public MainPage()
         {			
-			this.InitializeComponent();		
-        }
+			this.InitializeComponent();
+			MenuLeft = new RelayCommand(() => menu.Position = MenuPosition.Left);
+			MenuTop = new RelayCommand(() => menu.Position = MenuPosition.Top);
+			MenuRight = new RelayCommand(() => menu.Position = MenuPosition.Right);
+			MenuBottom = new RelayCommand(() => menu.Position = MenuPosition.Bottom);
+		}
+
+		public ICommand MenuLeft { get; set; }
+		public ICommand MenuTop { get; set; }
+		public ICommand MenuRight { get; set; }
+		public ICommand MenuBottom { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}

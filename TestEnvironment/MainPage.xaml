@@ -13,8 +13,10 @@
 
 
 
-	<StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-		Name="target">
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		Name="target"
+		VerticalAlignment="Stretch"
+		>
 
 		<!--<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
@@ -67,11 +69,31 @@
 
 		<controls:Icon BorderThickness="1" BorderBrush="Gray"
 			Width="50" Height="50" FontSize="30"
-			Glyph="&#xE702;"/>
-
-		<controls:Menu
+			Command="{x:Bind MenuLeft, Mode=OneWay}"
+			Glyph="&#xE72B;"
+			Margin="-99 0 0 0"/>
+		<controls:Icon BorderThickness="1" BorderBrush="Gray"
+			Width="50" Height="50" FontSize="30"
+			Command="{x:Bind MenuTop, Mode=OneWay}"
+			Glyph="&#xE74A;"
+			Margin="0 -99 0 0"/>
+		<controls:Icon BorderThickness="1" BorderBrush="Gray"
+			Width="50" Height="50" FontSize="30"
+			Command="{x:Bind MenuRight, Mode=OneWay}"
+			Glyph="&#xE72A;"
+			Margin="0 0 -98 0"/>
+		<controls:Icon BorderThickness="1" BorderBrush="Gray"
+			Width="50" Height="50" FontSize="30"
+			Command="{x:Bind MenuBottom, Mode=OneWay}"
+			Glyph="&#xE74B;"
+			Margin="0 0 0 -98"/>
+		<controls:Icon BorderThickness="1" BorderBrush="Gray"
+			Width="50" Height="50" FontSize="30"
+			Command="{x:Bind MenuBottom, Mode=OneWay}"
+			Glyph="&#xE8BB;"/>
+		<controls:Menu Name="menu"
 		IconsPanelLength="100"
 		ContentLength="100">
 		</controls:Menu>
-	</StackPanel>
+	</Grid>
 </Page>
