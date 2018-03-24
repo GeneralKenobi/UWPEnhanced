@@ -38,7 +38,7 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
-		#region EqualTo Dependency Property
+		#region CompareTo Dependency Property
 
 		/// <summary>
 		/// Value to compare the data to
