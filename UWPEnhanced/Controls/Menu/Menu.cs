@@ -30,12 +30,9 @@ namespace UWPEnhanced.Controls
 
 		private async Task t()
 		{
-			//await Task.Delay(1000);
-			VisualStateManager.GoToState(this, "LeftOpen", false);
-			await Task.Delay(3000);
-			VisualStateManager.GoToState(this, "LeftClosed", false);
-			await Task.Delay(3000);
-			VisualStateManager.GoToState(this, "LeftOpen", false);
+			await Task.Delay(1000);
+			VisualStateManager.GoToState(this, "TopOpen", false);
+			VisualStateManager.GoToState(this, "TopOpen", true);
 		}
 
 		#endregion
@@ -43,23 +40,24 @@ namespace UWPEnhanced.Controls
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		#region MenuPositionProperty Dependency Property
+		#region Position Dependency Property
 
 		/// <summary>
 		/// Position of the menu
 		/// </summary>
-		public MenuPosition MenuPositionProperty
+		public MenuPosition Position
 		{
-			get => (MenuPosition)GetValue(MenuPositionPropertyProperty);
-			set => SetValue(MenuPositionPropertyProperty, value);
+			get => (MenuPosition)GetValue(PositionProperty);
+			set => SetValue(PositionProperty, value);
 		}
 
 		/// <summary>
 		/// Position of the menu
 		/// </summary>
-		public static readonly DependencyProperty MenuPositionPropertyProperty =
-			DependencyProperty.Register(nameof(MenuPositionProperty), typeof(MenuPosition),
-			typeof(Menu), new PropertyMetadata(MenuPosition.Left));
+		public static readonly DependencyProperty PositionProperty =
+			DependencyProperty.Register(nameof(Position), typeof(MenuPosition),
+			typeof(Menu), new PropertyMetadata((int)MenuPosition.Left, new PropertyChangedCallback(
+				(s, e) => (s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs("MenuPosition")))));
 
 		#endregion
 

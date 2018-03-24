@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:xaml="using:UWPEnhanced.Xaml"
+	xmlns:converters="using:UWPEnhanced.ValueConverters"
     xmlns:controls="using:UWPEnhanced.Controls">
 
 
@@ -10,11 +12,11 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:Menu">
 
-					<Grid HorizontalAlignment="Left">
+					<Grid Name="RootGrid">
 
 						<Grid.Resources>
-				
-							
+							<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
+
 						</Grid.Resources>
 
 						<Grid.RowDefinitions>
@@ -30,59 +32,136 @@
 
 
 						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup>
+							<VisualStateGroup x:Name="Common">
 
-								
+								<VisualStateGroup.Transitions>
+									<VisualTransition To="TopOpen" GeneratedDuration="0:0:1">
+										<Storyboard>
+										
+										</Storyboard>
+									</VisualTransition>								
+								</VisualStateGroup.Transitions>
 
 
 								<VisualState x:Name="LeftOpen">
 									<VisualState.Setters>
 										<Setter Target="IconsPresenter.Grid.Column" Value="0"/>
 										<Setter Target="ContentPresenter.Grid.Column" Value="1"/>
-										
+										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
+										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
+										<Setter Target="ContentPresenter.Height" Value="Auto"/>
+										<Setter Target="IconsPresenter.Height" Value="Auto"/>
+										<Setter Target="RootGrid.HorizontalAlignment" Value="Left"/>
+										<Setter Target="RootGrid.VerticalAlignment" Value="Stretch"/>
 									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="LeftClosed">
 									<VisualState.Setters>
 										<Setter Target="IconsPresenter.Grid.Column" Value="0"/>
 										<Setter Target="ContentPresenter.Grid.Column" Value="1"/>
+										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
+										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
+										<Setter Target="ContentPresenter.Height" Value="Auto"/>
 										<Setter Target="ContentPresenter.Width" Value="0"/>
-										<Setter Target="IconsPresenter.Width" Value="10"/>
-										<Setter Target="ContentPresenter.Width" Value="10"/>
+										<Setter Target="IconsPresenter.Height" Value="Auto"/>
 									</VisualState.Setters>
 								</VisualState>
-								<VisualState x:Name="TopOpen">
+								<VisualState x:Name="TopOpen">									
+									<VisualState.Setters>										
+										<Setter Target="IconsPresenter.Grid.ColumnSpan" Value="2"/>
+										<Setter Target="ContentPresenter.Grid.ColumnSpan" Value="2"/>
+										<Setter Target="ContentPresenter.Grid.Row" Value="1"/>
+										<Setter Target="IconsPresenter.Grid.Row" Value="0"/>
+										<Setter Target="ContentPresenter.Width" Value="Auto"/>
+										<Setter Target="IconsPresenter.Width" Value="Auto"/>
+										<Setter Target="RootGrid.HorizontalAlignment" Value="Stretch"/>
+										<Setter Target="RootGrid.VerticalAlignment" Value="Top"/>
+									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="TopClosed">
 								</VisualState>
 								<VisualState x:Name="RightOpen">
+									<VisualState.Setters>
+										<Setter Target="IconsPresenter.Grid.Column" Value="1"/>
+										<Setter Target="ContentPresenter.Grid.Column" Value="0"/>
+										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
+										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
+										<Setter Target="ContentPresenter.Height" Value="Auto"/>
+										<Setter Target="IconsPresenter.Height" Value="Auto"/>
+										<Setter Target="RootGrid.HorizontalAlignment" Value="Right"/>
+										<Setter Target="RootGrid.VerticalAlignment" Value="Stretch"/>
+									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="RightClosed">
 								</VisualState>
 								<VisualState x:Name="BottomOpen">
+									<VisualState.Setters>
+										<Setter Target="IconsPresenter.Grid.ColumnSpan" Value="2"/>
+										<Setter Target="ContentPresenter.Grid.ColumnSpan" Value="2"/>
+										<Setter Target="ContentPresenter.Grid.Row" Value="0"/>
+										<Setter Target="IconsPresenter.Grid.Row" Value="1"/>
+										<Setter Target="ContentPresenter.Width" Value="Auto"/>
+										<Setter Target="IconsPresenter.Width" Value="Auto"/>
+										<Setter Target="RootGrid.HorizontalAlignment" Value="Stretch"/>
+										<Setter Target="RootGrid.VerticalAlignment" Value="Bottom"/>
+									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="BottomClosed">
 								</VisualState>
 
-								<VisualStateGroup.Transitions>
-									<VisualTransition From="LeftOpen" To="LeftClosed">
-									
-									</VisualTransition>
-
-									<VisualTransition From="LeftClosed" To="LeftOpen">
-
-									</VisualTransition>
-								</VisualStateGroup.Transitions>
+								
 
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 
+						<xaml:VisualAttachments.AttachedVisuals>
+							<xaml:VisualStateNavigation State="LeftOpen">
+								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
+									<xaml:VisualDataTrigger.CompareTo>
+										<controls:MenuPosition>Left</controls:MenuPosition>
+									</xaml:VisualDataTrigger.CompareTo>
+								</xaml:VisualDataTrigger>
+							</xaml:VisualStateNavigation>
+							<xaml:VisualStateNavigation State="RightOpen">
+								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
+									<xaml:VisualDataTrigger.CompareTo>
+										<controls:MenuPosition>Right</controls:MenuPosition>
+									</xaml:VisualDataTrigger.CompareTo>
+								</xaml:VisualDataTrigger>
+							</xaml:VisualStateNavigation>
 
-						<Grid Name="IconsPresenter" Background="Red" Width="{TemplateBinding IconsPanelLength}" Height="200">
+							<xaml:VisualStateNavigation State="TopOpen">
+								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
+									<xaml:VisualDataTrigger.CompareTo>
+										<controls:MenuPosition>Top</controls:MenuPosition>
+									</xaml:VisualDataTrigger.CompareTo>
+								</xaml:VisualDataTrigger>
+							</xaml:VisualStateNavigation>
+
+							<xaml:VisualStateNavigation State="BottomOpen">
+								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
+									<xaml:VisualDataTrigger.CompareTo>
+										<controls:MenuPosition>Bottom</controls:MenuPosition>
+									</xaml:VisualDataTrigger.CompareTo>
+								</xaml:VisualDataTrigger>
+							</xaml:VisualStateNavigation>
+
+						</xaml:VisualAttachments.AttachedVisuals>
+
+
+						<Grid Name="IconsPresenter"
+							Background="Red"
+							Width="{TemplateBinding IconsPanelLength}"
+							Height="{TemplateBinding IconsPanelLength}"
+							>
 						
 						</Grid>
 
-						<Grid Name="ContentPresenter" Background="Green" Width="{TemplateBinding ContentLength}" Height="200">
+						<Grid Name="ContentPresenter"
+							Background="Green"
+							Width="{TemplateBinding ContentLength}"
+							Height="{TemplateBinding ContentLength}"
+							>
 						
 						</Grid>
 
