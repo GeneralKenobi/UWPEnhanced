@@ -30,9 +30,9 @@ namespace UWPEnhanced.Controls
 
 		private async Task t()
 		{
-			await Task.Delay(1000);
-			VisualStateManager.GoToState(this, "TopOpen", false);
-			VisualStateManager.GoToState(this, "TopOpen", true);
+			await Task.Delay(100);
+			VisualStateManager.GoToState(this, "LeftOpen", true);
+
 		}
 
 		#endregion

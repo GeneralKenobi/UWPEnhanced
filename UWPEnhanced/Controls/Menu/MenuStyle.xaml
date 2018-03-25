@@ -12,7 +12,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:Menu">
 
-					<Grid Name="RootGrid">
+					<Grid Name="RootGrid" Background="Transparent">
 
 						<Grid.Resources>
 							<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
@@ -32,27 +32,17 @@
 
 
 						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup x:Name="Common">
-
-								<VisualStateGroup.Transitions>
-									<VisualTransition To="TopOpen" GeneratedDuration="0:0:1">
-										<Storyboard>
-										
-										</Storyboard>
-									</VisualTransition>								
-								</VisualStateGroup.Transitions>
-
-
+							<VisualStateGroup>
 								<VisualState x:Name="LeftOpen">
 									<VisualState.Setters>
 										<Setter Target="IconsPresenter.Grid.Column" Value="0"/>
 										<Setter Target="ContentPresenter.Grid.Column" Value="1"/>
 										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
 										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="ContentPresenter.Height" Value="Auto"/>
-										<Setter Target="IconsPresenter.Height" Value="Auto"/>
 										<Setter Target="RootGrid.HorizontalAlignment" Value="Left"/>
 										<Setter Target="RootGrid.VerticalAlignment" Value="Stretch"/>
+										<Setter Target="IconsPresenter.Height" Value="Auto"/>
+										<Setter Target="ContentPresenter.Height" Value="Auto"/>
 									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="LeftClosed">
@@ -61,9 +51,7 @@
 										<Setter Target="ContentPresenter.Grid.Column" Value="1"/>
 										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
 										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="ContentPresenter.Height" Value="Auto"/>
 										<Setter Target="ContentPresenter.Width" Value="0"/>
-										<Setter Target="IconsPresenter.Height" Value="Auto"/>
 									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="TopOpen">									
@@ -72,13 +60,13 @@
 										<Setter Target="ContentPresenter.Grid.ColumnSpan" Value="2"/>
 										<Setter Target="ContentPresenter.Grid.Row" Value="1"/>
 										<Setter Target="IconsPresenter.Grid.Row" Value="0"/>
-										<Setter Target="ContentPresenter.Width" Value="Auto"/>
-										<Setter Target="IconsPresenter.Width" Value="Auto"/>
 										<Setter Target="RootGrid.HorizontalAlignment" Value="Stretch"/>
 										<Setter Target="RootGrid.VerticalAlignment" Value="Top"/>
+										<Setter Target="IconsPresenter.Width" Value="Auto"/>
+										<Setter Target="ContentPresenter.Width" Value="Auto"/>
 									</VisualState.Setters>
 								</VisualState>
-								<VisualState x:Name="TopClosed">
+								<VisualState x:Name="TopClosed">									
 								</VisualState>
 								<VisualState x:Name="RightOpen">
 									<VisualState.Setters>
@@ -86,10 +74,10 @@
 										<Setter Target="ContentPresenter.Grid.Column" Value="0"/>
 										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
 										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="ContentPresenter.Height" Value="Auto"/>
-										<Setter Target="IconsPresenter.Height" Value="Auto"/>
 										<Setter Target="RootGrid.HorizontalAlignment" Value="Right"/>
 										<Setter Target="RootGrid.VerticalAlignment" Value="Stretch"/>
+										<Setter Target="IconsPresenter.Height" Value="Auto"/>
+										<Setter Target="ContentPresenter.Height" Value="Auto"/>
 									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="RightClosed">
@@ -100,10 +88,10 @@
 										<Setter Target="ContentPresenter.Grid.ColumnSpan" Value="2"/>
 										<Setter Target="ContentPresenter.Grid.Row" Value="0"/>
 										<Setter Target="IconsPresenter.Grid.Row" Value="1"/>
-										<Setter Target="ContentPresenter.Width" Value="Auto"/>
-										<Setter Target="IconsPresenter.Width" Value="Auto"/>
 										<Setter Target="RootGrid.HorizontalAlignment" Value="Stretch"/>
 										<Setter Target="RootGrid.VerticalAlignment" Value="Bottom"/>
+										<Setter Target="IconsPresenter.Width" Value="Auto"/>
+										<Setter Target="ContentPresenter.Width" Value="Auto"/>
 									</VisualState.Setters>
 								</VisualState>
 								<VisualState x:Name="BottomClosed">
@@ -114,7 +102,9 @@
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 
+						
 						<xaml:VisualAttachments.AttachedVisuals>
+						
 							<xaml:VisualStateNavigation State="LeftOpen">
 								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
 									<xaml:VisualDataTrigger.CompareTo>
@@ -151,20 +141,22 @@
 
 						<Grid Name="IconsPresenter"
 							Background="Red"
+							BorderBrush="Blue"
+							BorderThickness="2"
 							Width="{TemplateBinding IconsPanelLength}"
-							Height="{TemplateBinding IconsPanelLength}"
-							>
+							Height="{TemplateBinding IconsPanelLength}">
 						
 						</Grid>
 
 						<Grid Name="ContentPresenter"
-							Background="Green"
+							Background="Pink"
 							Width="{TemplateBinding ContentLength}"
 							Height="{TemplateBinding ContentLength}"
+							BorderBrush="Green"
+							BorderThickness="2"
 							>
 						
 						</Grid>
-
 
 
 
