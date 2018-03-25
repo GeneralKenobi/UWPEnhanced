@@ -22,12 +22,16 @@ namespace TestEnvironment
         public MainPage()
         {			
 			this.InitializeComponent();
-			MenuLeft = new RelayCommand(() => menu.Position = MenuPosition.Left);
-			MenuTop = new RelayCommand(() => menu.Position = MenuPosition.Top);
-			MenuRight = new RelayCommand(() => menu.Position = MenuPosition.Right);
-			MenuBottom = new RelayCommand(() => menu.Position = MenuPosition.Bottom);
-		}
 
+			//MenuLeft = new RelayCommand(() => menu.Position = MenuPosition.Left);
+			//MenuTop = new RelayCommand(() => menu.Position = MenuPosition.Top);
+			//MenuRight = new RelayCommand(() => menu.Position = MenuPosition.Right);
+			//MenuBottom = new RelayCommand(() => menu.Position = MenuPosition.Bottom);
+		}
+		private async void t()
+		{
+
+		}
 		public ICommand MenuLeft { get; set; }
 		public ICommand MenuTop { get; set; }
 		public ICommand MenuRight { get; set; }

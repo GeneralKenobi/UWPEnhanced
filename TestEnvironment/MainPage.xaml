@@ -13,59 +13,51 @@
 
 
 
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	<Grid Name="RootGrid" Background="Red" Width="200" Height="200">
+
+
+		<xaml:VisualAttachments.AttachedVisuals>
+			<xaml:VisualManager>
+				<xaml:VisualSetup>
+					<VisualState x:Name="fewafet">
+						<VisualState.Setters>
+							<Setter Target="RootGrid.Width" Value="100"/>
+						</VisualState.Setters>
+					</VisualState>
+					<VisualState x:Name="test">
+						<VisualState.Setters>
+							<Setter Target="RootGrid.Height" Value="100"/>
+						</VisualState.Setters>
+					</VisualState>
+				</xaml:VisualSetup>
+			</xaml:VisualManager>
+		
+		
+		</xaml:VisualAttachments.AttachedVisuals>
+	</Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 		Name="target"
 		VerticalAlignment="Stretch"
 		>
 
-		<!--<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup>
-
-				<VisualStateGroup.Transitions>
-
-					<VisualTransition  From="Normal" GeneratedDuration="0:0:2">
-						<Storyboard>
-							<ColorAnimationUsingKeyFrames
-							Storyboard.TargetName="target"
-							Storyboard.TargetProperty="(StackPanel.Background).(Color)">
-
-								<DiscreteColorKeyFrame Value="Red"/>
-							</ColorAnimationUsingKeyFrames>
-						</Storyboard>
-
-					</VisualTransition>
-
-					<VisualTransition  To="Normal2" GeneratedDuration="0:0:4">
-						<Storyboard>
-							<ColorAnimationUsingKeyFrames
-							Storyboard.TargetName="target"
-							Storyboard.TargetProperty="(StackPanel.Background).(Color)">
-
-								<DiscreteColorKeyFrame Value="Green"/>								
-							</ColorAnimationUsingKeyFrames>
-						</Storyboard>
-						
-					</VisualTransition>
-						
-				</VisualStateGroup.Transitions>
-
-
-				<VisualState x:Name="Normal"/>
-				<VisualState x:Name="Normal2">
-					<Storyboard>
-						<ColorAnimationUsingKeyFrames
-							Storyboard.TargetName="target"
-							Storyboard.TargetProperty="(StackPanel.Background).(Color)">
-
-							<DiscreteColorKeyFrame Value="Blue" KeyTime="0:0:0"/>
-						</ColorAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-			
-			
-
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>-->
+		
 
 		<controls:Icon BorderThickness="1" BorderBrush="Gray"
 			Width="50" Height="50" FontSize="30"
@@ -95,5 +87,6 @@
 		IconsPanelLength="100"
 		ContentLength="100">
 		</controls:Menu>
-	</Grid>
+	</Grid>-->
+
 </Page>
