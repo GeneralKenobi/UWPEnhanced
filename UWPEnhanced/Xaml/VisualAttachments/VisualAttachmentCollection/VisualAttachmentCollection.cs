@@ -14,7 +14,7 @@ namespace UWPEnhanced.Xaml
 	/// </summary>
 	/// <typeparam name="T">Type of the items in the collection. It should derive from <see cref="IAttachable"/>
 	/// and, in order to ensure proper functioning, from <see cref="DependencyObject"/></typeparam>
-	public class VisualAttachmentCollection<T> : DependencyObjectCollectionOfT<T>, IAttachable
+	public class VisualAttachmentCollection<T> : AttachableDependencyCollectionOfT<T>
 		where T : class, IAttachable
 	{
 		#region Constructor
@@ -24,61 +24,23 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="LockAttachedTo">If true, attaching to a new <see cref="DependencyObject"/> will be possible
 		/// only if the <see cref="AttachedTo"/> is currently null</param>
-		public VisualAttachmentCollection(bool lockAttachedTo = true)
-		{
-			LockAttachedTo = lockAttachedTo;
-		}
-
-		#endregion
-		
-		#region Public Properties
-
-		/// <summary>
-		/// If true, attaching to a new <see cref="DependencyObject"/> will be possible
-		/// only if the <see cref="AttachedTo"/> is currently null
-		/// </summary>
-		public bool LockAttachedTo { get; private set; } = true;
+		public VisualAttachmentCollection(bool allowDuplicates = false, bool lockAttachedTo = true)
+			: base(allowDuplicates, lockAttachedTo)	{ }
 
 		#endregion
 		
 		#region IAttachable implementation
-
-		/// <summary>
-		/// Getter to the <see cref="DependencyObject"/> the <see cref="IAttachable"/> is attached to
-		/// </summary>
-		public DependencyObject AttachedTo { get; private set; }
-
-		/// <summary>
-		/// True if this <see cref="IAttachable"/> is attached
-		/// </summary>
-		public bool IsAttached => AttachedTo != null;
-
+				
 		/// <summary>
 		/// Attaches this <see cref="IAttachable"/> as well as all contained <see cref="IAttachable"/> <see cref="DependencyObject"/>s
 		/// to the specified <see cref="DependencyObject"/>.
 		/// </summary>
 		/// <param name="obj"></param>
-		public virtual void Attach(DependencyObject obj)
+		public override void Attach(DependencyObject obj)
 		{
-			// Skip if the obj is the same as the stored object
-			if (AttachedTo == obj)
-			{
-				return;
-			}
-
-			// Check if this VisualAttachment cna be reattached and if it's already attached
-			if (LockAttachedTo && IsAttached)
-			{
-				throw new InvalidOperationException("This " + nameof(VisualAttachmentCollection<T>) + " can be attached only if it's not attached; " +
-					"Current settings prevent it from being reattached");
-			}
-
-			// Debug information for null obj
-			Debug.Assert(obj != null, "Can't attach self to a null object");
-
-			// Assign the obj to AttachedTo; If obj == null, throw ArgumentException instead
-			AttachedTo = obj ?? throw new ArgumentNullException(nameof(obj));
-
+			// Attach self using the base class implementation
+			base.Attach(obj);
+			
 			// For each DependencyObject
 			foreach(DependencyObject containedObject in this)
 			{
@@ -91,7 +53,7 @@ namespace UWPEnhanced.Xaml
 		/// Detaches this <see cref="IAttachable"/> as well as all contained <see cref="IAttachable"/> <see cref="DependencyObject"/>s
 		/// from the <see cref="DependencyObject"/> they are attached to (if they're attached to begin with)
 		/// </summary>
-		public virtual void Detach()
+		public override void Detach()
 		{
 			if (IsAttached)
 			{
@@ -101,9 +63,10 @@ namespace UWPEnhanced.Xaml
 					// If it implements IAttachable, attach it to the obj
 					(containedObject as IAttachable)?.Detach();
 				}
-
-				AttachedTo = null;
 			}
+
+			// Detatch self using the base implementation
+			base.Detach();
 		}
 
 		#endregion
