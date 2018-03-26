@@ -41,7 +41,6 @@ namespace UWPEnhanced.Xaml
 
 		/// <summary>
 		/// Getter to the <see cref="DependencyObject"/> the <see cref="IAttachable"/> is attached to.
-		/// Set is exposed privately
 		/// </summary>
 		public DependencyObject AttachedTo { get; private set; }
 
@@ -72,7 +71,7 @@ namespace UWPEnhanced.Xaml
 			// Debug information for null obj
 			Debug.Assert(obj != null, "Can't attach self to a null object");
 
-			// Assign the obj to AttachedTo; If obj == null, throw ArgumentException instead
+			// Assign the obj to AttachedTo; If obj == null, throw ArgumentNullException instead
 			AttachedTo = obj ?? throw new ArgumentNullException(nameof(obj));
 		}
 
