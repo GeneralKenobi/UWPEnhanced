@@ -16,14 +16,42 @@
 	<Grid Name="RootGrid" Background="Red" Width="200" Height="200">
 
 
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="g1">
+				<VisualState x:Name="State1"/>
+				<VisualState x:Name="State2">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+						Storyboard.TargetProperty="(Grid.Width)">
+							<DiscreteObjectKeyFrame Value="100" KeyTime="0"/>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			
+			
+				<VisualState x:Name="State3"/>
+				<VisualState x:Name="State4">
+					<Storyboard>
+					<ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+						Storyboard.TargetProperty="(Grid.Height)">
+						<DiscreteObjectKeyFrame Value="100" KeyTime="0"/>
+					</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		
+		</VisualStateManager.VisualStateGroups>
+
 		<xaml:VisualManager.VisualSetups>
+			<xaml:VisualSetupGroup >
 			
+			</xaml:VisualSetupGroup>
+
+			
+		
 		</xaml:VisualManager.VisualSetups>
-
-		<xaml:VisualAttachments.AttachedVisuals>
-
-			
-		</xaml:VisualAttachments.AttachedVisuals>
+		
 		
 	</Grid>
 

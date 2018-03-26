@@ -22,6 +22,7 @@ namespace TestEnvironment
         public MainPage()
         {			
 			this.InitializeComponent();
+			t();
 			//MenuLeft = new RelayCommand(() => menu.Position = MenuPosition.Left);
 			//MenuTop = new RelayCommand(() => menu.Position = MenuPosition.Top);
 			//MenuRight = new RelayCommand(() => menu.Position = MenuPosition.Right);
@@ -29,7 +30,14 @@ namespace TestEnvironment
 		}
 		private async void t()
 		{
-
+			await Task.Delay(1000);
+			VisualStateManager.GoToState(this, "State2", true);
+			await Task.Delay(1000);
+			VisualStateManager.GoToState(this, "State1", true);
+			await Task.Delay(1000);
+			VisualStateManager.GoToState(this, "State2", true);
+			await Task.Delay(1000);
+			VisualStateManager.GoToState(this, "State4", true);
 		}
 		public ICommand MenuLeft { get; set; }
 		public ICommand MenuTop { get; set; }
