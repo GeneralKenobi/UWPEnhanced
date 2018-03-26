@@ -127,7 +127,7 @@ namespace UWPEnhanced.Xaml
 		{
 			// Check if the new item implements IAttachable
 			var casted = item as T ?? throw new InvalidOperationException(
-				"This collection stores only " + nameof(T) + " items");
+				"This collection stores only " + typeof(T).ToString() + " items");
 
 			// Check if it's already in the collection
 			if (!_AllowDuplicates && _ControlArchive.Contains(casted))
