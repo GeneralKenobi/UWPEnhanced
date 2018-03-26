@@ -22,7 +22,6 @@ namespace TestEnvironment
         public MainPage()
         {			
 			this.InitializeComponent();
-
 			//MenuLeft = new RelayCommand(() => menu.Position = MenuPosition.Left);
 			//MenuTop = new RelayCommand(() => menu.Position = MenuPosition.Top);
 			//MenuRight = new RelayCommand(() => menu.Position = MenuPosition.Right);

@@ -16,24 +16,15 @@
 	<Grid Name="RootGrid" Background="Red" Width="200" Height="200">
 
 
+		<xaml:VisualManager.VisualSetups>
+			
+		</xaml:VisualManager.VisualSetups>
+
 		<xaml:VisualAttachments.AttachedVisuals>
-			<xaml:VisualManager>
-				<xaml:VisualSetup>
-					<VisualState x:Name="fewafet">
-						<VisualState.Setters>
-							<Setter Target="RootGrid.Width" Value="100"/>
-						</VisualState.Setters>
-					</VisualState>
-					<VisualState x:Name="test">
-						<VisualState.Setters>
-							<Setter Target="RootGrid.Height" Value="100"/>
-						</VisualState.Setters>
-					</VisualState>
-				</xaml:VisualSetup>
-			</xaml:VisualManager>
-		
-		
+
+			
 		</xaml:VisualAttachments.AttachedVisuals>
+		
 	</Grid>
 
 
