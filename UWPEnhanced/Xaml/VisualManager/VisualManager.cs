@@ -23,12 +23,19 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
+		#region Private Static Members
+
+		private static readonly Dictionary<FrameworkElement, VisualSetupContainer> _RegisteredVisualSetups =
+			new Dictionary<FrameworkElement, VisualSetupContainer>();
+
+		#endregion
+
 		#region AttachedVisuals
 
 		/// <summary>
 		/// Getter for <see cref="VisualSetupsProperty"/>
 		/// </summary>
-		public static VisualAttachmentCollection<VisualSetup> GetAttachedVisuals(DependencyObject obj)
+		public static VisualAttachmentCollection<VisualSetup> GetVisualSetups(DependencyObject obj)
 		{
 			if (obj == null)
 			{
@@ -62,7 +69,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Setter for <see cref="VisualSetupsProperty"/>
 		/// </summary>
-		public static void SetAttachedVisuals(DependencyObject obj, VisualAttachmentCollection<VisualSetup> value)
+		public static void SetVisualSetups(DependencyObject obj, VisualAttachmentCollection<VisualSetup> value)
 		{
 			if (obj == null)
 			{
@@ -77,14 +84,14 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty VisualSetupsProperty =
 			DependencyProperty.RegisterAttached("VisualSetups", typeof(VisualAttachmentCollection<VisualSetup>),
-			 typeof(VisualAttachments), new PropertyMetadata(null, new PropertyChangedCallback(AttachedVisualsChanged)));
+			 typeof(VisualManager), new PropertyMetadata(null, new PropertyChangedCallback(VisualSetupsChanged)));
 
 		/// <summary>
 		/// Handles changes in <see cref="VisualSetupsProperty"/>
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private static void AttachedVisualsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+		private static void VisualSetupsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
 		{
 			// Dont' do anything if the value didn't really change
 			if (e.OldValue == e.NewValue)
@@ -120,7 +127,7 @@ namespace UWPEnhanced.Xaml
 			if (sender is DependencyObject obj)
 			{
 				// Attach its visuals
-				GetAttachedVisuals(obj).Attach(obj);
+				GetVisualSetups(obj).Attach(obj);
 			}
 		}
 
@@ -135,7 +142,7 @@ namespace UWPEnhanced.Xaml
 			if (sender is DependencyObject obj)
 			{
 				// Attach its visuals
-				GetAttachedVisuals(obj).Detach();
+				GetVisualSetups(obj).Detach();
 			}
 		}
 

@@ -9,20 +9,22 @@ using Windows.UI.Xaml.Controls;
 namespace UWPEnhanced.Xaml
 {
 	
-    public class VisualSetup : DependencyObjectCollectionOfT<VisualState>, IAttachable
+    public class VisualSetup : AttachableDependencyCollectionOfT<VisualState>
     {
-		public DependencyObject AttachedTo { get; private set; }
-
-		public bool IsAttached => AttachedTo != null;
-
-		public void Attach(DependencyObject obj)
+		/// <summary>
+		/// Before attaching self checks if the object is a <see cref="FrameworkElement"/>
+		/// </summary>
+		/// <param name="obj"></param>
+		public override void Attach(DependencyObject obj)
 		{
-			AttachedTo = obj;			
-		}
-
-		public void Detach()
-		{
-			//throw new NotImplementedException();
+			if (obj is FrameworkElement)
+			{
+				base.Attach(obj);
+			}
+			else
+			{
+				throw new ArgumentException("VisualSetups can only be added to " + nameof(FrameworkElement));
+			}
 		}
 
 		protected override VisualState NewElementCheckRoutine(DependencyObject item)
