@@ -22,7 +22,7 @@ namespace TestEnvironment
         public MainPage()
         {			
 			this.InitializeComponent();
-			t();
+			t2();
 			//MenuLeft = new RelayCommand(() => menu.Position = MenuPosition.Left);
 			//MenuTop = new RelayCommand(() => menu.Position = MenuPosition.Top);
 			//MenuRight = new RelayCommand(() => menu.Position = MenuPosition.Right);
@@ -42,6 +42,17 @@ namespace TestEnvironment
 			var b = a.Count;
 			a.Add(new VisualStateGroup());
 			a[0].States.Add(new VisualState());
+		}
+
+		private async void t2()
+		{
+			await Task.Delay(2000);
+
+			TargetPropertyPath path = new TargetPropertyPath(WidthProperty);
+			path.Target = RootGrid;
+			path.Path = new PropertyPath("Width");
+			
+			path.Target.GetType().GetProperty(path.Path.Path).SetValue(path.Target, 100);
 		}
 		public ICommand MenuLeft { get; set; }
 		public ICommand MenuTop { get; set; }

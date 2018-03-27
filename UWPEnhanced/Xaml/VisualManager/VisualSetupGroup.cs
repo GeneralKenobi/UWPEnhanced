@@ -15,7 +15,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// The group used by this instance to store its visual state setups
 		/// </summary>
-		private VisualStateGroup _AssociatedVisualStateGroup = null;
+		private readonly VisualStateGroup _AssociatedVisualStateGroup = new VisualStateGroup();
 
 		/// <summary>
 		/// Before attaching checks if the <paramref name="obj"/> is a <see cref="FrameworkElement"/>, then adds the visual
@@ -27,30 +27,32 @@ namespace UWPEnhanced.Xaml
 			if (obj is FrameworkElement element)
 			{
 				base.Attach(obj);
-
-				if (_AssociatedVisualStateGroup == null)
-				{
-					// Create a new group dedicated for the VisualStateManager
-					_AssociatedVisualStateGroup = new VisualStateGroup();
-				}
+							
 				// Add the items
 				foreach(var item in this)
 				{
 					if(item is VisualSetup setup)
 					{
-						_AssociatedVisualStateGroup.States.Add(setup.State);
+						var copy = new VisualState();
+
+						foreach (var setter in setup.State.Setters)
+						{
+							copy.Setters.Add(setter);
+						}
+
+						_AssociatedVisualStateGroup.States.Add(copy);
 					}
 				}
 
 				// Add the group to the element
-				VisualStateManager.GetVisualStateGroups(element).Insert(0, _AssociatedVisualStateGroup);
+				VisualStateManager.GetVisualStateGroups(element).Add(_AssociatedVisualStateGroup);
 			}
 			else
 			{
 				throw new ArgumentException("Visual states can be added only to " + nameof(FrameworkElement) + "s");
 			}
 		}
-
+		TargetPropertyPath parh;
 		/// <summary>
 		/// Detatches the group and removes the group from the <see cref="_AssociatedVisualStateGroup"/>
 		/// </summary>

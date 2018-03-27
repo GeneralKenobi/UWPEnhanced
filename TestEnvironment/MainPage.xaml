@@ -43,14 +43,24 @@
 		
 		</VisualStateManager.VisualStateGroups>-->
 
-		<xaml:VisualManager.VisualSetups>
-			<xaml:VisualSetupGroup Name="testname">
-			
-			</xaml:VisualSetupGroup>
 
+		<!--<xaml:VisualManager.VisualSetups>
+			<xaml:VisualSetupGroup>
+				<xaml:VisualSetup>
+					<xaml:VisualSetup.State>
+						<VisualState>
+							<Storyboard>
+								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+									Storyboard.TargetProperty="(Grid.Width)">
+									<DiscreteObjectKeyFrame Value="100" KeyTime="0"/>
+								</ObjectAnimationUsingKeyFrames>
+							</Storyboard>
+						</VisualState>
+					</xaml:VisualSetup.State>
+				</xaml:VisualSetup>
+			</xaml:VisualSetupGroup>
 			
-		
-		</xaml:VisualManager.VisualSetups>
+		</xaml:VisualManager.VisualSetups>-->
 		
 		
 	</Grid>
