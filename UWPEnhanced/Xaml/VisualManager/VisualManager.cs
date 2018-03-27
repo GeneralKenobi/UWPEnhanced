@@ -35,7 +35,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Getter for <see cref="VisualSetupsProperty"/>
 		/// </summary>
-		public VisualAttachmentCollection<VisualSetupGroup> GetVisualSetups(DependencyObject obj)
+		public static VisualAttachmentCollection<VisualSetupGroup> GetVisualSetups(DependencyObject obj)
 		{
 			if (obj == null)
 			{
@@ -49,8 +49,6 @@ namespace UWPEnhanced.Xaml
 			{
 				// Create a new instance
 				collection = new VisualAttachmentCollection<VisualSetupGroup>();
-
-				//collection.
 
 				// And set it for the object
 				obj.SetValue(VisualSetupsProperty, collection);

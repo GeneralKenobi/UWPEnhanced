@@ -9,14 +9,22 @@ using Windows.UI.Xaml.Controls;
 namespace UWPEnhanced.Xaml
 {
 	
-    public class VisualSetup : DependencyObjectCollectionOfT<VisualState>
+    public class VisualSetup : DependencyObject
     {
-		protected override VisualState NewElementCheckRoutine(DependencyObject item)
+
+
+		public VisualState State
 		{
-			var a = base.NewElementCheckRoutine(item);
-			t(a);
-			return a;
+			get => (VisualState)GetValue(VisualStateProperty);
+			set => SetValue(VisualStateProperty, value);
 		}
+
+		// Using a DependencyProperty as the backing store for VisualState.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty VisualStateProperty =
+			DependencyProperty.Register(nameof(State), typeof(VisualState), typeof(VisualSetup), new PropertyMetadata(null));
+
+
+
 
 		private async void t(VisualState state)
 		{
