@@ -38,6 +38,10 @@ namespace TestEnvironment
 			VisualStateManager.GoToState(this, "State2", true);
 			await Task.Delay(1000);
 			VisualStateManager.GoToState(this, "State4", true);
+			var a = VisualStateManager.GetVisualStateGroups(this);
+			var b = a.Count;
+			a.Add(new VisualStateGroup());
+			a[0].States.Add(new VisualState());
 		}
 		public ICommand MenuLeft { get; set; }
 		public ICommand MenuTop { get; set; }

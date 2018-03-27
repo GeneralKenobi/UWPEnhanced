@@ -17,7 +17,7 @@
 
 
 
-		<VisualStateManager.VisualStateGroups>
+		<!--<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="g1">
 				<VisualState x:Name="State1"/>
 				<VisualState x:Name="State2">
@@ -41,10 +41,10 @@
 				</VisualState>
 			</VisualStateGroup>
 		
-		</VisualStateManager.VisualStateGroups>
+		</VisualStateManager.VisualStateGroups>-->
 
 		<xaml:VisualManager.VisualSetups>
-			<xaml:VisualSetupGroup >
+			<xaml:VisualSetupGroup Name="testname">
 			
 			</xaml:VisualSetupGroup>
 
