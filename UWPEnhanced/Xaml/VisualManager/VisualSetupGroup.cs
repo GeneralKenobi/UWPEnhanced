@@ -13,11 +13,6 @@ namespace UWPEnhanced.Xaml
 	public class VisualSetupGroup : AttachableDependencyCollectionOfT<VisualSetup>
 	{
 		/// <summary>
-		/// The group used by this instance to store its visual state setups
-		/// </summary>
-		private readonly VisualStateGroup _AssociatedVisualStateGroup = new VisualStateGroup();
-
-		/// <summary>
 		/// Before attaching checks if the <paramref name="obj"/> is a <see cref="FrameworkElement"/>, then adds the visual
 		/// group to the element's visual groups.
 		/// </summary>
@@ -35,17 +30,11 @@ namespace UWPEnhanced.Xaml
 					{
 						var copy = new VisualState();
 
-						foreach (var setter in setup.State.Setters)
-						{
-							copy.Setters.Add(setter);
-						}
+						
 
-						_AssociatedVisualStateGroup.States.Add(copy);
+					
 					}
-				}
-
-				// Add the group to the element
-				VisualStateManager.GetVisualStateGroups(element).Add(_AssociatedVisualStateGroup);
+				}		
 			}
 			else
 			{
@@ -58,7 +47,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public override void Detach()
 		{
-			VisualStateManager.GetVisualStateGroups(AttachedTo as FrameworkElement).Remove(_AssociatedVisualStateGroup);
+			
 
 			base.Detach();
 		}
@@ -72,8 +61,6 @@ namespace UWPEnhanced.Xaml
 		{
 			var checkedItem = base.NewElementCheckRoutine(item);
 
-			_AssociatedVisualStateGroup.States.Add(checkedItem.State);
-
 			return checkedItem;
 		}
 		
@@ -84,8 +71,6 @@ namespace UWPEnhanced.Xaml
 		protected override void CleanupRoutine(VisualSetup item)
 		{
 			base.CleanupRoutine(item);
-
-			_AssociatedVisualStateGroup.States.Remove(item.State);
 		}
 	}
 }
