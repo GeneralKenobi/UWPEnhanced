@@ -128,7 +128,10 @@
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\IAttachable.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\VisualAttachment.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\VisualAttachmentOfT.cs" />
+    <Compile Include="Xaml\VisualManager\IVisualSetter.cs" />
+    <Compile Include="Xaml\VisualManager\SetterCollection.cs" />
     <Compile Include="Xaml\VisualManager\VisualManager.cs" />
+    <Compile Include="Xaml\VisualManager\VisualSetter.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetup.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetupGroup.cs" />
     <Compile Include="Xaml\VisualTreeHelpers\VisualTreeHelpers.cs" />

@@ -14,8 +14,18 @@
 
 
 	<Grid Name="RootGrid" Background="Red" Width="200" Height="200">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
 
+		<Grid.Resources>
+			<Style TargetType="Grid">
+				
+			</Style>
+		</Grid.Resources>
 
+		<Border Grid.Row="0" Name="rec" Background="Blue" Width="50" Height="50"/>
 
 		<!--<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="g1">
@@ -43,6 +53,15 @@
 		
 		</VisualStateManager.VisualStateGroups>-->
 
+		
+		<xaml:VisualAttachments.AttachedVisuals>
+			<xaml:VisualSetter x:Name="setter" Property="Width" Value="100" Target="{x:Bind rec}"
+			test="{Binding ElementName=rec, Path=Width, Mode=TwoWay}"/>
+			<xaml:VisualSetter x:Name="setter2" Property="(Grid.Row)" Value="1" Target="{x:Bind rec}"
+			test="{Binding ElementName=rec, Path=(Grid.Row), Mode=TwoWay}"/>
+
+
+		</xaml:VisualAttachments.AttachedVisuals>
 
 		<!--<xaml:VisualManager.VisualSetups>
 			<xaml:VisualSetupGroup>
