@@ -1,11 +1,13 @@
 ﻿using System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Markup;
 
 namespace UWPEnhanced.Xaml
 {
 	/// <summary>
 	/// Standard base class implementing <see cref="IVisualSetter"/>, provides casting value to expected type functionality
 	/// </summary>
+	[ContentProperty(Name = nameof(Value))]
 	public abstract class BaseSetter : DependencyObject, IVisualSetter
 	{
 		#region Private Members
