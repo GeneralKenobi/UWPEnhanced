@@ -35,20 +35,20 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Getter for <see cref="VisualSetupsProperty"/>
 		/// </summary>
-		public static VisualAttachmentCollection<VisualSetupGroup> GetVisualSetups(DependencyObject obj)
+		public static DependencyObjectCollectionOfT<VisualSetupGroup> GetVisualSetups(DependencyObject obj)
 		{
 			if (obj == null)
 			{
 				throw new ArgumentNullException(nameof(obj));
 			}
 
-			var collection = (VisualAttachmentCollection<VisualSetupGroup>)obj.GetValue(VisualSetupsProperty);
+			var collection = (DependencyObjectCollectionOfT<VisualSetupGroup>)obj.GetValue(VisualSetupsProperty);
 
 			// If the collection wasn't yet set
 			if (collection == null)
 			{
 				// Create a new instance
-				collection = new VisualAttachmentCollection<VisualSetupGroup>();
+				collection = new DependencyObjectCollectionOfT<VisualSetupGroup>();
 
 				// And set it for the object
 				obj.SetValue(VisualSetupsProperty, collection);
@@ -69,7 +69,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Setter for <see cref="VisualSetupsProperty"/>
 		/// </summary>
-		public static void SetVisualSetups(DependencyObject obj, VisualAttachmentCollection<VisualSetupGroup> value)
+		public static void SetVisualSetups(DependencyObject obj, DependencyObjectCollectionOfT<VisualSetupGroup> value)
 		{
 			if (obj == null)
 			{
@@ -83,7 +83,7 @@ namespace UWPEnhanced.Xaml
 		/// Attached property for attached visuals
 		/// </summary>
 		public static readonly DependencyProperty VisualSetupsProperty =
-			DependencyProperty.RegisterAttached("VisualSetups", typeof(VisualAttachmentCollection<VisualSetupGroup>),
+			DependencyProperty.RegisterAttached("VisualSetups", typeof(DependencyObjectCollectionOfT<VisualSetupGroup>),
 			 typeof(VisualManager), new PropertyMetadata(null, new PropertyChangedCallback(VisualSetupsChanged)));
 
 		/// <summary>
@@ -100,15 +100,15 @@ namespace UWPEnhanced.Xaml
 			}
 
 			// If old collection wasn't null, detatch it
-			if (e.OldValue is VisualAttachmentCollection<VisualSetupGroup> cOld)
+			if (e.OldValue is DependencyObjectCollectionOfT<VisualSetupGroup> cOld)
 			{
-				cOld.Detach();
+				//cOld.Detach();
 			}
 
 			// If the new collection isn't null and sender isn't null, attatch the new collection to the sender
-			if (e.NewValue is VisualAttachmentCollection<VisualSetupGroup> cNew && sender != null)
+			if (e.NewValue is DependencyObjectCollectionOfT<VisualSetupGroup> cNew && sender != null)
 			{
-				cNew.Attach(sender);
+				//cNew.Attach(sender);
 			}
 		}
 
@@ -127,7 +127,7 @@ namespace UWPEnhanced.Xaml
 			if (sender is DependencyObject obj)
 			{
 				// Attach its visuals
-				GetVisualSetups(obj).Attach(obj);
+				//GetVisualSetups(obj).Attach(obj);
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace UWPEnhanced.Xaml
 			if (sender is DependencyObject obj)
 			{
 				// Attach its visuals
-				GetVisualSetups(obj).Detach();
+				//GetVisualSetups(obj).Detach();
 			}
 		}
 
