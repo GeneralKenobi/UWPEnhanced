@@ -1,14 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using UWPEnhanced.Controls;
-using UWPEnhanced.Xaml;
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -45,13 +41,23 @@ namespace TestEnvironment
 			a[0].States.Add(new VisualState());
 		}
 
-		private async void t2()
+		TaskCompletionSource<bool> StoryboardCompleted = null;
+		private void t2()
 		{
-			await Task.Delay(100);
-			setter2.Activate();
-			setter.Activate();
-
+			var wait = new ManualResetEvent(false);
+			testevent += (s, e) => wait.Set();
+			Task.Run(async () =>
+			{
+				await Task.Delay(1000);
+				testevent?.Invoke(this, EventArgs.Empty);
+			});
+			lock (wait)
+			{
+				wait.WaitOne();
+			}
 		}
+
+		private EventHandler testevent;
 		public ICommand MenuLeft { get; set; }
 		public ICommand MenuTop { get; set; }
 		public ICommand MenuRight { get; set; }

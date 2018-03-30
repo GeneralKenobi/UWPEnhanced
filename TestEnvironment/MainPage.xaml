@@ -25,7 +25,7 @@
 			</Style>
 		</Grid.Resources>
 
-		<Border Grid.Row="0" Name="rec" Background="Blue" Width="50" Height="50"/>
+		<Border Grid.Row="0" Name="rec" Background="Blue" Width="10" Height="50" HorizontalAlignment="Right"/>
 
 		<!--<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="g1">
@@ -55,31 +55,33 @@
 
 		
 		<xaml:VisualAttachments.AttachedVisuals>
-			<xaml:VisualSetter x:Name="setter" Property="Width" Value="100" Target="{x:Bind rec}"
-			test="{Binding ElementName=rec, Path=Width, Mode=TwoWay}"/>
-			<xaml:VisualSetter x:Name="setter2" Property="(Grid.Row)" Value="1" Target="{x:Bind rec}"
-			test="{Binding ElementName=rec, Path=(Grid.Row), Mode=TwoWay}"/>
-
-
+			<!--<xaml:PropertySetter x:Name="setter" Property="Width" Value="100" Target="{x:Bind rec}"
+			test="{Binding ElementName=rec, Path=Width, Mode=TwoWay}"/>-->
+			<!--<xaml:TemporaryBindablePropertySetter x:Name="setter2" Value="1" Property="{Binding ElementName=rec, Path=(Grid.Row), Mode=OneWay}"/>
+			<xaml:PropertySetter x:Name="setter" Target="{x:Bind rec, Mode=OneTime}" Property="Width" Value="100"/>
+			<xaml:TemporaryPropertySetter x:Name="setter3" Target="{x:Bind rec, Mode=TwoWay}" Property="HorizontalAlignment" Value="Left"/>-->
+			<!--<xaml:BindablePropertySetter x:Name="setter2"  Property="{Binding ElementName=rec, Path=(Grid.Row), Mode=TwoWay}" Value="1"/>-->
+			
+		
 		</xaml:VisualAttachments.AttachedVisuals>
 
-		<!--<xaml:VisualManager.VisualSetups>
+		<xaml:VisualManager.VisualSetups>
 			<xaml:VisualSetupGroup>
+				<xaml:VisualSetup x:Name="test">
+					<xaml:VisualSetup.Setters>
+						<xaml:PropertySetter Target="{x:Bind rec, Mode=OneTime}" Property="Background">						
+							<SolidColorBrush Color="Black"/>						
+						</xaml:PropertySetter>
+					</xaml:VisualSetup.Setters>
+				</xaml:VisualSetup>
 				<xaml:VisualSetup>
-					<xaml:VisualSetup.State>
-						<VisualState>
-							<Storyboard>
-								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
-									Storyboard.TargetProperty="(Grid.Width)">
-									<DiscreteObjectKeyFrame Value="100" KeyTime="0"/>
-								</ObjectAnimationUsingKeyFrames>
-							</Storyboard>
-						</VisualState>
-					</xaml:VisualSetup.State>
+					<xaml:VisualSetup.Setters>
+						<xaml:PropertySetter Target="{x:Bind rec, Mode=OneTime}" Property="Width" Value="100"/>
+						<xaml:PropertySetter Target="{x:Bind rec, Mode=OneTime}" Property="Height" Value="25"/>
+					</xaml:VisualSetup.Setters>
 				</xaml:VisualSetup>
 			</xaml:VisualSetupGroup>
-			
-		</xaml:VisualManager.VisualSetups>-->
+		</xaml:VisualManager.VisualSetups>
 		
 		
 	</Grid>
