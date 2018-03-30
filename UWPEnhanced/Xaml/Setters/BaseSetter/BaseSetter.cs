@@ -6,7 +6,7 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Standard base class implementing <see cref="IVisualSetter"/>, provides casting value to expected type functionality
 	/// </summary>
-	public abstract class BaseSetter : VisualAttachment, IVisualSetter
+	public abstract class BaseSetter : DependencyObject, IVisualSetter
 	{
 		#region Private Members
 
