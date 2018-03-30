@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Interface for custom setters
 	/// </summary>
-	interface IVisualSetter
+	public interface IVisualSetter
 	{
 		/// <summary>
 		/// Activates the setter (applies the value to the target)

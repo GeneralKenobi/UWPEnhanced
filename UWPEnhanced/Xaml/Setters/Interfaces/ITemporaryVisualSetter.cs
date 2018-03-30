@@ -5,7 +5,7 @@
 	/// For example a temporary setter for width before setting its 300d value will first remember the old value (ex. 100d).
 	/// Then when <see cref="Reset"/> is called it will set the width to 100d
 	/// </summary>
-	interface ITemporaryVisualSetter : IVisualSetter
+	public interface ITemporaryVisualSetter : IVisualSetter
 	{
 		/// <summary>
 		/// The old value remembered by the setter
