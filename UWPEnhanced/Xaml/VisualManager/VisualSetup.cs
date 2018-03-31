@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -28,7 +29,16 @@ namespace UWPEnhanced.Xaml
 
 		#region Private Members
 
-		private ManualResetEvent _WaitForStoryboard = new ManualResetEvent(false);
+		/// <summary>
+		/// Semaphore used to ensure only one Transition call is operating on the setters and storyboards
+		/// </summary>
+		private readonly SemaphoreSlim _TransitionSemaphore = new SemaphoreSlim(1,1);
+
+		/// <summary>
+		/// AutoResetEvent that can be used to wait for a storyboard to finish (since storyboards won't be played simultaneously
+		/// by definition, only one is enough to serve both storyboards)
+		/// </summary>
+		private readonly AutoResetEvent _WaitForStoryboardToFinish = new AutoResetEvent(false);
 
 		#endregion
 
@@ -88,7 +98,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty TransitionInStoryboardProperty =
 			DependencyProperty.Register(nameof(TransitionInStoryboard), typeof(Storyboard),
-			typeof(VisualSetup), new PropertyMetadata(default(Storyboard), new PropertyChangedCallback(StoryboardChanged)));
+			typeof(VisualSetup), new PropertyMetadata(null, new PropertyChangedCallback(StoryboardChanged)));
 
 		#endregion
 
@@ -108,54 +118,90 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty TransitionOutStoryboardProperty =
 			DependencyProperty.Register(nameof(TransitionOutStoryboard), typeof(Storyboard),
-			typeof(VisualSetup), new PropertyMetadata(default(Storyboard)));
+			typeof(VisualSetup), new PropertyMetadata(null, new PropertyChangedCallback(StoryboardChanged)));
+
+		#endregion
+
+		#region Private Static Methods
+
+		/// <summary>
+		/// Callback for <see cref="TransitionInStoryboard"/> and <see cref="TransitionOutStoryboard"/>.
+		/// Subscribes to Storyboard.Completed event on on new storyboards and unsubscribes from it on old storyboards
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private static void StoryboardChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+		{
+			if(sender is VisualSetup setup && e.NewValue != e.OldValue)
+			{
+				if (e.OldValue is Storyboard oldSb)
+				{
+					oldSb.Completed -= setup.SignalStoryboardCompleted;
+				}
+
+				if (e.NewValue is Storyboard newSb)
+				{
+					newSb.Completed += setup.SignalStoryboardCompleted;
+				}
+			}
+		}
 
 		#endregion
 
 		#region Private Methods
 
-		private static void StoryboardChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-		{
-			if(sender is VisualSetup setup && e.NewValue != e.OldValue && e.NewValue is Storyboard storyboard)
-			{
-				storyboard.Completed += setup.StoryboardCompleted;
-			}
-		}
+		/// <summary>
+		/// Method used to subscribe to storyboards. It will Set the <see cref="_WaitForStoryboardToFinish"/>
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SignalStoryboardCompleted(object sender, object e) => _WaitForStoryboardToFinish.Set();
 
-		private void StoryboardCompleted(object sender, object e)
-		{
-			_WaitForStoryboard.Set();
-		}
 		#endregion
+
 		#region Public Methods
 
 		/// <summary>
 		/// Transitions into the state: 
 		/// </summary>
-		public void TransitionIn()
+		public async Task TransitionIn()
 		{
-			lock(_WaitForStoryboard)
-			{
-				_WaitForStoryboard.Reset();
-				TransitionInStoryboard.Begin();
-				_WaitForStoryboard.WaitOne();
-			}
-			Setters.ForEach((x) => x.Set());
+			// Get into the semaphore
+			await Task.Run(() => _TransitionSemaphore.Wait());
+
+			// Start the transition in storyboard
+			TransitionInStoryboard.Begin();
+			
+			// Start a task that will wait for the storyboard to finish
+			await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+			
+			// After the storyboard finished apply the setters
 			TemporarySetters.ForEach((x) => x.Set());
+			Setters.ForEach((x) => x.Set());
+
+			// Transition finished; Release the semaphore
+			_TransitionSemaphore.Release();
 		}
 
 		/// <summary>
 		/// Transitions into the state: 
 		/// </summary>
-		public void TransitionOut()
+		public async Task TransitionOut()
 		{
+			// Get into the semaphore
+			await Task.Run(() => _TransitionSemaphore.Wait());
+
+			// Reset the temporary setters
 			TemporarySetters.ForEach((x) => x.Reset());
-			lock (_WaitForStoryboard)
-			{
-				_WaitForStoryboard.Reset();
-				TransitionOutStoryboard.Begin();
-				_WaitForStoryboard.WaitOne();
-			}			
+
+			// Begin the storyboard
+			TransitionOutStoryboard.Begin();
+
+			// Wait for it to finish
+			await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+
+			// Transition finished; Release the semaphore
+			_TransitionSemaphore.Release();
 		}
 
 
