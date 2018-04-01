@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpEnhanced.Synchronization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Semaphore used to ensure only one Transition call is operating on the setters and storyboards
 		/// </summary>
-		private readonly SemaphoreSlim _TransitionSemaphore = new SemaphoreSlim(1,1);
+		private readonly SemaphoreSlimFIFO _TransitionSemaphore = new SemaphoreSlimFIFO(1,1);
 
 		/// <summary>
 		/// AutoResetEvent that can be used to wait for a storyboard to finish (since storyboards won't be played simultaneously
@@ -162,12 +163,13 @@ namespace UWPEnhanced.Xaml
 		#region Public Methods
 
 		/// <summary>
-		/// Transitions into the state: 
+		/// Transitions into the state. Calls to <see cref="TransitionIn"/> and <see cref="TransitionOut"/> are synchronized
+		/// and only one will be executed at a time, the rest will be blocked and executed in random order.
 		/// </summary>
 		public async Task TransitionIn()
 		{
 			// Get into the semaphore
-			await Task.Run(() => _TransitionSemaphore.Wait());
+			await _TransitionSemaphore.WaitAsync();
 
 			// Start the transition in storyboard
 			TransitionInStoryboard.Begin();
@@ -184,12 +186,12 @@ namespace UWPEnhanced.Xaml
 		}
 
 		/// <summary>
-		/// Transitions into the state: 
+		/// Transitions out of the state: 
 		/// </summary>
 		public async Task TransitionOut()
 		{
 			// Get into the semaphore
-			await Task.Run(() => _TransitionSemaphore.Wait());
+			await _TransitionSemaphore.WaitAsync();
 
 			// Reset the temporary setters
 			TemporarySetters.ForEach((x) => x.Reset());
@@ -203,7 +205,6 @@ namespace UWPEnhanced.Xaml
 			// Transition finished; Release the semaphore
 			_TransitionSemaphore.Release();
 		}
-
 
 		#endregion
 	}
