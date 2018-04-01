@@ -13,6 +13,10 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace UWPEnhanced.Xaml
 {
+	/// <summary>
+	/// A single setup for <see cref="VisualManager"/>. Defines transition in/out animations, setters, temporary setters.
+	/// Acts as an expanded <see cref="VisualState"/>
+	/// </summary>
     public class VisualSetup : DependencyObject
     {
 		#region Constructor
@@ -40,6 +44,26 @@ namespace UWPEnhanced.Xaml
 		/// by definition, only one is enough to serve both storyboards)
 		/// </summary>
 		private readonly AutoResetEvent _WaitForStoryboardToFinish = new AutoResetEvent(false);
+
+		#endregion
+
+		#region Name Dependency Property
+
+		/// <summary>
+		/// Name of this setup
+		/// </summary>
+		public string Name
+		{
+			get => (string)GetValue(NameProperty);
+			set => SetValue(NameProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="Name"/>
+		/// </summary>
+		public static readonly DependencyProperty NameProperty =
+			DependencyProperty.Register(nameof(Name), typeof(string),
+			typeof(VisualSetup), new PropertyMetadata(default(string)));
 
 		#endregion
 
@@ -164,7 +188,7 @@ namespace UWPEnhanced.Xaml
 
 		/// <summary>
 		/// Transitions into the state. Calls to <see cref="TransitionIn"/> and <see cref="TransitionOut"/> are synchronized
-		/// and only one will be executed at a time, the rest will be blocked and executed in random order.
+		/// and only one will be executed at a time, the rest will be blocked and executed in FIFO order.
 		/// </summary>
 		public async Task TransitionIn()
 		{
@@ -186,7 +210,8 @@ namespace UWPEnhanced.Xaml
 		}
 
 		/// <summary>
-		/// Transitions out of the state: 
+		/// Transitions out of the state. Calls to <see cref="TransitionIn"/> and <see cref="TransitionOut"/> are synchronized
+		/// and only one will be executed at a time, the rest will be blocked and executed in FIFO order.
 		/// </summary>
 		public async Task TransitionOut()
 		{
