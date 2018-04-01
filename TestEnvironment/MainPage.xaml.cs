@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UWPEnhanced.Xaml;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -18,7 +19,7 @@ namespace TestEnvironment
         public MainPage()
         {			
 			this.InitializeComponent();
-			t2();
+		
 		
 			//MenuLeft = new RelayCommand(() => menu.Position = MenuPosition.Left);
 			//MenuTop = new RelayCommand(() => menu.Position = MenuPosition.Top);
@@ -42,20 +43,17 @@ namespace TestEnvironment
 		}
 
 		TaskCompletionSource<bool> StoryboardCompleted = null;
-		private void t2()
+		private async void t2()
 		{
-			var wait = new ManualResetEvent(false);
-			testevent += (s, e) => wait.Set();
-			Task.Run(async () =>
-			{
-				await Task.Delay(1000);
-				testevent?.Invoke(this, EventArgs.Empty);
-			});
-			lock (wait)
-			{
-				wait.WaitOne();
-			}
+			await Task.Delay(1000);
+
+			
+
+			
 		}
+
+		AutoResetEvent testReset = new AutoResetEvent(false);
+		SemaphoreSlim testSemaphore = new SemaphoreSlim(1,1);
 
 		private EventHandler testevent;
 		public ICommand MenuLeft { get; set; }
@@ -64,5 +62,15 @@ namespace TestEnvironment
 		public ICommand MenuBottom { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			test.TransitionIn();
+		}
+
+		private void Button_Click_1(object sender, RoutedEventArgs e)
+		{
+			test.TransitionOut();
+		}
 	}
 }
