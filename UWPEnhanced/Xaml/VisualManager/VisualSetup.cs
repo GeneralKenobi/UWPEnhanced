@@ -27,7 +27,7 @@ namespace UWPEnhanced.Xaml
 		public VisualSetup()
 		{
 			Setters = new DependencyObjectCollectionOfT<IVisualSetter>();
-			TemporarySetters = new DependencyObjectCollectionOfT<ITemporaryVisualSetter>();
+			TemporarySetters = new DependencyObjectCollectionOfT<ITemporaryVisualSetter>();			
 		}
 
 		#endregion
@@ -190,17 +190,21 @@ namespace UWPEnhanced.Xaml
 		/// Transitions into the state. Calls to <see cref="TransitionIn"/> and <see cref="TransitionOut"/> are synchronized
 		/// and only one will be executed at a time, the rest will be blocked and executed in FIFO order.
 		/// </summary>
-		public async Task TransitionIn()
+		/// <paramref name="useTransitions">If true, use defined storyboard animations in the transition</paramref>
+		public async Task TransitionIn(bool useTransitions = true)
 		{
 			// Get into the semaphore
 			await _TransitionSemaphore.WaitAsync();
 
-			// Start the transition in storyboard
-			TransitionInStoryboard.Begin();
-			
-			// Start a task that will wait for the storyboard to finish
-			await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
-			
+			if (useTransitions)
+			{
+				// Start the transition in storyboard
+				TransitionInStoryboard.Begin();
+
+				// Start a task that will wait for the storyboard to finish
+				await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+			}
+						
 			// After the storyboard finished apply the setters
 			TemporarySetters.ForEach((x) => x.Set());
 			Setters.ForEach((x) => x.Set());
@@ -213,7 +217,8 @@ namespace UWPEnhanced.Xaml
 		/// Transitions out of the state. Calls to <see cref="TransitionIn"/> and <see cref="TransitionOut"/> are synchronized
 		/// and only one will be executed at a time, the rest will be blocked and executed in FIFO order.
 		/// </summary>
-		public async Task TransitionOut()
+		/// <paramref name="useTransitions">If true, use defined storyboard animations in the transition</paramref>
+		public async Task TransitionOut(bool useTransitions = true)
 		{
 			// Get into the semaphore
 			await _TransitionSemaphore.WaitAsync();
@@ -221,11 +226,14 @@ namespace UWPEnhanced.Xaml
 			// Reset the temporary setters
 			TemporarySetters.ForEach((x) => x.Reset());
 
-			// Begin the storyboard
-			TransitionOutStoryboard.Begin();
+			if (useTransitions)
+			{
+				// Begin the storyboard
+				TransitionOutStoryboard.Begin();
 
-			// Wait for it to finish
-			await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+				// Wait for it to finish
+				await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+			}
 
 			// Transition finished; Release the semaphore
 			_TransitionSemaphore.Release();
