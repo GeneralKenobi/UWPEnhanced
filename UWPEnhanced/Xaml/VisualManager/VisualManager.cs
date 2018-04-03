@@ -11,6 +11,10 @@ namespace UWPEnhanced.Xaml
 	/// Visual setups are one step above visual states. They allow for improved management of <see cref="FrameworkElement"/>'s
 	/// visuals - with use of <see cref="VisualState"/>s, transition into and out of state animations,
 	/// intermediate transition states, chained temporary states and more.
+	/// <para/>
+	/// Important note: Defining many <see cref="VisualSetupGroup"/>s for one <see cref="FrameworkElement"/> with overlapping
+	/// <see cref="VisualSetup"/>s may cause significant delay in transitions. It is recommended TODO: determine the bearable number
+	/// of setups.
 	/// </summary>
 	public class VisualManager
 	{
@@ -52,15 +56,6 @@ namespace UWPEnhanced.Xaml
 
 				// And set it for the object
 				obj.SetValue(VisualSetupsProperty, collection);
-
-				if (obj is FrameworkElement element)
-				{
-					// Subscribe to loaded and unloaded events
-					element.Loaded -= FrameworkElementLoaded;
-					element.Loaded += FrameworkElementLoaded;
-					element.Unloaded -= FrameworkElementUnloaded;
-					element.Unloaded += FrameworkElementUnloaded;
-				}
 			}
 
 			return collection;
@@ -114,36 +109,33 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
-		#region Private Methods
+		#region Public Methods
 
 		/// <summary>
-		/// Method to call when FrameworkElement is loaded
+		/// 
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private static void FrameworkElementLoaded(object sender, RoutedEventArgs e)
+		/// <param name="element"></param>
+		/// <param name="setup"></param>
+		/// <returns></returns>
+		public static Task<int> GoToSetup(FrameworkElement element, string setup, bool useTransitions = true)
 		{
-			// If sender is a DependencyObject
-			if (sender is DependencyObject obj)
+			TaskCompletionSource<int> task = new TaskCompletionSource<int>();
+			var definedSetups = GetVisualSetups(element);
+			List<Task<bool>> transitions = new List<Task<bool>>();
+			int successfulTransitions = 0;
+			foreach (VisualSetupGroup item in definedSetups)
 			{
-				// Attach its visuals
-				//GetVisualSetups(obj).Attach(obj);
+				transitions.Add(item.GoToSetup(setup, useTransitions));
 			}
-		}
+			
+			Task.Run(() =>
+			{
+				transitions.ForEach((x) => successfulTransitions += x.Result ? 1 : 0);
 
-		/// <summary>
-		/// Method to call when FrameworkElement is unloaded
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private static void FrameworkElementUnloaded(object sender, RoutedEventArgs e)
-		{
-			// If sender is a DependencyObject
-			if (sender is DependencyObject obj)
-			{
-				// Attach its visuals
-				//GetVisualSetups(obj).Detach();
-			}
+				task.SetResult(successfulTransitions);
+			});
+
+			return task.Task;
 		}
 
 		#endregion

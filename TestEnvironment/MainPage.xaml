@@ -28,7 +28,57 @@
 			</Style>
 		</Grid.Resources>
 
-		<Border Grid.Row="0" Name="rec" Background="Blue" Width="100" Height="50" HorizontalAlignment="Center"/>
+			<Border Grid.Row="0" Name="rec" Background="Blue" Width="100" Height="50" HorizontalAlignment="Center">
+				<xaml:VisualManager.VisualSetups>
+					<xaml:VisualSetupGroup>
+						<xaml:VisualSetup >
+							<xaml:VisualSetup.TemporarySetters>
+								<!--<xaml:TemporaryPropertySetter Target="{x:Bind RootGrid, Mode=OneTime}" Property="Background">						
+							<SolidColorBrush Color="Black"/>						
+						</xaml:TemporaryPropertySetter>-->
+							</xaml:VisualSetup.TemporarySetters>
+							<xaml:VisualSetup.TransitionInStoryboard>
+								<Storyboard Duration="0:0:3" BeginTime="0:0:0">
+									<ColorAnimation Storyboard.TargetName="rec"
+							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+							To="Pink" Duration="0:0:2" BeginTime="0:0:1"/>
+									<DoubleAnimation Storyboard.TargetName="rec"
+								Storyboard.TargetProperty="Height"
+								EnableDependentAnimation="True"
+								To="300" Duration="0:0:3"/>
+									<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
+							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+								<DiscreteObjectKeyFrame KeyTime="0:0:2">
+									<DiscreteObjectKeyFrame.Value>
+										<Color>#ff0000</Color>
+									</DiscreteObjectKeyFrame.Value>
+								</DiscreteObjectKeyFrame>
+							</ObjectAnimationUsingKeyFrames>-->
+								</Storyboard>
+							</xaml:VisualSetup.TransitionInStoryboard>
+							<xaml:VisualSetup.TransitionOutStoryboard>
+								<Storyboard BeginTime="0:0:0">
+									<ColorAnimation Storyboard.TargetName="rec"
+							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+							To="Blue" Duration="0:0:2" BeginTime="0:0:0"/>
+									<DoubleAnimation Storyboard.TargetName="rec"
+								Storyboard.TargetProperty="(Border.Height)"
+								EnableDependentAnimation="True"
+								To="100" Duration="0:0:2"/>
+									<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
+							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+								<DiscreteObjectKeyFrame KeyTime="0:0:2">
+									<DiscreteObjectKeyFrame.Value>
+										<Color>#ff0000</Color>
+									</DiscreteObjectKeyFrame.Value>
+								</DiscreteObjectKeyFrame>
+							</ObjectAnimationUsingKeyFrames>-->
+								</Storyboard>
+							</xaml:VisualSetup.TransitionOutStoryboard>
+						</xaml:VisualSetup>
+					</xaml:VisualSetupGroup>
+				</xaml:VisualManager.VisualSetups>
+			</Border>
 
 		<!--<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="g1">
@@ -70,21 +120,67 @@
 
 		<xaml:VisualManager.VisualSetups>
 			<xaml:VisualSetupGroup>
-				<xaml:VisualSetup x:Name="test">
-					<xaml:VisualSetup.TemporarySetters>
-						<!--<xaml:TemporaryPropertySetter Target="{x:Bind RootGrid, Mode=OneTime}" Property="Background">						
-							<SolidColorBrush Color="Black"/>						
-						</xaml:TemporaryPropertySetter>-->
-					</xaml:VisualSetup.TemporarySetters>
-					<xaml:VisualSetup.TransitionInStoryboard>
-						<Storyboard Duration="0:0:3" x:Name="sb" BeginTime="0:0:0">
+					<xaml:VisualSetup Name="Normal">
+						
+					</xaml:VisualSetup>
+					<xaml:VisualSetup x:Name="test" Name="test">
+						<xaml:VisualSetup.TemporarySetters>
+							<xaml:TemporaryPropertySetter Target="{x:Bind RootGrid, Mode=OneTime}" Property="Background">						
+								<SolidColorBrush Color="Black"/>						
+							</xaml:TemporaryPropertySetter>
+						</xaml:VisualSetup.TemporarySetters>
+					<!--<xaml:VisualSetup.TransitionInStoryboard>
+						<Storyboard x:Name="sb" BeginTime="0:0:0">
 							<ColorAnimation Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-							To="Pink" Duration="0:0:2" BeginTime="0:0:1"/>
+							From ="Yellow" To="Pink" Duration="0:0:1"/>
 								<DoubleAnimation Storyboard.TargetName="rec"
 								Storyboard.TargetProperty="Height"
 								EnableDependentAnimation="True"
-								To="300" Duration="0:0:3"/>
+								To="300" Duration="0:0:1"/>
+								--><!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
+							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+								<DiscreteObjectKeyFrame KeyTime="0:0:2">
+									<DiscreteObjectKeyFrame.Value>
+										<Color>#ff0000</Color>
+									</DiscreteObjectKeyFrame.Value>
+								</DiscreteObjectKeyFrame>
+							</ObjectAnimationUsingKeyFrames>--><!--
+						</Storyboard>
+					</xaml:VisualSetup.TransitionInStoryboard>
+						<xaml:VisualSetup.TransitionOutStoryboard>
+							<Storyboard BeginTime="0:0:0">
+								<ColorAnimation Storyboard.TargetName="rec"
+							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+							To="Blue" Duration="0:0:1" BeginTime="0:0:0"/>
+								<DoubleAnimation Storyboard.TargetName="rec"
+								Storyboard.TargetProperty="(Border.Height)"
+								EnableDependentAnimation="True"
+								To="100" Duration="0:0:1"/>
+								--><!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
+							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+								<DiscreteObjectKeyFrame KeyTime="0:0:2">
+									<DiscreteObjectKeyFrame.Value>
+										<Color>#ff0000</Color>
+									</DiscreteObjectKeyFrame.Value>
+								</DiscreteObjectKeyFrame>
+							</ObjectAnimationUsingKeyFrames>--><!--
+							</Storyboard>
+						</xaml:VisualSetup.TransitionOutStoryboard>-->
+					</xaml:VisualSetup>				
+			</xaml:VisualSetupGroup>
+			<xaml:VisualSetupGroup>
+			
+					<xaml:VisualSetup Name="test">						
+						<xaml:VisualSetup.TransitionInStoryboard>
+							<Storyboard BeginTime="0:0:0">
+								<ColorAnimation Storyboard.TargetName="rec"
+							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+							From ="Yellow" To="Pink" Duration="0:0:1"/>
+								<DoubleAnimation Storyboard.TargetName="rec"
+								Storyboard.TargetProperty="Height"
+								EnableDependentAnimation="True"
+								To="300" Duration="0:0:1"/>
 								<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
 								<DiscreteObjectKeyFrame KeyTime="0:0:2">
@@ -93,17 +189,17 @@
 									</DiscreteObjectKeyFrame.Value>
 								</DiscreteObjectKeyFrame>
 							</ObjectAnimationUsingKeyFrames>-->
-						</Storyboard>
-					</xaml:VisualSetup.TransitionInStoryboard>
+							</Storyboard>
+						</xaml:VisualSetup.TransitionInStoryboard>
 						<xaml:VisualSetup.TransitionOutStoryboard>
 							<Storyboard BeginTime="0:0:0">
 								<ColorAnimation Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-							To="Blue" Duration="0:0:2" BeginTime="0:0:0"/>
+							To="Blue" Duration="0:0:1" BeginTime="0:0:0"/>
 								<DoubleAnimation Storyboard.TargetName="rec"
 								Storyboard.TargetProperty="(Border.Height)"
 								EnableDependentAnimation="True"
-								To="100" Duration="0:0:2"/>
+								To="100" Duration="0:0:1"/>
 								<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
 								<DiscreteObjectKeyFrame KeyTime="0:0:2">
@@ -114,8 +210,92 @@
 							</ObjectAnimationUsingKeyFrames>-->
 							</Storyboard>
 						</xaml:VisualSetup.TransitionOutStoryboard>
-					</xaml:VisualSetup>				
-			</xaml:VisualSetupGroup>
+					</xaml:VisualSetup>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="test"/>
+					<xaml:VisualSetup Name="Normall"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetup Name="tesst"/>
+					<xaml:VisualSetup Name="Normal"/>
+				</xaml:VisualSetupGroup>
 		</xaml:VisualManager.VisualSetups>
 		
 		

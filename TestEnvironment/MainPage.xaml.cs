@@ -65,12 +65,20 @@ namespace TestEnvironment
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			test.TransitionIn();
+			var task = VisualManager.GoToSetup(RootGrid, "test");
+			Task.Run(() =>
+			{
+				int a = task.Result;
+			});
 		}
 
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
-			test.TransitionOut();
+			var task = VisualManager.GoToSetup(RootGrid, "Normal");
+			Task.Run(() =>
+			{
+				int a = task.Result;
+			});
 		}
 	}
 }

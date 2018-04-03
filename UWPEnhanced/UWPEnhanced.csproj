@@ -119,6 +119,7 @@
     <Compile Include="Controls\Menu\MenuSamplePage.xaml.cs">
       <DependentUpon>MenuSamplePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ThreadingHelpers\DispatcherHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueConverters\EnumToIntConverter.cs" />
     <Compile Include="Xaml\DependencyObjectCollectionOfT\DependencyObjectCollectionOfT.cs" />
