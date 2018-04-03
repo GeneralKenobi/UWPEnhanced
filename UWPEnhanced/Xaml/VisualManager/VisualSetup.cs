@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UWPEnhanced.Helpers;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -198,16 +199,34 @@ namespace UWPEnhanced.Xaml
 
 			if (useTransitions)
 			{
-				// Start the transition in storyboard
-				TransitionInStoryboard.Begin();
+				bool sbDefined = false;
 
-				// Start a task that will wait for the storyboard to finish
-				await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+				// Get on the UI thread
+				await DispatcherHelpers.RunAsync(() =>
+				{
+					// If the storyboard is defined
+					if (TransitionInStoryboard != null)
+					{
+						sbDefined = true;
+
+						// Run it
+						TransitionInStoryboard?.Begin();
+					}
+				});
+
+				// If the UI thread task determined that storyboard was defined, start a task that will wait for the storyboard to finish
+				if (sbDefined)
+				{
+					await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+				}
 			}
-						
+
 			// After the storyboard finished apply the setters
-			TemporarySetters.ForEach((x) => x.Set());
-			Setters.ForEach((x) => x.Set());
+			await DispatcherHelpers.RunAsync(() =>
+			{
+				TemporarySetters?.ForEach((x) => x.Set());
+				Setters?.ForEach((x) => x.Set());
+			});
 
 			// Transition finished; Release the semaphore
 			_TransitionSemaphore.Release();
@@ -224,15 +243,30 @@ namespace UWPEnhanced.Xaml
 			await _TransitionSemaphore.WaitAsync();
 
 			// Reset the temporary setters
-			TemporarySetters.ForEach((x) => x.Reset());
+			await DispatcherHelpers.RunAsync(() => TemporarySetters.ForEach((x) => x.Reset()));
 
 			if (useTransitions)
 			{
-				// Begin the storyboard
-				TransitionOutStoryboard.Begin();
+				bool sbDefined = false;
 
-				// Wait for it to finish
-				await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+				// Get on the UI thread
+				await DispatcherHelpers.RunAsync(() =>
+				{
+					// If the storyboard is defined
+					if (TransitionOutStoryboard != null)
+					{
+						sbDefined = true;
+
+						// Run it
+						TransitionOutStoryboard?.Begin();
+					}
+				});
+
+				// If the UI thread task determined that storyboard was defined, start a task that will wait for the storyboard to finish
+				if (sbDefined)
+				{
+					await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
+				}
 			}
 
 			// Transition finished; Release the semaphore
