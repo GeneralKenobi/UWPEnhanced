@@ -80,14 +80,14 @@ namespace UWPEnhanced.Xaml
 				// Run a background task
 				Task.Run(() =>
 				{
-				// Try to find the setup
-				VisualSetup designatedSetup = FindSetup(setup);
+					// Try to find the setup
+					VisualSetup designatedSetup = FindSetup(setup);
 
-				// If it was found
-				if (designatedSetup != null)
+					// If it was found
+					if (designatedSetup != null)
 					{
-					// Perform the transition using helper method
-					Transition(designatedSetup, useTransitions);
+						// Perform the transition using helper method
+						Transition(designatedSetup, useTransitions);
 
 						task.SetResult(true);
 					}
