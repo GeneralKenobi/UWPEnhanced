@@ -15,6 +15,9 @@
 	<StackPanel>
 		<Button Content="Test" Click="Button_Click"/>
 		<Button Content="Test2" Click="Button_Click_1"/>
+		<Button Content="Test3" Click="Button_Click_2"/>
+		<Button Content="Anim" Click="Button_Click_3"/>
+		<Button Content="AnimBack" Click="Button_Click_4"/>
 
 		<Grid Name="RootGrid" Background="Red" Width="500" Height="500">
 		<Grid.RowDefinitions>
@@ -23,12 +26,21 @@
 		</Grid.RowDefinitions>
 
 		<Grid.Resources>
-			<Style TargetType="Grid">
-				
-			</Style>
-		</Grid.Resources>
+				<Storyboard x:Key="Anim1">
+					<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
+					To="500" Duration="0:0:2" EnableDependentAnimation="True"/>
+				</Storyboard>
+				<Storyboard x:Key="Anim2">
+					<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
+					To="0" Duration="0:0:2" EnableDependentAnimation="True"/>
+				</Storyboard>
+			</Grid.Resources>
 
 			<Border Grid.Row="0" Name="rec" Background="Blue" Width="100" Height="50" HorizontalAlignment="Center">
+				<Border.RenderTransform>
+					<TranslateTransform Y="0" x:Name="rt"/>
+				</Border.RenderTransform>
+
 				<xaml:VisualManager.VisualSetups>
 					<xaml:VisualSetupGroup>
 						<xaml:VisualSetup >
@@ -119,7 +131,7 @@
 		</xaml:VisualAttachments.AttachedVisuals>
 
 		<xaml:VisualManager.VisualSetups>
-			<xaml:VisualSetupGroup>
+			<!--<xaml:VisualSetupGroup>
 					<xaml:VisualSetup Name="Normal">
 						
 					</xaml:VisualSetup>
@@ -129,7 +141,7 @@
 								<SolidColorBrush Color="Black"/>						
 							</xaml:TemporaryPropertySetter>
 						</xaml:VisualSetup.TemporarySetters>
-					<!--<xaml:VisualSetup.TransitionInStoryboard>
+					--><!--<xaml:VisualSetup.TransitionInStoryboard>
 						<Storyboard x:Name="sb" BeginTime="0:0:0">
 							<ColorAnimation Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
@@ -166,40 +178,24 @@
 								</DiscreteObjectKeyFrame>
 							</ObjectAnimationUsingKeyFrames>--><!--
 							</Storyboard>
-						</xaml:VisualSetup.TransitionOutStoryboard>-->
+						</xaml:VisualSetup.TransitionOutStoryboard>--><!--
 					</xaml:VisualSetup>				
-			</xaml:VisualSetupGroup>
+			</xaml:VisualSetupGroup>-->
 			<xaml:VisualSetupGroup>
 			
 					<xaml:VisualSetup Name="test">						
 						<xaml:VisualSetup.TransitionInStoryboard>
-							<Storyboard BeginTime="0:0:0">
-								<ColorAnimation Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-							From ="Yellow" To="Pink" Duration="0:0:1"/>
-								<DoubleAnimation Storyboard.TargetName="rec"
-								Storyboard.TargetProperty="Height"
-								EnableDependentAnimation="True"
-								To="300" Duration="0:0:1"/>
-								<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-								<DiscreteObjectKeyFrame KeyTime="0:0:2">
-									<DiscreteObjectKeyFrame.Value>
-										<Color>#ff0000</Color>
-									</DiscreteObjectKeyFrame.Value>
-								</DiscreteObjectKeyFrame>
-							</ObjectAnimationUsingKeyFrames>-->
+							<Storyboard x:Key="Anim1">
+								<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
+					To="500" Duration="0:0:2" EnableDependentAnimation="True"/>
 							</Storyboard>
+							
 						</xaml:VisualSetup.TransitionInStoryboard>
 						<xaml:VisualSetup.TransitionOutStoryboard>
-							<Storyboard BeginTime="0:0:0">
-								<ColorAnimation Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-							To="Blue" Duration="0:0:1" BeginTime="0:0:0"/>
-								<DoubleAnimation Storyboard.TargetName="rec"
-								Storyboard.TargetProperty="(Border.Height)"
-								EnableDependentAnimation="True"
-								To="100" Duration="0:0:1"/>
+							<Storyboard x:Key="Anim2">
+								<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
+					To="0" Duration="0:0:2" EnableDependentAnimation="True"/>
+							</Storyboard>
 								<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
 								<DiscreteObjectKeyFrame KeyTime="0:0:2">
@@ -207,12 +203,11 @@
 										<Color>#ff0000</Color>
 									</DiscreteObjectKeyFrame.Value>
 								</DiscreteObjectKeyFrame>
-							</ObjectAnimationUsingKeyFrames>-->
-							</Storyboard>
+								</ObjectAnimationUsingKeyFrames>-->						
 						</xaml:VisualSetup.TransitionOutStoryboard>
 					</xaml:VisualSetup>
 				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
+				<!--<xaml:VisualSetupGroup>
 					<xaml:VisualSetup Name="test"/>
 					<xaml:VisualSetup Name="Normall"/>
 				</xaml:VisualSetupGroup>
@@ -295,7 +290,7 @@
 				<xaml:VisualSetupGroup>
 					<xaml:VisualSetup Name="tesst"/>
 					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
+				</xaml:VisualSetupGroup>-->
 		</xaml:VisualManager.VisualSetups>
 		
 		

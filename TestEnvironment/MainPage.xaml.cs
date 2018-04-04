@@ -6,6 +6,7 @@ using System.Windows.Input;
 using UWPEnhanced.Xaml;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -19,7 +20,7 @@ namespace TestEnvironment
         public MainPage()
         {			
 			this.InitializeComponent();
-		
+			t2();
 		
 			//MenuLeft = new RelayCommand(() => menu.Position = MenuPosition.Left);
 			//MenuTop = new RelayCommand(() => menu.Position = MenuPosition.Top);
@@ -47,10 +48,12 @@ namespace TestEnvironment
 		{
 			await Task.Delay(1000);
 
-			
-
-			
+			s1 = (RootGrid.Resources["Anim1"] as Storyboard);
+			s2 = (RootGrid.Resources["Anim2"] as Storyboard);
 		}
+
+		Storyboard s1 = null;
+		Storyboard s2 = null;
 
 		AutoResetEvent testReset = new AutoResetEvent(false);
 		SemaphoreSlim testSemaphore = new SemaphoreSlim(1,1);
@@ -79,6 +82,23 @@ namespace TestEnvironment
 			{
 				int a = task.Result;
 			});
+		}
+
+		private void Button_Click_2(object sender, RoutedEventArgs e)
+		{
+			VisualManager.GoToSetup(RootGrid, string.Empty);
+		}
+
+		private void Button_Click_3(object sender, RoutedEventArgs e)
+		{
+		
+			s1.Begin();
+		}
+
+		private void Button_Click_4(object sender, RoutedEventArgs e)
+		{
+			
+			s2.Begin();
 		}
 	}
 }

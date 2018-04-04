@@ -208,7 +208,7 @@ namespace UWPEnhanced.Xaml
 					if (TransitionInStoryboard != null)
 					{
 						sbDefined = true;
-
+						
 						// Run it
 						TransitionInStoryboard?.Begin();
 					}
@@ -256,7 +256,7 @@ namespace UWPEnhanced.Xaml
 					if (TransitionOutStoryboard != null)
 					{
 						sbDefined = true;
-
+												
 						// Run it
 						TransitionOutStoryboard?.Begin();
 					}
