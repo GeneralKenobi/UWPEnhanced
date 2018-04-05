@@ -1,11 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using UWPEnhanced.Controls;
 using UWPEnhanced.Xaml;
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -45,18 +43,62 @@ namespace TestEnvironment
 			a[0].States.Add(new VisualState());
 		}
 
+		TaskCompletionSource<bool> StoryboardCompleted = null;
 		private async void t2()
 		{
-			await Task.Delay(100);
-			setter2.Activate();
-			setter.Activate();
+			await Task.Delay(1000);
 
+			s1 = (RootGrid.Resources["Anim1"] as Storyboard);
+			s2 = (RootGrid.Resources["Anim2"] as Storyboard);
 		}
+
+		Storyboard s1 = null;
+		Storyboard s2 = null;
+
+		AutoResetEvent testReset = new AutoResetEvent(false);
+		SemaphoreSlim testSemaphore = new SemaphoreSlim(1,1);
+
+		private EventHandler testevent;
 		public ICommand MenuLeft { get; set; }
 		public ICommand MenuTop { get; set; }
 		public ICommand MenuRight { get; set; }
 		public ICommand MenuBottom { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			var task = VisualManager.GoToSetup(RootGrid, "test");
+			Task.Run(() =>
+			{
+				int a = task.Result;
+			});
+		}
+
+		private void Button_Click_1(object sender, RoutedEventArgs e)
+		{
+			var task = VisualManager.GoToSetup(RootGrid, "Normal");
+			Task.Run(() =>
+			{
+				int a = task.Result;
+			});
+		}
+
+		private void Button_Click_2(object sender, RoutedEventArgs e)
+		{
+			VisualManager.GoToSetup(RootGrid, string.Empty);
+		}
+
+		private void Button_Click_3(object sender, RoutedEventArgs e)
+		{
+		
+			s1.Begin();
+		}
+
+		private void Button_Click_4(object sender, RoutedEventArgs e)
+		{
+			
+			s2.Begin();
+		}
 	}
 }

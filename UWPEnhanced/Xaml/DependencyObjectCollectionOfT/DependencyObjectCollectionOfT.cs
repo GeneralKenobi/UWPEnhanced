@@ -174,5 +174,15 @@ namespace UWPEnhanced.Xaml
 		}
 
 		#endregion
+
+		#region Public Methods
+
+		/// <summary>
+		/// Performs the specified action on each element in the collection
+		/// </summary>
+		/// <param name="action"></param>
+		public void ForEach(Action<T> action) => _ControlArchive.ForEach(action);
+
+		#endregion
 	}
 }

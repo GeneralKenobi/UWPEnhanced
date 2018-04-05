@@ -11,6 +11,10 @@ namespace UWPEnhanced.Xaml
 	/// Visual setups are one step above visual states. They allow for improved management of <see cref="FrameworkElement"/>'s
 	/// visuals - with use of <see cref="VisualState"/>s, transition into and out of state animations,
 	/// intermediate transition states, chained temporary states and more.
+	/// <para/>
+	/// Important note: Defining many <see cref="VisualSetupGroup"/>s for one <see cref="FrameworkElement"/> with overlapping
+	/// <see cref="VisualSetup"/>s may cause significant delay in transitions. It is recommended TODO: determine the bearable number
+	/// of setups.
 	/// </summary>
 	public class VisualManager
 	{
@@ -35,32 +39,23 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Getter for <see cref="VisualSetupsProperty"/>
 		/// </summary>
-		public static VisualAttachmentCollection<VisualSetupGroup> GetVisualSetups(DependencyObject obj)
+		public static DependencyObjectCollectionOfT<VisualSetupGroup> GetVisualSetups(DependencyObject obj)
 		{
 			if (obj == null)
 			{
 				throw new ArgumentNullException(nameof(obj));
 			}
 
-			var collection = (VisualAttachmentCollection<VisualSetupGroup>)obj.GetValue(VisualSetupsProperty);
+			var collection = (DependencyObjectCollectionOfT<VisualSetupGroup>)obj.GetValue(VisualSetupsProperty);
 
 			// If the collection wasn't yet set
 			if (collection == null)
 			{
 				// Create a new instance
-				collection = new VisualAttachmentCollection<VisualSetupGroup>();
+				collection = new DependencyObjectCollectionOfT<VisualSetupGroup>();
 
 				// And set it for the object
 				obj.SetValue(VisualSetupsProperty, collection);
-
-				if (obj is FrameworkElement element)
-				{
-					// Subscribe to loaded and unloaded events
-					element.Loaded -= FrameworkElementLoaded;
-					element.Loaded += FrameworkElementLoaded;
-					element.Unloaded -= FrameworkElementUnloaded;
-					element.Unloaded += FrameworkElementUnloaded;
-				}
 			}
 
 			return collection;
@@ -69,7 +64,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Setter for <see cref="VisualSetupsProperty"/>
 		/// </summary>
-		public static void SetVisualSetups(DependencyObject obj, VisualAttachmentCollection<VisualSetupGroup> value)
+		public static void SetVisualSetups(DependencyObject obj, DependencyObjectCollectionOfT<VisualSetupGroup> value)
 		{
 			if (obj == null)
 			{
@@ -83,7 +78,7 @@ namespace UWPEnhanced.Xaml
 		/// Attached property for attached visuals
 		/// </summary>
 		public static readonly DependencyProperty VisualSetupsProperty =
-			DependencyProperty.RegisterAttached("VisualSetups", typeof(VisualAttachmentCollection<VisualSetupGroup>),
+			DependencyProperty.RegisterAttached("VisualSetups", typeof(DependencyObjectCollectionOfT<VisualSetupGroup>),
 			 typeof(VisualManager), new PropertyMetadata(null, new PropertyChangedCallback(VisualSetupsChanged)));
 
 		/// <summary>
@@ -100,50 +95,47 @@ namespace UWPEnhanced.Xaml
 			}
 
 			// If old collection wasn't null, detatch it
-			if (e.OldValue is VisualAttachmentCollection<VisualSetupGroup> cOld)
+			if (e.OldValue is DependencyObjectCollectionOfT<VisualSetupGroup> cOld)
 			{
-				cOld.Detach();
+				//cOld.Detach();
 			}
 
 			// If the new collection isn't null and sender isn't null, attatch the new collection to the sender
-			if (e.NewValue is VisualAttachmentCollection<VisualSetupGroup> cNew && sender != null)
+			if (e.NewValue is DependencyObjectCollectionOfT<VisualSetupGroup> cNew && sender != null)
 			{
-				cNew.Attach(sender);
+				//cNew.Attach(sender);
 			}
 		}
 
 		#endregion
 
-		#region Private Methods
+		#region Public Methods
 
 		/// <summary>
-		/// Method to call when FrameworkElement is loaded
+		/// 
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private static void FrameworkElementLoaded(object sender, RoutedEventArgs e)
+		/// <param name="element"></param>
+		/// <param name="setup"></param>
+		/// <returns></returns>
+		public static Task<int> GoToSetup(FrameworkElement element, string setup, bool useTransitions = true)
 		{
-			// If sender is a DependencyObject
-			if (sender is DependencyObject obj)
+			TaskCompletionSource<int> task = new TaskCompletionSource<int>();
+			var definedSetups = GetVisualSetups(element);
+			List<Task<bool>> transitions = new List<Task<bool>>();
+			int successfulTransitions = 0;
+			foreach (VisualSetupGroup item in definedSetups)
 			{
-				// Attach its visuals
-				GetVisualSetups(obj).Attach(obj);
+				transitions.Add(item.GoToSetup(setup, useTransitions));
 			}
-		}
+			
+			Task.Run(() =>
+			{
+				transitions.ForEach((x) => successfulTransitions += x.Result ? 1 : 0);
 
-		/// <summary>
-		/// Method to call when FrameworkElement is unloaded
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private static void FrameworkElementUnloaded(object sender, RoutedEventArgs e)
-		{
-			// If sender is a DependencyObject
-			if (sender is DependencyObject obj)
-			{
-				// Attach its visuals
-				GetVisualSetups(obj).Detach();
-			}
+				task.SetResult(successfulTransitions);
+			});
+
+			return task.Task;
 		}
 
 		#endregion

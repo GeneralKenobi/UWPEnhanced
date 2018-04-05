@@ -119,17 +119,23 @@
     <Compile Include="Controls\Menu\MenuSamplePage.xaml.cs">
       <DependentUpon>MenuSamplePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ThreadingHelpers\DispatcherHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueConverters\EnumToIntConverter.cs" />
     <Compile Include="Xaml\DependencyObjectCollectionOfT\DependencyObjectCollectionOfT.cs" />
+    <Compile Include="Xaml\Setters\Interfaces\ITemporaryVisualSetter.cs" />
+    <Compile Include="Xaml\Setters\BindablePropertySetters\TemporaryBindablePropertySetter.cs" />
+    <Compile Include="Xaml\Setters\PropertyPathSetters\TemporaryPropertySetter.cs" />
     <Compile Include="Xaml\VisualAttachments\AttachableDependencyCollectionOfT\AttachableDependencyCollectionOfT.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachmentCollection\VisualAttachmentCollection.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachments.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\IAttachable.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\VisualAttachment.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachment\VisualAttachmentOfT.cs" />
-    <Compile Include="Xaml\VisualManager\IVisualSetter.cs" />
-    <Compile Include="Xaml\VisualManager\SetterCollection.cs" />
+    <Compile Include="Xaml\Setters\BaseSetter\BaseSetter.cs" />
+    <Compile Include="Xaml\Setters\BindablePropertySetters\BindablePropertySetter.cs" />
+    <Compile Include="Xaml\Setters\Interfaces\IVisualSetter.cs" />
+    <Compile Include="Xaml\Setters\PropertyPathSetters\PropertySetter.cs" />
     <Compile Include="Xaml\VisualManager\VisualManager.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetup.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetupGroup.cs" />
