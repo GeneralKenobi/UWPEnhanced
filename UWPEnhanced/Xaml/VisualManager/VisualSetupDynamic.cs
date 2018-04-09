@@ -12,12 +12,12 @@ namespace UWPEnhanced.Xaml
 {
 	public class VisualSetupDynamic : VisualSetupBase
 	{
-		protected readonly SemaphoreSlimFIFO _StoryboardSemaphore = new SemaphoreSlimFIFO(0,1);
+		protected readonly AutoResetEvent _WaitForStoryboard = new AutoResetEvent(false);
 
 
 		private int _CurrentCaller = 0;
 
-		protected override void SignalStoryboardCompleted(object sender, object e) => _StoryboardSemaphore.Release();
+		protected override void SignalStoryboardCompleted(object sender, object e) => _WaitForStoryboard.Set();
 
 
 		public override async Task TransitionIn(bool useTransitions = true)
@@ -25,9 +25,11 @@ namespace UWPEnhanced.Xaml
 			Stopwatch s = new Stopwatch();
 			s.Start();
 			int id = _CurrentCaller++;
-			cc.Cancel();
-			c.Dispose();
-			c = new CancellationTokenSource();
+			_Cancellation.Cancel();
+			//_Cancellation.Dispose();
+			var cancellation = new CancellationTokenSource();
+			_Cancellation = cancellation;
+
 			if (useTransitions)
 			{
 				bool sbDefined = false;
@@ -51,17 +53,16 @@ namespace UWPEnhanced.Xaml
 				// If the UI thread task determined that storyboard was defined, start a task that will wait for the storyboard to finish
 				if (sbDefined)
 				{
-					await Task.Factory.StartNew(() =>
+					WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard });
+
+					if(cancellation.IsCancellationRequested)
 					{
-						Task.Run(() => _StoryboardSemaphore.Wait(), c.Token).ContinueWith((task) =>
+						DispatcherHelpers.RunAsync(() =>
 						{
-							DispatcherHelpers.RunAsync(() =>
-							{
-								TemporarySetters?.ForEach((x) => x.Set());
-								Setters?.ForEach((x) => x.Set());
-							});
-						}, TaskContinuationOptions.NotOnCanceled).Wait();
-					}, c.Token);
+							TemporarySetters?.ForEach((x) => x.Set());
+							Setters?.ForEach((x) => x.Set());
+						});
+					}
 					//_StoryboardSemaphore.Wait();
 					//await Task.Run(() => _StoryboardSemaphore.Wait());
 				}
@@ -77,17 +78,20 @@ namespace UWPEnhanced.Xaml
 				//});
 				
 			}
+			cancellation.Dispose();
 		}
-		private CancellationTokenSource c = new CancellationTokenSource();
-		private CancellationTokenSource cc = new CancellationTokenSource();
+		private CancellationTokenSource _Cancellation = new CancellationTokenSource();
+
 		public override async Task TransitionOut(bool useTransitions = true)
 		{
 			Stopwatch s = new Stopwatch();
 			s.Start();
 			++_CurrentCaller;
-			c.Cancel();
-			cc.Dispose();
-			cc = new CancellationTokenSource();
+			var cancellation = new CancellationTokenSource();
+			_Cancellation.Cancel();
+			//_Cancellation.Dispose();
+			_Cancellation = cancellation;
+
 			// Reset the temporary setters
 			DispatcherHelpers.RunAsync(() => TemporarySetters.ForEach((x) => x.Reset()));
 
@@ -115,15 +119,11 @@ namespace UWPEnhanced.Xaml
 				// If the UI thread task determined that storyboard was defined, start a task that will wait for the storyboard to finish
 				if (sbDefined)
 				{
-					await Task.Factory.StartNew(() =>
-					{
-						Task.Run(() => _StoryboardSemaphore.Wait(), cc.Token).Wait();
-					}, cc.Token);
-					//await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
-					//await Task.Run(() => _StoryboardSemaphore.Wait());
-					//_StoryboardSemaphore.Wait();
+					WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard });					
 				}
 			}
+
+			cancellation.Dispose();
 		}
 	}
 }
