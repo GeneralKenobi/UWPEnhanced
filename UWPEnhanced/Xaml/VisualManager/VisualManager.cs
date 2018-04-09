@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
@@ -55,7 +56,7 @@ namespace UWPEnhanced.Xaml
 				collection = new DependencyObjectCollectionOfT<VisualSetupGroup>();
 
 				// And set it for the object
-				obj.SetValue(VisualSetupsProperty, collection);
+				obj.SetValue(VisualSetupsProperty, collection);				
 			}
 
 			return collection;
@@ -117,25 +118,28 @@ namespace UWPEnhanced.Xaml
 		/// <param name="element"></param>
 		/// <param name="setup"></param>
 		/// <returns></returns>
-		public static Task<int> GoToSetup(FrameworkElement element, string setup, bool useTransitions = true)
+		public static Task<bool> GoToSetup(FrameworkElement element, string setup, string group = "", bool useTransitions = true)
 		{
-			TaskCompletionSource<int> task = new TaskCompletionSource<int>();
+			// Get the setups
 			var definedSetups = GetVisualSetups(element);
-			List<Task<bool>> transitions = new List<Task<bool>>();
-			int successfulTransitions = 0;
-			foreach (VisualSetupGroup item in definedSetups)
+
+			// If the setups are defined
+			if (definedSetups != null)
 			{
-				transitions.Add(item.GoToSetup(setup, useTransitions));
+				// Search for the specified group
+				foreach (VisualSetupGroup item in GetVisualSetups(element))
+				{
+					// If it was found
+					if (item.Name == group)
+					{
+						// Return the group's transition task
+						return item.GoToSetup(setup, useTransitions);
+					}
+				}
 			}
-			
-			Task.Run(() =>
-			{
-				transitions.ForEach((x) => successfulTransitions += x.Result ? 1 : 0);
 
-				task.SetResult(successfulTransitions);
-			});
-
-			return task.Task;
+			// Otherwise return an already completed task
+			return new TaskCompletionSource<bool>(false).Task;
 		}
 
 		#endregion
