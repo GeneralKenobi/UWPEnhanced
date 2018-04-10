@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -58,7 +59,7 @@ namespace TestEnvironment
 		AutoResetEvent testReset = new AutoResetEvent(false);
 		SemaphoreSlim testSemaphore = new SemaphoreSlim(1,1);
 
-		private EventHandler testevent;
+
 		public ICommand MenuLeft { get; set; }
 		public ICommand MenuTop { get; set; }
 		public ICommand MenuRight { get; set; }
@@ -71,7 +72,8 @@ namespace TestEnvironment
 			var task = VisualManager.GoToSetup(RootGrid, "test");
 			Task.Run(() =>
 			{
-				int a = task.Result;
+				Debug.WriteLine($"Finished transition to test; {task.Result}");
+				
 			});
 		}
 
@@ -80,13 +82,17 @@ namespace TestEnvironment
 			var task = VisualManager.GoToSetup(RootGrid, "Normal");
 			Task.Run(() =>
 			{
-				int a = task.Result;
+				Debug.WriteLine(task.Result);
 			});
 		}
 
-		private void Button_Click_2(object sender, RoutedEventArgs e)
+		private async void Button_Click_2(object sender, RoutedEventArgs e)
 		{
-			VisualManager.GoToSetup(RootGrid, string.Empty);
+			var a = VisualManager.GoToSetup(RootGrid, string.Empty);
+			Task.Run(() =>
+			{
+				Debug.WriteLine($"Finished transition out; {a.Result}");
+			});
 		}
 
 		private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -99,6 +105,12 @@ namespace TestEnvironment
 		{
 			
 			s2.Begin();
+		}
+
+		private void Button_Click_5(object sender, RoutedEventArgs e)
+		{
+
+
 		}
 	}
 }
