@@ -32,6 +32,24 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
+		#region PrivateMethods
+
+		/// <summary>
+		/// Returns the value of <see cref="RestartTransition"/> (enters the UI thread)
+		/// </summary>
+		/// <returns></returns>
+		private bool GetRestartTransitionFromTask()
+		{
+			bool restartTransition = false;
+
+			// Get on UI thread and get the value
+			DispatcherHelpers.Run(() => restartTransition = RestartTransition);
+
+			return restartTransition;
+		}
+
+		#endregion
+
 		#region Protected Methods
 
 		/// <summary>
@@ -52,8 +70,8 @@ namespace UWPEnhanced.Xaml
 		/// <returns></returns>
 		public override async Task TransitionIn(bool useTransitions = true)
 		{
-			// If there's already a transition in going on just return
-			if(_TransitionDirection)
+			// If there's already a transition in going on and we're not supposed to restart it, just return
+			if (_TransitionDirection && !GetRestartTransitionFromTask())
 			{
 				return;
 			}
@@ -123,8 +141,8 @@ namespace UWPEnhanced.Xaml
 		/// <returns></returns>
 		public override async Task TransitionOut(bool useTransitions = true)
 		{
-			// If there's already a transition out going on just return
-			if (!_TransitionDirection)
+			// If there's already a transition out going on and we're not supposed to restart it, just return
+			if (!_TransitionDirection && !GetRestartTransitionFromTask())
 			{
 				return;
 			}
