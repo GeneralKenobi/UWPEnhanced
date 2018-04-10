@@ -29,11 +29,11 @@
 		<Grid.Resources>
 				<Storyboard x:Key="Anim1">
 					<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
-					To="500" Duration="0:0:2" EnableDependentAnimation="True"/>
+					To="500" Duration="0:0:10" EnableDependentAnimation="True"/>
 				</Storyboard>
 				<Storyboard x:Key="Anim2">
 					<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
-					To="0" Duration="0:0:2" EnableDependentAnimation="True"/>
+					To="0" Duration="0:0:10" EnableDependentAnimation="True"/>
 				</Storyboard>
 			</Grid.Resources>
 
@@ -137,14 +137,14 @@
 						<xaml:VisualSetupDynamic.TransitionInStoryboard>
 							<Storyboard >
 								<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
-					To="500" Duration="0:0:5" EnableDependentAnimation="True"/>
+					To="500" Duration="0:0:2.5" EnableDependentAnimation="True"/>
 							</Storyboard>
 							
 						</xaml:VisualSetupDynamic.TransitionInStoryboard>
 						<xaml:VisualSetupDynamic.TransitionOutStoryboard>
 							<Storyboard >
 								<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
-					To="0" Duration="0:0:5" EnableDependentAnimation="True"/>
+					To="0" Duration="0:0:2.5" EnableDependentAnimation="True"/>
 							</Storyboard>
 								<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">

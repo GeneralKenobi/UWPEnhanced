@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UWPEnhanced.Helpers;
 using UWPEnhanced.Xaml;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -100,17 +101,36 @@ namespace TestEnvironment
 		
 			s1.Begin();
 		}
-
+		double ration = 1;
 		private void Button_Click_4(object sender, RoutedEventArgs e)
 		{
-			
+			var a = s1.Duration;
+			s1.Pause();
+			//ratio = (s1.GetCurrentTime()/s1.Get;
 			s2.Begin();
 		}
 
-		private void Button_Click_5(object sender, RoutedEventArgs e)
+		private async void Button_Click_5(object sender, RoutedEventArgs e)
 		{
-
+			Stopwatch s = new Stopwatch();
+			s.Start();
+			await Task.Run(() =>	DispatcherHelpers.Run(() => s1.SpeedRatio = 1));
+			s.Stop();
+			Debug.WriteLine($"Elapsed time {s.ElapsedMilliseconds} ms");
 
 		}
 	}
 }
+
+// in total 8s out total 3s
+// 4s gone
+// %completed = 50
+// Speed ratio for out = 2 (total transition in 1.5s, 50% in 0.75s)
+// 1s animate back
+//
+//
+
+
+
+
+
