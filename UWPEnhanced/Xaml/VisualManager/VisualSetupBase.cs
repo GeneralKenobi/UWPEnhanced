@@ -44,6 +44,26 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
+		#region RestartTransition Dependency Property
+
+		/// <summary>
+		/// If true restarts the in/out transition even if the respective transition was the last one ran/is still running.
+		/// False by default.
+		/// </summary>
+		public bool RestartTransition
+		{
+			get => (bool)GetValue(RestartTransitionProperty);
+			set => SetValue(RestartTransitionProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="RestartTransition"/>
+		/// </summary>
+		public static readonly DependencyProperty RestartTransitionProperty =
+			DependencyProperty.Register(nameof(RestartTransition), typeof(bool), typeof(VisualSetupBase), new PropertyMetadata(false));
+
+		#endregion
+
 		#region Setters Dependency Property
 
 		/// <summary>
