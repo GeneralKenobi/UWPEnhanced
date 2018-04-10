@@ -1,33 +1,75 @@
 ﻿using CSharpEnhanced.Synchronization;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UWPEnhanced.Helpers;
 
 namespace UWPEnhanced.Xaml
 {
+	/// <summary>
+	/// Visual setup that will cancel transition in/out upon transition out/in is requested
+	/// </summary>
 	public class VisualSetupDynamic : VisualSetupBase
 	{
+		#region Private Members
+
+		/// <summary>
+		/// Marks the direction of the transition. True for transition in, false for transition out.
+		/// </summary>
+		private bool _TransitionDirection = false;
+
+		/// <summary>
+		/// Event fired when <see cref="TransitionIn(bool)"/> or <see cref="TransitionOut(bool)"/> storyboard finishes
+		/// </summary>
 		protected readonly AutoResetEvent _WaitForStoryboard = new AutoResetEvent(false);
 
+		/// <summary>
+		/// Transition methods upon being called assign their <see cref="CancellationTokenSource"/>s which the next caller
+		/// will use to signal cancellation.
+		/// </summary>
+		private CancellationTokenSource _Cancellation = new CancellationTokenSource();
 
-		private int _CurrentCaller = 0;
+		#endregion
 
+		#region Protected Methods
+
+		/// <summary>
+		/// Method used as callback for for Storyboard.Completed event. Sets the <see cref="_WaitForStoryboard"/>
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected override void SignalStoryboardCompleted(object sender, object e) => _WaitForStoryboard.Set();
 
+		#endregion
 
+		#region Public Methods
+
+		/// <summary>
+		/// Transitions into the state. Cancels transition out operation (if it was happening).
+		/// </summary>
+		/// <param name="useTransitions"></param>
+		/// <returns></returns>
 		public override async Task TransitionIn(bool useTransitions = true)
 		{
-			Stopwatch s = new Stopwatch();
-			s.Start();
-			int id = _CurrentCaller++;
-			_Cancellation.Cancel();
-			//_Cancellation.Dispose();
+			// If there's already a transition in going on just return
+			if(_TransitionDirection)
+			{
+				return;
+			}
+			else
+			{
+				// Otherwise set the transition direction
+				_TransitionDirection = true;
+			}
+
+			// If the CancellationTokenSource from the previous transition call is still alive cancel it
+			_Cancellation?.Cancel();
+
+			// Create a new source for ourselves
 			var cancellation = new CancellationTokenSource();
+
+			// And assign it to the class-wide variable
 			_Cancellation = cancellation;
 
 			if (useTransitions)
@@ -40,60 +82,69 @@ namespace UWPEnhanced.Xaml
 					// If the storyboard is defined
 					if (TransitionInStoryboard != null)
 					{
+						// Mark it for the rest of the Task
 						sbDefined = true;
 
-						// Run it						
+						// Pause the transition out storyboard
 						TransitionOutStoryboard.Pause();
+						// Run the transition in storyboard
 						TransitionInStoryboard?.Begin();
-						s.Stop();
-						Debug.WriteLine($"Sb started: {s.ElapsedMilliseconds}");
 					}
 				});
 
-				// If the UI thread task determined that storyboard was defined, start a task that will wait for the storyboard to finish
+				// If the UI thread task determined that storyboard was defined,
+				// start a task that will wait for the storyboard to finish
 				if (sbDefined)
 				{
-					WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard });
-
-					if(cancellation.IsCancellationRequested)
+					// Wait for either for the storyboard to finish or for the CancellationTokenSource to be cancelled
+					// and if the storyboard finished first apply the setters on UI thread
+					if (WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard }) == 1)
 					{
-						DispatcherHelpers.RunAsync(() =>
+						// If we weren't cancelled remove the reference to the _Cancellation, otherwise the one cancelling
+						// will provide their own CancellationTokenSource therefore removing the reference to ours
+						_Cancellation = null;
+
+						await DispatcherHelpers.RunAsync(() =>
 						{
 							TemporarySetters?.ForEach((x) => x.Set());
 							Setters?.ForEach((x) => x.Set());
 						});
 					}
-					//_StoryboardSemaphore.Wait();
-					//await Task.Run(() => _StoryboardSemaphore.Wait());
 				}
 			}
 
-			if (_CurrentCaller == id)
-			{
-				//// After the storyboard finished apply the setters
-				//DispatcherHelpers.RunAsync(() =>
-				//{
-				//	TemporarySetters?.ForEach((x) => x.Set());
-				//	Setters?.ForEach((x) => x.Set());
-				//});
-				
-			}
 			cancellation.Dispose();
 		}
-		private CancellationTokenSource _Cancellation = new CancellationTokenSource();
 
+		/// <summary>
+		/// Transitions out of the state. Cancels transition in operation (if it was happening).
+		/// </summary>
+		/// <param name="useTransitions"></param>
+		/// <returns></returns>
 		public override async Task TransitionOut(bool useTransitions = true)
 		{
-			Stopwatch s = new Stopwatch();
-			s.Start();
-			++_CurrentCaller;
+			// If there's already a transition out going on just return
+			if (!_TransitionDirection)
+			{
+				return;
+			}
+			else
+			{
+				// Save the transition direction
+				_TransitionDirection = false;
+			}
+
+			// If the CancellationTokenSource from the previous transition call is still alive cancel it
+			_Cancellation?.Cancel();
+
+			// Create a new source for ourselves
 			var cancellation = new CancellationTokenSource();
-			_Cancellation.Cancel();
-			//_Cancellation.Dispose();
+
+			// And assign it to the class-wide variable
 			_Cancellation = cancellation;
 
 			// Reset the temporary setters
-			DispatcherHelpers.RunAsync(() => TemporarySetters.ForEach((x) => x.Reset()));
+			await DispatcherHelpers.RunAsync(() => TemporarySetters.ForEach((x) => x.Reset()));
 
 			if (useTransitions)
 			{
@@ -105,25 +156,33 @@ namespace UWPEnhanced.Xaml
 					// If the storyboard is defined
 					if (TransitionOutStoryboard != null)
 					{
+						// signal it
 						sbDefined = true;
 
-						// Run it
-						//TransitionOutStoryboard?.Begin();
+						// Pause the transition in storyboard
 						TransitionInStoryboard.Pause();
+						// Run the transition out storyboard
 						TransitionOutStoryboard.Begin();
-						s.Stop();
-						Debug.WriteLine($"Sb started: {s.ElapsedMilliseconds}");
 					}
 				});
 
 				// If the UI thread task determined that storyboard was defined, start a task that will wait for the storyboard to finish
 				if (sbDefined)
 				{
-					WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard });					
+					// Wait either for cancellation or storyboard to finish so that this Task doesn't end before the operations
+					// are completed
+					if(WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard })==1)
+					{
+						// If we weren't cancelled remove the reference to the _Cancellation, otherwise the one cancelling
+						// will provide their own CancellationTokenSource therefore removing the reference to ours
+						_Cancellation = null;
+					}
 				}
 			}
 
 			cancellation.Dispose();
 		}
+
+		#endregion
 	}
 }
