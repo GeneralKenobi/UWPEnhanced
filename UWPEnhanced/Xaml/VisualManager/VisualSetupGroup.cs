@@ -143,11 +143,11 @@ namespace UWPEnhanced.Xaml
 		{
 			Debug.WriteLine($"Transitin method called: {s.ElapsedMilliseconds}");
 			var temp = _CurrentSetup;
-			// Assign the new setup
 			_CurrentSetup = setup;
 
+			// Assign the new setup
 			// If this group was in a state
-			if (temp != null)
+			if (temp != null && temp!=setup)
 			{
 				// Transition out of it
 				Debug.WriteLine($"Transitinout out: {s.ElapsedMilliseconds}");
