@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UWPEnhanced.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -47,20 +48,20 @@ namespace UWPEnhanced.Xaml
 		#region RestartTransition Dependency Property
 
 		/// <summary>
-		/// If true restarts the in/out transition even if the respective transition was the last one ran/is still running.
-		/// False by default.
+		/// Defines the desired repeated transition behavior for the given instance
 		/// </summary>
-		public bool RestartTransition
+		public RepeatedTransitionBehavior RepeatedTransition
 		{
-			get => (bool)GetValue(RestartTransitionProperty);
-			set => SetValue(RestartTransitionProperty, value);
+			get => (RepeatedTransitionBehavior)GetValue(RepeatedTransitionProperty);
+			set => SetValue(RepeatedTransitionProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="RestartTransition"/>
+		/// Backing store for <see cref="RepeatedTransition"/>
 		/// </summary>
-		public static readonly DependencyProperty RestartTransitionProperty =
-			DependencyProperty.Register(nameof(RestartTransition), typeof(bool), typeof(VisualSetupBase), new PropertyMetadata(false));
+		public static readonly DependencyProperty RepeatedTransitionProperty =
+			DependencyProperty.Register(nameof(RepeatedTransition), typeof(RepeatedTransitionBehavior),
+				typeof(VisualSetupBase), new PropertyMetadata(RepeatedTransitionBehavior.Skip));
 
 		#endregion
 
@@ -147,6 +148,20 @@ namespace UWPEnhanced.Xaml
 		#region Protected Methods
 
 		/// <summary>
+		/// Returns the value of <see cref="RestartTransition"/> (enters the UI thread)
+		/// </summary>
+		/// <returns></returns>
+		protected RepeatedTransitionBehavior GetRepeatedTransition()
+		{
+			RepeatedTransitionBehavior repeatedTransition = RepeatedTransitionBehavior.Skip;
+
+			// Get on UI thread and get the value
+			DispatcherHelpers.Run(() => repeatedTransition = RepeatedTransition);
+
+			return repeatedTransition;
+		}
+
+		/// <summary>
 		/// Method used to subscribe to storyboards. It will Set the <see cref="_WaitForStoryboardToFinish"/>
 		/// </summary>
 		/// <param name="sender"></param>
@@ -183,9 +198,9 @@ namespace UWPEnhanced.Xaml
 
 		#region Public Methods
 
-		public abstract Task TransitionIn(bool useTransitions = true);
+		public abstract Task TransitionIn(VisualTransitionType type, bool useTransitions = true);
 
-		public abstract Task TransitionOut(bool useTransitions = true);
+		public abstract Task TransitionOut(VisualTransitionType type, bool useTransitions = true);
 
 		#endregion
 	}

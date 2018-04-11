@@ -30,25 +30,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		private CancellationTokenSource _Cancellation = new CancellationTokenSource();
 
-		#endregion
-
-		#region PrivateMethods
-
-		/// <summary>
-		/// Returns the value of <see cref="RestartTransition"/> (enters the UI thread)
-		/// </summary>
-		/// <returns></returns>
-		private bool GetRestartTransitionFromTask()
-		{
-			bool restartTransition = false;
-
-			// Get on UI thread and get the value
-			DispatcherHelpers.Run(() => restartTransition = RestartTransition);
-
-			return restartTransition;
-		}
-
-		#endregion
+		#endregion		
 
 		#region Protected Methods
 
@@ -68,17 +50,13 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="useTransitions"></param>
 		/// <returns></returns>
-		public override async Task TransitionIn(bool useTransitions = true)
+		public override async Task TransitionIn(VisualTransitionType type, bool useTransitions = true)
 		{
 			// If there's already a transition in going on and we're not supposed to restart it, just return
-			if (_TransitionDirection && !GetRestartTransitionFromTask())
+			if (type == VisualTransitionType.ToTheSameSetup &&
+				!GetRepeatedTransition().HasFlag(RepeatedTransitionBehavior.TransitionIn))
 			{
 				return;
-			}
-			else
-			{
-				// Otherwise set the transition direction
-				_TransitionDirection = true;
 			}
 
 			// If the CancellationTokenSource from the previous transition call is still alive cancel it
@@ -139,19 +117,14 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="useTransitions"></param>
 		/// <returns></returns>
-		public override async Task TransitionOut(bool useTransitions = true)
+		public override async Task TransitionOut(VisualTransitionType type, bool useTransitions = true)
 		{
 			// If there's already a transition out going on and we're not supposed to restart it, just return
-			if (!_TransitionDirection && !GetRestartTransitionFromTask())
+			if (type == VisualTransitionType.ToTheSameSetup && !GetRepeatedTransition().HasFlag(RepeatedTransitionBehavior.TransitionOut))
 			{
 				return;
 			}
-			else
-			{
-				// Save the transition direction
-				_TransitionDirection = false;
-			}
-
+			
 			// If the CancellationTokenSource from the previous transition call is still alive cancel it
 			_Cancellation?.Cancel();
 
