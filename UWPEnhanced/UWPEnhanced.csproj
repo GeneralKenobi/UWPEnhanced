@@ -137,11 +137,13 @@
     <Compile Include="Xaml\Setters\Interfaces\IVisualSetter.cs" />
     <Compile Include="Xaml\Setters\PropertyPathSetters\PropertySetter.cs" />
     <Compile Include="Xaml\VisualManager\IVisualSetup.cs" />
+    <Compile Include="Xaml\VisualManager\RepeatedTransitionBehavior.cs" />
     <Compile Include="Xaml\VisualManager\VisualManager.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetup.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetupBase.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetupDynamic.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetupGroup.cs" />
+    <Compile Include="Xaml\VisualManager\VisualTransitionType.cs" />
     <Compile Include="Xaml\VisualTreeHelpers\VisualTreeHelpers.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\ComparisonType.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\DataTriggerCommand\DataTriggerCommand.cs" />

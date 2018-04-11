@@ -109,39 +109,39 @@
 			<xaml:VisualSetupGroup Name="secondGroup">
 					<xaml:VisualSetup Name="Normal">						
 					</xaml:VisualSetup>
-					<xaml:VisualSetupDynamic x:Name="test" Name="test" RestartTransition="True">
-						<xaml:VisualSetupDynamic.TemporarySetters>
+					<xaml:VisualSetup x:Name="test" Name="test" RepeatedTransition="Both">
+						<xaml:VisualSetup.TemporarySetters>
 							<xaml:TemporaryPropertySetter Target="{x:Bind RootGrid, Mode=OneTime}" Property="Background">						
 								<SolidColorBrush Color="Black"/>						
 							</xaml:TemporaryPropertySetter>
-						</xaml:VisualSetupDynamic.TemporarySetters>
-						<xaml:VisualSetupDynamic.TransitionInStoryboard>
+						</xaml:VisualSetup.TemporarySetters>
+						<xaml:VisualSetup.TransitionInStoryboard>
 						<Storyboard x:Name="sb" BeginTime="0:0:0">
 							<ColorAnimation Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
 							To="Pink" Duration="0:0:1"/>												
 						</Storyboard>
-					</xaml:VisualSetupDynamic.TransitionInStoryboard>
-						<xaml:VisualSetupDynamic.TransitionOutStoryboard>
+					</xaml:VisualSetup.TransitionInStoryboard>
+						<xaml:VisualSetup.TransitionOutStoryboard>
 							<Storyboard BeginTime="0:0:0">
 								<ColorAnimation Storyboard.TargetName="rec"
 							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
 							To="Blue" Duration="0:0:1" BeginTime="0:0:0"/>
 							</Storyboard>
-						</xaml:VisualSetupDynamic.TransitionOutStoryboard>
-					</xaml:VisualSetupDynamic>				
+						</xaml:VisualSetup.TransitionOutStoryboard>
+					</xaml:VisualSetup>				
 			</xaml:VisualSetupGroup>
 			<xaml:VisualSetupGroup>
 
-					<xaml:VisualSetupDynamic Name="test" RestartTransition="True">
-						<xaml:VisualSetupDynamic.TransitionInStoryboard>
+					<xaml:VisualSetup Name="test" RepeatedTransition="Both">
+						<xaml:VisualSetup.TransitionInStoryboard>
 							<Storyboard >
 								<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
 					To="500" Duration="0:0:2.5" EnableDependentAnimation="True"/>
 							</Storyboard>
 							
-						</xaml:VisualSetupDynamic.TransitionInStoryboard>
-						<xaml:VisualSetupDynamic.TransitionOutStoryboard>
+						</xaml:VisualSetup.TransitionInStoryboard>
+						<xaml:VisualSetup.TransitionOutStoryboard>
 							<Storyboard >
 								<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
 					To="0" Duration="0:0:2.5" EnableDependentAnimation="True"/>
@@ -154,8 +154,8 @@
 									</DiscreteObjectKeyFrame.Value>
 								</DiscreteObjectKeyFrame>
 								</ObjectAnimationUsingKeyFrames>-->						
-						</xaml:VisualSetupDynamic.TransitionOutStoryboard>
-					</xaml:VisualSetupDynamic>
+						</xaml:VisualSetup.TransitionOutStoryboard>
+					</xaml:VisualSetup>
 				</xaml:VisualSetupGroup>
 				<!--<xaml:VisualSetupGroup>
 					<xaml:VisualSetup Name="test"/>

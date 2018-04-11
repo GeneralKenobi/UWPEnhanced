@@ -49,8 +49,15 @@ namespace UWPEnhanced.Xaml
 		/// and only one will be executed at a time, the rest will be blocked and executed in FIFO order.
 		/// </summary>
 		/// <paramref name="useTransitions">If true, use defined storyboard animations in the transition</paramref>
-		public override async Task TransitionIn(bool useTransitions = true)
-		{			
+		public override async Task TransitionIn(VisualTransitionType type, bool useTransitions = true)
+		{
+			// If it's a transition to self and the transition in should be omitted return
+			if(type == VisualTransitionType.ToTheSameSetup &&
+				!GetRepeatedTransition().HasFlag(RepeatedTransitionBehavior.TransitionIn))
+			{
+				return;
+			}
+
 			// Get into the semaphore
 			await _TransitionSemaphore.WaitAsync();		
 		
@@ -94,8 +101,15 @@ namespace UWPEnhanced.Xaml
 		/// and only one will be executed at a time, the rest will be blocked and executed in FIFO order.
 		/// </summary>
 		/// <paramref name="useTransitions">If true, use defined storyboard animations in the transition</paramref>
-		public override async Task TransitionOut(bool useTransitions = true)
+		public override async Task TransitionOut(VisualTransitionType type, bool useTransitions = true)
 		{
+			// If it's a transition to self and the transition out should be omitted return
+			if (type == VisualTransitionType.ToTheSameSetup &&
+				!GetRepeatedTransition().HasFlag(RepeatedTransitionBehavior.TransitionOut))
+			{
+				return;
+			}
+
 			// Get into the semaphore
 			await _TransitionSemaphore.WaitAsync();
 
