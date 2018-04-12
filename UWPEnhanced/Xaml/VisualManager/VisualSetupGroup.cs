@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UWPEnhanced.Helpers;
+using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
@@ -14,8 +15,20 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Class which handles <see cref="VisualSetup"/>s associated with a given <see cref="DependencyObject"/>
 	/// </summary>
-	public class VisualSetupGroup : DependencyObjectCollectionOfT<IVisualSetup>
+	public class VisualSetupGroup : AttachableDependencyCollectionOfT<IVisualSetup>
 	{
+		#region Constructor
+
+		/// <summary>
+		/// Default Constructor
+		/// </summary>
+		public VisualSetupGroup()
+		{
+			Triggers = new VisualAttachmentCollection<VisualTransition>();
+		}
+
+		#endregion
+
 		#region Private Members
 
 		/// <summary>
@@ -45,6 +58,26 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
+		#region Triggers Dependency Property
+
+		/// <summary>
+		/// Collection of triggers for this group
+		/// </summary>
+		public VisualAttachmentCollection<VisualTransition> Triggers
+		{
+			get => (VisualAttachmentCollection<VisualTransition>)GetValue(TriggersProperty);
+			set => SetValue(TriggersProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="Triggers"/>
+		/// </summary>
+		public static readonly DependencyProperty TriggersProperty =
+			DependencyProperty.Register(nameof(Triggers), typeof(VisualAttachmentCollection<VisualTransition>),
+			typeof(VisualSetupGroup), new PropertyMetadata(null, new PropertyChangedCallback(TriggersChanged)));
+
+		#endregion
+
 		#region Public Properties
 
 		/// <summary>
@@ -55,6 +88,20 @@ namespace UWPEnhanced.Xaml
 		#endregion
 
 		#region Protected Methods
+
+		/// <summary>
+		/// After attaching self attaches the <see cref="Triggers"/> collection
+		/// </summary>
+		/// <param name="obj"></param>
+		public override void Attach(DependencyObject obj)
+		{
+			base.Attach(obj);
+
+			if(IsAttached && Triggers != null)
+			{
+				Triggers.Attach(AttachedTo);
+			}
+		}
 
 		/// <summary>
 		/// Checks the new item and adds it to the visual group
@@ -79,6 +126,37 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
+		#region Private Methods
+
+		/// <summary>
+		/// Callback for changes in <see cref="TriggersProperty"/>. Detatches old collections and attaches new ones
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		private static void TriggersChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+		{
+			if (sender is VisualSetupGroup group)
+			{
+				if(args.OldValue is VisualAttachmentCollection<IVisualTrigger> oldCollection)
+				{
+					oldCollection.Detach();
+				}
+
+				if (args.NewValue is VisualAttachmentCollection<IVisualTrigger> newCollection)
+				{
+
+					if (group.IsAttached)
+					{
+						newCollection.Attach(group.AttachedTo);
+					}
+				}
+			}
+		}
+
+		#endregion
+
+		
+
 		#region Public Methods
 
 		/// <summary>
@@ -95,7 +173,7 @@ namespace UWPEnhanced.Xaml
 		public Task<bool> GoToSetup(string setup, bool useTransitions = true)
 		{			
 			TaskCompletionSource<bool> task = new TaskCompletionSource<bool>();
-						
+			
 			IVisualSetup designatedSetup = null;
 
 			// If the new setup is null or whitespace then it's simply a transition out of current state so designatedSetup
@@ -113,7 +191,7 @@ namespace UWPEnhanced.Xaml
 			{
 				task.SetResult(false);
 			}
-						
+			
 			return task.Task;
 		}
 

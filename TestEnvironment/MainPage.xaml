@@ -44,7 +44,9 @@
 
 				<xaml:VisualManager.VisualSetups>
 					<xaml:VisualSetupGroup>
+						
 						<xaml:VisualSetupDynamic >
+						
 							<xaml:VisualSetupDynamic.TemporarySetters>
 								<!--<xaml:TemporaryPropertySetter Target="{x:Bind RootGrid, Mode=OneTime}" Property="Background">						
 							<SolidColorBrush Color="Black"/>						
@@ -107,7 +109,12 @@
 
 		<xaml:VisualManager.VisualSetups>
 			<xaml:VisualSetupGroup Name="secondGroup">
-					<xaml:VisualSetup Name="Normal">						
+					
+
+					<xaml:VisualSetup Name="Normal">
+						<xaml:VisualSetup.TransitionInStoryboard>
+							
+						</xaml:VisualSetup.TransitionInStoryboard>
 					</xaml:VisualSetup>
 					<xaml:VisualSetup x:Name="test" Name="test" RepeatedTransition="Both">
 						<xaml:VisualSetup.TemporarySetters>

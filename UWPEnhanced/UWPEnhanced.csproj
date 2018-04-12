@@ -145,6 +145,8 @@
     <Compile Include="Xaml\VisualManager\VisualSetupGroup.cs" />
     <Compile Include="Xaml\VisualManager\VisualTransitionType.cs" />
     <Compile Include="Xaml\VisualTreeHelpers\VisualTreeHelpers.cs" />
+    <Compile Include="Xaml\VisualTriggers\TriggerCollection\VisualTransition.cs" />
+    <Compile Include="Xaml\VisualTriggers\TriggerCollection\VisualTransitionTriggeredEventArgs.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\ComparisonType.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\DataTriggerCommand\DataTriggerCommand.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\VisualDataTrigger.cs" />
