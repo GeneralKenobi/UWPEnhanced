@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UWPEnhanced.Xaml
+﻿namespace UWPEnhanced.Xaml
 {
 	/// <summary>
 	/// Type of transition that may occur in <see cref="IVisualSetup"/>

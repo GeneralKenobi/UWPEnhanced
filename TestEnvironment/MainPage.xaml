@@ -39,272 +39,66 @@
 
 			<Border Grid.Row="0" Name="rec" Background="Blue" Width="100" Height="50" HorizontalAlignment="Center">
 				<Border.RenderTransform>
-					<TranslateTransform Y="0" x:Name="rt"/>
+					<ScaleTransform  x:Name="rt"/>
 				</Border.RenderTransform>
-
-				<xaml:VisualManager.VisualSetups>
-					<xaml:VisualSetupGroup>
-						
-						<xaml:VisualSetupDynamic >
-						
-							<xaml:VisualSetupDynamic.TemporarySetters>
-								<!--<xaml:TemporaryPropertySetter Target="{x:Bind RootGrid, Mode=OneTime}" Property="Background">						
-							<SolidColorBrush Color="Black"/>						
-						</xaml:TemporaryPropertySetter>-->
-							</xaml:VisualSetupDynamic.TemporarySetters>
-							<xaml:VisualSetupDynamic.TransitionInStoryboard>
-								<Storyboard Duration="0:0:3" BeginTime="0:0:0">
-									<ColorAnimation Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-							To="Pink" Duration="0:0:2" BeginTime="0:0:1"/>
-									<DoubleAnimation Storyboard.TargetName="rec"
-								Storyboard.TargetProperty="Height"
-								EnableDependentAnimation="True"
-								To="300" Duration="0:0:3"/>
-									<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-								<DiscreteObjectKeyFrame KeyTime="0:0:2">
-									<DiscreteObjectKeyFrame.Value>
-										<Color>#ff0000</Color>
-									</DiscreteObjectKeyFrame.Value>
-								</DiscreteObjectKeyFrame>
-							</ObjectAnimationUsingKeyFrames>-->
-								</Storyboard>
-							</xaml:VisualSetupDynamic.TransitionInStoryboard>
-							<xaml:VisualSetupDynamic.TransitionOutStoryboard>
-								<Storyboard BeginTime="0:0:0">
-									<ColorAnimation Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-							To="Blue" Duration="0:0:2" BeginTime="0:0:0"/>
-									<DoubleAnimation Storyboard.TargetName="rec"
-								Storyboard.TargetProperty="(Border.Height)"
-								EnableDependentAnimation="True"
-								To="100" Duration="0:0:2"/>
-									<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-								<DiscreteObjectKeyFrame KeyTime="0:0:2">
-									<DiscreteObjectKeyFrame.Value>
-										<Color>#ff0000</Color>
-									</DiscreteObjectKeyFrame.Value>
-								</DiscreteObjectKeyFrame>
-							</ObjectAnimationUsingKeyFrames>-->
-								</Storyboard>
-							</xaml:VisualSetupDynamic.TransitionOutStoryboard>
-						</xaml:VisualSetupDynamic>
-					</xaml:VisualSetupGroup>
-				</xaml:VisualManager.VisualSetups>
 			</Border>
 
-			
-		<xaml:VisualAttachments.AttachedVisuals>
-			<!--<xaml:PropertySetter x:Name="setter" Property="Width" Value="100" Target="{x:Bind rec}"
-			test="{Binding ElementName=rec, Path=Width, Mode=TwoWay}"/>-->
-			<!--<xaml:TemporaryBindablePropertySetter x:Name="setter2" Value="1" Property="{Binding ElementName=rec, Path=(Grid.Row), Mode=OneWay}"/>
-			<xaml:PropertySetter x:Name="setter" Target="{x:Bind rec, Mode=OneTime}" Property="Width" Value="100"/>
-			<xaml:TemporaryPropertySetter x:Name="setter3" Target="{x:Bind rec, Mode=TwoWay}" Property="HorizontalAlignment" Value="Left"/>-->
-			<!--<xaml:BindablePropertySetter x:Name="setter2"  Property="{Binding ElementName=rec, Path=(Grid.Row), Mode=TwoWay}" Value="1"/>-->
-			
-		
-		</xaml:VisualAttachments.AttachedVisuals>
+			<xaml:VisualManager.VisualSetups>
+				<xaml:VisualSetupGroup>
+					<xaml:VisualSetupGroup.Triggers>
+						<xaml:VisualTransitionCollection>
+							<xaml:VisualTransition TransitionTo="test">
+								<xaml:BindableVisualPointerTrigger Target="{x:Bind rec}" PointerEvent="PointerEntered"/>
+							</xaml:VisualTransition>
+							<xaml:VisualTransition>
+								<xaml:BindableVisualPointerTrigger Target="{x:Bind rec}" PointerEvent="PointerExited"/>
+							</xaml:VisualTransition>
+						</xaml:VisualTransitionCollection>
+					</xaml:VisualSetupGroup.Triggers>
 
-		<xaml:VisualManager.VisualSetups>
-			<xaml:VisualSetupGroup Name="secondGroup">
-					
+					<xaml:VisualSetupDynamic Name="test">
+						<xaml:VisualSetupDynamic.TransitionInStoryboard>
+								<Storyboard>
+									<DoubleAnimation Storyboard.TargetName="rt"
+								Storyboard.TargetProperty="ScaleX"
+								To="0.5" Duration="0:0:0.5">
+										<DoubleAnimation.EasingFunction>
+											<SineEase EasingMode="EaseInOut"/>
+										</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+								<DoubleAnimation Storyboard.TargetName="rt"
+								Storyboard.TargetProperty="ScaleY"
+								To="0.5" Duration="0:0:0.5">
+									<DoubleAnimation.EasingFunction>
+										<SineEase EasingMode="EaseInOut"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+								</Storyboard>
+							</xaml:VisualSetupDynamic.TransitionInStoryboard>
+						<xaml:VisualSetupDynamic.TransitionOutStoryboard>
+								<Storyboard>
+									<DoubleAnimation Storyboard.TargetName="rt"
+								Storyboard.TargetProperty="ScaleX"
+								To="1" Duration="0:0:0.5">
+										<DoubleAnimation.EasingFunction>
+											<SineEase EasingMode="EaseInOut"/>
+										</DoubleAnimation.EasingFunction>
+									</DoubleAnimation>
+									<DoubleAnimation Storyboard.TargetName="rt"
+								Storyboard.TargetProperty="ScaleY"
+								To="1" Duration="0:0:0.5">
+										<DoubleAnimation.EasingFunction>
+											<SineEase EasingMode="EaseInOut"/>
+										</DoubleAnimation.EasingFunction>
+									</DoubleAnimation>
+								</Storyboard>								
+							</xaml:VisualSetupDynamic.TransitionOutStoryboard>
+						</xaml:VisualSetupDynamic>
+				</xaml:VisualSetupGroup>
+			</xaml:VisualManager.VisualSetups>
 
-					<xaml:VisualSetup Name="Normal">
-						<xaml:VisualSetup.TransitionInStoryboard>
-							
-						</xaml:VisualSetup.TransitionInStoryboard>
-					</xaml:VisualSetup>
-					<xaml:VisualSetup x:Name="test" Name="test" RepeatedTransition="Both">
-						<xaml:VisualSetup.TemporarySetters>
-							<xaml:TemporaryPropertySetter Target="{x:Bind RootGrid, Mode=OneTime}" Property="Background">						
-								<SolidColorBrush Color="Black"/>						
-							</xaml:TemporaryPropertySetter>
-						</xaml:VisualSetup.TemporarySetters>
-						<xaml:VisualSetup.TransitionInStoryboard>
-						<Storyboard x:Name="sb" BeginTime="0:0:0">
-							<ColorAnimation Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-							To="Pink" Duration="0:0:1"/>												
-						</Storyboard>
-					</xaml:VisualSetup.TransitionInStoryboard>
-						<xaml:VisualSetup.TransitionOutStoryboard>
-							<Storyboard BeginTime="0:0:0">
-								<ColorAnimation Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-							To="Blue" Duration="0:0:1" BeginTime="0:0:0"/>
-							</Storyboard>
-						</xaml:VisualSetup.TransitionOutStoryboard>
-					</xaml:VisualSetup>				
-			</xaml:VisualSetupGroup>
-			<xaml:VisualSetupGroup>
-
-					<xaml:VisualSetup Name="test" RepeatedTransition="Both">
-						<xaml:VisualSetup.TransitionInStoryboard>
-							<Storyboard >
-								<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
-					To="500" Duration="0:0:2.5" EnableDependentAnimation="True"/>
-							</Storyboard>
-							
-						</xaml:VisualSetup.TransitionInStoryboard>
-						<xaml:VisualSetup.TransitionOutStoryboard>
-							<Storyboard >
-								<DoubleAnimation Storyboard.TargetName="rt" Storyboard.TargetProperty="Y"
-					To="0" Duration="0:0:2.5" EnableDependentAnimation="True"/>
-							</Storyboard>
-								<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="rec"
-							Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-								<DiscreteObjectKeyFrame KeyTime="0:0:2">
-									<DiscreteObjectKeyFrame.Value>
-										<Color>#ff0000</Color>
-									</DiscreteObjectKeyFrame.Value>
-								</DiscreteObjectKeyFrame>
-								</ObjectAnimationUsingKeyFrames>-->						
-						</xaml:VisualSetup.TransitionOutStoryboard>
-					</xaml:VisualSetup>
-				</xaml:VisualSetupGroup>
-				<!--<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normall"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>-->
-				<!--<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>
-				<xaml:VisualSetupGroup>
-					<xaml:VisualSetup Name="test"/>
-					<xaml:VisualSetup Name="Normal"/>
-				</xaml:VisualSetupGroup>-->
-		</xaml:VisualManager.VisualSetups>
-		
-		
-	</Grid>
+		</Grid>
 
 	</StackPanel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-		Name="target"
-		VerticalAlignment="Stretch"
-		>
-
-		
-
-		<controls:Icon BorderThickness="1" BorderBrush="Gray"
-			Width="50" Height="50" FontSize="30"
-			Command="{x:Bind MenuLeft, Mode=OneWay}"
-			Glyph="&#xE72B;"
-			Margin="-99 0 0 0"/>
-		<controls:Icon BorderThickness="1" BorderBrush="Gray"
-			Width="50" Height="50" FontSize="30"
-			Command="{x:Bind MenuTop, Mode=OneWay}"
-			Glyph="&#xE74A;"
-			Margin="0 -99 0 0"/>
-		<controls:Icon BorderThickness="1" BorderBrush="Gray"
-			Width="50" Height="50" FontSize="30"
-			Command="{x:Bind MenuRight, Mode=OneWay}"
-			Glyph="&#xE72A;"
-			Margin="0 0 -98 0"/>
-		<controls:Icon BorderThickness="1" BorderBrush="Gray"
-			Width="50" Height="50" FontSize="30"
-			Command="{x:Bind MenuBottom, Mode=OneWay}"
-			Glyph="&#xE74B;"
-			Margin="0 0 0 -98"/>
-		<controls:Icon BorderThickness="1" BorderBrush="Gray"
-			Width="50" Height="50" FontSize="30"
-			Command="{x:Bind MenuBottom, Mode=OneWay}"
-			Glyph="&#xE8BB;"/>
-		<controls:Menu Name="menu"
-		IconsPanelLength="100"
-		ContentLength="100">
-		</controls:Menu>
-	</Grid>-->
 
 </Page>

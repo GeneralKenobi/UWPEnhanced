@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
@@ -38,7 +34,27 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty TransitionToProperty =
 			DependencyProperty.Register(nameof(TransitionTo), typeof(string),
-			typeof(VisualTransition), new PropertyMetadata(default(string)));
+			typeof(VisualTransition), new PropertyMetadata(string.Empty));
+
+		#endregion
+
+		#region UseTransitions Dependency Property
+
+		/// <summary>
+		/// Determines whether to use transitions during the instance transition. Default value is true
+		/// </summary>
+		public bool UseTransitions
+		{
+			get => (bool)GetValue(UseTransitionsProperty);
+			set => SetValue(UseTransitionsProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="UseTransitions"/>
+		/// </summary>
+		public static readonly DependencyProperty UseTransitionsProperty =
+			DependencyProperty.Register(nameof(UseTransitions), typeof(bool),
+			typeof(VisualTransition), new PropertyMetadata(true));
 
 		#endregion
 
@@ -81,7 +97,7 @@ namespace UWPEnhanced.Xaml
 		/// <param name="args"></param>
 		private void TriggerFired(object sender, EventArgs args) =>
 			TransitionTriggered?.Invoke(this, new VisualTransitionTriggeredEventArgs(
-				sender as IVisualTrigger, TransitionTo));
+				sender as IVisualTrigger, TransitionTo, UseTransitions));
 
 		#endregion
 	}

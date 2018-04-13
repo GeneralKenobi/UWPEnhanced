@@ -15,7 +15,7 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Class which handles <see cref="VisualSetup"/>s associated with a given <see cref="DependencyObject"/>
 	/// </summary>
-	public class VisualSetupGroup : AttachableDependencyCollectionOfT<IVisualSetup>
+	public class VisualSetupGroup : DependencyObjectCollectionOfT<IVisualSetup>
 	{
 		#region Constructor
 
@@ -24,7 +24,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public VisualSetupGroup()
 		{
-			Triggers = new VisualAttachmentCollection<VisualTransition>();
+			Triggers = new VisualTransitionCollection();
 		}
 
 		#endregion
@@ -63,9 +63,9 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Collection of triggers for this group
 		/// </summary>
-		public VisualAttachmentCollection<VisualTransition> Triggers
+		public VisualTransitionCollection Triggers
 		{
-			get => (VisualAttachmentCollection<VisualTransition>)GetValue(TriggersProperty);
+			get => (VisualTransitionCollection)GetValue(TriggersProperty);
 			set => SetValue(TriggersProperty, value);
 		}
 
@@ -73,7 +73,7 @@ namespace UWPEnhanced.Xaml
 		/// Backing store for <see cref="Triggers"/>
 		/// </summary>
 		public static readonly DependencyProperty TriggersProperty =
-			DependencyProperty.Register(nameof(Triggers), typeof(VisualAttachmentCollection<VisualTransition>),
+			DependencyProperty.Register(nameof(Triggers), typeof(VisualTransitionCollection),
 			typeof(VisualSetupGroup), new PropertyMetadata(null, new PropertyChangedCallback(TriggersChanged)));
 
 		#endregion
@@ -88,20 +88,6 @@ namespace UWPEnhanced.Xaml
 		#endregion
 
 		#region Protected Methods
-
-		/// <summary>
-		/// After attaching self attaches the <see cref="Triggers"/> collection
-		/// </summary>
-		/// <param name="obj"></param>
-		public override void Attach(DependencyObject obj)
-		{
-			base.Attach(obj);
-
-			if(IsAttached && Triggers != null)
-			{
-				Triggers.Attach(AttachedTo);
-			}
-		}
 
 		/// <summary>
 		/// Checks the new item and adds it to the visual group
@@ -137,25 +123,19 @@ namespace UWPEnhanced.Xaml
 		{
 			if (sender is VisualSetupGroup group)
 			{
-				if(args.OldValue is VisualAttachmentCollection<IVisualTrigger> oldCollection)
+				if(args.OldValue is VisualTransitionCollection oldCollection)
 				{
-					oldCollection.Detach();
+					oldCollection.TransitionTriggered -= group.TriggerCallback;
 				}
 
-				if (args.NewValue is VisualAttachmentCollection<IVisualTrigger> newCollection)
+				if (args.NewValue is VisualTransitionCollection newCollection)
 				{
-
-					if (group.IsAttached)
-					{
-						newCollection.Attach(group.AttachedTo);
-					}
+					newCollection.TransitionTriggered += group.TriggerCallback;
 				}
 			}
 		}
 
 		#endregion
-
-		
 
 		#region Public Methods
 
@@ -207,6 +187,8 @@ namespace UWPEnhanced.Xaml
 		#endregion
 
 		#region Private Methods
+
+		private void TriggerCallback(object sender, VisualTransitionTriggeredEventArgs e) => GoToSetup(e.TransitionTo, e.UseTransitions);
 
 		/// <summary>
 		/// Transitions to the given <see cref="IVisualSetup"/>. Caller should ensure that the <see cref="VisualSetupBase"/> is in

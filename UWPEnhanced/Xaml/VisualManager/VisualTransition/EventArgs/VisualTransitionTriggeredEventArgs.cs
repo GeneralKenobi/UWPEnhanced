@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UWPEnhanced.Xaml
 {
@@ -22,13 +18,19 @@ namespace UWPEnhanced.Xaml
 		public string TransitionTo { get; private set; }
 
 		/// <summary>
+		/// Determines whether to use transitions in the process
+		/// </summary>
+		public bool UseTransitions { get; private set; }
+
+		/// <summary>
 		/// Default constructor, requires parameters
 		/// </summary>
 		/// <exception cref="ArgumentNullException">For <paramref name="trigger"/></exception>
-		public VisualTransitionTriggeredEventArgs(IVisualTrigger trigger, string transitionTo)
+		public VisualTransitionTriggeredEventArgs(IVisualTrigger trigger, string transitionTo, bool useTransitions)
 		{
 			TriggeredEvent = trigger ?? throw new ArgumentNullException(nameof(trigger));
 			TransitionTo = transitionTo;
+			UseTransitions = useTransitions;
 		}
 	}
 }

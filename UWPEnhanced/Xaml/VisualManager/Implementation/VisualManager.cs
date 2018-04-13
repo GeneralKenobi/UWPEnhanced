@@ -113,7 +113,9 @@ namespace UWPEnhanced.Xaml
 		#region Public Methods
 
 		/// <summary>
-		/// 
+		/// Goes to the given <see cref="IVisualSetup"/> in the given <see cref="VisualSetupGroup"/>. Returns a <see cref="Task"/>
+		/// that will complete when the transition is finished. If the <see cref="IVisualSetup"/> was found, it will be chosen
+		/// as the current setup immediately. The <see cref="Task"/> will have true result if the transition was successful
 		/// </summary>
 		/// <param name="element"></param>
 		/// <param name="setup"></param>
