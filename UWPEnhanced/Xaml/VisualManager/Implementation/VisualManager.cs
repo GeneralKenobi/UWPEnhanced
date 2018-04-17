@@ -9,13 +9,9 @@ using Windows.UI.Xaml;
 namespace UWPEnhanced.Xaml
 {
 	/// <summary>
-	/// Visual setups are one step above visual states. They allow for improved management of <see cref="FrameworkElement"/>'s
+	/// Visual setups are one step above visual states. They enable improved management of <see cref="FrameworkElement"/>'s
 	/// visuals - with use of <see cref="VisualState"/>s, transition into and out of state animations,
 	/// intermediate transition states, chained temporary states and more.
-	/// <para/>
-	/// Important note: Defining many <see cref="VisualSetupGroup"/>s for one <see cref="FrameworkElement"/> with overlapping
-	/// <see cref="VisualSetup"/>s may cause significant delay in transitions. It is recommended TODO: determine the bearable number
-	/// of setups.
 	/// </summary>
 	public class VisualManager
 	{
@@ -25,13 +21,6 @@ namespace UWPEnhanced.Xaml
 		/// Default constructor, hidden
 		/// </summary>
 		private VisualManager() { }
-
-		#endregion
-
-		#region Private Static Members
-
-		private static readonly Dictionary<FrameworkElement, VisualSetupGroup> _RegisteredVisualSetups =
-			new Dictionary<FrameworkElement, VisualSetupGroup>();
 
 		#endregion
 
