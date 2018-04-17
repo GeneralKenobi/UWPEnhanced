@@ -11,8 +11,26 @@
 	Name="page">
 
 
+	<Grid Name="RootGrid">
+		<Grid.Resources>
+			<Storyboard x:Key="storyb">
+				<DoubleAnimation Storyboard.TargetName="trans"
+				Storyboard.TargetProperty="Y" From="0" To="300" Duration="0:0:1"/>
+			</Storyboard>
+		</Grid.Resources>
 
-	<StackPanel>
+		<controls:Icon Glyph="&#xE713;" Width="50" Height="50"
+		Background="Red">
+			<controls:Icon.RenderTransform>
+				<TranslateTransform x:Name="trans"/>
+			</controls:Icon.RenderTransform>
+		</controls:Icon>
+	</Grid>
+
+
+
+
+	<!--<StackPanel>
 		<Button Content="Test" Click="Button_Click"/>
 		<Button Content="Test2" Click="Button_Click_1"/>
 		<Button Content="Test3" Click="Button_Click_2"/>
@@ -99,6 +117,6 @@
 
 		</Grid>
 
-	</StackPanel>
+	</StackPanel>-->
 
 </Page>

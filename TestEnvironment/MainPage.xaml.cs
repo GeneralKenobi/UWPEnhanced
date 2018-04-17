@@ -49,9 +49,21 @@ namespace TestEnvironment
 		private async void t2()
 		{
 			await Task.Delay(1000);
+			var sb = (RootGrid.Resources["storyb"] as Storyboard);
 
-			s1 = (RootGrid.Resources["Anim1"] as Storyboard);
-			s2 = (RootGrid.Resources["Anim2"] as Storyboard);
+			//sb.Completed += (s, e) => (s as Storyboard).Pause();
+			sb.Begin();
+			//await Task.Delay(1000);
+			//sb.Pause();
+
+			//sb.Begin();
+			await Task.Delay(2000);
+			sb.AutoReverse = true;
+			sb.Begin();
+			sb.Seek(TimeSpan.FromSeconds(1));
+			//sb.Resume();
+			//s1 = (RootGrid.Resources["Anim1"] as Storyboard);
+			//s2 = (RootGrid.Resources["Anim2"] as Storyboard);
 		}
 
 		Storyboard s1 = null;
@@ -70,53 +82,53 @@ namespace TestEnvironment
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			var task = VisualManager.GoToSetup(RootGrid, "test");
-			Task.Run(() =>
-			{
-				Debug.WriteLine($"Finished transition to test; {task.Result}");
-				
-			});
+			//var task = VisualManager.GoToSetup(RootGrid, "test");
+			//Task.Run(() =>
+			//{
+			//	Debug.WriteLine($"Finished transition to test; {task.Result}");
+			//	
+			//});
 		}
 
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
-			var task = VisualManager.GoToSetup(RootGrid, "Normal");
-			Task.Run(() =>
-			{
-				Debug.WriteLine(task.Result);
-			});
+			//var task = VisualManager.GoToSetup(RootGrid, "Normal");
+			////Task.Run(() =>
+			//{
+			//	Debug.WriteLine(task.Result);
+			//});
 		}
 
 		private async void Button_Click_2(object sender, RoutedEventArgs e)
 		{
-			var a = VisualManager.GoToSetup(RootGrid, string.Empty);
-			Task.Run(() =>
-			{
-				Debug.WriteLine($"Finished transition out; {a.Result}");
-			});
+			//var a = VisualManager.GoToSetup(RootGrid, string.Empty);
+			//Task.Run(() =>
+			//{
+			//	Debug.WriteLine($"Finished transition out; {a.Result}");
+			//});
 		}
 
 		private void Button_Click_3(object sender, RoutedEventArgs e)
 		{
 		
-			s1.Begin();
+			//s1.Begin();
 		}
 		double ration = 1;
 		private void Button_Click_4(object sender, RoutedEventArgs e)
 		{
-			var a = s1.Duration;
-			s1.Pause();
-			//ratio = (s1.GetCurrentTime()/s1.Get;
-			s2.Begin();
+			//var a = s1.Duration;
+			//s1.Pause();
+			////ratio = (s1.GetCurrentTime()/s1.Get;
+			//s2.Begin();
 		}
 
 		private async void Button_Click_5(object sender, RoutedEventArgs e)
 		{
-			Stopwatch s = new Stopwatch();
-			s.Start();
-			await Task.Run(() =>	DispatcherHelpers.Run(() => s1.SpeedRatio = 1));
-			s.Stop();
-			Debug.WriteLine($"Elapsed time {s.ElapsedMilliseconds} ms");
+			//Stopwatch s = new Stopwatch();
+			//s.Start();
+			//await Task.Run(() =>	DispatcherHelpers.Run(() => s1.SpeedRatio = 1));
+			//s.Stop();
+			//Debug.WriteLine($"Elapsed time {s.ElapsedMilliseconds} ms");
 
 		}
 	}
