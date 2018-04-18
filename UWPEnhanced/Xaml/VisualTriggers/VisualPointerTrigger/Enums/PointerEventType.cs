@@ -10,25 +10,23 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Enum denoting the type of the pointer event type, these correspond to pointer events on <see cref="UIElement"/>
 	/// </summary>
+	[Flags]
 	public enum PointerEventType
 	{
-		// Default value - none
-		None = 0,
-
 		PointerCanceled = 1,
 
 		PointerCaptureLost = 2,
 
-		PointerEntered = 3,
+		PointerEntered = 4,
 
-		PointerExited = 4,
+		PointerExited = 8,
 
-		PointerMoved = 5,
+		PointerMoved = 16,
 
-		PointerPressed = 6,
+		PointerPressed = 32,
 
-		PointerReleased = 7,
+		PointerReleased = 64,
 
-		PointerWheelChanged = 8,
+		PointerWheelChanged = 128,
 	}
 }
