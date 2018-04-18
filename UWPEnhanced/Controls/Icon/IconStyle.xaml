@@ -56,12 +56,8 @@
 
 										<!-- Transition out (to null state) -->
 										<xaml:VisualTransition>
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerExited"
-												Target="{Binding ElementName=RootGrid}"/>
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerCanceled"
-												Target="{Binding ElementName=RootGrid}"/>
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerCaptureLost"
-												Target="{Binding ElementName=RootGrid}"/>
+											<xaml:BindableVisualPointerTrigger Target="{Binding ElementName=RootGrid}"
+												PointerEvent="PointerExited, PointerCanceled, PointerCaptureLost"/>											
 										</xaml:VisualTransition>
 
 									</xaml:VisualTransitionCollection>
@@ -108,14 +104,8 @@
 
 										<!-- Transition out of state (to null state) -->
 										<xaml:VisualTransition>
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerReleased"
-												Target="{Binding ElementName=RootGrid}"/>
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerExited"
-												Target="{Binding ElementName=RootGrid}"/>
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerCanceled"
-												Target="{Binding ElementName=RootGrid}"/>
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerCaptureLost"
-												Target="{Binding ElementName=RootGrid}"/>
+											<xaml:BindableVisualPointerTrigger Target="{Binding ElementName=RootGrid}"
+												PointerEvent="PointerReleased, PointerExited, PointerCanceled, PointerCaptureLost"/>
 										</xaml:VisualTransition>
 
 									</xaml:VisualTransitionCollection>
