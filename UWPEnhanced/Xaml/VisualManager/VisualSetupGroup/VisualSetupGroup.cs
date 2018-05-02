@@ -150,29 +150,22 @@ namespace UWPEnhanced.Xaml
 		/// <returns><see cref="Task"/> that will complete when the transition is finished.
 		/// The result will be true if the transition was successful (either: to the current state, out of the current state
 		/// or from current state to any other state in this <see cref="VisualSetupGroup"/>, false otherwise</returns>
-		public Task<bool> GoToSetup(string setup, bool useTransitions = true)
-		{			
-			TaskCompletionSource<bool> task = new TaskCompletionSource<bool>();
-			
+		public async Task<bool> GoToSetup(string setup, bool useTransitions = true)
+		{
 			IVisualSetup designatedSetup = null;
 
 			// If the new setup is null or whitespace then it's simply a transition out of current state so designatedSetup
 			// remains null, if not try to find the new setup, if successfull make the transition
 			if (string.IsNullOrWhiteSpace(setup) || TryFindSetup(setup, out designatedSetup))
-			{				
+			{
 				// Perform the transition using helper method
-				Task.Run(() =>
-				{
-					Transition(designatedSetup, useTransitions);
-					task.SetResult(true);
-				});
+				await Transition(designatedSetup, useTransitions);
+				return true;
 			}
 			else
 			{
-				task.SetResult(false);
+				return false;
 			}
-			
-			return task.Task;
 		}
 
 		/// <summary>
@@ -196,7 +189,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="setup">Setup to go to. If null, the old state will be transitioned out and the group won't be in any state</param>
 		/// <param name="useTransitions">If true, use the defined storyboard animations in the transitions</param>
-		private void Transition(IVisualSetup setup, bool useTransitions = true)
+		private async Task Transition(IVisualSetup setup, bool useTransitions = true)
 		{
 			// Remember the old setup
 			var temp = _CurrentSetup;
@@ -208,14 +201,14 @@ namespace UWPEnhanced.Xaml
 			if (temp != null)
 			{
 				// Transition out of it
-				temp.TransitionOut(temp == setup ? VisualTransitionType.ToTheSameSetup : VisualTransitionType.BetweenSetups, useTransitions).Wait();
+				await temp.TransitionOut(temp == setup ? VisualTransitionType.ToTheSameSetup : VisualTransitionType.BetweenSetups, useTransitions);
 			}
 			
 			// If the transition ends in a new setup
 			if (_CurrentSetup != null)
 			{
 				// Perform the transitions
-				_CurrentSetup.TransitionIn(temp == setup ? VisualTransitionType.ToTheSameSetup : VisualTransitionType.BetweenSetups, useTransitions).Wait();
+				await _CurrentSetup.TransitionIn(temp == setup ? VisualTransitionType.ToTheSameSetup : VisualTransitionType.BetweenSetups, useTransitions);
 			}
 		}
 

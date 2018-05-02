@@ -94,7 +94,8 @@ namespace UWPEnhanced.Xaml
 				{
 					// Wait for either for the storyboard to finish or for the CancellationTokenSource to be cancelled
 					// and if the storyboard finished first apply the setters on UI thread
-					if (WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard }) == 1)
+					//if (WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard }) == 1)
+					if(await Task.Run(() => WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard }) == 1))
 					{
 						// If we weren't cancelled remove the reference to the _Cancellation, otherwise the one cancelling
 						// will provide their own CancellationTokenSource therefore removing the reference to ours
@@ -162,7 +163,7 @@ namespace UWPEnhanced.Xaml
 				{
 					// Wait either for cancellation or storyboard to finish so that this Task doesn't end before the operations
 					// are completed
-					if(WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard })==1)
+					if(await Task.Run(() => WaitHandle.WaitAny(new[] { cancellation.Token.WaitHandle, _WaitForStoryboard }) == 1))
 					{
 						// If we weren't cancelled remove the reference to the _Cancellation, otherwise the one cancelling
 						// will provide their own CancellationTokenSource therefore removing the reference to ours
