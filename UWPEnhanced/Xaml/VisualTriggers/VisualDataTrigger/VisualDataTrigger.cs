@@ -100,14 +100,14 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
-		#region Private methods
+		#region Protected Methods
 
 		/// <summary>
 		/// Checks if the compared value is null, and if so, carries out the comparison including <see cref="IgnoreNull"/>
 		/// Returns true if it determined the result of the comparison and taken appropriate action, false otherwise.
 		/// </summary>
 		/// <returns></returns>
-		private bool AssertNull()
+		protected bool AssertNull()
 		{
 			if(Data == null)
 			{
@@ -130,7 +130,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="s"></param>
 		/// <param name="e"></param>
-		private static void CompareValues(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		protected static void CompareValues(DependencyObject s, DependencyPropertyChangedEventArgs e)
 		{
 			if(s is VisualDataTrigger trigger)
 			{
