@@ -8,6 +8,9 @@ using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
+	/// <summary>
+	/// Implementation for <see cref="MenuPosition"/>
+	/// </summary>
 	public class VisualDataTriggerMenuPosition : GenericVisualDataTrigger<MenuPosition>
 	{
 		
