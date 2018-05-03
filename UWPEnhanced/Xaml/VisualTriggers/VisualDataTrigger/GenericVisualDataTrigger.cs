@@ -4,9 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
 
 namespace UWPEnhanced.Xaml
 {
+	/// <summary>
+	/// Generic implementation of the <see cref="IVisualTrigger"/>. If the implicit type conversion does not work, a more
+	/// specific class may be created simply by declaring public class Foo : GenericVisualDataTrigger of MyType.
+	/// This is a simpler <see cref="IValueConverter"/>.
+	/// It will also allow xaml to work with proper input type, for example in case of enums.
+	/// This is sort of a workaround because UWP xaml does not support generic classes but a class inheriting
+	/// the generic one with specific type is fine.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class GenericVisualDataTrigger<T> : VisualAttachment, IVisualTrigger
 	{
 		#region Triggered Event Handler
@@ -39,7 +49,7 @@ namespace UWPEnhanced.Xaml
 		#endregion
 
 		#region CompareTo Dependency Property
-
+		
 		/// <summary>
 		/// Value to compare the data to
 		/// </summary>
@@ -139,7 +149,7 @@ namespace UWPEnhanced.Xaml
 				{
 					return;
 				}
-
+				
 				switch (trigger.ComparisonType)
 				{
 					// Equality is a standard comparison
