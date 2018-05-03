@@ -43,9 +43,9 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Value to compare the data to
 		/// </summary>
-		public object CompareTo
+		public T CompareTo
 		{
-			get => GetValue(EqualToProperty);
+			get => (T)GetValue(EqualToProperty);
 			set => SetValue(EqualToProperty, value);
 		}
 
@@ -53,8 +53,8 @@ namespace UWPEnhanced.Xaml
 		/// Backing store for <see cref="CompareTo"/>
 		/// </summary>
 		public static readonly DependencyProperty EqualToProperty =
-			DependencyProperty.Register(nameof(CompareTo), typeof(object),
-			typeof(GenericVisualDataTrigger<T>), new PropertyMetadata(default(object), new PropertyChangedCallback(CompareValues)));
+			DependencyProperty.Register(nameof(CompareTo), typeof(T),
+			typeof(GenericVisualDataTrigger<T>), new PropertyMetadata(default(T), new PropertyChangedCallback(CompareValues)));
 
 		#endregion
 
