@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
-	public class VisualDataTrigger : VisualAttachment, IVisualTrigger
+	public class GenericVisualDataTrigger<T> : VisualAttachment, IVisualTrigger
 	{
 		#region Triggered Event Handler
 
@@ -23,9 +23,9 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Data to compare
 		/// </summary>
-		public object Data
+		public T Data
 		{
-			get => GetValue(DataProperty);
+			get => (T)GetValue(DataProperty);
 			set => SetValue(DataProperty, value);
 		}
 
@@ -33,8 +33,8 @@ namespace UWPEnhanced.Xaml
 		/// Backing store for <see cref="Data"/>
 		/// </summary>
 		public static readonly DependencyProperty DataProperty =
-			DependencyProperty.Register(nameof(Data), typeof(object),
-			typeof(VisualDataTrigger), new PropertyMetadata(default(object), new PropertyChangedCallback(CompareValues)));
+			DependencyProperty.Register(nameof(Data), typeof(T),
+			typeof(GenericVisualDataTrigger<T>), new PropertyMetadata(default(T), new PropertyChangedCallback(CompareValues)));
 
 		#endregion
 
@@ -54,7 +54,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty EqualToProperty =
 			DependencyProperty.Register(nameof(CompareTo), typeof(object),
-			typeof(VisualDataTrigger), new PropertyMetadata(default(object), new PropertyChangedCallback(CompareValues)));
+			typeof(GenericVisualDataTrigger<T>), new PropertyMetadata(default(object), new PropertyChangedCallback(CompareValues)));
 
 		#endregion
 
@@ -74,7 +74,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty ComparisonTypeProperty =
 			DependencyProperty.Register(nameof(ComparisonType), typeof(ComparisonType),
-			typeof(VisualDataTrigger), new PropertyMetadata(ComparisonType.Equal, new PropertyChangedCallback(CompareValues)));
+			typeof(GenericVisualDataTrigger<T>), new PropertyMetadata(ComparisonType.Equal, new PropertyChangedCallback(CompareValues)));
 
 		#endregion
 
@@ -96,7 +96,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty IgnoreNullProperty =
 			DependencyProperty.Register(nameof(IgnoreNull), typeof(bool),
-			typeof(VisualDataTrigger), new PropertyMetadata(default(bool)));
+			typeof(GenericVisualDataTrigger<T>), new PropertyMetadata(default(bool)));
 
 		#endregion
 
@@ -132,7 +132,7 @@ namespace UWPEnhanced.Xaml
 		/// <param name="e"></param>
 		protected static void CompareValues(DependencyObject s, DependencyPropertyChangedEventArgs e)
 		{
-			if(s is VisualDataTrigger trigger)
+			if(s is GenericVisualDataTrigger<T> trigger)
 			{
 				// Comparison for nulls
 				if(trigger.AssertNull())
