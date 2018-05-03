@@ -23,7 +23,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Data to compare
 		/// </summary>
-		public T Data
+		public virtual T Data
 		{
 			get => (T)GetValue(DataProperty);
 			set => SetValue(DataProperty, value);
