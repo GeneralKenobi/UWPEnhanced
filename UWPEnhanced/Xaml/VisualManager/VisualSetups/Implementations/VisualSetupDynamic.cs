@@ -97,13 +97,7 @@ namespace UWPEnhanced.Xaml
 					{
 						// If we weren't cancelled remove the reference to the _Cancellation, otherwise the one cancelling
 						// will provide their own CancellationTokenSource therefore removing the reference to ours
-						_Cancellation = null;
-
-						await DispatcherHelpers.RunAsync(() =>
-						{
-							TemporarySetters?.ForEach((x) => x.Set());
-							Setters?.ForEach((x) => x.Set());
-						});
+						_Cancellation = null;						
 					}
 				}
 				else if (!cancellation.IsCancellationRequested)
@@ -111,6 +105,13 @@ namespace UWPEnhanced.Xaml
 					// If our cancellation was not removed by another call, remove the reference to it
 					_Cancellation = null;
 				}
+
+				// Apply the setters
+				await DispatcherHelpers.RunAsync(() =>
+				{
+					TemporarySetters?.ForEach((x) => x.Set());
+					Setters?.ForEach((x) => x.Set());
+				});
 			}
 
 			cancellation.Dispose();
