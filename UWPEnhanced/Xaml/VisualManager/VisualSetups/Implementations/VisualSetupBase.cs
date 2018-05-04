@@ -151,12 +151,12 @@ namespace UWPEnhanced.Xaml
 		/// Returns the value of <see cref="RestartTransition"/> (enters the UI thread)
 		/// </summary>
 		/// <returns></returns>
-		protected RepeatedTransitionBehavior GetRepeatedTransition()
+		protected async Task<RepeatedTransitionBehavior> GetRepeatedTransition()
 		{
 			RepeatedTransitionBehavior repeatedTransition = RepeatedTransitionBehavior.Skip;
 
 			// Get on UI thread and get the value
-			DispatcherHelpers.Run(() => repeatedTransition = RepeatedTransition);
+			await DispatcherHelpers.RunAsync(() => repeatedTransition = RepeatedTransition);
 
 			return repeatedTransition;
 		}
