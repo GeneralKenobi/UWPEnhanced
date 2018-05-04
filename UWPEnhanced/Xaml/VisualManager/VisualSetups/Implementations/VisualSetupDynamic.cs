@@ -16,11 +16,6 @@ namespace UWPEnhanced.Xaml
 		#region Private Members
 
 		/// <summary>
-		/// Marks the direction of the transition. True for transition in, false for transition out.
-		/// </summary>
-		private bool _TransitionDirection = false;
-
-		/// <summary>
 		/// Event fired when <see cref="TransitionIn(bool)"/> or <see cref="TransitionOut(bool)"/> storyboard finishes
 		/// </summary>
 		protected readonly AutoResetEvent _WaitForStoryboard = new AutoResetEvent(false);
