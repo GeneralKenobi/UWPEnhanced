@@ -68,8 +68,10 @@ namespace UWPEnhanced.Xaml
 				// Get on the UI thread
 				await DispatcherHelpers.RunAsync(() =>
 				{
-					// If the storyboard is defined and has at least one Timeline object
-					if (TransitionInStoryboard != null && TransitionInStoryboard.Children.Count > 0)
+					// If the storyboard is defined
+					if (TransitionInStoryboard != null &&
+					// or has a defined at least one timeline object or not automatic duration
+					(TransitionInStoryboard.Children.Count > 0 || TransitionInStoryboard.Duration != Duration.Automatic))
 					{
 						sbDefined = true;
 						
@@ -123,8 +125,10 @@ namespace UWPEnhanced.Xaml
 				// Get on the UI thread
 				await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() =>
 				{
-					// If the storyboard is defined and has at least one Timeline object
-					if (TransitionOutStoryboard != null && TransitionOutStoryboard.Children.Count > 0)
+					// If the storyboard is defined
+					if (TransitionOutStoryboard != null &&
+					// or has a defined at least one timeline object or not automatic duration
+					(TransitionOutStoryboard.Children.Count > 0 || TransitionOutStoryboard.Duration != Duration.Automatic))
 					{
 						sbDefined = true;
 												
@@ -136,8 +140,7 @@ namespace UWPEnhanced.Xaml
 				// If the UI thread task determined that storyboard was defined, start a task that will wait for the storyboard to finish
 				if (sbDefined)
 				{
-					//await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());
-					_WaitForStoryboardToFinish.WaitOne();
+					await Task.Run(() => _WaitForStoryboardToFinish.WaitOne());					
 				}
 			}
 			

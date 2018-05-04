@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using UWPEnhanced.Helpers;
+using Windows.UI.Xaml;
 
 namespace UWPEnhanced.Xaml
 {
@@ -75,8 +76,10 @@ namespace UWPEnhanced.Xaml
 				// Get on the UI thread
 				await DispatcherHelpers.RunAsync(() =>
 				{
-					// If the storyboard is defined and has at least one Timeline object
-					if (TransitionInStoryboard != null && TransitionInStoryboard.Children.Count > 0)
+					// If the storyboard is defined
+					if (TransitionInStoryboard != null &&
+					// or has a defined at least one timeline object or not automatic duration
+					(TransitionInStoryboard.Children.Count > 0 || TransitionInStoryboard.Duration != Duration.Automatic))
 					{
 						// Mark it for the rest of the Task
 						sbDefined = true;
@@ -146,8 +149,10 @@ namespace UWPEnhanced.Xaml
 				// Get on the UI thread
 				await DispatcherHelpers.RunAsync(() =>
 				{
-					// If the storyboard is defined and has at least one Timeline object
-					if (TransitionOutStoryboard != null && TransitionOutStoryboard.Children.Count > 0)
+					// If the storyboard is defined 
+					if (TransitionOutStoryboard != null &&
+					// or has a defined at least one timeline object or not automatic duration
+					(TransitionOutStoryboard.Children.Count > 0 || TransitionOutStoryboard.Duration != Duration.Automatic))
 					{
 						// signal it
 						sbDefined = true;
