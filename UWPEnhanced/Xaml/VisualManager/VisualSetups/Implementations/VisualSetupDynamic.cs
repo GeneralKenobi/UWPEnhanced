@@ -106,6 +106,11 @@ namespace UWPEnhanced.Xaml
 						});
 					}
 				}
+				else if (!cancellation.IsCancellationRequested)
+				{
+					// If our cancellation was not removed by another call, remove the reference to it
+					_Cancellation = null;
+				}
 			}
 
 			cancellation.Dispose();
@@ -170,6 +175,11 @@ namespace UWPEnhanced.Xaml
 						// will provide their own CancellationTokenSource therefore removing the reference to ours
 						_Cancellation = null;
 					}
+				}
+				else if (!cancellation.IsCancellationRequested)
+				{
+					// If our cancellation was not removed by another call, remove the reference to it
+					_Cancellation = null;
 				}
 			}
 
