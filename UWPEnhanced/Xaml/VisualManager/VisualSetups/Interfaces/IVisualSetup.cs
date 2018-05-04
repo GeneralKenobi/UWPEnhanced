@@ -14,7 +14,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Name of the state. Has to be unique: it will be checked by <see cref="VisualSetupGroup"/>
 		/// </summary>
-		string Name { get; }
+		string ID { get; }
 
 		/// <summary>
 		/// Transitions into the setup and returns a <see cref="Task"/> that will complete when the transition is done

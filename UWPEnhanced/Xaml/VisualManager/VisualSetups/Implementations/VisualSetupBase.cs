@@ -30,17 +30,18 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Name of this setup
 		/// </summary>
-		public string Name
+		
+		public string ID
 		{
 			get => (string)GetValue(NameProperty);
 			set => SetValue(NameProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="Name"/>
+		/// Backing store for <see cref="ID"/>
 		/// </summary>
 		public static readonly DependencyProperty NameProperty =
-			DependencyProperty.Register(nameof(Name), typeof(string),
+			DependencyProperty.Register(nameof(ID), typeof(string),
 			typeof(VisualSetupBase), new PropertyMetadata(default(string)));
 
 		#endregion
