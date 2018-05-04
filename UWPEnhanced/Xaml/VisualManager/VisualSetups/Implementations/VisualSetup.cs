@@ -53,7 +53,7 @@ namespace UWPEnhanced.Xaml
 		{
 			// If it's a transition to self and the transition in should be omitted return
 			if(type == VisualTransitionType.ToTheSameSetup &&
-				!GetRepeatedTransition().HasFlag(RepeatedTransitionBehavior.TransitionIn))
+				!(await GetRepeatedTransition()).HasFlag(RepeatedTransitionBehavior.TransitionIn))
 			{
 				return;
 			}
@@ -68,8 +68,8 @@ namespace UWPEnhanced.Xaml
 				// Get on the UI thread
 				await DispatcherHelpers.RunAsync(() =>
 				{
-					// If the storyboard is defined
-					if (TransitionInStoryboard != null)
+					// If the storyboard is defined and has at least one Timeline object
+					if (TransitionInStoryboard != null && TransitionInStoryboard.Children.Count > 0)
 					{
 						sbDefined = true;
 						
@@ -105,7 +105,7 @@ namespace UWPEnhanced.Xaml
 		{
 			// If it's a transition to self and the transition out should be omitted return
 			if (type == VisualTransitionType.ToTheSameSetup &&
-				!GetRepeatedTransition().HasFlag(RepeatedTransitionBehavior.TransitionOut))
+				!(await GetRepeatedTransition()).HasFlag(RepeatedTransitionBehavior.TransitionOut))
 			{
 				return;
 			}
@@ -123,8 +123,8 @@ namespace UWPEnhanced.Xaml
 				// Get on the UI thread
 				await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() =>
 				{
-					// If the storyboard is defined
-					if (TransitionOutStoryboard != null)
+					// If the storyboard is defined and has at least one Timeline object
+					if (TransitionOutStoryboard != null && TransitionOutStoryboard.Children.Count > 0)
 					{
 						sbDefined = true;
 												

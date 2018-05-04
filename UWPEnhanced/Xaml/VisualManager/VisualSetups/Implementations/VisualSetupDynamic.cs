@@ -54,7 +54,7 @@ namespace UWPEnhanced.Xaml
 		{
 			// If there's already a transition in going on and we're not supposed to restart it, just return
 			if (type == VisualTransitionType.ToTheSameSetup &&
-				!GetRepeatedTransition().HasFlag(RepeatedTransitionBehavior.TransitionIn))
+				!(await GetRepeatedTransition()).HasFlag(RepeatedTransitionBehavior.TransitionIn))
 			{
 				return;
 			}
@@ -75,8 +75,8 @@ namespace UWPEnhanced.Xaml
 				// Get on the UI thread
 				await DispatcherHelpers.RunAsync(() =>
 				{
-					// If the storyboard is defined
-					if (TransitionInStoryboard != null)
+					// If the storyboard is defined and has at least one Timeline object
+					if (TransitionInStoryboard != null && TransitionInStoryboard.Children.Count > 0)
 					{
 						// Mark it for the rest of the Task
 						sbDefined = true;
@@ -121,7 +121,8 @@ namespace UWPEnhanced.Xaml
 		public override async Task TransitionOut(VisualTransitionType type, bool useTransitions = true)
 		{
 			// If there's already a transition out going on and we're not supposed to restart it, just return
-			if (type == VisualTransitionType.ToTheSameSetup && !GetRepeatedTransition().HasFlag(RepeatedTransitionBehavior.TransitionOut))
+			if (type == VisualTransitionType.ToTheSameSetup &&
+				!(await GetRepeatedTransition()).HasFlag(RepeatedTransitionBehavior.TransitionOut))
 			{
 				return;
 			}
@@ -145,8 +146,8 @@ namespace UWPEnhanced.Xaml
 				// Get on the UI thread
 				await DispatcherHelpers.RunAsync(() =>
 				{
-					// If the storyboard is defined
-					if (TransitionOutStoryboard != null)
+					// If the storyboard is defined and has at least one Timeline object
+					if (TransitionOutStoryboard != null && TransitionOutStoryboard.Children.Count > 0)
 					{
 						// signal it
 						sbDefined = true;
