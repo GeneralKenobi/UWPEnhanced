@@ -33,6 +33,23 @@ namespace UWPEnhanced.Controls
 
 		#region Public Properties
 
+		#region Control Size
+
+		/// <summary>
+		/// The length the menu has when its opened
+		/// </summary>
+		public double OpenLength => IconsPanelLength + ContentLength;
+
+		#endregion
+
+		#region Menu TranslateTransform
+
+		//public double MenuTranslateTransformX { get; private set; }
+
+		//public double MenuTranslateTransformY { get; private set; }
+
+		#endregion
+
 		#region Content TranslateTransform
 
 		/// <summary>
@@ -101,12 +118,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty PositionProperty =
 			DependencyProperty.Register(nameof(Position), typeof(MenuPosition),
-			typeof(Menu), new PropertyMetadata(MenuPosition.Left, new PropertyChangedCallback(
-				(s, e) =>
-				{
-					(s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs(nameof(Position)));
-					(s as Menu)?.RecalculateContentTranslate();
-				})));
+			typeof(Menu), new PropertyMetadata(MenuPosition.Left, new PropertyChangedCallback(MenuPositionChanged)));
 
 		#endregion
 
@@ -126,7 +138,8 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty IconsPanelLengthProperty =
 			DependencyProperty.Register(nameof(IconsPanelLength), typeof(double),
-			typeof(Menu), new PropertyMetadata(25d));
+			typeof(Menu), new PropertyMetadata(25d, new PropertyChangedCallback((s,e) =>
+				(s as Menu)?.InvokePropertyChanged(nameof(IconsPanelLength), nameof(OpenLength)))));
 
 		#endregion
 
@@ -147,7 +160,7 @@ namespace UWPEnhanced.Controls
 		public static readonly DependencyProperty ContentLengthProperty =
 			DependencyProperty.Register(nameof(ContentLength), typeof(double),
 			typeof(Menu), new PropertyMetadata(100d, new PropertyChangedCallback((s,e)=>
-			(s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs(nameof(ContentLength))))));
+			(s as Menu)?.InvokePropertyChanged(nameof(ContentLength), nameof(OpenLength)))));
 
 		#endregion
 
@@ -174,7 +187,92 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region Private Static Methods
+
+		#region Position Changed Handler
+
+		/// <summary>
+		/// Recalculates animation values which depend on the position of the menu (MenuTranslate, ContentTranslate).
+		/// </summary>
+		private static void MenuPositionChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		{
+			if (s is Menu menu)
+			{
+				menu.InvokePropertyChanged(nameof(Position));
+
+				menu.RecalculateContentTranslate();
+				menu.RecalculateMenuTranslate();
+			}
+		}
+
+		#endregion
+
+		#endregion
+
 		#region Private Methods
+
+		#region Content TranslateTransform
+
+		/// <summary>
+		/// Recalculates the <see cref="TranslateTransform"/> X and Y values for Menu
+		/// </summary>
+		private void RecalculateMenuTranslate()
+		{
+			// Calculate the new values
+			//MenuTranslateTransformX = CalculateMenuTranslateX();
+			//MenuTranslateTransformY = CalculateMenuTranslateY();
+
+			//// Invoke the PropertyChangedEvent for them
+			//InvokePropertyChanged(nameof(MenuTranslateTransformX), nameof(MenuTranslateTransformY));
+		}
+
+		/// <summary>
+		/// Returns the desired Menu <see cref="TranslateTransform.X"/> which hides the Menu when its repositioned (closes the menu)
+		/// Helper for <see cref="RecalculateMenuTranslate"/>
+		/// </summary>
+		/// <returns></returns>
+		private double CalculateMenuTranslateX()
+		{
+			switch (Position)
+			{
+				case MenuPosition.Left:
+					{
+						return -OpenLength;
+					}
+
+				case MenuPosition.Right:
+					{
+						return OpenLength;
+					}
+			}
+
+			return 0;
+		}
+
+		/// <summary>
+		/// Returns the desired Menu <see cref="TranslateTransform.X"/> which hides the Menu when its repositioned (closes the menu)
+		/// Helper for <see cref="RecalculateMenuTranslate"/>
+		/// </summary>
+		/// <returns></returns>
+		private double CalculateMenuTranslateY()
+		{
+			switch (Position)
+			{
+				case MenuPosition.Top:
+					{
+						return -OpenLength;
+					}
+
+				case MenuPosition.Bottom:
+					{
+						return OpenLength;
+					}
+			}
+
+			return 0;
+		}
+
+		#endregion
 
 		#region Content TranslateTransform
 
@@ -249,9 +347,6 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#endregion
-
-		
-
 	}
 
 }
