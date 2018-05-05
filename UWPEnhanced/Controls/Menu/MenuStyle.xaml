@@ -15,13 +15,27 @@
 					<Grid Name="RootGrid" Background="Transparent" >
 
 						<Grid.Resources>
+
+							<!--#region ValueConverters -->
+
 							<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
 							<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
 
+							<!--#endregion-->
+
+							<!--#region Constants -->
+
+							<!-- ContentTranslate XY values are animated to when Content is slid in-->
 							<x:Double x:Key="ContentOpenTranslateXY">0</x:Double>
+							<!-- MenuTranslate XY values are animated to when menu is slid in-->
+							<x:Double x:Key="MenuOnScreenTranslateXY">0</x:Double>
 							<Duration x:Key="OpenCloseStoryboardDuration">0:0:0.25</Duration>
 							<Duration x:Key="MenuInOutStoryboardDuration">0:0:0.25</Duration>
 							<CubicEase x:Key="DefaultEasing" EasingMode="EaseInOut"/>
+							
+							<!--#endregion-->
+
+							<!--#region Menu open/close storyboards -->
 
 							<!-- Storyboard use to Open the Menu - animate the TranslateTransform of Content to 0 -->
 							<Storyboard x:Key="OpenMenuStoryboard">
@@ -62,6 +76,11 @@
 
 							</Storyboard>
 
+							<!--#endregion-->
+
+							<!--#region Menu Reposition Storyboards -->
+							
+							<!-- Storyboard used to slide out the whole menu to left using a TranslateTransform -->
 							<Storyboard x:Key="SlideOutToLeft">
 								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="X"
@@ -70,6 +89,7 @@
 											EasingFunction="{StaticResource DefaultEasing}"/>
 							</Storyboard>
 
+							<!-- Storyboard used to slide in the whole menu from left using a TranslateTransform -->
 							<Storyboard x:Key="SlideInFromLeft">
 								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="X"
@@ -77,12 +97,15 @@
 											To="0"
 											From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
 											EasingFunction="{StaticResource DefaultEasing}"/>
+
+								<!-- Set Y translate to 0 (it's necessary if the menu was slid out to left/right earlier) -->
 								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="Y">
-									<DiscreteDoubleKeyFrame Value="0"/>
+									<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
 								</DoubleAnimationUsingKeyFrames>
 							</Storyboard>
 
+							<!-- Storyboard used to slide out the whole menu to top using a TranslateTransform -->
 							<Storyboard x:Key="SlideOutToTop">
 								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="Y"
@@ -91,19 +114,23 @@
 											EasingFunction="{StaticResource DefaultEasing}"/>
 							</Storyboard>
 
+							<!-- Storyboard used to slide in the whole menu from top using a TranslateTransform -->
 							<Storyboard x:Key="SlideInFromTop">
 								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="Y"
 											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="0"
+											To="{StaticResource MenuOnScreenTranslateXY}"
 											From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
 											EasingFunction="{StaticResource DefaultEasing}"/>
+
+								<!-- Set X translate to 0 (it's necessary if the menu was slid out to top/bottom earlier) -->
 								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="X">
-									<DiscreteDoubleKeyFrame Value="0"/>
+									<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
 								</DoubleAnimationUsingKeyFrames>
 							</Storyboard>
 
+							<!-- Storyboard used to slide out the whole menu to right using a TranslateTransform -->
 							<Storyboard x:Key="SlideOutToRight">
 								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="X"
@@ -112,19 +139,23 @@
 											EasingFunction="{StaticResource DefaultEasing}"/>
 							</Storyboard>
 
+							<!-- Storyboard used to slide in the whole menu from right using a TranslateTransform -->
 							<Storyboard x:Key="SlideInFromRight">
 								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="X"
 											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="0"
+											To="{StaticResource MenuOnScreenTranslateXY}"
 											From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											EasingFunction="{StaticResource DefaultEasing}"/>
+
+								<!-- Set Y translate to 0 (it's necessary if the menu was slid out to left/right earlier) -->
 								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="Y">
-									<DiscreteDoubleKeyFrame Value="0"/>
+									<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
 								</DoubleAnimationUsingKeyFrames>
 							</Storyboard>
 
+							<!-- Storyboard used to slide out the whole menu to bottom using a TranslateTransform -->
 							<Storyboard x:Key="SlideOutToBottom">
 								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="Y"
@@ -133,18 +164,23 @@
 											EasingFunction="{StaticResource DefaultEasing}"/>
 							</Storyboard>
 
+							<!-- Storyboard used to slide in the whole menu from right using a TranslateTransform -->
 							<Storyboard x:Key="SlideInFromBottom">
 								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="Y"
 											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="0"
+											To="{StaticResource MenuOnScreenTranslateXY}"
 											From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											EasingFunction="{StaticResource DefaultEasing}"/>
+
+								<!-- Set X translate to 0 (it's necessary if the menu was slid out to top/bottom earlier) -->
 								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
 											Storyboard.TargetProperty="X">
-									<DiscreteDoubleKeyFrame Value="0"/>
+									<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
 								</DoubleAnimationUsingKeyFrames>
 							</Storyboard>
+
+							<!--#endregion-->
 
 						</Grid.Resources>
 
@@ -168,6 +204,7 @@
 							setters/animations are required. Opening/Closing is handled by VisualSetup Open -->
 							<xaml:VisualSetupGroup Name="StateGroup">
 
+								<!-- Triggers based on IsOpen property on the menu -->
 								<xaml:VisualSetupGroup.Triggers>
 									<xaml:VisualTransitionCollection>
 										<xaml:VisualTransition TransitionTo="Closed">
@@ -181,10 +218,13 @@
 									</xaml:VisualTransitionCollection>
 								</xaml:VisualSetupGroup.Triggers>
 
-								<xaml:VisualSetupDynamic x:Name="Open" ID="Open"
+								<xaml:VisualSetupDynamic ID="Open"
 									TransitionInStoryboard="{StaticResource OpenMenuStoryboard}"
 									TransitionOutStoryboard="{StaticResource CloseMenuStoryboard}"/>
 
+								<!-- Sets visibility to collapsed (makes sure that the content won't be seen in unexpected
+								places on the screen, for example when changing the position of the menu, if the background 
+								is transpart, etc -->
 								<xaml:VisualSetupDynamic ID="Closed">
 									<xaml:VisualSetupDynamic.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Visibility" Value="Collapsed"/>
@@ -192,9 +232,11 @@
 								</xaml:VisualSetupDynamic>
 							</xaml:VisualSetupGroup>
 
+							<!-- Group managing the properties and animations connected with changing position of the menu -->
 							<xaml:VisualSetupGroup Name="Position">
 
 								<xaml:VisualSetupGroup.Triggers>
+									<!-- Triggers based on Position property of the control -->
 									<xaml:VisualTransitionCollection>
 										<xaml:VisualTransition TransitionTo="Left">
 											<xaml:VisualDataTriggerMenuPosition Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"
@@ -215,8 +257,8 @@
 
 									</xaml:VisualTransitionCollection>
 								</xaml:VisualSetupGroup.Triggers>
-								
-								
+
+								<!-- First setup applies the setters which reposition the icons and content on the RootGrid -->
 								<xaml:VisualSetupCascade ID="Left">
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Left"/>
@@ -231,6 +273,7 @@
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
+									<!-- Second setup animates the menu into the screen -->
 									<xaml:VisualSetupCascade.Cascade>
 										<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource SlideInFromLeft}"
 											TransitionOutStoryboard="{StaticResource SlideOutToLeft}"/>
@@ -238,6 +281,7 @@
 
 								</xaml:VisualSetupCascade>
 
+								<!-- First setup applies the setters which reposition the icons and content on the RootGrid -->
 								<xaml:VisualSetupCascade ID="Top">
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
@@ -252,6 +296,7 @@
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
+									<!-- Second setup animates the menu into the screen -->
 									<xaml:VisualSetupCascade.Cascade>
 										<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource SlideInFromTop}"
 											TransitionOutStoryboard="{StaticResource SlideOutToTop}"/>
@@ -260,6 +305,7 @@
 								</xaml:VisualSetupCascade>
 
 								
+								<!-- First setup applies the setters which reposition the icons and content on the RootGrid -->
 								<xaml:VisualSetupCascade ID="Right">
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Right"/>
@@ -274,6 +320,7 @@
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
+									<!-- Second setup animates the menu into the screen -->
 									<xaml:VisualSetupCascade.Cascade>
 										<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource SlideInFromRight}"
 											TransitionOutStoryboard="{StaticResource SlideOutToRight}"/>
@@ -281,6 +328,7 @@
 
 								</xaml:VisualSetupCascade>
 
+								<!-- First setup applies the setters which reposition the icons and content on the RootGrid -->
 								<xaml:VisualSetupCascade ID="Bottom">
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
@@ -295,6 +343,7 @@
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
+									<!-- Second setup animates the menu into the screen -->
 									<xaml:VisualSetupCascade.Cascade>
 										<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource SlideInFromBottom}"
 											TransitionOutStoryboard="{StaticResource SlideOutToBottom}"/>
@@ -303,6 +352,7 @@
 								</xaml:VisualSetupCascade>							
 
 							</xaml:VisualSetupGroup>
+
 						</xaml:VisualManager.VisualSetups>
 
 						<Grid Name="Content"
