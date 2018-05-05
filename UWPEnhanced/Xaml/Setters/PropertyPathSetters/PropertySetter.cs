@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 namespace UWPEnhanced.Xaml
 {
 	/// <summary>
-	/// Setter based on Target object and PropertyPath
+	/// Setter based on Target object and PropertyPath. For Attached Properties use <see cref="BindablePropertySetter"/>
 	/// </summary>
 	public class PropertySetter : BaseSetter
 	{
