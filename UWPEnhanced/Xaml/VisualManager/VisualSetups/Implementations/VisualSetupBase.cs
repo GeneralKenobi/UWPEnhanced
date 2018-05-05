@@ -23,7 +23,16 @@ namespace UWPEnhanced.Xaml
 			TemporarySetters = new DependencyObjectCollectionOfT<ITemporaryVisualSetter>();
 		}
 
-		#endregion		
+		#endregion
+
+		#region Public Properties
+
+		/// <summary>
+		/// <see cref="VisualSetupGroup"/> which owns this <see cref="IVisualSetup"/>
+		/// </summary>
+		public VisualSetupGroup Parent { get; private set; }
+
+		#endregion
 
 		#region Name Dependency Property
 
@@ -197,9 +206,51 @@ namespace UWPEnhanced.Xaml
 		#endregion
 
 		#region Public Methods
+		
+		/// <summary>
+		/// Assigns the given <see cref="VisualSetupGroup"/> as a parent of this <see cref="IVisualSetup"/>
+		/// </summary>
+		/// <param name="parent"></param>
+		public void AssignParent(VisualSetupGroup parent)
+		{
+			// Check if the argument is correct
+			if (parent == null)
+			{
+				throw new Exception("New parent cannot be null");
+			}
+			// Check if a parent was already attached
+			else if (Parent != null)
+			{
+				throw new Exception("This VisualSetup already has a parent");
+			}
+			// If everything is fine attach the parent
+			else
+			{
+				Parent = parent;
+			}
+		}
 
+		/// <summary>
+		/// Removes the current parent from the <see cref="VisualSetupGroup"/>
+		/// </summary>
+		public void RemoveParent() => Parent = null;
+
+		/// <summary>
+		/// Transitions into the setup and returns a <see cref="Task"/> that will complete when the transition is done
+		/// </summary>
+		/// <param name="type">Type of the transition used to perform specific actions based on the implementation
+		/// specific handling of repeated transitions</param>
+		/// <param name="useTransitions"></param>
+		/// <returns></returns>
 		public abstract Task TransitionIn(VisualTransitionType type, bool useTransitions = true);
 
+		/// <summary>
+		/// Transitions out of the setup and returns a <see cref="Task"/> that will complete when the transition is done
+		/// </summary>
+		/// <param name="type">Type of the transition used to perform specific actions based on the implementation
+		/// specific handling of repeated transitions</param>
+		/// <param name="useTransitions"></param>
+		/// <returns></returns>
 		public abstract Task TransitionOut(VisualTransitionType type, bool useTransitions = true);
 
 		#endregion
