@@ -118,7 +118,7 @@ namespace UWPEnhanced.Xaml
 			if (definedSetups != null)
 			{
 				// Search for the specified group
-				foreach (VisualSetupGroup item in GetVisualSetups(element))
+				foreach (VisualSetupGroup item in definedSetups)
 				{
 					// If it was found
 					if (item.Name == group)
