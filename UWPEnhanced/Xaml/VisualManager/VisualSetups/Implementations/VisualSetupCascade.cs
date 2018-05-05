@@ -74,8 +74,13 @@ namespace UWPEnhanced.Xaml
 			// Transition into this setup
 			await base.TransitionIn(type, useTransitions);
 
+			var nextCascade = await GetCascadeUsingDispatcher();
+
 			// If the cascade is not null, transition into it as well (and wait for the transition to finish)
-			await (await GetCascadeUsingDispatcher()).TransitionIn(type, useTransitions);
+			if(nextCascade != null)
+			{
+				await nextCascade.TransitionIn(type, useTransitions);
+			}
 		}
 
 		/// <summary>
@@ -85,8 +90,13 @@ namespace UWPEnhanced.Xaml
 		/// <param name="useTransitions"></param>
 		public async override Task TransitionOut(VisualTransitionType type, bool useTransitions = true)
 		{
+			var nextCascade = await GetCascadeUsingDispatcher();
+
 			// If the cascade is not null, transition into it as well (and wait for the transition to finish)
-			await(await GetCascadeUsingDispatcher()).TransitionOut(type, useTransitions);
+			if (nextCascade != null)
+			{
+				await nextCascade.TransitionOut(type, useTransitions);
+			}
 
 			// Transition into this setup
 			await base.TransitionOut(type, useTransitions);
