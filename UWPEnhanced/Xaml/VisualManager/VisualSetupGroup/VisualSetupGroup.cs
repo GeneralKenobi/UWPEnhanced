@@ -83,7 +83,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// The current state in the <see cref="VisualStateGroup"/>. <see cref="string.Empty"/> if no state is set
 		/// </summary>
-		public string CurrentSetup => _CurrentSetup == null ? string.Empty : _CurrentSetup.Name;
+		public string CurrentSetup => _CurrentSetup == null ? string.Empty : _CurrentSetup.ID;
 
 		#endregion
 
@@ -226,7 +226,7 @@ namespace UWPEnhanced.Xaml
 			
 			foreach (var item in _ControlArchive)
 			{
-				if (item.Name == name)
+				if (item.ID == name)
 				{
 					result = item;
 					break;
