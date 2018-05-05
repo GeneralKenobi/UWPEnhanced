@@ -98,6 +98,8 @@ namespace UWPEnhanced.Xaml
 		{
 			var checkedItem = base.NewElementCheckRoutine(item);
 
+			checkedItem.AssignParent(this);
+
 			return checkedItem;
 		}
 
@@ -107,12 +109,13 @@ namespace UWPEnhanced.Xaml
 		/// <param name="item"></param>
 		protected override void CleanupRoutine(IVisualSetup item)
 		{
+			item.RemoveParent();
 			base.CleanupRoutine(item);
 		}
 
 		#endregion
 
-		#region Private Methods
+		#region Private Static Methods
 
 		/// <summary>
 		/// Callback for changes in <see cref="TriggersProperty"/>. Detatches old collections and attaches new ones
