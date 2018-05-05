@@ -6,13 +6,51 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="using:UWPEnhanced.Controls"
+	xmlns:converters="using:UWPEnhanced.ValueConverters"
 	xmlns:xaml="using:UWPEnhanced.Xaml"
     mc:Ignorable="d"
 	Name="page">
 
 
-	<Grid Name="RootGrid" >
-		<controls:Icon Background="Red" Glyph="&#xE717;" FontSize="50"/>
+	<Page.Resources>
+		<converters:OppositeDoubleConverter x:Key="OppositeNumberConverter"/>
+		<Storyboard x:Name="sb1">
+			<DoubleAnimation Storyboard.TargetName="RootGrid"
+			Storyboard.TargetProperty="Width"
+			To="10"
+			Duration="0:0:1"/>
+		</Storyboard>
+		<Storyboard x:Name="sb2" Duration="Forever">
+
+		</Storyboard>
+	</Page.Resources>
+
+	<Grid Name="RootGrid" Background="Green">
+		<controls:Menu x:Name="menu" Position="Left"/>
+		<StackPanel HorizontalAlignment="Right">
+			<Button Content="Left" Click="Button_Click" x:Name="test"/>
+			<Button Content="Top" Click="Button_Click_1"/>
+			<Button Content="Right" Click="Button_Click_2"/>
+			<Button Content="Bottom" Click="Button_Click_3"/>
+			<Button Content="Open/Close" Click="Button_Click_4"/>
+		</StackPanel>
+
+		<xaml:VisualManager.VisualSetups>
+			<xaml:VisualSetupGroup>
+				<xaml:VisualSetup ID="testing" x:Name="testing123"/>
+			</xaml:VisualSetupGroup>
+		</xaml:VisualManager.VisualSetups>
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="s">
+					<VisualState.Setters>
+						<Setter x:Name="setter" Target="RootGrid.Background" Value="Red"/>
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+
 	</Grid>
 
 </Page>

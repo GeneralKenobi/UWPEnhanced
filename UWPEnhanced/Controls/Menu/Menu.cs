@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using UWPEnhanced.Xaml;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -25,20 +26,64 @@ namespace UWPEnhanced.Controls
 		public Menu()
         {
             this.DefaultStyleKey = typeof(Menu);
-			t();
+			RecalculateContentTranslate();
         }
 
-		private async Task t()
-		{
-			await Task.Delay(100);
-			VisualStateManager.GoToState(this, "LeftOpen", true);
+		#endregion
 
+		#region Public Properties
+
+		#region Content TranslateTransform
+
+		/// <summary>
+		/// Value to which Content will be moved horizontally using a <see cref="TranslateTransform"/> when Menu is closed.
+		/// </summary>
+		public double ContentTranslateTransformX { get; private set; }
+
+		/// <summary>
+		/// Value to which Content will be moved vertically using a <see cref="TranslateTransform"/> when Menu is closed.
+		/// </summary>
+		public double ContentTranslateTransformY { get; private set; }
+
+		/// <summary>
+		/// If <see cref="PropertyChanged"/> event is invoked for this property, the TranslateTransform of Content will be set
+		/// to this value. Used to adjust manually the position of the Content when <see cref="Position"/> changes.
+		/// </summary>
+		public double ContentTranslateTransformXCorrection => ContentTranslateTransformX;
+
+		/// <summary>
+		/// If <see cref="PropertyChanged"/> event is invoked for this property, the TranslateTransform of Content will be set
+		/// to this value. Used to adjust manually the position of the Content when <see cref="Position"/> changes.
+		/// </summary>
+		public double ContentTranslateTransformYCorrection => ContentTranslateTransformY;
+
+		#endregion
+
+		#endregion
+
+		#region INotifyPropertyChanged
+
+		/// <summary>
+		/// Event raised when property changes
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		/// <summary>
+		/// Invokes Property Changed Event for each string parameter
+		/// </summary>
+		/// <param name="propertyName">Properties to invoke for.
+		/// Null or string.Empty will result in notification for all properties</param>
+		public void InvokePropertyChanged(params string[] propertyNames)
+		{
+			foreach (var item in propertyNames)
+			{
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(item));
+			}
 		}
 
 		#endregion
 
-
-		public event PropertyChangedEventHandler PropertyChanged;
+		#region Dependency Properties
 
 		#region Position Dependency Property
 
@@ -56,8 +101,12 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty PositionProperty =
 			DependencyProperty.Register(nameof(Position), typeof(MenuPosition),
-			typeof(Menu), new PropertyMetadata((int)MenuPosition.Left, new PropertyChangedCallback(
-				(s, e) => (s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs("MenuPosition")))));
+			typeof(Menu), new PropertyMetadata(MenuPosition.Left, new PropertyChangedCallback(
+				(s, e) =>
+				{
+					(s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs(nameof(Position)));
+					(s as Menu)?.RecalculateContentTranslate();
+				})));
 
 		#endregion
 
@@ -77,7 +126,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty IconsPanelLengthProperty =
 			DependencyProperty.Register(nameof(IconsPanelLength), typeof(double),
-			typeof(Menu), new PropertyMetadata(100d));
+			typeof(Menu), new PropertyMetadata(25d));
 
 		#endregion
 
@@ -98,10 +147,111 @@ namespace UWPEnhanced.Controls
 		public static readonly DependencyProperty ContentLengthProperty =
 			DependencyProperty.Register(nameof(ContentLength), typeof(double),
 			typeof(Menu), new PropertyMetadata(100d, new PropertyChangedCallback((s,e)=>
-			(s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs("ContentLength")))));
+			(s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs(nameof(ContentLength))))));
 
 		#endregion
 
+		#region IsOpen Dependency Property
+
+		/// <summary>
+		/// Controls the open/close of the menu
+		/// </summary>
+		public bool IsOpen
+		{
+			get => (bool)GetValue(IsOpenProperty);
+			set => SetValue(IsOpenProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="IsOpen"/>
+		/// </summary>
+		public static readonly DependencyProperty IsOpenProperty =
+			DependencyProperty.Register(nameof(IsOpen), typeof(bool),
+			typeof(Menu), new PropertyMetadata(default(bool), new PropertyChangedCallback(
+				(s,e) => (s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs(nameof(IsOpen))))));
+
+		#endregion
+
+		#endregion
+
+		#region Private Methods
+
+		#region Content TranslateTransform
+
+		/// <summary>
+		/// Recalculates the <see cref="TranslateTransform"/> X and Y values for Content. Manually repositions the
+		/// Content if the Menu was closed.
+		/// </summary>
+		private void RecalculateContentTranslate()
+		{
+			// Calculate the new values
+			ContentTranslateTransformX = CalculateContentTranslateX();
+			ContentTranslateTransformY = CalculateContentTranslateY();
+
+			// Invoke the PropertyChangedEvent for them
+			InvokePropertyChanged(nameof(ContentTranslateTransformX), nameof(ContentTranslateTransformY));
+
+			// If the menu was closes its necessary to move the Content to the new calculated positions
+			if (!IsOpen)
+			{
+				// So invoke the PropertyChanged for the adjusting properties as well
+				InvokePropertyChanged(nameof(ContentTranslateTransformXCorrection),
+					nameof(ContentTranslateTransformYCorrection));
+			}
+		}
+
+		/// <summary>
+		/// Returns the desired Content <see cref="TranslateTransform.X"/> which hides the content (closes the menu)
+		/// Helper for <see cref="RecalculateContentTranslate"/>
+		/// </summary>
+		/// <returns></returns>
+		private double CalculateContentTranslateX()
+		{
+			switch (Position)
+			{
+				case MenuPosition.Left:
+					{
+						return -ContentLength;
+					}
+
+				case MenuPosition.Right:
+					{
+						return ContentLength;
+					}
+			}
+
+			return 0;
+		}
+
+		/// <summary>
+		/// Returns the desired Content <see cref="TranslateTransform.X"/> which hides the content (closes the menu)
+		/// Helper for <see cref="RecalculateContentTranslate"/>
+		/// </summary>
+		/// <returns></returns>
+		private double CalculateContentTranslateY()
+		{
+			switch (Position)
+			{
+				case MenuPosition.Top:
+					{
+						return -ContentLength;
+					}
+
+				case MenuPosition.Bottom:
+					{
+						return ContentLength;
+					}
+			}
+
+			return 0;
+		}
+
+		#endregion
+
+		#endregion
+
+		
 
 	}
+
 }
