@@ -12,10 +12,121 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:Menu">
 
-					<Grid Name="RootGrid" Background="Transparent">
+					<Grid Name="RootGrid" Background="Transparent" >
 
 						<Grid.Resources>
 							<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
+							<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
+
+							<x:Double x:Key="ContentPresenterOpenTranslateXY">0</x:Double>
+							<Duration x:Key="OpenCloseStoryboardDuration">0:0:0.25</Duration>
+
+							<Storyboard x:Key="OpenFromLeftStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+									Storyboard.TargetProperty="X"
+									Duration="{StaticResource OpenCloseStoryboardDuration}"
+									To="{StaticResource ContentPresenterOpenTranslateXY}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseOut"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
+
+							<Storyboard x:Key="CloseToLeftStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+									Storyboard.TargetProperty="X"
+									Duration="{StaticResource OpenCloseStoryboardDuration}"
+									To="{Binding ContentLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseIn"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
+
+							<Storyboard x:Key="OpenFromTopStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+									Storyboard.TargetProperty="Y"
+									Duration="{StaticResource OpenCloseStoryboardDuration}"
+									To="{StaticResource ContentPresenterOpenTranslateXY}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseOut"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
+
+							<Storyboard x:Key="CloseToTopStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+									Storyboard.TargetProperty="Y"
+									Duration="{StaticResource OpenCloseStoryboardDuration}"
+									To="{Binding ContentLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseIn"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
+
+							<Storyboard x:Key="OpenFromRightStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+									Storyboard.TargetProperty="X"
+									Duration="{StaticResource OpenCloseStoryboardDuration}"
+									To="{StaticResource ContentPresenterOpenTranslateXY}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseOut"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
+
+							<Storyboard x:Key="CloseToRightStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+									Storyboard.TargetProperty="X"
+									Duration="{StaticResource OpenCloseStoryboardDuration}"
+									To="{Binding ContentLength, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseIn"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
+
+							<Storyboard x:Key="OpenFromBottomStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+									Storyboard.TargetProperty="Y"
+									Duration="{StaticResource OpenCloseStoryboardDuration}"
+									To="{StaticResource ContentPresenterOpenTranslateXY}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseOut"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
+
+							<Storyboard x:Key="CloseToBottomStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+									Storyboard.TargetProperty="Y"
+									Duration="{StaticResource OpenCloseStoryboardDuration}"
+									To="{Binding ContentLength, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseIn"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
+
+							<Storyboard x:Key="test">
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+												Storyboard.TargetProperty="X"
+												Duration="{StaticResource OpenCloseStoryboardDuration}"												
+												To="{Binding ContentTranslateTransformX, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseOut"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+												Storyboard.TargetProperty="Y"
+												Duration="{StaticResource OpenCloseStoryboardDuration}"
+												To="{Binding ContentTranslateTransformY, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+									<DoubleAnimation.EasingFunction>
+										<CubicEase EasingMode="EaseOut"/>
+									</DoubleAnimation.EasingFunction>
+								</DoubleAnimation>
+							</Storyboard>
 
 						</Grid.Resources>
 
@@ -24,122 +135,180 @@
 							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 
-
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 
+						<xaml:VisualManager.VisualSetups>
 
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup>
-								<VisualState x:Name="LeftOpen">
-									<VisualState.Setters>
-										<Setter Target="IconsPresenter.Grid.Column" Value="0"/>
-										<Setter Target="ContentPresenter.Grid.Column" Value="1"/>
-										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="RootGrid.HorizontalAlignment" Value="Left"/>
-										<Setter Target="RootGrid.VerticalAlignment" Value="Stretch"/>
-										<Setter Target="IconsPresenter.Height" Value="Auto"/>
-										<Setter Target="ContentPresenter.Height" Value="Auto"/>
-									</VisualState.Setters>
-								</VisualState>
-								<VisualState x:Name="LeftClosed">
-									<VisualState.Setters>
-										<Setter Target="IconsPresenter.Grid.Column" Value="0"/>
-										<Setter Target="ContentPresenter.Grid.Column" Value="1"/>
-										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="ContentPresenter.Width" Value="0"/>
-									</VisualState.Setters>
-								</VisualState>
-								<VisualState x:Name="TopOpen">									
-									<VisualState.Setters>										
-										<Setter Target="IconsPresenter.Grid.ColumnSpan" Value="2"/>
-										<Setter Target="ContentPresenter.Grid.ColumnSpan" Value="2"/>
-										<Setter Target="ContentPresenter.Grid.Row" Value="1"/>
-										<Setter Target="IconsPresenter.Grid.Row" Value="0"/>
-										<Setter Target="RootGrid.HorizontalAlignment" Value="Stretch"/>
-										<Setter Target="RootGrid.VerticalAlignment" Value="Top"/>
-										<Setter Target="IconsPresenter.Width" Value="Auto"/>
-										<Setter Target="ContentPresenter.Width" Value="Auto"/>
-									</VisualState.Setters>
-								</VisualState>
-								<VisualState x:Name="TopClosed">									
-								</VisualState>
-								<VisualState x:Name="RightOpen">
-									<VisualState.Setters>
-										<Setter Target="IconsPresenter.Grid.Column" Value="1"/>
-										<Setter Target="ContentPresenter.Grid.Column" Value="0"/>
-										<Setter Target="ContentPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="IconsPresenter.Grid.RowSpan" Value="2"/>
-										<Setter Target="RootGrid.HorizontalAlignment" Value="Right"/>
-										<Setter Target="RootGrid.VerticalAlignment" Value="Stretch"/>
-										<Setter Target="IconsPresenter.Height" Value="Auto"/>
-										<Setter Target="ContentPresenter.Height" Value="Auto"/>
-									</VisualState.Setters>
-								</VisualState>
-								<VisualState x:Name="RightClosed">
-								</VisualState>
-								<VisualState x:Name="BottomOpen">
-									<VisualState.Setters>
-										<Setter Target="IconsPresenter.Grid.ColumnSpan" Value="2"/>
-										<Setter Target="ContentPresenter.Grid.ColumnSpan" Value="2"/>
-										<Setter Target="ContentPresenter.Grid.Row" Value="0"/>
-										<Setter Target="IconsPresenter.Grid.Row" Value="1"/>
-										<Setter Target="RootGrid.HorizontalAlignment" Value="Stretch"/>
-										<Setter Target="RootGrid.VerticalAlignment" Value="Bottom"/>
-										<Setter Target="IconsPresenter.Width" Value="Auto"/>
-										<Setter Target="ContentPresenter.Width" Value="Auto"/>
-									</VisualState.Setters>
-								</VisualState>
-								<VisualState x:Name="BottomClosed">
-								</VisualState>
+							<!-- Group for open/closed states. By default the menu is closed - no additional
+							setters/animations are required. Opening/Closing is handled by VisualSetup Open -->
+							<xaml:VisualSetupGroup Name="StateGroup">
 
-								
+								<xaml:VisualSetupGroup.Triggers>
+									<xaml:VisualTransitionCollection>
+										<xaml:VisualTransition TransitionTo="Closed">
+											<xaml:VisualDataTriggerBool Data="{Binding IsOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												CompareTo="False"/>
+										</xaml:VisualTransition>
+										<xaml:VisualTransition TransitionTo="Open">
+											<xaml:VisualDataTriggerBool Data="{Binding IsOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												CompareTo="True"/>
+										</xaml:VisualTransition>
+									</xaml:VisualTransitionCollection>
+								</xaml:VisualSetupGroup.Triggers>
 
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>
-
-						
-						<xaml:VisualAttachments.AttachedVisuals>
-						
-							<xaml:VisualStateNavigation State="LeftOpen">
-								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
-									<xaml:VisualDataTrigger.CompareTo>
-										<controls:MenuPosition>Left</controls:MenuPosition>
-									</xaml:VisualDataTrigger.CompareTo>
-								</xaml:VisualDataTrigger>
-							</xaml:VisualStateNavigation>
-							<xaml:VisualStateNavigation State="RightOpen">
-								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
-									<xaml:VisualDataTrigger.CompareTo>
-										<controls:MenuPosition>Right</controls:MenuPosition>
-									</xaml:VisualDataTrigger.CompareTo>
-								</xaml:VisualDataTrigger>
-							</xaml:VisualStateNavigation>
-
-							<xaml:VisualStateNavigation State="TopOpen">
-								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
-									<xaml:VisualDataTrigger.CompareTo>
-										<controls:MenuPosition>Top</controls:MenuPosition>
-									</xaml:VisualDataTrigger.CompareTo>
-								</xaml:VisualDataTrigger>
-							</xaml:VisualStateNavigation>
-
-							<xaml:VisualStateNavigation State="BottomOpen">
-								<xaml:VisualDataTrigger Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToIntConverter}}" ComparisonType="Equal">
-									<xaml:VisualDataTrigger.CompareTo>
-										<controls:MenuPosition>Bottom</controls:MenuPosition>
-									</xaml:VisualDataTrigger.CompareTo>
-								</xaml:VisualDataTrigger>
-							</xaml:VisualStateNavigation>
-
-						</xaml:VisualAttachments.AttachedVisuals>
+								<xaml:VisualSetupDynamic x:Name="Open" ID="Open" TransitionOutStoryboard="{StaticResource test}">
+									
 
 
-						<Grid Name="IconsPresenter"
+									<xaml:VisualSetupDynamic.TransitionInStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+												Storyboard.TargetProperty="X"
+												Duration="{StaticResource OpenCloseStoryboardDuration}"
+												To="0">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseIn"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+											<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+												Storyboard.TargetProperty="Y"
+												Duration="{StaticResource OpenCloseStoryboardDuration}"
+												To="0">
+												<DoubleAnimation.EasingFunction>
+													<CubicEase EasingMode="EaseIn"/>
+												</DoubleAnimation.EasingFunction>
+											</DoubleAnimation>
+										</Storyboard>
+									</xaml:VisualSetupDynamic.TransitionInStoryboard>
+								</xaml:VisualSetupDynamic>
+								<xaml:VisualSetupDynamic ID="Closed">
+									<xaml:VisualSetupDynamic.TemporarySetters>
+										<!--<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Visibility" Value="Collapsed"/>-->
+									</xaml:VisualSetupDynamic.TemporarySetters>
+								</xaml:VisualSetupDynamic>
+							</xaml:VisualSetupGroup>
+
+							<xaml:VisualSetupGroup Name="Position">
+
+								<xaml:VisualSetupGroup.Triggers>
+									<xaml:VisualTransitionCollection>
+										<xaml:VisualTransition TransitionTo="Left">
+											<xaml:VisualDataTriggerMenuPosition Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												ComparisonType="Equal" CompareTo="Left"/>
+										</xaml:VisualTransition>
+										<xaml:VisualTransition TransitionTo="Top">
+											<xaml:VisualDataTriggerMenuPosition Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												ComparisonType="Equal" CompareTo="Top"/>
+										</xaml:VisualTransition>
+										<xaml:VisualTransition TransitionTo="Right">
+											<xaml:VisualDataTriggerMenuPosition Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												ComparisonType="Equal" CompareTo="Right"/>
+										</xaml:VisualTransition>
+										<xaml:VisualTransition TransitionTo="Bottom">
+											<xaml:VisualDataTriggerMenuPosition Data="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												ComparisonType="Equal" CompareTo="Bottom"/>
+										</xaml:VisualTransition>
+
+									</xaml:VisualTransitionCollection>
+								</xaml:VisualSetupGroup.Triggers>
+
+								<xaml:VisualSetup ID="Left">
+									<xaml:VisualSetup.Setters>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Left"/>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Stretch"/>
+										<!--<xaml:PropertySetter Target="{Binding ElementName=Open, Mode=TwoWay}" Property="TransitionInStoryboard" Value="{StaticResource OpenFromLeftStoryboard}"/>
+										<xaml:PropertySetter Target="{Binding ElementName=Open, Mode=TwoWay}" Property="TransitionOutStoryboard" Value="{StaticResource CloseToLeftStoryboard}"/>-->
+									</xaml:VisualSetup.Setters>
+									<xaml:VisualSetup.TemporarySetters>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Height" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="1"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
+									</xaml:VisualSetup.TemporarySetters>
+								</xaml:VisualSetup>
+
+								<xaml:VisualSetup ID="Top">
+									<xaml:VisualSetup.Setters>										
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Top"/>
+										<!--<xaml:PropertySetter Target="{Binding ElementName=Open, Mode=TwoWay}" Property="TransitionInStoryboard" Value="{StaticResource OpenFromTopStoryboard}"/>
+										<xaml:PropertySetter Target="{Binding ElementName=Open, Mode=TwoWay}" Property="TransitionOutStoryboard" Value="{StaticResource CloseToTopStoryboard}"/>-->
+									</xaml:VisualSetup.Setters>
+									<xaml:VisualSetup.TemporarySetters>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="1"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
+									</xaml:VisualSetup.TemporarySetters>
+								</xaml:VisualSetup>
+
+								<xaml:VisualSetup ID="Right">
+									<xaml:VisualSetup.Setters>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Right"/>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Stretch"/>
+										<!--<xaml:PropertySetter Target="{Binding ElementName=Open, Mode=TwoWay}" Property="TransitionInStoryboard" Value="{StaticResource OpenFromRightStoryboard}"/>
+										<xaml:PropertySetter Target="{Binding ElementName=Open, Mode=TwoWay}" Property="TransitionOutStoryboard" Value="{StaticResource CloseToRightStoryboard}"/>-->
+									</xaml:VisualSetup.Setters>
+									<xaml:VisualSetup.TemporarySetters>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Height" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Column), Mode=TwoWay}" Value="1"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
+									</xaml:VisualSetup.TemporarySetters>
+								</xaml:VisualSetup>
+
+								<xaml:VisualSetup ID="Bottom">
+									<xaml:VisualSetup.Setters>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Bottom"/>
+										<!--<xaml:PropertySetter Target="{Binding ElementName=Open, Mode=TwoWay}" Property="TransitionInStoryboard" Value="{StaticResource OpenFromBottomStoryboard}"/>
+										<xaml:PropertySetter Target="{Binding ElementName=Open, Mode=TwoWay}" Property="TransitionOutStoryboard" Value="{StaticResource CloseToBottomStoryboard}"/>-->
+									</xaml:VisualSetup.Setters>
+									<xaml:VisualSetup.TemporarySetters>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Row), Mode=TwoWay}" Value="1"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
+									</xaml:VisualSetup.TemporarySetters>
+								</xaml:VisualSetup>
+
+							</xaml:VisualSetupGroup>
+						</xaml:VisualManager.VisualSetups>
+
+						<Grid Name="Content"
+							Background="Pink"	
+							Width="{TemplateBinding ContentLength}"
+							Height="{TemplateBinding ContentLength}"
+							BorderBrush="Green"
+							BorderThickness="2">
+
+							<Grid.Resources>
+								<controls:ContentTranslateTransformXConverter x:Key="InitialXConverter"/>
+								<controls:ContentTranslateTransformYConverter x:Key="InitialYConverter"/>
+							</Grid.Resources>
+
+							<Grid.RenderTransform>
+								<TranslateTransform x:Name="ContentPresenterTranslate"/>
+								<!--X="{Binding ContentTranslateTransformX, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+									Y="{Binding ContentTranslateTransformY, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>-->
+								<!--X="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InitialXConverter}}"
+									Y="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InitialYConverter}}"/>-->
+							</Grid.RenderTransform>
+
+						</Grid>
+
+						<Grid Name="IconsPresenter"							
 							Background="Red"
 							BorderBrush="Blue"
 							BorderThickness="2"
@@ -148,15 +317,7 @@
 						
 						</Grid>
 
-						<Grid Name="ContentPresenter"
-							Background="Pink"
-							Width="{TemplateBinding ContentLength}"
-							Height="{TemplateBinding ContentLength}"
-							BorderBrush="Green"
-							BorderThickness="2"
-							>
 						
-						</Grid>
 
 
 
