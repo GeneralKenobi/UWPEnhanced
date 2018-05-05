@@ -64,7 +64,7 @@
 								</xaml:VisualSetupGroup.Triggers>
 
 								<!-- Setup for when pointer is over the Icon -->
-								<xaml:VisualSetupDynamic Name="PointerOver">
+								<xaml:VisualSetupDynamic ID="PointerOver">
 
 									<!-- Apply the highlight -->
 									<xaml:VisualSetupDynamic.TransitionInStoryboard>
@@ -112,7 +112,7 @@
 								</xaml:VisualSetupGroup.Triggers>
 
 								<!-- Setup for when pointer is pressed -->
-								<xaml:VisualSetupDynamic Name="PointerPressed">
+								<xaml:VisualSetupDynamic ID="PointerPressed">
 
 									<!-- Reduce the ScaleX and ScaleY properties on Icon's ScaleTransform -->
 									<xaml:VisualSetupDynamic.TransitionInStoryboard>
