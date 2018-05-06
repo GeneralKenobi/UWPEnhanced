@@ -180,7 +180,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty IsOpenProperty =
 			DependencyProperty.Register(nameof(IsOpen), typeof(bool),
-			typeof(Menu), new PropertyMetadata(default(bool), new PropertyChangedCallback(
+			typeof(Menu), new PropertyMetadata(false, new PropertyChangedCallback(
 				(s,e) => (s as Menu)?.PropertyChanged?.Invoke(s, new PropertyChangedEventArgs(nameof(IsOpen))))));
 
 		#endregion

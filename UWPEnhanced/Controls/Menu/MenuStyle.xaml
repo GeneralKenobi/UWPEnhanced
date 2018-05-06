@@ -206,14 +206,14 @@
 
 								<!-- Triggers based on IsOpen property on the menu -->
 								<xaml:VisualSetupGroup.Triggers>
-									<xaml:VisualTransitionCollection>
-										<xaml:VisualTransition TransitionTo="Closed">
-											<xaml:VisualDataTriggerBool Data="{Binding IsOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-												CompareTo="False"/>
-										</xaml:VisualTransition>
+									<xaml:VisualTransitionCollection>										
 										<xaml:VisualTransition TransitionTo="Open">
 											<xaml:VisualDataTriggerBool Data="{Binding IsOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 												CompareTo="True"/>
+										</xaml:VisualTransition>
+										<xaml:VisualTransition TransitionTo="Closed">
+											<xaml:VisualDataTriggerBool Data="{Binding IsOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												CompareTo="False"/>
 										</xaml:VisualTransition>
 									</xaml:VisualTransitionCollection>
 								</xaml:VisualSetupGroup.Triggers>
@@ -225,7 +225,7 @@
 								<!-- Sets visibility to collapsed (makes sure that the content won't be seen in unexpected
 								places on the screen, for example when changing the position of the menu, if the background 
 								is transpart, etc -->
-								<xaml:VisualSetupDynamic ID="Closed">
+								<xaml:VisualSetupDynamic ID="Closed" EnterWhenCreated="True">
 									<xaml:VisualSetupDynamic.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Visibility" Value="Collapsed"/>
 									</xaml:VisualSetupDynamic.TemporarySetters>
@@ -356,7 +356,7 @@
 						</xaml:VisualManager.VisualSetups>
 
 						<Grid Name="Content"
-							Background="Pink"	
+							Background="Pink"
 							Width="{TemplateBinding ContentLength}"
 							Height="{TemplateBinding ContentLength}"
 							BorderBrush="Green"
