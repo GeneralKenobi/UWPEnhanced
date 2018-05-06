@@ -42,11 +42,7 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region Menu TranslateTransform
-
-		//public double MenuTranslateTransformX { get; private set; }
-
-		//public double MenuTranslateTransformY { get; private set; }
+		#region Menu TranslateTransform		
 
 		#endregion
 
@@ -201,7 +197,6 @@ namespace UWPEnhanced.Controls
 				menu.InvokePropertyChanged(nameof(Position));
 
 				menu.RecalculateContentTranslate();
-				menu.RecalculateMenuTranslate();
 			}
 		}
 
@@ -210,69 +205,6 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region Private Methods
-
-		#region Content TranslateTransform
-
-		/// <summary>
-		/// Recalculates the <see cref="TranslateTransform"/> X and Y values for Menu
-		/// </summary>
-		private void RecalculateMenuTranslate()
-		{
-			// Calculate the new values
-			//MenuTranslateTransformX = CalculateMenuTranslateX();
-			//MenuTranslateTransformY = CalculateMenuTranslateY();
-
-			//// Invoke the PropertyChangedEvent for them
-			//InvokePropertyChanged(nameof(MenuTranslateTransformX), nameof(MenuTranslateTransformY));
-		}
-
-		/// <summary>
-		/// Returns the desired Menu <see cref="TranslateTransform.X"/> which hides the Menu when its repositioned (closes the menu)
-		/// Helper for <see cref="RecalculateMenuTranslate"/>
-		/// </summary>
-		/// <returns></returns>
-		private double CalculateMenuTranslateX()
-		{
-			switch (Position)
-			{
-				case MenuPosition.Left:
-					{
-						return -OpenLength;
-					}
-
-				case MenuPosition.Right:
-					{
-						return OpenLength;
-					}
-			}
-
-			return 0;
-		}
-
-		/// <summary>
-		/// Returns the desired Menu <see cref="TranslateTransform.X"/> which hides the Menu when its repositioned (closes the menu)
-		/// Helper for <see cref="RecalculateMenuTranslate"/>
-		/// </summary>
-		/// <returns></returns>
-		private double CalculateMenuTranslateY()
-		{
-			switch (Position)
-			{
-				case MenuPosition.Top:
-					{
-						return -OpenLength;
-					}
-
-				case MenuPosition.Bottom:
-					{
-						return OpenLength;
-					}
-			}
-
-			return 0;
-		}
-
-		#endregion
 
 		#region Content TranslateTransform
 
