@@ -92,7 +92,7 @@ namespace UWPEnhanced.Xaml
 		/// <typeparam name="T">Type to look for</typeparam>
 		/// <param name="obj">Object whose children to search through</param>
 		/// <returns>First found child of type T or null if none was found</returns>
-		private static T FindChild<T>(this DependencyObject obj)
+		public static T FindChild<T>(this DependencyObject obj)
 			where T : DependencyObject
 		{
 			// For each child
@@ -176,7 +176,7 @@ namespace UWPEnhanced.Xaml
 		/// <typeparam name="T">Type to look for</typeparam>
 		/// <param name="obj">Object whose children to search through</param>
 		/// <returns>First found child of type T or null if none was found</returns>
-		private static T FindChildOrSelf<T>(this DependencyObject obj)
+		public static T FindChildOrSelf<T>(this DependencyObject obj)
 			where T : DependencyObject
 		{
 			if(obj is T castedObj)
