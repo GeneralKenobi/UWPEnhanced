@@ -181,6 +181,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region Content Dependency Property
+
+		/// <summary>
+		/// Collection of all elements that are placed in this menu
+		/// </summary>
+		public DependencyObjectCollectionOfT<UIElement> Content
+		{
+			get => (DependencyObjectCollectionOfT<UIElement>)GetValue(ContentProperty);
+			set => SetValue(ContentProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="Content"/>
+		/// </summary>
+		public static readonly DependencyProperty ContentProperty =
+			DependencyProperty.Register(nameof(Content), typeof(DependencyObjectCollectionOfT<UIElement>),
+			typeof(Menu), new PropertyMetadata(default(DependencyObjectCollectionOfT<UIElement>)));
+
+		#endregion
+
 		#endregion
 
 		#region Private Static Methods

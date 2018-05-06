@@ -25,14 +25,29 @@
 		</Storyboard>
 	</Page.Resources>
 
-	<Grid Name="RootGrid" Background="Green">
+	<Grid Name="RootGrid" Background="White">
 		<controls:Menu x:Name="menu" Position="Left"/>
+
+
+
 		<StackPanel HorizontalAlignment="Right">
 			<Button Content="Left" Click="Button_Click" x:Name="test"/>
 			<Button Content="Top" Click="Button_Click_1"/>
 			<Button Content="Right" Click="Button_Click_2"/>
 			<Button Content="Bottom" Click="Button_Click_3"/>
 			<Button Content="Open/Close" Click="Button_Click_4"/>
+			<Button Content="Test" Click="Button_Click_5"/>
+
+			<controls:ItemsContainer ItemsSource="{x:Bind collection, Mode=OneWay}" FlowDirection="RightToLeft">
+				<controls:ItemsContainer.ItemTemplate>
+					<DataTemplate>
+						<Border BorderThickness="1" BorderBrush="Red">
+							<TextBlock Text="{Binding }"/>
+						</Border>
+					</DataTemplate>
+				</controls:ItemsContainer.ItemTemplate>
+			</controls:ItemsContainer>
+
 		</StackPanel>
 
 		<xaml:VisualManager.VisualSetups>
