@@ -49,5 +49,10 @@ namespace UWPEnhanced.Xaml
 		/// <param name="useTransitions"></param>
 		/// <returns></returns>
 		Task TransitionOut(VisualTransitionType type, bool useTransitions);
+
+		/// <summary>
+		/// If true, the visual setup will be navigated to when its created
+		/// </summary>
+		bool EnterWhenCreated { get; set; }
 	}
 }

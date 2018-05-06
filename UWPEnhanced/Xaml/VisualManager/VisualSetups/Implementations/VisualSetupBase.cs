@@ -154,6 +154,26 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
+		#region EnterWhenCreated Dependency Property
+
+		/// <summary>
+		/// If true, the visual setup will be navigated to when its created
+		/// </summary>
+		public bool EnterWhenCreated
+		{
+			get => (bool)GetValue(EnterWhenCreatedProperty);
+			set => SetValue(EnterWhenCreatedProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="EnterWhenCreated"/>
+		/// </summary>
+		public static readonly DependencyProperty EnterWhenCreatedProperty =
+			DependencyProperty.Register(nameof(EnterWhenCreated), typeof(bool),
+			typeof(VisualSetupBase), new PropertyMetadata(default(bool)));
+
+		#endregion
+
 		#region Protected Methods
 
 		/// <summary>

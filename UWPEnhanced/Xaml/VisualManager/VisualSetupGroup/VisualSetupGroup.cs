@@ -76,7 +76,7 @@ namespace UWPEnhanced.Xaml
 			DependencyProperty.Register(nameof(Triggers), typeof(VisualTransitionCollection),
 			typeof(VisualSetupGroup), new PropertyMetadata(null, new PropertyChangedCallback(TriggersChanged)));
 
-		#endregion
+		#endregion		
 
 		#region Public Properties
 
@@ -99,6 +99,11 @@ namespace UWPEnhanced.Xaml
 			var checkedItem = base.NewElementCheckRoutine(item);
 
 			checkedItem.AssignParent(this);
+
+			if(checkedItem.EnterWhenCreated)
+			{
+				Transition(checkedItem, true);
+			}
 
 			return checkedItem;
 		}
