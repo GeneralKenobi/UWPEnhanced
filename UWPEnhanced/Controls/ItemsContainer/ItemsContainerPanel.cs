@@ -106,6 +106,8 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region Private Methods
+
 		/// <summary>
 		/// Arranges the items in a top to bottom direction. Helper of <see cref="ArrangeOverride(Size)"/>.
 		/// </summary>
@@ -243,7 +245,9 @@ namespace UWPEnhanced.Controls
 
 			return new Size(greatestWidth, cumulativeChildrenHeight + TotalItemSpacing);
 		}
-		
+
+		#endregion
+
 		#region Protected Methods
 
 		/// <summary>
