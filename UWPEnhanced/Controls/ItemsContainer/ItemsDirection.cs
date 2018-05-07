@@ -8,21 +8,21 @@
 		/// <summary>
 		/// Items are positioned horizontally, from right to left
 		/// </summary>
-		ToLeft = 0,
+		RightToLeft = 0,
 
 		/// <summary>
 		/// Items are positioned vertically, from bottom to top
 		/// </summary>
-		ToTop = 1,
+		BottomToTop = 1,
 
 		/// <summary>
 		/// Items are positioned horizontally, from left to right
 		/// </summary>
-		ToRight = 2,
+		LeftToRight = 2,
 
 		/// <summary>
 		/// Items are positioned vertically, from top to bottom
 		/// </summary>
-		ToBottom = 3,
+		TopToBottom = 3,
 	}
 }
