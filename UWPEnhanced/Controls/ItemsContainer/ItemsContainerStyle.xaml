@@ -15,14 +15,14 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ItemsContainer">
-					<Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+					<Border HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                           VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Background="{TemplateBinding Background}"
                           BorderBrush="{TemplateBinding BorderBrush}"
                           BorderThickness="{TemplateBinding BorderThickness}">
 						<ItemsPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-					</Grid>
+					</Border>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
