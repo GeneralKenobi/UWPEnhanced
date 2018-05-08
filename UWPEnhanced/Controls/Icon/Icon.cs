@@ -52,7 +52,6 @@ namespace UWPEnhanced.Controls
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 			FindContainerGrid();
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-
 		}
 
 		#endregion
@@ -98,13 +97,11 @@ namespace UWPEnhanced.Controls
 				// Subscribe to size changed
 				element.SizeChanged+= (s, e) =>
 				{
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterX"));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterY"));
+					InvokePropertyChanged(nameof(ScaleCenterX), nameof(ScaleCenterY));
 				};
 
-				// Fire event in order to notify for the first value
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterX"));
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScaleCenterY"));
+				// Fire event in order to notify about the first value
+				InvokePropertyChanged(nameof(ScaleCenterX), nameof(ScaleCenterY));
 			}
 			else
 			{
@@ -174,12 +171,25 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region Property Changed Event
+		#region INotifyPropertyChanged
 
 		/// <summary>
-		/// Event to fire when observed property changes
+		/// Event raised when property changes
 		/// </summary>
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		/// <summary>
+		/// Invokes Property Changed Event for each string parameter
+		/// </summary>
+		/// <param name="propertyName">Properties to invoke for.
+		/// Null or string.Empty will result in notification for all properties</param>
+		public void InvokePropertyChanged(params string[] propertyNames)
+		{
+			foreach (var item in propertyNames)
+			{
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(item));
+			}
+		}
 
 		#endregion
 
