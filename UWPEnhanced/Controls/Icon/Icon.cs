@@ -228,9 +228,9 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Brush presented when the Icon is highlighted, default is white
 		/// </summary>
-		public SolidColorBrush HighlightBrush
+		public Brush HighlightBrush
 		{
-			get => (SolidColorBrush)GetValue(HighlightBrushProperty);
+			get => (Brush)GetValue(HighlightBrushProperty);
 			set => SetValue(HighlightBrushProperty, value);
 		}
 
@@ -238,7 +238,7 @@ namespace UWPEnhanced.Controls
 		/// Brush presented when the Icon is highlighted, default is white
 		/// </summary>
 		public static readonly DependencyProperty HighlightBrushProperty =
-			DependencyProperty.Register(nameof(HighlightBrush), typeof(SolidColorBrush),
+			DependencyProperty.Register(nameof(HighlightBrush), typeof(Brush),
 			typeof(Icon), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 255, 255, 255))));
 
 		#endregion
