@@ -52,6 +52,9 @@ namespace UWPEnhanced.Controls
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 			FindContainerGrid();
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+
+			// Whenever size changes notify that the observed dimensions changed
+			this.SizeChanged += (s,e) => InvokePropertyChanged(nameof(ObservedWidth), nameof(ObservedHeight));
 		}
 
 		#endregion
@@ -234,6 +237,16 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region Public Properties
+
+		/// <summary>
+		/// <see cref="FrameworkElement.ActualWidth"/> that can be observed
+		/// </summary>
+		public double ObservedWidth => ActualWidth;
+
+		/// <summary>
+		/// <see cref="FrameworkElement.ActualHeight"/> that can be observed
+		/// </summary>
+		public double ObservedHeight => ActualHeight;
 
 		/// <summary>
 		/// X center for scale transform
