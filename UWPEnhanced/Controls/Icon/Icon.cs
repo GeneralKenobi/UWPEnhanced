@@ -233,26 +233,6 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region HighlightBrush Dependency Property
-
-		/// <summary>
-		/// Brush presented when the Icon is highlighted, default is white
-		/// </summary>
-		public Brush HighlightBrush
-		{
-			get => (Brush)GetValue(HighlightBrushProperty);
-			set => SetValue(HighlightBrushProperty, value);
-		}
-
-		/// <summary>
-		/// Brush presented when the Icon is highlighted, default is white
-		/// </summary>
-		public static readonly DependencyProperty HighlightBrushProperty =
-			DependencyProperty.Register(nameof(HighlightBrush), typeof(Brush),
-			typeof(Icon), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 255, 255, 255))));
-
-		#endregion
-
 		#region Public Properties
 
 		/// <summary>
