@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UWPEnhanced.Xaml;
+using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -26,12 +31,60 @@ namespace UWPEnhanced.Controls
 		public Menu()
         {
             this.DefaultStyleKey = typeof(Menu);
+			Content = new ObservableCollection<UIElement>();		
+			Content.CollectionChanged += Content_CollectionChanged;
 			RecalculateContentTranslate();
         }
+
+		private void Content_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			switch(e.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					{
+						foreach(var item in e.NewItems)
+						{
+							if(item is UIElement element)
+							{
+								collection.Add(new Icon()
+								{
+									Width=20,
+									Height = 20,
+									Glyph = GetGlyph(element),
+									ImageSource = GetImage(element),
+									Background = new LinearGradientBrush()
+									{
+										StartPoint = new Point(0.5, 0),
+										EndPoint = new Point(0.5, 1),
+										GradientStops = new GradientStopCollection()
+										{
+											new GradientStop()
+											{
+												Color = Colors.Transparent,
+												Offset = 0,
+											},
+
+											new GradientStop()
+											{
+												Color = Colors.White,
+												Offset = 1,
+											},
+										},
+									}
+								});
+							}
+						}
+					} break;
+			}
+		}
 
 		#endregion
 
 		#region Public Properties
+
+		public ObservableCollection<UIElement> collection { get; set; } = new ObservableCollection<UIElement>();
+		public ObservableCollection<string> collection2 { get; set; } = new ObservableCollection<string>() { "s1", "s2" };
+
 
 		#region Control Size
 
@@ -186,9 +239,9 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Collection of all elements that are placed in this menu
 		/// </summary>
-		public DependencyObjectCollectionOfT<UIElement> Content
+		public ObservableCollection<UIElement> Content
 		{
-			get => (DependencyObjectCollectionOfT<UIElement>)GetValue(ContentProperty);
+			get => (ObservableCollection<UIElement>)GetValue(ContentProperty);
 			set => SetValue(ContentProperty, value);
 		}
 
@@ -196,8 +249,50 @@ namespace UWPEnhanced.Controls
 		/// Backing store for <see cref="Content"/>
 		/// </summary>
 		public static readonly DependencyProperty ContentProperty =
-			DependencyProperty.Register(nameof(Content), typeof(DependencyObjectCollectionOfT<UIElement>),
-			typeof(Menu), new PropertyMetadata(default(DependencyObjectCollectionOfT<UIElement>)));
+			DependencyProperty.Register(nameof(Content), typeof(ObservableCollection<UIElement>),
+			typeof(Menu), new PropertyMetadata(default(ObservableCollection<UIElement>)));
+
+		#endregion
+
+		#region Glyph Attached Property
+
+		/// <summary>
+		/// Getter for <see cref="GlyphProperty"/>
+		/// </summary>
+		public static string GetGlyph(DependencyObject obj) => (string)obj.GetValue(GlyphProperty);
+
+		/// <summary>
+		/// Setter for <see cref="GlyphProperty"/>
+		/// </summary>
+		public static void SetGlyph(DependencyObject obj, string value) => obj.SetValue(GlyphProperty, value);
+
+		/// <summary>
+		///
+		/// </summary>
+		public static readonly DependencyProperty GlyphProperty =
+			DependencyProperty.RegisterAttached("Glyph", typeof(string),
+			 typeof(Menu), new PropertyMetadata(default(string)));
+
+		#endregion
+
+		#region Image Attached Property
+
+		/// <summary>
+		/// Getter for <see cref="ImageProperty"/>
+		/// </summary>
+		public static ImageSource GetImage(DependencyObject obj) => (ImageSource)obj.GetValue(ImageProperty);
+
+		/// <summary>
+		/// Setter for <see cref="ImageProperty"/>
+		/// </summary>
+		public static void SetImage(DependencyObject obj, ImageSource value) => obj.SetValue(ImageProperty, value);
+
+		/// <summary>
+		/// Image to present on the selecting Icon
+		/// </summary>
+		public static readonly DependencyProperty ImageProperty =
+			DependencyProperty.RegisterAttached("Image", typeof(ImageSource),
+			 typeof(Menu), new PropertyMetadata(default(ImageSource)));
 
 		#endregion
 

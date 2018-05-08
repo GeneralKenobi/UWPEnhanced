@@ -116,8 +116,10 @@
       <DependentUpon>ItemsContainerSamplePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ItemsContainer\ItemsDirection.cs" />
+    <Compile Include="Controls\Menu\Converters\MenuContentToIconInfoConverter.cs" />
     <Compile Include="Controls\Menu\Enums\Enums.cs" />
     <Compile Include="Controls\Menu\Menu.cs" />
+    <Compile Include="Controls\Menu\MenuContentIconInfo.cs" />
     <Compile Include="Controls\Menu\MenuSamplePage.xaml.cs">
       <DependentUpon>MenuSamplePage.xaml</DependentUpon>
     </Compile>

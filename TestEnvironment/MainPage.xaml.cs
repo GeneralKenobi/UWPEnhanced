@@ -24,11 +24,11 @@ namespace TestEnvironment
 	public sealed partial class MainPage : Page
     {
         public MainPage()
-        {			
+        {
 			this.InitializeComponent();
 		}
 
-		public ObservableCollection<string> collection = new ObservableCollection<string>() { "Test1", "Test2", "Test3" };
+		public ObservableCollection<string> collection = new ObservableCollection<string>();
 
 		public double D { get; set; } = 1;
 
@@ -66,6 +66,17 @@ namespace TestEnvironment
 			menu.Position = MenuPosition.Bottom;
 			await Task.Delay(100);
 			menu.Position = MenuPosition.Left;
+		}
+
+		private void Button_Click_6(object sender, RoutedEventArgs e)
+		{
+			collection.Add("new test");
+		}
+
+		private void Button_Click_7(object sender, RoutedEventArgs e)
+		{
+			var rd = new Random();
+			collection.RemoveAt(rd.Next() % collection.Count);
 		}
 	}
 }

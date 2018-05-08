@@ -18,6 +18,7 @@
 
 							<!--#region ValueConverters -->
 
+							<controls:MenuContentToIconInfoConverter x:Key="MenuContentConverter"/>
 							<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
 							<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
 
@@ -372,22 +373,47 @@
 
 						</Grid>
 
-						<Grid Name="IconsPresenter"							
-							Background="Red"
+						<controls:ItemsContainer Name="IconsPresenter"
+							Background="{TemplateBinding Background}"
 							BorderBrush="Blue"
 							BorderThickness="2"
 							Width="{TemplateBinding IconsPanelLength}"
-							Height="{TemplateBinding IconsPanelLength}">
-						
-						</Grid>
+							Height="{TemplateBinding IconsPanelLength}"
+							ItemSpacing="10"
+							ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}">
 
-						
+							<controls:ItemsContainer.ItemTemplate>
+								<DataTemplate>
+									<controls:Icon Glyph="{Binding Glyph}"
+									ImageSource="{Binding Image}"
+									FontSize="20"									
+									HorizontalAlignment="Stretch"
+									ImageStretch="Uniform">
 
+										<controls:Icon.Background>
+											<LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
+												<GradientStop Color="Transparent" Offset="0"/>
+												<GradientStop Color="Transparent" Offset="0.95"/>
+												<GradientStop Color="White" Offset="0.95"/>
+												<GradientStop Color="White" Offset="1"/>
+											</LinearGradientBrush>
+										</controls:Icon.Background>
 
+										<controls:Icon.HighlightBrush>
+											<LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
+												<GradientStop Color="Transparent" Offset="0"/>
+												<GradientStop Color="Transparent" Offset="0.25"/>
+												<GradientStop Color="White" Offset="1"/>
+											</LinearGradientBrush>
+										</controls:Icon.HighlightBrush>
+
+									</controls:Icon>
+								</DataTemplate>
+							</controls:ItemsContainer.ItemTemplate>
+
+						</controls:ItemsContainer>
 
 					</Grid>
-
-
 					
 				</ControlTemplate>
 			</Setter.Value>

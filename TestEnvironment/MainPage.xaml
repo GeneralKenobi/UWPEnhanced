@@ -25,20 +25,30 @@
 		</Storyboard>
 	</Page.Resources>
 
-	<Grid Name="RootGrid" Background="White">
-		<controls:Menu x:Name="menu" Position="Left"/>
+	<Grid Name="RootGrid" Background="Wheat">
+		<controls:Menu x:Name="menu" Position="Left" Background="Navy"
+		IconsPanelLength="50">
+			<controls:Menu.Content>
+				<Rectangle Width="10" Height="10" Fill="Green" controls:Menu.Glyph="&#xE700;"
+				controls:Menu.Image="ms-appx:///Assets/LockScreenLogo.scale-200.png"/>
+				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>
+			</controls:Menu.Content>
+		</controls:Menu>
 
 
 
-		<StackPanel HorizontalAlignment="Right">
+		<StackPanel HorizontalAlignment="Right" Margin="50" BorderThickness="1" BorderBrush="Red">
 			<Button Content="Left" Click="Button_Click" x:Name="test"/>
 			<Button Content="Top" Click="Button_Click_1"/>
 			<Button Content="Right" Click="Button_Click_2"/>
 			<Button Content="Bottom" Click="Button_Click_3"/>
 			<Button Content="Open/Close" Click="Button_Click_4"/>
 			<Button Content="Test" Click="Button_Click_5"/>
+			<Button Content="Add string" Click="Button_Click_6"/>
+			<Button Content="Remove string" Click="Button_Click_7"/>
 
-			<controls:ItemsContainer ItemsSource="{x:Bind collection, Mode=OneWay}" FlowDirection="RightToLeft">
+			<controls:ItemsContainer ItemsSource="{x:Bind collection, Mode=OneWay}" FlowDirection="LeftToRight"
+			ItemSpacing="0" BorderThickness="1" BorderBrush="Green">
 				<controls:ItemsContainer.ItemTemplate>
 					<DataTemplate>
 						<Border BorderThickness="1" BorderBrush="Red">
