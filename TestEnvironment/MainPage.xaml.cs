@@ -30,54 +30,54 @@ namespace TestEnvironment
 
 		public ObservableCollection<string> collection = new ObservableCollection<string>();
 
-		public double D { get; set; } = 1;
+		//public double D { get; set; } = 1;
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			menu.Position = MenuPosition.Left;
-		}
+		//private void Button_Click(object sender, RoutedEventArgs e)
+		//{
+		//	menu.Position = MenuPosition.Left;
+		//}
 
-		private void Button_Click_1(object sender, RoutedEventArgs e)
-		{			
-			menu.Position = MenuPosition.Top;
-		}
+		//private void Button_Click_1(object sender, RoutedEventArgs e)
+		//{			
+		//	menu.Position = MenuPosition.Top;
+		//}
 
-		private void Button_Click_2(object sender, RoutedEventArgs e)
-		{
-			menu.Position = MenuPosition.Right;
-		}
+		//private void Button_Click_2(object sender, RoutedEventArgs e)
+		//{
+		//	menu.Position = MenuPosition.Right;
+		//}
 
-		private void Button_Click_3(object sender, RoutedEventArgs e)
-		{
-			menu.Position = MenuPosition.Bottom;
-		}
+		//private void Button_Click_3(object sender, RoutedEventArgs e)
+		//{
+		//	menu.Position = MenuPosition.Bottom;
+		//}
 
-		private void Button_Click_4(object sender, RoutedEventArgs e)
-		{
-			menu.IsOpen = !menu.IsOpen;			
-		}
+		//private void Button_Click_4(object sender, RoutedEventArgs e)
+		//{
+		//	menu.IsOpen = !menu.IsOpen;			
+		//}
 
-		private async void Button_Click_5(object sender, RoutedEventArgs e)
-		{
-			menu.Position = MenuPosition.Top;
-			await Task.Delay(100);
-			menu.Position = MenuPosition.Right;
-			await Task.Delay(100);
-			menu.Position = MenuPosition.Bottom;
-			await Task.Delay(100);
-			menu.Position = MenuPosition.Left;
-		}
+		//private async void Button_Click_5(object sender, RoutedEventArgs e)
+		//{
+		//	menu.Position = MenuPosition.Top;
+		//	await Task.Delay(100);
+		//	menu.Position = MenuPosition.Right;
+		//	await Task.Delay(100);
+		//	menu.Position = MenuPosition.Bottom;
+		//	await Task.Delay(100);
+		//	menu.Position = MenuPosition.Left;
+		//}
 
-		private void Button_Click_6(object sender, RoutedEventArgs e)
-		{
-			collection.Add("new test");
-		}
+		//private void Button_Click_6(object sender, RoutedEventArgs e)
+		//{
+		//	collection.Add("new test");
+		//}
 
-		private void Button_Click_7(object sender, RoutedEventArgs e)
-		{
-			var rd = new Random();
-			collection.RemoveAt(rd.Next() % collection.Count);
-		}
+		//private void Button_Click_7(object sender, RoutedEventArgs e)
+		//{
+		//	var rd = new Random();
+		//	collection.RemoveAt(rd.Next() % collection.Count);
+		//}
 	}
 }
 

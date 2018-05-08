@@ -26,7 +26,15 @@
 	</Page.Resources>
 
 	<Grid Name="RootGrid" Background="Wheat">
-		<controls:Menu x:Name="menu" Position="Left" Background="Navy"
+
+		<controls:Icon Style="{StaticResource IconWithAnimatedEdgesStyle}"
+			Glyph="&#xE705;"
+			FontSize="100"/>
+
+		
+
+
+		<!--<controls:Menu x:Name="menu" Position="Left" Background="Navy"
 		IconsPanelLength="50">
 			<controls:Menu.Content>
 				<Rectangle Width="10" Height="10" Fill="Green" controls:Menu.Glyph="&#xE700;"
@@ -74,7 +82,7 @@
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
+		</VisualStateManager.VisualStateGroups>-->
 
 
 

@@ -110,6 +110,7 @@
     <Compile Include="Controls\Icon\IconSamplePage.xaml.cs">
       <DependentUpon>IconSamplePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Icon\ValueConverters\ProductConverter.cs" />
     <Compile Include="Controls\ItemsContainer\ItemsContainer.cs" />
     <Compile Include="Controls\ItemsContainer\ItemsContainerPanel.cs" />
     <Compile Include="Controls\ItemsContainer\ItemsContainerSamplePage.xaml.cs">
@@ -180,6 +181,11 @@
     <Page Include="Controls\Icon\IconSamplePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Icon\IconWithAnimatedEdgesStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Controls\Icon\IconStyle.xaml">
       <SubType>Designer</SubType>

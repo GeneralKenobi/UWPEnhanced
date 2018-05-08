@@ -384,30 +384,64 @@
 
 							<controls:ItemsContainer.ItemTemplate>
 								<DataTemplate>
-									<controls:Icon Glyph="{Binding Glyph}"
-									ImageSource="{Binding Image}"
-									FontSize="20"									
-									HorizontalAlignment="Stretch"
-									ImageStretch="Uniform">
 
-										<controls:Icon.Background>
-											<LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
-												<GradientStop Color="Transparent" Offset="0"/>
-												<GradientStop Color="Transparent" Offset="0.95"/>
-												<GradientStop Color="White" Offset="0.95"/>
-												<GradientStop Color="White" Offset="1"/>
-											</LinearGradientBrush>
-										</controls:Icon.Background>
+									<Grid>
 
-										<controls:Icon.HighlightBrush>
-											<LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
-												<GradientStop Color="Transparent" Offset="0"/>
-												<GradientStop Color="Transparent" Offset="0.25"/>
-												<GradientStop Color="White" Offset="1"/>
-											</LinearGradientBrush>
-										</controls:Icon.HighlightBrush>
+										<Grid.Resources>
 
-									</controls:Icon>
+											<CompositeTransform x:Key="VerticalTransform"
+												CenterX="20"
+												CenterY="20"
+												ScaleY="0.6"
+												TranslateY="0"
+												x:Name="VerticalTransform"/>
+										</Grid.Resources>
+
+										<Grid.RowDefinitions>
+											<RowDefinition Height="1"/>
+											<RowDefinition Height="*"/>
+											<RowDefinition Height="1"/>
+										</Grid.RowDefinitions>
+
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="1"/>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="1"/>
+										</Grid.ColumnDefinitions>
+
+										<controls:Icon Glyph="{Binding Glyph}"
+										Grid.Row="1"
+										Grid.Column="1"
+										ImageSource="{Binding Image}"
+										FontSize="20"
+										Width="40"
+										Height="40"
+										HorizontalAlignment="Center"
+										ImageStretch="Uniform">
+
+
+										</controls:Icon>
+
+										<Rectangle Grid.Row="2"
+											Grid.ColumnSpan="3"
+											Fill="Red">
+
+											<Rectangle.RenderTransform>
+												<ScaleTransform CenterX="20" CenterY="20" ScaleX="0.8"/>
+											</Rectangle.RenderTransform>
+										</Rectangle>
+
+										<Rectangle Grid.RowSpan="3"
+											Grid.Column="0"
+											Fill="Red"
+											RenderTransform="{StaticResource VerticalTransform}"/>
+
+										<Rectangle Grid.Column="2"
+											Grid.RowSpan="3"
+											Fill="Red"
+											RenderTransform="{StaticResource VerticalTransform}"/>
+
+									</Grid>
 								</DataTemplate>
 							</controls:ItemsContainer.ItemTemplate>
 

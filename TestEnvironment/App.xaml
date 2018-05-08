@@ -6,8 +6,15 @@
     RequestedTheme="Light">
 
 	<Application.Resources>
-		<FontFamily x:Key="FontAwesome">ms-appx:///Assets/FontAwesome.ttf#FontAwesome</FontFamily>
+		<!--<FontFamily x:Key="FontAwesome">ms-appx:///Assets/FontAwesome.ttf#FontAwesome</FontFamily>-->
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/IconWithAnimatedEdgesStyle.xaml"/>
+
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+
 	</Application.Resources>
 
-
+	
 </Application>
