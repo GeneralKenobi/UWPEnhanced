@@ -120,7 +120,12 @@ namespace UWPEnhanced.Controls
 			foreach(var item in Children)
 			{
 				item.Measure(finalSize);
-				item.Arrange(new Rect(0, cumulativeHeight, item.DesiredSize.Width, item.DesiredSize.Height));
+				
+				// If the finalSize width is greater than the desired width, assign it instead so that the control may
+				// position itself horizontally as it wishes
+				item.Arrange(new Rect(0, cumulativeHeight, Math.Max(item.DesiredSize.Width, finalSize.Width),
+					item.DesiredSize.Height));
+
 				cumulativeHeight += item.DesiredSize.Height + ItemSpacing;
 			}
 
@@ -144,8 +149,13 @@ namespace UWPEnhanced.Controls
 				foreach (var item in Children)
 			{
 				item.Measure(finalSize);
+
 				cumulativeHeight -= item.DesiredSize.Height + ItemSpacing;
-				item.Arrange(new Rect(0, cumulativeHeight, item.DesiredSize.Width, item.DesiredSize.Height));
+
+				// If the finalSize width is greater than the desired width, assign it instead so that the control may
+				// position itself horizontally as it wishes
+				item.Arrange(new Rect(0, cumulativeHeight, Math.Max(item.DesiredSize.Width, finalSize.Width),
+					item.DesiredSize.Height));
 			}
 
 			return finalSize;
@@ -163,7 +173,12 @@ namespace UWPEnhanced.Controls
 			foreach(var item in Children)
 			{
 				item.Measure(finalSize);
-				item.Arrange(new Rect(cumulativeWidth, 0, item.DesiredSize.Width, item.DesiredSize.Height));
+
+				// If the finalSize height is greater than the desired height, assign it instead so that the control may
+				// position itself vertically as it wishes
+				item.Arrange(new Rect(cumulativeWidth, 0, item.DesiredSize.Width,
+					Math.Max(item.DesiredSize.Height, finalSize.Height)));
+
 				cumulativeWidth += item.DesiredSize.Width + ItemSpacing;
 			}
 
@@ -187,8 +202,13 @@ namespace UWPEnhanced.Controls
 			foreach (var item in Children)
 			{
 				item.Measure(finalSize);
+
 				cumulativeWidth -= item.DesiredSize.Width + ItemSpacing;
-				item.Arrange(new Rect(cumulativeWidth, 0, item.DesiredSize.Width, item.DesiredSize.Height));
+
+				// If the finalSize height is greater than the desired height, assign it instead so that the control may
+				// position itself vertically as it wishes
+				item.Arrange(new Rect(cumulativeWidth, 0, item.DesiredSize.Width,
+					Math.Max(item.DesiredSize.Height, finalSize.Height)));
 			}
 
 			return finalSize;
