@@ -9,6 +9,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace UWPEnhanced.Controls
 {
+	/// <summary>
+	/// Panel for <see cref="ItemsContainer"/>, positions children in 4 possible configurations
+	/// </summary>
 	internal class ItemsContainerPanel : Panel
 	{
 		#region Private Properties
