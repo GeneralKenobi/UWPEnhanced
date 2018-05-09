@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 
-namespace UWPEnhanced.Controls
+namespace UWPEnhanced.ValueConverters
 {
 	/// <summary>
 	/// If the value is a double and the parameter is a double returns value*parameter.
