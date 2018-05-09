@@ -1,0 +1,376 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:UWPEnhanced.Controls"
+    xmlns:converters="using:UWPEnhanced.ValueConverters"
+    xmlns:xaml="using:UWPEnhanced.Xaml">
+
+
+	<!-- Icon with animated border (left, right, bottom) instead of a highlight -->
+	<Style TargetType="controls:Icon" x:Key="IconWithAnimatedBorderStyle">
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="FontFamily" Value="{ThemeResource SymbolThemeFontFamily}"/>
+		<Setter Property="FontSize" Value="20"/>
+		<Setter Property="Padding" Value="5"/>
+		<Setter Property="BorderBrush" Value="Black"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="ImageStretch" Value="None"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:Icon" x:Name="Template">
+									
+					<!-- Main container, presents background and border brush -->
+					<Grid x:Name="RootGrid"
+						Background="{TemplateBinding Background}"
+						BorderThickness="0"						
+						Width="{TemplateBinding Width}"
+						Height="{TemplateBinding Height}">
+						
+
+						<!-- Resources -->
+						<!-- Constant values in animations are defined here -->
+						<Grid.Resources>
+
+							<!--#region Constants -->
+							<x:Double x:Key="ScaleFrom">1</x:Double>
+							<x:Double x:Key="ScaleTo">0.9</x:Double>
+							<Duration x:Key="ScaleDuration">0:0:0.05</Duration>
+							<Duration x:Key="BorderAnimatonDuration">0:0:0.35</Duration>
+							<x:Double x:Key="BottomEdgeScaleNarrow">0.3</x:Double>
+							<x:Double x:Key="BottomEdgeScaleWide">0.7</x:Double>
+							<x:Double x:Key="VerticalEdgeScaleNarrow">0</x:Double>
+							<x:Double x:Key="VerticalEdgeScaleWide">0.4</x:Double>
+							<x:Double x:Key="StandardBottomEdgeTranslate">0</x:Double>
+							<x:Double x:Key="StandardVerticalEdgeTranslate">0</x:Double>
+							
+							<!--#endregion-->
+
+							<!--#region Converters -->
+							<converters:ProductConverter x:Key="Product"/>
+							<converters:DoubleToGridLength x:Key="GridLengthConverter"/>
+							<!--#endregion-->
+
+							<!--#region RenderTransforms, Easings -->
+
+							<CompositeTransform x:Key="VerticalBorderTransform"
+								CenterY="{Binding ObservedWidth, RelativeSource={RelativeSource Mode=TemplatedParent},  Converter={StaticResource Product}, ConverterParameter=0.5}"
+								ScaleY="{StaticResource VerticalEdgeScaleNarrow}"
+								x:Name="VerticalBorderTransform"/>
+
+							<CompositeTransform x:Key="BottomBorderTransformLeft"
+								x:Name="BottomBorderTransformLeft"
+								CenterX="{Binding ObservedWidth, RelativeSource={RelativeSource Mode=TemplatedParent},  Converter={StaticResource Product}, ConverterParameter=0.5}"
+								ScaleX="{StaticResource BottomEdgeScaleNarrow}"/>
+
+							<CompositeTransform x:Key="BottomBorderTransformRight"
+								x:Name="BottomBorderTransformRight"
+								ScaleX="{StaticResource BottomEdgeScaleNarrow}"/>
+
+							<CircleEase x:Key="CircleIn" EasingMode="EaseIn"/>
+							<CircleEase x:Key="CircleOut" EasingMode="EaseOut"/>
+
+							<!--#endregion-->
+
+							<!--#region Storyboards -->
+
+							<!-- Storyboard performing animations when the pointer is positioned over the icon -->
+							<Storyboard x:Key="PointerOverTransitionInStoryboard">
+
+								<!-- Widen the left bottom edge -->
+								<DoubleAnimation Storyboard.TargetName="BottomBorderTransformLeft"
+												Storyboard.TargetProperty="ScaleX"
+												To="{StaticResource BottomEdgeScaleWide}"
+												Duration="{StaticResource BorderAnimatonDuration}"
+												EasingFunction="{StaticResource CircleOut}"/>
+
+
+								<!-- Widen the right bottom edge -->
+								<DoubleAnimation Storyboard.TargetName="BottomBorderTransformRight"
+												Storyboard.TargetProperty="ScaleX"
+												To="{StaticResource BottomEdgeScaleWide}"
+												Duration="{StaticResource BorderAnimatonDuration}"
+												EasingFunction="{StaticResource CircleOut}"/>
+
+								<!-- Widen the vertical edges -->
+								<DoubleAnimation Storyboard.TargetName="VerticalBorderTransform"
+												Storyboard.TargetProperty="ScaleY"
+												To="{StaticResource VerticalEdgeScaleWide}"
+												Duration="{StaticResource BorderAnimatonDuration}"
+												EasingFunction="{StaticResource CircleOut}"/>
+
+							</Storyboard>
+
+							<!-- Storyboard performing animations when the pointer is no longer positioned over the icon -->
+							<Storyboard x:Key="PointerOverTransitionOutStoryboard">
+
+								<!-- Narrow the left bottom edge -->
+								<DoubleAnimation Storyboard.TargetName="BottomBorderTransformLeft"
+													Storyboard.TargetProperty="ScaleX"
+													To="{StaticResource BottomEdgeScaleNarrow}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleIn}"/>
+
+								<!-- Narrow the right bottom edge -->
+								<DoubleAnimation Storyboard.TargetName="BottomBorderTransformRight"
+													Storyboard.TargetProperty="ScaleX"
+													To="{StaticResource BottomEdgeScaleNarrow}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleIn}"/>
+
+								<!-- Narrow the vertical edges -->
+								<DoubleAnimation Storyboard.TargetName="VerticalBorderTransform"
+													Storyboard.TargetProperty="ScaleY"
+													To="{StaticResource VerticalEdgeScaleNarrow}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleIn}"/>
+
+							</Storyboard>
+
+							<!-- Storyboard performing animations when the Icon is pressed-->
+							<Storyboard x:Key="PointerPressedTransitionInStoryboard">
+
+								<!-- Scale the Glyph/Image horizontally -->
+								<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+													Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+													To="{StaticResource ScaleTo}"
+													Duration="{StaticResource ScaleDuration}"/>
+
+								<!-- Scale the Glyph/Image vertically -->
+								<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+													Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+													To="{StaticResource ScaleTo}"
+													Duration="{StaticResource ScaleDuration}"/>
+
+								<!-- Move the left bottom edge to the corner -->
+								<DoubleAnimation Storyboard.TargetName="BottomBorderTransformLeft"
+													Storyboard.TargetProperty="TranslateX"
+													To="{Binding ObservedWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource Product}, ConverterParameter=-0.15}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleOut}"/>
+
+								<!-- Move the right bottom edge to the corner -->
+								<DoubleAnimation Storyboard.TargetName="BottomBorderTransformRight"
+													Storyboard.TargetProperty="TranslateX"
+													To="{Binding ObservedWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource Product}, ConverterParameter=0.15}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleOut}"/>
+
+								<!-- Move the vertical edges to the bottom corner -->
+								<DoubleAnimation Storyboard.TargetName="VerticalBorderTransform"
+													Storyboard.TargetProperty="TranslateY"
+													To="{Binding ObservedHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource Product}, ConverterParameter=0.3}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleOut}"/>
+
+							</Storyboard>
+
+							<!-- Storyboard performing animations when the pointer is released/lost -->
+							<Storyboard x:Key="PointerPressedTransitionOutStoryboard">
+
+								<!-- Revert glyph/image horizontal scaling -->
+								<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+													Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+													To="1"
+													Duration="{StaticResource ScaleDuration}"/>
+
+								<!-- Revert glyph/image vertical scaling -->
+								<DoubleAnimation Storyboard.TargetName="GridScaleTransform"
+													Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+													To="1"
+													Duration="{StaticResource ScaleDuration}"/>
+
+								<!-- Return the left bottom edge to the center -->
+								<DoubleAnimation Storyboard.TargetName="BottomBorderTransformLeft"
+													Storyboard.TargetProperty="TranslateX"
+													To="{StaticResource StandardBottomEdgeTranslate}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleIn}"/>
+
+								<!-- Return the right bottom edge to the center -->
+								<DoubleAnimation Storyboard.TargetName="BottomBorderTransformRight"
+													Storyboard.TargetProperty="TranslateX"
+													To="{StaticResource StandardBottomEdgeTranslate}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleIn}"/>
+
+								<!-- Return the vertical edges to the center -->
+								<DoubleAnimation Storyboard.TargetName="VerticalBorderTransform"
+													Storyboard.TargetProperty="TranslateY"
+													To="{StaticResource StandardVerticalEdgeTranslate}"
+													Duration="{StaticResource BorderAnimatonDuration}"
+													EasingFunction="{StaticResource CircleIn}"/>
+
+							</Storyboard>
+
+							<!--#endregion-->
+						</Grid.Resources>
+
+						<!-- Visual Setups defined for the Icon -->
+						<xaml:VisualManager.VisualSetups>
+							
+							<!-- Group resposnible for pointer over effect -->
+							<xaml:VisualSetupGroup Name="HoverGroup">
+
+								<!-- Triggers -->
+								<xaml:VisualSetupGroup.Triggers>
+									<xaml:VisualTransitionCollection>
+
+										<!-- Transitions into PointerOver-->
+										<xaml:VisualTransition TransitionTo="PointerOver">
+											<xaml:BindableVisualPointerTrigger PointerEvent="PointerEntered"
+												Target="{Binding ElementName=RootGrid}"/>
+										</xaml:VisualTransition>
+
+										<!-- Transition out (to null state) -->
+										<xaml:VisualTransition>
+											<xaml:BindableVisualPointerTrigger Target="{Binding ElementName=RootGrid}"
+												PointerEvent="PointerExited, PointerCanceled, PointerCaptureLost"/>											
+										</xaml:VisualTransition>
+
+									</xaml:VisualTransitionCollection>
+								</xaml:VisualSetupGroup.Triggers>
+
+								<!-- Setup for when pointer is over the Icon -->
+								<xaml:VisualSetupDynamic ID="PointerOver"
+									TransitionInStoryboard="{StaticResource PointerOverTransitionInStoryboard}"
+									TransitionOutStoryboard="{StaticResource PointerOverTransitionOutStoryboard}"/>
+
+							</xaml:VisualSetupGroup>
+
+							<!-- Group responsible for pointer pressed effects -->
+							<xaml:VisualSetupGroup Name="PressGroup">
+
+								<!-- Triggers -->
+								<xaml:VisualSetupGroup.Triggers>
+									<xaml:VisualTransitionCollection>
+
+										<!-- Transition into PointerPressed -->
+										<xaml:VisualTransition TransitionTo="PointerPressed">
+											<xaml:BindableVisualPointerTrigger PointerEvent="PointerPressed"
+												Target="{Binding ElementName=RootGrid}"/>
+										</xaml:VisualTransition>
+
+										<!-- Transition out of state (to null state) -->
+										<xaml:VisualTransition>
+											<xaml:BindableVisualPointerTrigger Target="{Binding ElementName=RootGrid}"
+												PointerEvent="PointerReleased, PointerExited, PointerCanceled, PointerCaptureLost"/>
+										</xaml:VisualTransition>
+
+									</xaml:VisualTransitionCollection>
+								</xaml:VisualSetupGroup.Triggers>
+
+								<!-- Setup for when pointer is pressed -->
+								<xaml:VisualSetupDynamic ID="PointerPressed"
+									TransitionInStoryboard="{StaticResource PointerPressedTransitionInStoryboard}"
+									TransitionOutStoryboard="{StaticResource PointerPressedTransitionOutStoryboard}"/>
+							</xaml:VisualSetupGroup>
+
+						</xaml:VisualManager.VisualSetups>
+
+						<Grid.RowDefinitions>
+							<!-- Top border (not animated) -->
+							<RowDefinition Height="{Binding BorderThickness.Top, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GridLengthConverter}}"/>
+							<!-- The Icon -->
+							<RowDefinition Height="*"/>
+							<!-- Bottom border-->
+							<RowDefinition Height="{Binding BorderThickness.Bottom, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GridLengthConverter}}"/>
+						</Grid.RowDefinitions>
+
+						<Grid.ColumnDefinitions>
+							<!-- Left animated border -->
+							<ColumnDefinition Width="{Binding BorderThickness.Left, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GridLengthConverter}}"/>
+							<!-- The Icon -->
+							<ColumnDefinition Width="*"/>
+							<!-- Right animated border -->
+							<ColumnDefinition Width="{Binding BorderThickness.Right, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GridLengthConverter}}"/>
+						</Grid.ColumnDefinitions>
+
+						<!-- Container grid which is scaled using the render transform -->
+						<!-- The name is used in code behind to determine the scale origin and should not be changed -->
+						<Grid Name="ScaledContainer"
+							Grid.Row="1"
+							Grid.Column="1"
+							Padding="{TemplateBinding Padding}"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch">
+
+
+							<!-- Render transforms for child elements, composed of ScaleTransform -->
+							<Grid.RenderTransform>
+								<ScaleTransform  x:Name="GridScaleTransform"
+								CenterX="{Binding ScaleCenterX, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+								CenterY="{Binding ScaleCenterY, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+							</Grid.RenderTransform>
+
+							<!-- Image on the bottom of the control which may also act as a background -->
+							<Image Name="ImageControl"
+								Source="{TemplateBinding ImageSource}"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Stretch="{TemplateBinding ImageStretch}"
+								/>
+
+							<!--Font Icon visible on the top-->
+							<FontIcon Name="IconPresenter"
+								Visibility="{Binding ShowFontIcon, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+								Glyph="{TemplateBinding Glyph}"
+								FontFamily="{TemplateBinding FontFamily}"
+								FontSize="{TemplateBinding FontSize}"
+								Foreground="{TemplateBinding Foreground}"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								/>
+
+						</Grid>
+
+						<!-- Left animated border -->
+						<Rectangle Grid.RowSpan="3"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
+							Grid.Column="0"
+							Fill="{TemplateBinding BorderBrush}"
+							RenderTransform="{StaticResource VerticalBorderTransform}"/>
+
+						<!-- Right animated border -->
+						<Rectangle Grid.Column="2"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
+							Grid.RowSpan="3"
+							Fill="{TemplateBinding BorderBrush}"
+							RenderTransform="{StaticResource VerticalBorderTransform}"/>
+
+						<!-- Bottom animated border-->
+						<Grid Grid.Row="2"
+							Grid.ColumnSpan="3"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch">
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+
+							<!-- Left part -->
+							<Rectangle Grid.Column="0"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								Fill="{TemplateBinding BorderBrush}"
+								RenderTransform="{StaticResource BottomBorderTransformLeft}"/>
+
+							<!-- Right part -->
+							<Rectangle Grid.Column="1"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								Fill="{TemplateBinding BorderBrush}"
+								RenderTransform="{StaticResource BottomBorderTransformRight}"/>
+						</Grid>
+
+					</Grid>
+					
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

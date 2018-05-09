@@ -106,17 +106,12 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\Icon\Icon.cs" />
-    <Compile Include="Controls\Icon\IconSamplePage.xaml.cs">
-      <DependentUpon>IconSamplePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Icon\ValueConverters\ProductConverter.cs" />
-    <Compile Include="Controls\ItemsContainer\ItemsContainer.cs" />
-    <Compile Include="Controls\ItemsContainer\ItemsContainerPanel.cs" />
-    <Compile Include="Controls\ItemsContainer\ItemsContainerSamplePage.xaml.cs">
-      <DependentUpon>ItemsContainerSamplePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ItemsContainer\ItemsDirection.cs" />
+    <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
+    <Compile Include="ValueConverters\DoubleToRowHeightConverter.cs" />
+    <Compile Include="ValueConverters\ProductConverter.cs" />
+    <Compile Include="Controls\ItemsContainer\CodeBehind\ItemsContainer.cs" />
+    <Compile Include="Controls\ItemsContainer\ItemsContainerPanel\ItemsContainerPanel.cs" />
+    <Compile Include="Controls\ItemsContainer\Enums\ItemsDirection.cs" />
     <Compile Include="Controls\Menu\Converters\MenuContentToIconInfoConverter.cs" />
     <Compile Include="Controls\Menu\Enums\Enums.cs" />
     <Compile Include="Controls\Menu\Menu.cs" />
@@ -178,25 +173,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\Icon\IconSamplePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Icon\IconWithAnimatedEdgesStyle.xaml">
+    <Page Include="Controls\Icon\Styles\IconWithAnimatedBorderStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Controls\Icon\IconStyle.xaml">
+    <Page Include="Controls\Icon\Styles\IconStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Controls\ItemsContainer\ItemsContainerSamplePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ItemsContainer\ItemsContainerStyle.xaml">
+    <Page Include="Controls\ItemsContainer\Style\ItemsContainerStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

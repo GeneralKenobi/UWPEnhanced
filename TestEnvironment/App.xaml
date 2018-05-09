@@ -9,7 +9,7 @@
 		<!--<FontFamily x:Key="FontAwesome">ms-appx:///Assets/FontAwesome.ttf#FontAwesome</FontFamily>-->
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/IconWithAnimatedEdgesStyle.xaml"/>
+				<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/IconWithAnimatedBorderStyle.xaml"/>
 
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>

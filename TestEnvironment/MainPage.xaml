@@ -27,8 +27,8 @@
 
 	<Grid Name="RootGrid" Background="Wheat">
 
-		<controls:Icon Style="{StaticResource IconWithAnimatedEdgesStyle}"
-			Glyph="&#xE705;"
+		<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
+			Glyph="&#xE705;"		
 			FontSize="100"/>
 
 		
