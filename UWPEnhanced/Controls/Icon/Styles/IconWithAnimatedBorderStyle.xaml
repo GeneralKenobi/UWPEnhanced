@@ -54,7 +54,7 @@
 							<!--#region RenderTransforms, Easings -->
 
 							<CompositeTransform x:Key="VerticalBorderTransform"
-								CenterY="{Binding ObservedWidth, RelativeSource={RelativeSource Mode=TemplatedParent},  Converter={StaticResource Product}, ConverterParameter=0.5}"
+								CenterY="{Binding ObservedHeight, RelativeSource={RelativeSource Mode=TemplatedParent},  Converter={StaticResource Product}, ConverterParameter=0.5}"
 								ScaleY="{StaticResource VerticalEdgeScaleNarrow}"
 								x:Name="VerticalBorderTransform"/>
 
