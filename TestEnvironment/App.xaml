@@ -5,16 +5,16 @@
     xmlns:local="using:TestEnvironment"
     RequestedTheme="Light">
 
-	<Application.Resources>
-		<!--<FontFamily x:Key="FontAwesome">ms-appx:///Assets/FontAwesome.ttf#FontAwesome</FontFamily>-->
-		<ResourceDictionary>
+	<!--<Application.Resources>
+		--><!--<FontFamily x:Key="FontAwesome">ms-appx:///Assets/FontAwesome.ttf#FontAwesome</FontFamily>-->
+		<!--<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/IconWithAnimatedBorderStyle.xaml"/>
+				--><!--<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/IconWithAnimatedBorderStyle.xaml"/>--><!--
 
 			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
+		</ResourceDictionary>--><!--
 
-	</Application.Resources>
+	</Application.Resources>-->
 
 	
 </Application>

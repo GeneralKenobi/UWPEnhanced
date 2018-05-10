@@ -12,29 +12,16 @@
 	Name="page">
 
 
-	<Page.Resources>
-		<converters:OppositeDoubleConverter x:Key="OppositeNumberConverter"/>
-		<Storyboard x:Name="sb1">
-			<DoubleAnimation Storyboard.TargetName="RootGrid"
-			Storyboard.TargetProperty="Width"
-			To="10"
-			Duration="0:0:1"/>
-		</Storyboard>
-		<Storyboard x:Name="sb2" Duration="Forever">
-
-		</Storyboard>
-	</Page.Resources>
-
 	<Grid Name="RootGrid" Background="Wheat">
 
-		<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
+		<!--<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
 			Glyph="&#xE705;"		
-			FontSize="100"/>
+			FontSize="100"/>-->
 
 		
 
 
-		<!--<controls:Menu x:Name="menu" Position="Left" Background="Navy"
+		<controls:Menu x:Name="menu" Position="Left" Background="Navy"
 		IconsPanelLength="50">
 			<controls:Menu.Content>
 				<Rectangle Width="10" Height="10" Fill="Green" controls:Menu.Glyph="&#xE700;"
@@ -45,7 +32,7 @@
 
 
 
-		<StackPanel HorizontalAlignment="Right" Margin="50" BorderThickness="1" BorderBrush="Red">
+		<!--<StackPanel HorizontalAlignment="Right" Margin="50" BorderThickness="1" BorderBrush="Red">
 			<Button Content="Left" Click="Button_Click" x:Name="test"/>
 			<Button Content="Top" Click="Button_Click_1"/>
 			<Button Content="Right" Click="Button_Click_2"/>
@@ -53,9 +40,9 @@
 			<Button Content="Open/Close" Click="Button_Click_4"/>
 			<Button Content="Test" Click="Button_Click_5"/>
 			<Button Content="Add string" Click="Button_Click_6"/>
-			<Button Content="Remove string" Click="Button_Click_7"/>
+			<Button Content="Remove string" Click="Button_Click_7"/>-->
 
-			<controls:ItemsContainer ItemsSource="{x:Bind collection, Mode=OneWay}" FlowDirection="LeftToRight"
+			<!--<controls:ItemsContainer ItemsSource="{x:Bind collection, Mode=OneWay}" FlowDirection="LeftToRight"
 			ItemSpacing="0" BorderThickness="1" BorderBrush="Green">
 				<controls:ItemsContainer.ItemTemplate>
 					<DataTemplate>
@@ -64,27 +51,9 @@
 						</Border>
 					</DataTemplate>
 				</controls:ItemsContainer.ItemTemplate>
-			</controls:ItemsContainer>
+			</controls:ItemsContainer>-->
 
-		</StackPanel>
-
-		<xaml:VisualManager.VisualSetups>
-			<xaml:VisualSetupGroup>
-				<xaml:VisualSetup ID="testing" x:Name="testing123"/>
-			</xaml:VisualSetupGroup>
-		</xaml:VisualManager.VisualSetups>
-
-		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup>
-				<VisualState x:Name="s">
-					<VisualState.Setters>
-						<Setter x:Name="setter" Target="RootGrid.Background" Value="Red"/>
-					</VisualState.Setters>
-				</VisualState>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>-->
-
-
+		<!--</StackPanel>-->
 
 	</Grid>
 

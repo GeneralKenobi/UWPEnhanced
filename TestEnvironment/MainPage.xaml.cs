@@ -30,7 +30,7 @@ namespace TestEnvironment
 
 		public ObservableCollection<string> collection = new ObservableCollection<string>();
 
-		//public double D { get; set; } = 1;
+		public double D { get; set; } = 1;
 
 		//private void Button_Click(object sender, RoutedEventArgs e)
 		//{
@@ -38,7 +38,7 @@ namespace TestEnvironment
 		//}
 
 		//private void Button_Click_1(object sender, RoutedEventArgs e)
-		//{			
+		//{
 		//	menu.Position = MenuPosition.Top;
 		//}
 
@@ -54,7 +54,7 @@ namespace TestEnvironment
 
 		//private void Button_Click_4(object sender, RoutedEventArgs e)
 		//{
-		//	menu.IsOpen = !menu.IsOpen;			
+		//	menu.IsOpen = !menu.IsOpen;
 		//}
 
 		//private async void Button_Click_5(object sender, RoutedEventArgs e)
