@@ -119,11 +119,10 @@ namespace UWPEnhanced.Controls
 		private Size ArrangeTopToBottom(Size finalSize)
 		{
 			double cumulativeHeight = 0;
-
+			double maxWidth = 0;
 			foreach(var item in Children)
-			{
-				item.Measure(finalSize);
-				
+			{				
+				maxWidth = Math.Max(item.DesiredSize.Width, Math.Max(finalSize.Width, maxWidth));
 				// If the finalSize width is greater than the desired width, assign it instead so that the control may
 				// position itself horizontally as it wishes
 				item.Arrange(new Rect(0, cumulativeHeight, Math.Max(item.DesiredSize.Width, finalSize.Width),
@@ -131,7 +130,7 @@ namespace UWPEnhanced.Controls
 
 				cumulativeHeight += item.DesiredSize.Height + ItemSpacing;
 			}
-
+			
 			return finalSize;
 		}
 
@@ -149,10 +148,8 @@ namespace UWPEnhanced.Controls
 				cumulativeHeight += item.DesiredSize.Height + ItemSpacing;
 			}
 
-				foreach (var item in Children)
+			foreach (var item in Children)
 			{
-				item.Measure(finalSize);
-
 				cumulativeHeight -= item.DesiredSize.Height + ItemSpacing;
 
 				// If the finalSize width is greater than the desired width, assign it instead so that the control may
@@ -175,8 +172,6 @@ namespace UWPEnhanced.Controls
 
 			foreach(var item in Children)
 			{
-				item.Measure(finalSize);
-
 				// If the finalSize height is greater than the desired height, assign it instead so that the control may
 				// position itself vertically as it wishes
 				item.Arrange(new Rect(cumulativeWidth, 0, item.DesiredSize.Width,
@@ -204,8 +199,6 @@ namespace UWPEnhanced.Controls
 
 			foreach (var item in Children)
 			{
-				item.Measure(finalSize);
-
 				cumulativeWidth -= item.DesiredSize.Width + ItemSpacing;
 
 				// If the finalSize height is greater than the desired height, assign it instead so that the control may
@@ -265,7 +258,7 @@ namespace UWPEnhanced.Controls
 				// Add its height to the total height of the panel
 				cumulativeChildrenHeight += item.DesiredSize.Height;
 			}
-
+			
 			return new Size(greatestWidth, cumulativeChildrenHeight + TotalItemSpacing);
 		}
 
