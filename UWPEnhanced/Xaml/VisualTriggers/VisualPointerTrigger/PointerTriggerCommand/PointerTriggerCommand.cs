@@ -13,13 +13,17 @@ namespace UWPEnhanced.Xaml
 	/// </summary>
 	public class PointerTriggerCommand : VisualPointerTrigger
 	{
+		#region Constructor
+
 		/// <summary>
 		/// Default Constructor
 		/// </summary>
 		public PointerTriggerCommand()
 		{
-			this.Triggered += (s,e) => Command.Execute(null);
+			this.Triggered += (s,e) => Command?.Execute(CommandParameter);
 		}
+
+		#endregion
 
 		#region Command Dependency Property
 
@@ -38,6 +42,26 @@ namespace UWPEnhanced.Xaml
 		public static readonly DependencyProperty CommandProperty =
 			DependencyProperty.Register(nameof(Command), typeof(ICommand),
 			typeof(PointerTriggerCommand), new PropertyMetadata(default(ICommand)));
+
+		#endregion
+
+		#region CommandParameter Dependency Property
+
+		/// <summary>
+		/// Parameter to pass to the command
+		/// </summary>
+		public object CommandParameter
+		{
+			get => GetValue(CommandParameterProperty);
+			set => SetValue(CommandParameterProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="CommandParameter"/>
+		/// </summary>
+		public static readonly DependencyProperty CommandParameterProperty =
+			DependencyProperty.Register(nameof(CommandParameter), typeof(object),
+			typeof(PointerTriggerCommand), new PropertyMetadata(default(object)));
 
 		#endregion
 	}
