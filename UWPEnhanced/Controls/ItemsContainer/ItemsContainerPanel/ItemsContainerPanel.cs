@@ -120,9 +120,11 @@ namespace UWPEnhanced.Controls
 		{
 			double cumulativeHeight = 0;
 			double maxWidth = 0;
+
 			foreach(var item in Children)
 			{				
 				maxWidth = Math.Max(item.DesiredSize.Width, Math.Max(finalSize.Width, maxWidth));
+
 				// If the finalSize width is greater than the desired width, assign it instead so that the control may
 				// position itself horizontally as it wishes
 				item.Arrange(new Rect(0, cumulativeHeight, Math.Max(item.DesiredSize.Width, finalSize.Width),
@@ -233,7 +235,9 @@ namespace UWPEnhanced.Controls
 				greatestHeight = Math.Max(greatestHeight, item.DesiredSize.Height);
 			}
 
-			return new Size(cumulativeChildrenWidth + TotalItemSpacing, greatestHeight);
+			// Return the maximum from available size and measured size for both dimension
+			return new Size(Math.Max(availableSize.Width, cumulativeChildrenWidth + TotalItemSpacing),
+				Math.Max(availableSize.Height, greatestHeight));
 		}
 
 		/// <summary>
@@ -259,7 +263,9 @@ namespace UWPEnhanced.Controls
 				cumulativeChildrenHeight += item.DesiredSize.Height;
 			}
 			
-			return new Size(greatestWidth, cumulativeChildrenHeight + TotalItemSpacing);
+			// Return the maximum from available size and measured size for both dimension
+			return new Size(Math.Max(greatestWidth, availableSize.Width),
+				Math.Max(availableSize.Height, cumulativeChildrenHeight + TotalItemSpacing));
 		}
 
 		#endregion
