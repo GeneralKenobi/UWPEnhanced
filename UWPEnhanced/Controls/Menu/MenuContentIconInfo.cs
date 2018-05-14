@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
@@ -18,11 +19,12 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Default Constructor
 		/// </summary>
-		public MenuContentIconInfo(string glyph, ImageSource image, int index)
+		public MenuContentIconInfo(string glyph, ImageSource image, int index, ICommand iconPressedCommand)
 		{
 			Glyph = glyph;
 			Image = image;
 			Index = index;
+			IconPressedCommand = iconPressedCommand;
 		}
 
 		#endregion
@@ -43,6 +45,11 @@ namespace UWPEnhanced.Controls
 		/// Index of the element represented by the Icon
 		/// </summary>
 		public int Index { get; private set; }
+
+		/// <summary>
+		/// Command to execute when the Icon is clicked
+		/// </summary>
+		public ICommand IconPressedCommand { get; private set; }
 
 		#endregion
 	}

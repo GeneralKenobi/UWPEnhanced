@@ -9,8 +9,29 @@ using Windows.UI.Xaml.Data;
 
 namespace UWPEnhanced.Controls
 {
-	internal class MenuContentToIconInfoConverter : IValueConverter
+	internal class MenuContentToIconInfoConverter : DependencyObject, IValueConverter
 	{
+		#region Owner Dependency Property
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Menu Owner
+		{
+			get => (Menu)GetValue(OwnerProperty);
+			set => SetValue(OwnerProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="Owner"/>
+		/// </summary>
+		public static readonly DependencyProperty OwnerProperty =
+			DependencyProperty.Register(nameof(Owner), typeof(Menu),
+			typeof(MenuContentToIconInfoConverter), new PropertyMetadata(default(Menu)));
+
+		#endregion
+
+
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
 			if (value is IEnumerable<UIElement> c)
@@ -20,7 +41,8 @@ namespace UWPEnhanced.Controls
 
 				foreach (var item in c)
 				{
-					result.Add(new MenuContentIconInfo(Menu.GetGlyph(item), Menu.GetImage(item), index));
+					result.Add(new MenuContentIconInfo(Menu.GetGlyph(item), Menu.GetImage(item), index,
+						Owner == null ? null : Owner.IconPressedCommand));
 					++index;
 				}
 

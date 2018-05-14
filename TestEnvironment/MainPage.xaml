@@ -11,12 +11,20 @@
     mc:Ignorable="d"
 	Name="page">
 
+	<Page.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/Styles/IconWithAnimatedBorderStyle.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Page.Resources>
 
 	<Grid Name="RootGrid" Background="Wheat">
 
-		<!--<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
-			Glyph="&#xE705;"		
-			FontSize="100"/>-->
+		<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
+			Glyph="&#xE705;"
+			Command="{x:Bind command}"
+			FontSize="100"/>
 
 		
 

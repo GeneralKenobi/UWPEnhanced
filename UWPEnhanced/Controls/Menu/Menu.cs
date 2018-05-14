@@ -1,27 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CSharpEnhanced.ICommands;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using UWPEnhanced.Xaml;
-using Windows.Foundation;
-using Windows.UI;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
 namespace UWPEnhanced.Controls
 {
-    public sealed class Menu : Control, INotifyPropertyChanged
+	public sealed class Menu : Control, INotifyPropertyChanged
     {
 		#region Constructor
 
@@ -32,51 +21,11 @@ namespace UWPEnhanced.Controls
         {
             this.DefaultStyleKey = typeof(Menu);
 			Content = new ObservableCollection<UIElement>();		
-			Content.CollectionChanged += Content_CollectionChanged;
 			RecalculateContentTranslate();
+
+			IconPressedCommand = new RelayParametrizedCommand(IconPressed);
+			InvokePropertyChanged(nameof(IconPressedCommand));
         }
-
-		private void Content_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			switch(e.Action)
-			{
-				case NotifyCollectionChangedAction.Add:
-					{
-						foreach(var item in e.NewItems)
-						{
-							if(item is UIElement element)
-							{
-								collection.Add(new Icon()
-								{
-									Width=20,
-									Height = 20,
-									Glyph = GetGlyph(element),
-									ImageSource = GetImage(element),
-									Background = new LinearGradientBrush()
-									{
-										StartPoint = new Point(0.5, 0),
-										EndPoint = new Point(0.5, 1),
-										GradientStops = new GradientStopCollection()
-										{
-											new GradientStop()
-											{
-												Color = Colors.Transparent,
-												Offset = 0,
-											},
-
-											new GradientStop()
-											{
-												Color = Colors.White,
-												Offset = 1,
-											},
-										},
-									}
-								});
-							}
-						}
-					} break;
-			}
-		}
 
 		#endregion
 
@@ -124,6 +73,12 @@ namespace UWPEnhanced.Controls
 		public double ContentTranslateTransformYCorrection => ContentTranslateTransformY;
 
 		#endregion
+
+		#endregion
+
+		#region ICommands
+		public string a { get; set; } = "xdsa";
+		public ICommand IconPressedCommand { get; private set; }
 
 		#endregion
 
@@ -393,7 +348,19 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region Command Methods
+
+		/// <summary>
+		/// Method for <see cref="IconPressedCommand"/>, changes the presented content
+		/// </summary>
+		/// <param name="parameter"></param>
+		private void IconPressed(object parameter)
+		{
+
+		}
+
+		#endregion
+
 		#endregion
 	}
-
 }

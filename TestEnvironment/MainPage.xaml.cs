@@ -32,6 +32,9 @@ namespace TestEnvironment
 
 		public double D { get; set; } = 1;
 
+
+		public ICommand command { get; set; } = new RelayCommand(() => Debug.WriteLine("Command Fired"));
+
 		//private void Button_Click(object sender, RoutedEventArgs e)
 		//{
 		//	menu.Position = MenuPosition.Left;

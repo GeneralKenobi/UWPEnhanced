@@ -15,176 +15,178 @@
 					<Grid Name="RootGrid" Background="Transparent">
 
 						<Grid.Resources>
+
 							<ResourceDictionary>
 								<ResourceDictionary.MergedDictionaries>
 									<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/Styles/IconWithAnimatedBorderStyle.xaml"/>
 								</ResourceDictionary.MergedDictionaries>
 							<!--#region ValueConverters -->
 
-							<controls:MenuContentToIconInfoConverter x:Key="MenuContentConverter"/>
-							<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
-							<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
 
-							<!--#endregion-->
+								<controls:MenuContentToIconInfoConverter x:Key="MenuContentConverter"/>
+								<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
+								<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
 
-							<!--#region Constants -->
+								<!--#endregion-->
 
-							<!-- ContentTranslate XY values are animated to when Content is slid in-->
-							<x:Double x:Key="ContentOpenTranslateXY">0</x:Double>
-							<!-- MenuTranslate XY values are animated to when menu is slid in-->
-							<x:Double x:Key="MenuOnScreenTranslateXY">0</x:Double>
-							<Duration x:Key="OpenCloseStoryboardDuration">0:0:0.25</Duration>
-							<Duration x:Key="MenuInOutStoryboardDuration">0:0:0.25</Duration>
-							<CubicEase x:Key="DefaultEasing" EasingMode="EaseInOut"/>
+								<!--#region Constants -->
+
+								<!-- ContentTranslate XY values are animated to when Content is slid in-->
+								<x:Double x:Key="ContentOpenTranslateXY">0</x:Double>
+								<!-- MenuTranslate XY values are animated to when menu is slid in-->
+								<x:Double x:Key="MenuOnScreenTranslateXY">0</x:Double>
+								<Duration x:Key="OpenCloseStoryboardDuration">0:0:0.25</Duration>
+								<Duration x:Key="MenuInOutStoryboardDuration">0:0:0.25</Duration>
+								<CubicEase x:Key="DefaultEasing" EasingMode="EaseInOut"/>
 							
-							<!--#endregion-->
+								<!--#endregion-->
 
-							<!--#region Menu open/close storyboards -->
+								<!--#region Menu open/close storyboards -->
 
-							<!-- Storyboard use to Open the Menu - animate the TranslateTransform of Content to 0 -->
-							<Storyboard x:Key="OpenMenuStoryboard">
+								<!-- Storyboard use to Open the Menu - animate the TranslateTransform of Content to 0 -->
+								<Storyboard x:Key="OpenMenuStoryboard">
 
-								<!-- Animation for X -->
-								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
-												Storyboard.TargetProperty="X"
-												Duration="{StaticResource OpenCloseStoryboardDuration}"
-												To="{StaticResource ContentOpenTranslateXY}"
-												EasingFunction="{StaticResource DefaultEasing}"/>
+									<!-- Animation for X -->
+									<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+													Storyboard.TargetProperty="X"
+													Duration="{StaticResource OpenCloseStoryboardDuration}"
+													To="{StaticResource ContentOpenTranslateXY}"
+													EasingFunction="{StaticResource DefaultEasing}"/>
 
-								<!-- Animation for Y -->
-								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
-												Storyboard.TargetProperty="Y"
-												Duration="{StaticResource OpenCloseStoryboardDuration}"
-												To="{StaticResource ContentOpenTranslateXY}"
-												EasingFunction="{StaticResource DefaultEasing}"/>
+									<!-- Animation for Y -->
+									<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+													Storyboard.TargetProperty="Y"
+													Duration="{StaticResource OpenCloseStoryboardDuration}"
+													To="{StaticResource ContentOpenTranslateXY}"
+													EasingFunction="{StaticResource DefaultEasing}"/>
 												
-							</Storyboard>
+								</Storyboard>
 
-							<!-- Storyboard use to Open the Menu - animate the TranslateTransform of Content (X or Y) to
-								the value determined in CodeBehind -->
-							<Storyboard x:Key="CloseMenuStoryboard">
+								<!-- Storyboard use to Open the Menu - animate the TranslateTransform of Content (X or Y) to
+									the value determined in CodeBehind -->
+								<Storyboard x:Key="CloseMenuStoryboard">
 
-								<!-- Animation for X -->
-								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
-												Storyboard.TargetProperty="X"
-												Duration="{StaticResource OpenCloseStoryboardDuration}"												
-												To="{Binding ContentTranslateTransformX, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
-												EasingFunction="{StaticResource DefaultEasing}"/>
+									<!-- Animation for X -->
+									<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+													Storyboard.TargetProperty="X"
+													Duration="{StaticResource OpenCloseStoryboardDuration}"												
+													To="{Binding ContentTranslateTransformX, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
+													EasingFunction="{StaticResource DefaultEasing}"/>
 
-								<!-- Animation for Y -->
-								<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
-												Storyboard.TargetProperty="Y"
-												Duration="{StaticResource OpenCloseStoryboardDuration}"
-												To="{Binding ContentTranslateTransformY, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-												EasingFunction="{StaticResource DefaultEasing}"/>
+									<!-- Animation for Y -->
+									<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+													Storyboard.TargetProperty="Y"
+													Duration="{StaticResource OpenCloseStoryboardDuration}"
+													To="{Binding ContentTranslateTransformY, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+													EasingFunction="{StaticResource DefaultEasing}"/>
 
-							</Storyboard>
+								</Storyboard>
 
-							<!--#endregion-->
+								<!--#endregion-->
 
-							<!--#region Menu Reposition Storyboards -->
+								<!--#region Menu Reposition Storyboards -->
 							
-							<!-- Storyboard used to slide out the whole menu to left using a TranslateTransform -->
-							<Storyboard x:Key="SlideOutToLeft">
-								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="X"
-											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
-											EasingFunction="{StaticResource DefaultEasing}"/>
-							</Storyboard>
+								<!-- Storyboard used to slide out the whole menu to left using a TranslateTransform -->
+								<Storyboard x:Key="SlideOutToLeft">
+									<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="X"
+												Duration="{StaticResource MenuInOutStoryboardDuration}"
+												To="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
+												EasingFunction="{StaticResource DefaultEasing}"/>
+								</Storyboard>
 
-							<!-- Storyboard used to slide in the whole menu from left using a TranslateTransform -->
-							<Storyboard x:Key="SlideInFromLeft">
-								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="X"
-											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="0"
-											From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
-											EasingFunction="{StaticResource DefaultEasing}"/>
+								<!-- Storyboard used to slide in the whole menu from left using a TranslateTransform -->
+								<Storyboard x:Key="SlideInFromLeft">
+									<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="X"
+												Duration="{StaticResource MenuInOutStoryboardDuration}"
+												To="0"
+												From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
+												EasingFunction="{StaticResource DefaultEasing}"/>
 
-								<!-- Set Y translate to 0 (it's necessary if the menu was slid out to left/right earlier) -->
-								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="Y">
-									<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
-								</DoubleAnimationUsingKeyFrames>
-							</Storyboard>
+									<!-- Set Y translate to 0 (it's necessary if the menu was slid out to left/right earlier) -->
+									<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="Y">
+										<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
+									</DoubleAnimationUsingKeyFrames>
+								</Storyboard>
 
-							<!-- Storyboard used to slide out the whole menu to top using a TranslateTransform -->
-							<Storyboard x:Key="SlideOutToTop">
-								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="Y"
-											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
-											EasingFunction="{StaticResource DefaultEasing}"/>
-							</Storyboard>
+								<!-- Storyboard used to slide out the whole menu to top using a TranslateTransform -->
+								<Storyboard x:Key="SlideOutToTop">
+									<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="Y"
+												Duration="{StaticResource MenuInOutStoryboardDuration}"
+												To="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
+												EasingFunction="{StaticResource DefaultEasing}"/>
+								</Storyboard>
 
-							<!-- Storyboard used to slide in the whole menu from top using a TranslateTransform -->
-							<Storyboard x:Key="SlideInFromTop">
-								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="Y"
-											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="{StaticResource MenuOnScreenTranslateXY}"
-											From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
-											EasingFunction="{StaticResource DefaultEasing}"/>
+								<!-- Storyboard used to slide in the whole menu from top using a TranslateTransform -->
+								<Storyboard x:Key="SlideInFromTop">
+									<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="Y"
+												Duration="{StaticResource MenuInOutStoryboardDuration}"
+												To="{StaticResource MenuOnScreenTranslateXY}"
+												From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OppositeDoubleConverter}}"
+												EasingFunction="{StaticResource DefaultEasing}"/>
 
-								<!-- Set X translate to 0 (it's necessary if the menu was slid out to top/bottom earlier) -->
-								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="X">
-									<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
-								</DoubleAnimationUsingKeyFrames>
-							</Storyboard>
+									<!-- Set X translate to 0 (it's necessary if the menu was slid out to top/bottom earlier) -->
+									<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="X">
+										<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
+									</DoubleAnimationUsingKeyFrames>
+								</Storyboard>
 
-							<!-- Storyboard used to slide out the whole menu to right using a TranslateTransform -->
-							<Storyboard x:Key="SlideOutToRight">
-								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="X"
-											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-											EasingFunction="{StaticResource DefaultEasing}"/>
-							</Storyboard>
+								<!-- Storyboard used to slide out the whole menu to right using a TranslateTransform -->
+								<Storyboard x:Key="SlideOutToRight">
+									<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="X"
+												Duration="{StaticResource MenuInOutStoryboardDuration}"
+												To="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												EasingFunction="{StaticResource DefaultEasing}"/>
+								</Storyboard>
 
-							<!-- Storyboard used to slide in the whole menu from right using a TranslateTransform -->
-							<Storyboard x:Key="SlideInFromRight">
-								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="X"
-											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="{StaticResource MenuOnScreenTranslateXY}"
-											From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-											EasingFunction="{StaticResource DefaultEasing}"/>
+								<!-- Storyboard used to slide in the whole menu from right using a TranslateTransform -->
+								<Storyboard x:Key="SlideInFromRight">
+									<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="X"
+												Duration="{StaticResource MenuInOutStoryboardDuration}"
+												To="{StaticResource MenuOnScreenTranslateXY}"
+												From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												EasingFunction="{StaticResource DefaultEasing}"/>
 
-								<!-- Set Y translate to 0 (it's necessary if the menu was slid out to left/right earlier) -->
-								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="Y">
-									<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
-								</DoubleAnimationUsingKeyFrames>
-							</Storyboard>
+									<!-- Set Y translate to 0 (it's necessary if the menu was slid out to left/right earlier) -->
+									<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="Y">
+										<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
+									</DoubleAnimationUsingKeyFrames>
+								</Storyboard>
 
-							<!-- Storyboard used to slide out the whole menu to bottom using a TranslateTransform -->
-							<Storyboard x:Key="SlideOutToBottom">
-								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="Y"
-											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-											EasingFunction="{StaticResource DefaultEasing}"/>
-							</Storyboard>
+								<!-- Storyboard used to slide out the whole menu to bottom using a TranslateTransform -->
+								<Storyboard x:Key="SlideOutToBottom">
+									<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="Y"
+												Duration="{StaticResource MenuInOutStoryboardDuration}"
+												To="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												EasingFunction="{StaticResource DefaultEasing}"/>
+								</Storyboard>
 
-							<!-- Storyboard used to slide in the whole menu from right using a TranslateTransform -->
-							<Storyboard x:Key="SlideInFromBottom">
-								<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="Y"
-											Duration="{StaticResource MenuInOutStoryboardDuration}"
-											To="{StaticResource MenuOnScreenTranslateXY}"
-											From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-											EasingFunction="{StaticResource DefaultEasing}"/>
+								<!-- Storyboard used to slide in the whole menu from right using a TranslateTransform -->
+								<Storyboard x:Key="SlideInFromBottom">
+									<DoubleAnimation Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="Y"
+												Duration="{StaticResource MenuInOutStoryboardDuration}"
+												To="{StaticResource MenuOnScreenTranslateXY}"
+												From="{Binding OpenLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												EasingFunction="{StaticResource DefaultEasing}"/>
 
-								<!-- Set X translate to 0 (it's necessary if the menu was slid out to top/bottom earlier) -->
-								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
-											Storyboard.TargetProperty="X">
-									<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
-								</DoubleAnimationUsingKeyFrames>
-							</Storyboard>
+									<!-- Set X translate to 0 (it's necessary if the menu was slid out to top/bottom earlier) -->
+									<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuTranslateTransform"
+												Storyboard.TargetProperty="X">
+										<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
+									</DoubleAnimationUsingKeyFrames>
+								</Storyboard>
 
-							<!--#endregion-->
+								<!--#endregion-->
 
 							</ResourceDictionary>
 						</Grid.Resources>
@@ -384,22 +386,24 @@
 							Width="{TemplateBinding IconsPanelLength}"
 							Height="{TemplateBinding IconsPanelLength}"
 							ItemSpacing="10"
-							ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}">
+							ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}"
+							>
 
 							<controls:ItemsContainer.ItemTemplate>
 								<DataTemplate>
-
-									<controls:Icon Glyph="{Binding Glyph}"
-										Style="{StaticResource IconWithAnimatedBorderStyle}"
-										ImageSource="{Binding Image}"
-										HorizontalAlignment="Stretch"
-
-										ImageStretch="Uniform"/>
-
+									<controls:Icon
+									Glyph="{Binding Glyph}"
+									Style="{StaticResource IconWithAnimatedBorderStyle}"
+									ImageSource="{Binding Image}"
+									HorizontalAlignment="Stretch"
+									ImageStretch="Uniform"
+									Command="{Binding IconPressedCommand}"/>
 								</DataTemplate>
 							</controls:ItemsContainer.ItemTemplate>
-
 						</controls:ItemsContainer>
+
+
+
 
 					</Grid>
 					
