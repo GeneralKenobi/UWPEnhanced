@@ -16,6 +16,7 @@
 		<Setter Property="BorderBrush" Value="Black"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="ImageStretch" Value="None"/>
+		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:Icon" x:Name="Template">
@@ -23,7 +24,7 @@
 					<!-- Main container, presents background and border brush -->
 					<Grid x:Name="RootGrid"
 						Background="{TemplateBinding Background}"
-						BorderThickness="0"						
+						BorderThickness="0"
 						Width="{TemplateBinding Width}"
 						Height="{TemplateBinding Height}">
 						
