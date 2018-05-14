@@ -11,17 +11,18 @@ namespace UWPEnhanced.Controls
 	/// <summary>
 	/// Class containing information taken from an <see cref="UIElement"/> used to craete an <see cref="Icon"/>
 	/// </summary>
-	internal class MenuContentIconInfo
+	internal struct MenuContentIconInfo
 	{
 		#region Constructor
 
 		/// <summary>
 		/// Default Constructor
 		/// </summary>
-		public MenuContentIconInfo(string glyph, ImageSource image)
+		public MenuContentIconInfo(string glyph, ImageSource image, int index)
 		{
 			Glyph = glyph;
 			Image = image;
+			Index = index;
 		}
 
 		#endregion
@@ -37,6 +38,11 @@ namespace UWPEnhanced.Controls
 		/// Image to present on the <see cref="Icon"/>
 		/// </summary>
 		public ImageSource Image { get; private set; }
+
+		/// <summary>
+		/// Index of the element represented by the Icon
+		/// </summary>
+		public int Index { get; private set; }
 
 		#endregion
 	}

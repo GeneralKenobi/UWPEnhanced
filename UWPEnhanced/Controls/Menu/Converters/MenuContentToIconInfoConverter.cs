@@ -16,10 +16,12 @@ namespace UWPEnhanced.Controls
 			if (value is IEnumerable<UIElement> c)
 			{
 				ObservableCollection<MenuContentIconInfo> result = new ObservableCollection<MenuContentIconInfo>();
+				int index = 0;
 
 				foreach (var item in c)
 				{
-					result.Add(new MenuContentIconInfo(Menu.GetGlyph(item), Menu.GetImage(item)));
+					result.Add(new MenuContentIconInfo(Menu.GetGlyph(item), Menu.GetImage(item), index));
+					++index;
 				}
 
 				return result;
