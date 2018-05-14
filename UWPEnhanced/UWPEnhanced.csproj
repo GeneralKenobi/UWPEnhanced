@@ -107,6 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
+    <Compile Include="Controls\Menu\Converters\MenuPositionToItemsDirectionConverter.cs" />
     <Compile Include="ValueConverters\DoubleToRowHeightConverter.cs" />
     <Compile Include="ValueConverters\ProductConverter.cs" />
     <Compile Include="Controls\ItemsContainer\CodeBehind\ItemsContainer.cs" />
@@ -203,11 +204,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CSharpEnhanced">
+    <Reference Include="CSharpEnhanced, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CSharpEnhanced\CSharpEnhanced\bin\Debug\netstandard2.0\CSharpEnhanced.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -22,8 +22,9 @@
 								</ResourceDictionary.MergedDictionaries>
 							<!--#region ValueConverters -->
 
-
-								<controls:MenuContentToIconInfoConverter x:Key="MenuContentConverter"/>
+								<controls:MenuPositionToItemsDirectionConverter x:Key="ItemsDirectionConverter"/>
+								<controls:MenuContentToIconInfoConverter x:Key="MenuContentConverter"
+									Owner="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 								<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
 								<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
 
@@ -59,7 +60,7 @@
 													Duration="{StaticResource OpenCloseStoryboardDuration}"
 													To="{StaticResource ContentOpenTranslateXY}"
 													EasingFunction="{StaticResource DefaultEasing}"/>
-												
+
 								</Storyboard>
 
 								<!-- Storyboard use to Open the Menu - animate the TranslateTransform of Content (X or Y) to
@@ -227,18 +228,27 @@
 
 								<xaml:VisualSetupDynamic ID="Open"
 									TransitionInStoryboard="{StaticResource OpenMenuStoryboard}"
-									TransitionOutStoryboard="{StaticResource CloseMenuStoryboard}"/>
+									TransitionOutStoryboard="{StaticResource CloseMenuStoryboard}">
+
+									<xaml:VisualSetupDynamic.Setters>
+										<xaml:PropertySetter Target="{Binding ElementName=OpenCloseMenuIcon, Mode=TwoWay}" Property="Glyph" Value="&#xE76B;"/>
+									</xaml:VisualSetupDynamic.Setters>
+
+								</xaml:VisualSetupDynamic>
 
 								<!-- Sets visibility to collapsed (makes sure that the content won't be seen in unexpected
 								places on the screen, for example when changing the position of the menu, if the background 
-								is transpart, etc -->
+								is transpart, etc), changes the Open/CloseMenuIcon glyph -->
 								<xaml:VisualSetupDynamic ID="Closed" EnterWhenCreated="True">
+									<xaml:VisualSetupDynamic.Setters>
+										<xaml:PropertySetter Target="{Binding ElementName=OpenCloseMenuIcon, Mode=TwoWay}" Property="Glyph" Value="&#xE76C;"/>
+									</xaml:VisualSetupDynamic.Setters>
 									<xaml:VisualSetupDynamic.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Visibility" Value="Collapsed"/>
 									</xaml:VisualSetupDynamic.TemporarySetters>
 								</xaml:VisualSetupDynamic>
 							</xaml:VisualSetupGroup>
-
+							
 							<!-- Group managing the properties and animations connected with changing position of the menu -->
 							<xaml:VisualSetupGroup Name="Position">
 
@@ -379,31 +389,42 @@
 
 						</Grid>
 
+						<!-- The whole panel with controls -->
 						<controls:ItemsContainer Name="IconsPresenter"
+							FlowDirection="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ItemsDirectionConverter}}"
 							Background="{TemplateBinding Background}"
 							BorderBrush="Blue"
 							BorderThickness="2"
 							Width="{TemplateBinding IconsPanelLength}"
 							Height="{TemplateBinding IconsPanelLength}"
-							ItemSpacing="10"
-							ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}"
-							>
+							Padding="{TemplateBinding Padding}">
 
-							<controls:ItemsContainer.ItemTemplate>
-								<DataTemplate>
-									<controls:Icon
-									Glyph="{Binding Glyph}"
-									Style="{StaticResource IconWithAnimatedBorderStyle}"
-									ImageSource="{Binding Image}"
-									HorizontalAlignment="Stretch"
-									ImageStretch="Uniform"
-									Command="{Binding IconPressedCommand}"/>
-								</DataTemplate>
-							</controls:ItemsContainer.ItemTemplate>
+							<!-- Expand/Collapse menu Icon -->
+							<controls:Icon Name="OpenCloseMenuIcon"
+								Style="{StaticResource IconWithAnimatedBorderStyle}"
+								Glyph="&#xE76B;"								
+								Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+								Margin="0 0 0 20"/>
+
+							<!-- Icons for the content put into the menu -->
+							<controls:ItemsContainer ItemSpacing="10"
+								FlowDirection="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ItemsDirectionConverter}}"
+								ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}">
+
+								<controls:ItemsContainer.ItemTemplate>
+									<DataTemplate>
+										<controls:Icon
+										Glyph="{Binding Glyph}"
+										Style="{StaticResource IconWithAnimatedBorderStyle}"
+										ImageSource="{Binding Image}"
+										ImageStretch="Uniform"
+										Command="{Binding IconPressedCommand}"
+										CommandParameter="{Binding Index}"/>
+									</DataTemplate>
+								</controls:ItemsContainer.ItemTemplate>
+							</controls:ItemsContainer>
+
 						</controls:ItemsContainer>
-
-
-
 
 					</Grid>
 					

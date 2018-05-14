@@ -24,7 +24,7 @@ namespace UWPEnhanced.Controls
 			RecalculateContentTranslate();
 
 			IconPressedCommand = new RelayParametrizedCommand(IconPressed);
-			InvokePropertyChanged(nameof(IconPressedCommand));
+			OpenCloseMenuCommand = new RelayCommand(OpenCloseMenu);
         }
 
 		#endregion
@@ -77,8 +77,9 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region ICommands
-		public string a { get; set; } = "xdsa";
+		
 		public ICommand IconPressedCommand { get; private set; }
+		public ICommand OpenCloseMenuCommand { get; private set; }
 
 		#endregion
 
@@ -358,6 +359,11 @@ namespace UWPEnhanced.Controls
 		{
 
 		}
+
+		/// <summary>
+		/// Method for <see cref="OpenCloseMenuCommand"/>, toggles the <see cref="IsOpen"/> property.
+		/// </summary>
+		private void OpenCloseMenu() => IsOpen = !IsOpen;
 
 		#endregion
 
