@@ -1,10 +1,14 @@
 ﻿using CSharpEnhanced.ICommands;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using UWPEnhanced.Xaml;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -22,18 +26,23 @@ namespace UWPEnhanced.Controls
             this.DefaultStyleKey = typeof(Menu);
 			Content = new ObservableCollection<UIElement>();		
 			RecalculateContentTranslate();
-
+			this.Loaded += OnLoaded;
+			
+			
 			IconPressedCommand = new RelayParametrizedCommand(IconPressed);
 			OpenCloseMenuCommand = new RelayCommand(OpenCloseMenu);
         }
 
 		#endregion
 
+		#region Private Members
+
+		private Storyboard _TransitionOutContent = null;
+		private Storyboard _TransitionInContent = null;
+
+		#endregion
+
 		#region Public Properties
-
-		public ObservableCollection<UIElement> collection { get; set; } = new ObservableCollection<UIElement>();
-		public ObservableCollection<string> collection2 { get; set; } = new ObservableCollection<string>() { "s1", "s2" };
-
 
 		#region Control Size
 
@@ -74,10 +83,19 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region Selected Content
+
+		/// <summary>
+		/// Content to present
+		/// </summary>
+		public UIElement SelectedContent { get; private set; }
+
+		#endregion
+
 		#endregion
 
 		#region ICommands
-		
+
 		public ICommand IconPressedCommand { get; private set; }
 		public ICommand OpenCloseMenuCommand { get; private set; }
 
@@ -349,21 +367,97 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region OnLoaded
+
+		/// <summary>
+		/// Routine ran when the menu is loaded
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="e"></param>
+		private void OnLoaded(object s, RoutedEventArgs e)
+		{
+			GetContentStoryboards();
+		}
+
+		#endregion
+
+		#region Content Animations
+
+		/// <summary>
+		/// Attempts to find the <see cref="Storyboard"/>s responsible for animating the Content from
+		/// the RootGrid's resources.
+		/// </summary>
+		private void GetContentStoryboards()
+		{
+			_TransitionInContent = (GetTemplateChild("RootGrid") as Grid)?.
+				Resources["TransitionInContentStoryboard"] as Storyboard;
+
+			_TransitionOutContent = (GetTemplateChild("RootGrid") as Grid)?.
+				Resources["TransitionOutContentStoryboard"] as Storyboard;
+		}
+
+		private void ConfigureContentStoryboards()
+		{
+
+		}
+
+		#endregion
+
 		#region Command Methods
 
 		/// <summary>
 		/// Method for <see cref="IconPressedCommand"/>, changes the presented content
 		/// </summary>
 		/// <param name="parameter"></param>
-		private void IconPressed(object parameter)
+		private async void IconPressed(object parameter)
 		{
+			if(parameter is UIElement newContent)
+			{
+				Storyboard sbOut = new Storyboard();
+				Storyboard sbIn = new Storyboard();
 
+				var anOut = new DoubleAnimation()
+				{
+					To = 0,
+					Duration = new Duration(TimeSpan.FromMilliseconds(75)),
+				};
+
+				var anIn = new DoubleAnimation()
+				{
+					To = 100,
+					Duration = new Duration(TimeSpan.FromMilliseconds(75)),
+				};
+				var target = VisualTreeHelpers.FindChild<ContentPresenter>(this);
+				Storyboard.SetTarget(anOut, target);
+				Storyboard.SetTarget(anIn, target);
+				Storyboard.SetTargetProperty(anOut, "Opacity");
+				Storyboard.SetTargetProperty(anIn, "Opacity");
+				sbOut.Children.Add(anOut);
+				sbIn.Children.Add(anIn);
+				sbOut.Completed += (s, e) =>
+				{
+					SelectedContent = newContent;
+					InvokePropertyChanged(nameof(SelectedContent));
+					sbIn.Begin();
+				};
+				sbOut.Begin();
+			}
 		}
 
 		/// <summary>
 		/// Method for <see cref="OpenCloseMenuCommand"/>, toggles the <see cref="IsOpen"/> property.
 		/// </summary>
 		private void OpenCloseMenu() => IsOpen = !IsOpen;
+
+		private void ChangeContent(UIElement newContent)
+		{
+			_TransitionInContent.Begin();
+		}
+		
+		private void SelfUnhookableTransitionInCallback(object sender, object e)
+		{
+			_TransitionInContent.Completed -= SelfUnhookableTransitionInCallback;
+		}
 
 		#endregion
 

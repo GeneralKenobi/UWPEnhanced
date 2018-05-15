@@ -20,7 +20,8 @@
 								<ResourceDictionary.MergedDictionaries>
 									<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/Styles/IconWithAnimatedBorderStyle.xaml"/>
 								</ResourceDictionary.MergedDictionaries>
-							<!--#region ValueConverters -->
+
+								<!--#region ValueConverters -->
 
 								<controls:MenuPositionToItemsDirectionConverter x:Key="ItemsDirectionConverter"/>
 								<controls:MenuContentToIconInfoConverter x:Key="MenuContentConverter"
@@ -186,6 +187,13 @@
 										<DiscreteDoubleKeyFrame Value="{StaticResource MenuOnScreenTranslateXY}"/>
 									</DoubleAnimationUsingKeyFrames>
 								</Storyboard>
+
+								<!--#endregion-->
+
+								<!--#region Content Storyboards -->
+
+								<Storyboard x:Key="TransitionInContentStoryboard"/>
+								<Storyboard x:Key="TransitionOutContentStoryboard"/>
 
 								<!--#endregion-->
 
@@ -366,28 +374,29 @@
 											TransitionOutStoryboard="{StaticResource SlideOutToBottom}"/>
 									</xaml:VisualSetupCascade.Cascade>
 
-								</xaml:VisualSetupCascade>							
+								</xaml:VisualSetupCascade>
 
 							</xaml:VisualSetupGroup>
 
 						</xaml:VisualManager.VisualSetups>
 
-						<Grid Name="Content"
+						<ContentPresenter Name="Content"
 							Background="Pink"
 							Width="{TemplateBinding ContentLength}"
 							Height="{TemplateBinding ContentLength}"
 							BorderBrush="Green"
-							BorderThickness="2">					
+							BorderThickness="2"
+							Content="{Binding SelectedContent, RelativeSource={RelativeSource Mode=TemplatedParent}}">
 
-							<Grid.RenderTransform>
+							<ContentPresenter.RenderTransform>
 								<!-- These Bindings make sure that when the Menu position changes and the menu is closed its position
 								will be readjusted to stay hidden -->
 								<TranslateTransform x:Name="ContentPresenterTranslate"
 									X="{Binding ContentTranslateTransformXCorrection, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 									Y="{Binding ContentTranslateTransformYCorrection, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-							</Grid.RenderTransform>
+							</ContentPresenter.RenderTransform>
 
-						</Grid>
+						</ContentPresenter>
 
 						<!-- The whole panel with controls -->
 						<controls:ItemsContainer Name="IconsPresenter"
@@ -406,6 +415,18 @@
 								Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 								Margin="0 0 0 20"/>
 
+							<!-- Icon presenting the controls changing menu position -->
+							<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
+								Glyph="&#xE759;"								
+								Command="{Binding IconPressedCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+								Margin="0 0 0 20">
+
+								<controls:Icon.CommandParameter>
+									<x:Int32>-1</x:Int32>
+								</controls:Icon.CommandParameter>
+
+							</controls:Icon>
+
 							<!-- Icons for the content put into the menu -->
 							<controls:ItemsContainer ItemSpacing="10"
 								FlowDirection="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ItemsDirectionConverter}}"
@@ -419,7 +440,7 @@
 										ImageSource="{Binding Image}"
 										ImageStretch="Uniform"
 										Command="{Binding IconPressedCommand}"
-										CommandParameter="{Binding Index}"/>
+										CommandParameter="{Binding RepresentedElement}"/>
 									</DataTemplate>
 								</controls:ItemsContainer.ItemTemplate>
 							</controls:ItemsContainer>
