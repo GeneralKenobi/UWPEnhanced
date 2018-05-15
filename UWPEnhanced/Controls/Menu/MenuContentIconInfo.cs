@@ -19,12 +19,13 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Default Constructor
 		/// </summary>
-		public MenuContentIconInfo(string glyph, ImageSource image, int index, ICommand iconPressedCommand)
+		public MenuContentIconInfo(string glyph, ImageSource image, ICommand iconPressedCommand,
+			UIElement representedElement)
 		{
 			Glyph = glyph;
 			Image = image;
-			Index = index;
 			IconPressedCommand = iconPressedCommand;
+			RepresentedElement = representedElement;
 		}
 
 		#endregion
@@ -42,9 +43,9 @@ namespace UWPEnhanced.Controls
 		public ImageSource Image { get; private set; }
 
 		/// <summary>
-		/// Index of the element represented by the Icon
+		/// <see cref="UIElement"/> deconstructed by this <see cref="MenuContentIconInfo"/>
 		/// </summary>
-		public int Index { get; private set; }
+		public UIElement RepresentedElement { get; private set; }
 
 		/// <summary>
 		/// Command to execute when the Icon is clicked
