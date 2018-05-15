@@ -12,6 +12,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:Menu">
 
+					<!-- The name is used in code behind to look for certain resources -->
 					<Grid Name="RootGrid" Background="Transparent">
 
 						<Grid.Resources>
@@ -39,6 +40,7 @@
 								<x:Double x:Key="MenuOnScreenTranslateXY">0</x:Double>
 								<Duration x:Key="OpenCloseStoryboardDuration">0:0:0.25</Duration>
 								<Duration x:Key="MenuInOutStoryboardDuration">0:0:0.25</Duration>
+								<Duration x:Key="ContentFadeDuration">0:0:0.25</Duration>
 								<CubicEase x:Key="DefaultEasing" EasingMode="EaseInOut"/>
 							
 								<!--#endregion-->
@@ -50,6 +52,7 @@
 
 									<!-- Animation for X -->
 									<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+													EnableDependentAnimation="True"
 													Storyboard.TargetProperty="X"
 													Duration="{StaticResource OpenCloseStoryboardDuration}"
 													To="{StaticResource ContentOpenTranslateXY}"
@@ -57,6 +60,7 @@
 
 									<!-- Animation for Y -->
 									<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+													EnableDependentAnimation="True"
 													Storyboard.TargetProperty="Y"
 													Duration="{StaticResource OpenCloseStoryboardDuration}"
 													To="{StaticResource ContentOpenTranslateXY}"
@@ -70,6 +74,7 @@
 
 									<!-- Animation for X -->
 									<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+													EnableDependentAnimation="True"
 													Storyboard.TargetProperty="X"
 													Duration="{StaticResource OpenCloseStoryboardDuration}"												
 													To="{Binding ContentTranslateTransformX, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
@@ -77,6 +82,7 @@
 
 									<!-- Animation for Y -->
 									<DoubleAnimation Storyboard.TargetName="ContentPresenterTranslate"
+													EnableDependentAnimation="True"
 													Storyboard.TargetProperty="Y"
 													Duration="{StaticResource OpenCloseStoryboardDuration}"
 													To="{Binding ContentTranslateTransformY, RelativeSource={RelativeSource Mode=TemplatedParent}}"
@@ -192,8 +198,21 @@
 
 								<!--#region Content Storyboards -->
 
-								<Storyboard x:Key="TransitionInContentStoryboard"/>
-								<Storyboard x:Key="TransitionOutContentStoryboard"/>
+								<!-- Storyboard that fades in content. The name is used in code behind -->
+								<Storyboard x:Key="TransitionInContentStoryboard">
+									<DoubleAnimation Storyboard.TargetName="ContentOwner"
+										Storyboard.TargetProperty="Opacity"
+										To="1"
+										Duration="{StaticResource ContentFadeDuration}"/>
+								</Storyboard>
+
+								<!-- Storyboard that fades out content. The name is used in code behind -->
+								<Storyboard x:Key="TransitionOutContentStoryboard">
+									<DoubleAnimation Storyboard.TargetName="ContentOwner"
+										Storyboard.TargetProperty="Opacity"
+										To="0"
+										Duration="{StaticResource ContentFadeDuration}"/>
+								</Storyboard>
 
 								<!--#endregion-->
 
@@ -380,30 +399,34 @@
 
 						</xaml:VisualManager.VisualSetups>
 
-						<ContentPresenter Name="Content"
-							Background="Pink"
+						<Border Name="Content"
+							Background="{TemplateBinding Background}"
 							Width="{TemplateBinding ContentLength}"
 							Height="{TemplateBinding ContentLength}"
-							BorderBrush="Green"
-							BorderThickness="2"
-							Content="{Binding SelectedContent, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
 
-							<ContentPresenter.RenderTransform>
+							<Border.RenderTransform>
 								<!-- These Bindings make sure that when the Menu position changes and the menu is closed its position
 								will be readjusted to stay hidden -->
 								<TranslateTransform x:Name="ContentPresenterTranslate"
 									X="{Binding ContentTranslateTransformXCorrection, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 									Y="{Binding ContentTranslateTransformYCorrection, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-							</ContentPresenter.RenderTransform>
+							</Border.RenderTransform>
 
-						</ContentPresenter>
+							<ContentPresenter Name="ContentOwner"
+								Content="{Binding SelectedContent, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"/>
+
+						</Border>
 
 						<!-- The whole panel with controls -->
 						<controls:ItemsContainer Name="IconsPresenter"
-							FlowDirection="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ItemsDirectionConverter}}"
+							FlowDirection="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ItemsDirectionConverter}}"							
 							Background="{TemplateBinding Background}"
-							BorderBrush="Blue"
-							BorderThickness="2"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
 							Width="{TemplateBinding IconsPanelLength}"
 							Height="{TemplateBinding IconsPanelLength}"
 							Padding="{TemplateBinding Padding}">

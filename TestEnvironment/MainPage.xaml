@@ -30,9 +30,11 @@
 
 
 		<controls:Menu x:Name="menu" Position="Left" Background="Azure" Padding="2 0"
-		IconsPanelLength="50">
+		IconsPanelLength="50"
+		BorderThickness="1"
+		BorderBrush="Black">
 			<controls:Menu.Content>
-				<Rectangle Width="10" Height="10" Fill="Green" controls:Menu.Glyph="&#xE700;"
+				<Rectangle Width="50" Height="500" Fill="Green" controls:Menu.Glyph="&#xE700;"
 				controls:Menu.Image="ms-appx:///Assets/LockScreenLogo.scale-200.png"/>
 				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>
 				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>

@@ -37,10 +37,17 @@ namespace UWPEnhanced.Controls
 
 		#region Private Members
 
-		private Storyboard _TransitionOutContent = null;
-		private Storyboard _TransitionInContent = null;
+		/// <summary>
+		/// Storyboard animating out the current content before it's replaced
+		/// </summary>
+		private Storyboard _FadeOutContent = null;
 
-		#endregion
+		/// <summary>
+		/// Storyboard animating in the current content
+		/// </summary>
+		private Storyboard _FadeInContent = null;
+
+		#endregion	
 
 		#region Public Properties
 
@@ -389,17 +396,12 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private void GetContentStoryboards()
 		{
-			_TransitionInContent = (GetTemplateChild("RootGrid") as Grid)?.
+			_FadeInContent = (GetTemplateChild("RootGrid") as Grid)?.
 				Resources["TransitionInContentStoryboard"] as Storyboard;
 
-			_TransitionOutContent = (GetTemplateChild("RootGrid") as Grid)?.
+			_FadeOutContent = (GetTemplateChild("RootGrid") as Grid)?.
 				Resources["TransitionOutContentStoryboard"] as Storyboard;
-		}
-
-		private void ConfigureContentStoryboards()
-		{
-
-		}
+		}	
 
 		#endregion
 
@@ -409,38 +411,11 @@ namespace UWPEnhanced.Controls
 		/// Method for <see cref="IconPressedCommand"/>, changes the presented content
 		/// </summary>
 		/// <param name="parameter"></param>
-		private async void IconPressed(object parameter)
+		private void IconPressed(object parameter)
 		{
 			if(parameter is UIElement newContent)
 			{
-				Storyboard sbOut = new Storyboard();
-				Storyboard sbIn = new Storyboard();
-
-				var anOut = new DoubleAnimation()
-				{
-					To = 0,
-					Duration = new Duration(TimeSpan.FromMilliseconds(75)),
-				};
-
-				var anIn = new DoubleAnimation()
-				{
-					To = 100,
-					Duration = new Duration(TimeSpan.FromMilliseconds(75)),
-				};
-				var target = VisualTreeHelpers.FindChild<ContentPresenter>(this);
-				Storyboard.SetTarget(anOut, target);
-				Storyboard.SetTarget(anIn, target);
-				Storyboard.SetTargetProperty(anOut, "Opacity");
-				Storyboard.SetTargetProperty(anIn, "Opacity");
-				sbOut.Children.Add(anOut);
-				sbIn.Children.Add(anIn);
-				sbOut.Completed += (s, e) =>
-				{
-					SelectedContent = newContent;
-					InvokePropertyChanged(nameof(SelectedContent));
-					sbIn.Begin();
-				};
-				sbOut.Begin();
+				ChangeContent(newContent);
 			}
 		}
 
@@ -449,15 +424,41 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private void OpenCloseMenu() => IsOpen = !IsOpen;
 
+		/// <summary>
+		/// Changes current content with animations
+		/// </summary>
+		/// <param name="newContent"></param>
 		private void ChangeContent(UIElement newContent)
 		{
-			_TransitionInContent.Begin();
-		}
-		
-		private void SelfUnhookableTransitionInCallback(object sender, object e)
-		{
-			_TransitionInContent.Completed -= SelfUnhookableTransitionInCallback;
-		}
+			// If one of the storyboards is undefined just change the content
+			if(_FadeInContent == null || _FadeOutContent == null)
+			{
+				SelectedContent = newContent;
+				return;
+			}
+
+			// Create a callback for the FadeOutStoryboard
+			void callback(object s, object e)
+			{
+				// When completed, change the content
+				SelectedContent = newContent;
+
+				// Notify
+				InvokePropertyChanged(nameof(SelectedContent));
+
+				// Start fading in the content
+				_FadeInContent.Begin();
+
+				// Unhook self
+				_FadeOutContent.Completed -= callback;
+			}
+
+			// Hook to the completed event
+			_FadeOutContent.Completed += callback;
+
+			// Begin the storyboard
+			_FadeOutContent.Begin();
+		}		
 
 		#endregion
 
