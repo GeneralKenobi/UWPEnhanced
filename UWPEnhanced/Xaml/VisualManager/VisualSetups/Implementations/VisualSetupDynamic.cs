@@ -107,7 +107,7 @@ namespace UWPEnhanced.Xaml
 				}
 
 				// Apply the setters
-				await DispatcherHelpers.RunAsync(() =>
+				DispatcherHelpers.RunAsync(() =>
 				{
 					TemporarySetters?.ForEach((x) => x.Set());
 					Setters?.ForEach((x) => x.Set());
@@ -141,7 +141,7 @@ namespace UWPEnhanced.Xaml
 			_Cancellation = cancellation;
 
 			// Reset the temporary setters
-			await DispatcherHelpers.RunAsync(() => TemporarySetters.ForEach((x) => x.Reset()));
+			DispatcherHelpers.RunAsync(() => TemporarySetters.ForEach((x) => x.Reset()));
 
 			if (useTransitions)
 			{
