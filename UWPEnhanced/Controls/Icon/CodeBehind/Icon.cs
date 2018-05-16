@@ -18,6 +18,10 @@ using Windows.UI.Xaml.Media;
 
 namespace UWPEnhanced.Controls
 {
+	/// <summary>
+	/// Control displaying a glyph and/or image with simple animations on pointer interaction and possibility to bind
+	/// a command for pointer pressed event
+	/// </summary>
 	public sealed class Icon : Control, INotifyPropertyChanged
 	{
 		#region Private Static Members
@@ -48,13 +52,22 @@ namespace UWPEnhanced.Controls
 			this.DefaultStyleKey = typeof(Icon);
 			this.PointerPressed += (s, e) => Command?.Execute(CommandParameter);
 
-			// Whenever size changed notify that scale center also changes
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-			FindContainerGrid();
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-
 			// Whenever size changes notify that the observed dimensions changed
 			this.SizeChanged += (s,e) => InvokePropertyChanged(nameof(ObservedWidth), nameof(ObservedHeight));
+		}
+
+		#endregion
+
+		#region Protected Methods
+
+		/// <summary>
+		/// Finds the ScalableContainer element
+		/// </summary>
+		protected override void OnApplyTemplate()
+		{
+			FindContainerGrid();
+
+			base.OnApplyTemplate();
 		}
 
 		#endregion
@@ -63,22 +76,19 @@ namespace UWPEnhanced.Controls
 
 		/// <summary>
 		/// Method which finds Container from the visual tree which is needed to determine the scale transform center.
-		/// Additionally subsribes to its SizeChanged event in order to fire INotifyPropertyChanged for
+		/// Additionally subscribes to its SizeChanged event in order to fire INotifyPropertyChanged for
 		/// <see cref="ScaleCenterX"/> and <see cref="ScaleCenterY"/>
 		/// </summary>
 		/// <returns></returns>
 		private async Task FindContainerGrid()
 		{
-			// Await so that the constructor ends and we can get the container grid
-			await Task.Delay(20);
-
 			// Try to get the Container element
 			DependencyObject obj = GetTemplateChild(_ContainerName);
 
 			// If the operation failed
 			if (obj == null)
 			{
-				// Wait an additional second
+				// Wait a second
 				await Task.Delay(1000);
 
 				// Try again
