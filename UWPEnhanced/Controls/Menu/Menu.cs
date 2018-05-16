@@ -26,11 +26,10 @@ namespace UWPEnhanced.Controls
             this.DefaultStyleKey = typeof(Menu);
 			Content = new ObservableCollection<UIElement>();		
 			RecalculateContentTranslate();
-			this.Loaded += OnLoaded;
-			
-			
+			this.Loaded += OnLoaded;			
 			IconPressedCommand = new RelayParametrizedCommand(IconPressed);
 			OpenCloseMenuCommand = new RelayCommand(OpenCloseMenu);
+			RepositionMenuCommand = new RelayParametrizedCommand(RepositionMenu);
         }
 
 		#endregion
@@ -105,9 +104,10 @@ namespace UWPEnhanced.Controls
 
 		public ICommand IconPressedCommand { get; private set; }
 		public ICommand OpenCloseMenuCommand { get; private set; }
+		public ICommand RepositionMenuCommand { get; private set; }
 
 		#endregion
-
+		
 		#region INotifyPropertyChanged
 
 		/// <summary>
@@ -131,6 +131,26 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region Dependency Properties
+		
+		#region EnableMenuReposition Dependency Property
+
+		/// <summary>
+		/// Determines whether to create and show a menu for menu reposition
+		/// </summary>
+		public bool EnableMenuReposition
+		{
+			get => (bool)GetValue(EnableMenuRepositionProperty);
+			set => SetValue(EnableMenuRepositionProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="EnableMenuReposition"/>
+		/// </summary>
+		public static readonly DependencyProperty EnableMenuRepositionProperty =
+			DependencyProperty.Register(nameof(EnableMenuReposition), typeof(bool),
+			typeof(Menu), new PropertyMetadata(true));
+				
+		#endregion
 
 		#region Position Dependency Property
 
@@ -281,8 +301,6 @@ namespace UWPEnhanced.Controls
 
 		#region Private Static Methods
 
-		#region Position Changed Handler
-
 		/// <summary>
 		/// Recalculates animation values which depend on the position of the menu (MenuTranslate, ContentTranslate).
 		/// </summary>
@@ -295,8 +313,6 @@ namespace UWPEnhanced.Controls
 				menu.RecalculateContentTranslate();
 			}
 		}
-
-		#endregion
 
 		#endregion
 
@@ -458,7 +474,20 @@ namespace UWPEnhanced.Controls
 
 			// Begin the storyboard
 			_FadeOutContent.Begin();
-		}		
+		}
+
+		/// <summary>
+		/// Method for <see cref="RepositionMenuCommand"/>, if the parameter is a <see cref="string"/> that
+		/// can be parsed to <see cref="MenuPosition"/> sets the parsed value to <see cref="Position"/>
+		/// </summary>
+		/// <param name="parameter"></param>
+		private void RepositionMenu(object parameter)
+		{
+			if(parameter is string casted && Enum.TryParse(casted, out MenuPosition newPosition))
+			{
+				Position = newPosition;
+			}
+		}
 
 		#endregion
 
