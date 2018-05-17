@@ -25,7 +25,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty PropertyProperty =
 			DependencyProperty.Register(nameof(Property), typeof(object),
-			typeof(BindablePropertySetter), new PropertyMetadata(null));
+			typeof(BindablePropertySetter), new PropertyMetadata(null, PropertyChanged));
 
 		#endregion
 
