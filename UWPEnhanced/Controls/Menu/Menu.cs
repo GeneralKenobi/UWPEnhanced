@@ -400,6 +400,43 @@ namespace UWPEnhanced.Controls
 		private void OnLoaded(object s, RoutedEventArgs e)
 		{
 			GetContentStoryboards();
+			DetermineInitialContent();
+		}
+
+		#endregion
+
+		#region Determining initial content
+
+		/// <summary>
+		/// Determines the initial content for the menu with the given priority: if enabled, repositioning tool then the content
+		/// with index 0 (if there is at least one element in <see cref="Content"/>
+		/// </summary>
+		private void DetermineInitialContent()
+		{
+			if(EnableMenuReposition)
+			{
+				// Get the tool from the template
+				var repositioningTool = (GetTemplateChild("MenuRepositioningTool") as Icon)?.CommandParameter as UIElement;
+
+				// If successful, assign it
+				if(repositioningTool != null)
+				{
+					SelectedContent = repositioningTool;
+				}
+			}
+
+			// If the repositioning tool was not found / is not used, check if there's some content put into the menu
+			if(SelectedContent == null && Content.Count != 0)
+			{
+				// if so, assign it
+				SelectedContent = Content[0];
+			}
+
+			// If the content was assigned, notify
+			if(SelectedContent != null)
+			{
+				InvokePropertyChanged(nameof(SelectedContent));
+			}
 		}
 
 		#endregion
@@ -441,11 +478,18 @@ namespace UWPEnhanced.Controls
 		private void OpenCloseMenu() => IsOpen = !IsOpen;
 
 		/// <summary>
-		/// Changes current content with animations
+		/// Handles the user's request to change the presented content
 		/// </summary>
 		/// <param name="newContent"></param>
 		private void ChangeContent(UIElement newContent)
 		{
+			// If the user pressed the icon for the currently presented content, toggle the menu's open/close status
+			if(newContent == SelectedContent)
+			{
+				OpenCloseMenu();
+				return;
+			}
+
 			// If one of the storyboards is undefined just change the content
 			if(_FadeInContent == null || _FadeOutContent == null)
 			{

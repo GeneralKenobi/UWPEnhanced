@@ -433,18 +433,22 @@
 							<controls:Icon Name="OpenCloseMenuIcon"
 								Style="{StaticResource IconWithAnimatedBorderStyle}"
 								Glyph="&#xE700;"
-								Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-								Margin="0 0 0 0"/>
+								Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
-							<!-- Menu repositioning tool Icon -->
-							<controls:Icon
+							<!-- Menu repositioning tool Icon, the name is used in code behind but is not critical
+							for the operation of the control (used to asign this icon's command parameter as the default
+							content if the repositioning tool is enabled -->
+							<controls:Icon Name="MenuRepositioningTool"
 								Style="{StaticResource IconWithAnimatedBorderStyle}"
 								Glyph="&#xE759;"								
 								Command="{Binding IconPressedCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
 
+								<!-- The menu repositioning tool -->
 								<controls:Icon.CommandParameter>
 									<Grid Width="{TemplateBinding ContentLength}"
 										Height="{TemplateBinding ContentLength}">
+
+										<!-- Make a 3x3 grid for the arrows -->
 										<Grid.RowDefinitions>
 											<RowDefinition Height="*"/>
 											<RowDefinition Height="*"/>
@@ -457,22 +461,26 @@
 											<ColumnDefinition Width="*"/>
 										</Grid.ColumnDefinitions>
 
+										<!-- Position on the left -->
 										<controls:Icon Glyph="&#xE973;"
 											Grid.Row="1"
 											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											CommandParameter="Left"/>
 
+										<!-- Position on the top -->
 										<controls:Icon Glyph="&#xE971;"
 											Grid.Column="1"
 											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											CommandParameter="Top"/>
 
+										<!-- Position on the right -->
 										<controls:Icon Glyph="&#xE974;"
 											Grid.Row="1"
 											Grid.Column="2"
 											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											CommandParameter="Right"/>
 
+										<!-- Position on the bottom -->
 										<controls:Icon Glyph="&#xE972;"
 											Grid.Row="2"
 											Grid.Column="1"
