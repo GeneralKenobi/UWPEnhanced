@@ -33,7 +33,7 @@
 		IconsPanelLength="50"
 		BorderThickness="1"
 		EnableMenuReposition="False"
-		BorderBrush="Black" Margin="0,2,0,0" >
+		BorderBrush="Black" Margin="0,0,0,0" >
 			<controls:Menu.Content>
 				<Rectangle Width="50" Height="500" Fill="Green" controls:Menu.Glyph="&#xE700;"
 				controls:Menu.Image="ms-appx:///Assets/LockScreenLogo.scale-200.png"/>

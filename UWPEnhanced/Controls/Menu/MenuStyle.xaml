@@ -255,21 +255,12 @@
 
 								<xaml:VisualSetupDynamic ID="Open"
 									TransitionInStoryboard="{StaticResource OpenMenuStoryboard}"
-									TransitionOutStoryboard="{StaticResource CloseMenuStoryboard}">
-
-									<xaml:VisualSetupDynamic.Setters>
-										<xaml:PropertySetter Target="{Binding ElementName=OpenCloseMenuIcon, Mode=TwoWay}" Property="Glyph" Value="&#xE76B;"/>
-									</xaml:VisualSetupDynamic.Setters>
-
-								</xaml:VisualSetupDynamic>
+									TransitionOutStoryboard="{StaticResource CloseMenuStoryboard}"/>
 
 								<!-- Sets visibility to collapsed (makes sure that the content won't be seen in unexpected
 								places on the screen, for example when changing the position of the menu, if the background 
 								is transpart, etc), changes the Open/CloseMenuIcon glyph -->
-								<xaml:VisualSetupDynamic ID="Closed" EnterWhenCreated="True">
-									<xaml:VisualSetupDynamic.Setters>
-										<xaml:PropertySetter Target="{Binding ElementName=OpenCloseMenuIcon, Mode=TwoWay}" Property="Glyph" Value="&#xE76C;"/>
-									</xaml:VisualSetupDynamic.Setters>
+								<xaml:VisualSetupDynamic ID="Closed" EnterWhenCreated="True">									
 									<xaml:VisualSetupDynamic.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Visibility" Value="Collapsed"/>
 									</xaml:VisualSetupDynamic.TemporarySetters>
@@ -307,6 +298,8 @@
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Left"/>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Stretch"/>
+										<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
+										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Height" Value="NaN"/>
@@ -330,6 +323,8 @@
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Top"/>
+										<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
+										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Width" Value="NaN"/>
@@ -354,6 +349,8 @@
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Right"/>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Stretch"/>
+										<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
+										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Height" Value="NaN"/>
@@ -377,6 +374,8 @@
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Bottom"/>
+										<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
+										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Width" Value="NaN"/>
@@ -422,8 +421,7 @@
 						</Border>
 
 						<!-- The whole panel with controls -->
-						<controls:ItemsContainer Name="IconsPresenter"
-							FlowDirection="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ItemsDirectionConverter}}"							
+						<controls:ItemsContainer Name="IconsPresenter"							
 							Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
@@ -434,16 +432,15 @@
 							<!-- Expand/Collapse menu Icon -->
 							<controls:Icon Name="OpenCloseMenuIcon"
 								Style="{StaticResource IconWithAnimatedBorderStyle}"
-								Glyph="&#xE76B;"
+								Glyph="&#xE700;"
 								Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-								Margin="0 0 0 20"/>
+								Margin="0 0 0 0"/>
 
-							<!-- Expand/Collapse menu Icon -->
+							<!-- Menu repositioning tool Icon -->
 							<controls:Icon
 								Style="{StaticResource IconWithAnimatedBorderStyle}"
-								Glyph="&#xE759;"
-								Command="{Binding IconPressedCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-								Margin="0 0 0 20">
+								Glyph="&#xE759;"								
+								Command="{Binding IconPressedCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
 
 								<controls:Icon.CommandParameter>
 									<Grid Width="{TemplateBinding ContentLength}"
@@ -488,8 +485,8 @@
 							</controls:Icon>
 
 							<!-- Icons for the content put into the menu -->
-							<controls:ItemsContainer ItemSpacing="10"
-								FlowDirection="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ItemsDirectionConverter}}"
+							<controls:ItemsContainer Name="ContentIconsPresenter"
+								ItemSpacing="10"								
 								ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}">
 
 								<controls:ItemsContainer.ItemTemplate>
