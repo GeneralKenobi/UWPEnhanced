@@ -30,9 +30,7 @@
 								<controls:MenuContentToIconInfoConverter x:Key="MenuContentConverter"
 									Owner="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 								<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
-								<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
-								<controls:ContentBorderThicknessConverter x:Key="ContentBorderConverter"
-									MenuPosition="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+								<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>								
 
 								<!--#endregion-->
 
