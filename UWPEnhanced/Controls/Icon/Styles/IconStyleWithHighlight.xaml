@@ -7,7 +7,7 @@
 
 
 	<!-- Default style for an Icon -->
-	<Style TargetType="controls:Icon">
+	<Style TargetType="controls:Icon" x:Key="IconWithHighlightStyle">
 		<Setter Property="HorizontalAlignment" Value="Center"/>
 		<Setter Property="VerticalAlignment" Value="Center"/>
 		<Setter Property="FontFamily" Value="{ThemeResource SymbolThemeFontFamily}"/>
@@ -34,12 +34,68 @@
 							<x:Double x:Key="ScaleFrom">1</x:Double>
 							<x:Double x:Key="ScaleTo">0.9</x:Double>
 							<Duration x:Key="ScaleDuration">0:0:0.05</Duration>
+							<x:Double x:Key="HighlightPresentOpacity">0.25</x:Double>
+							<x:Double x:Key="HighlightHiddenOpacity">0</x:Double>
+							<Duration x:Key="HighlightChangeDuration">0:0:0.1</Duration>
+							<LinearGradientBrush x:Key="HighlightBrush" StartPoint="0.5 0" EndPoint="0.5 1">
+								<GradientStop Color="Transparent" Offset="0"/>
+								<GradientStop Color="Transparent" Offset="0.5"/>
+								<GradientStop Color="White" Offset="1"/>
+							</LinearGradientBrush>
 							<converters:ProductConverter x:Key="Product"/>
 						</Grid.Resources>
 
 						<!-- Visual Setups defined for the Icon -->
 						<xaml:VisualManager.VisualSetups>
 							
+							<!-- Group resposnible for pointer over effect -->
+							<xaml:VisualSetupGroup Name="HoverGroup">
+
+								<!-- Triggers -->
+								<xaml:VisualSetupGroup.Triggers>
+									<xaml:VisualTransitionCollection>
+
+										<!-- Transitions into PointerOver-->
+										<xaml:VisualTransition TransitionTo="PointerOver">
+											<xaml:BindableVisualPointerTrigger PointerEvent="PointerEntered"
+												Target="{Binding ElementName=RootGrid}"/>
+										</xaml:VisualTransition>
+
+										<!-- Transition out (to null state) -->
+										<xaml:VisualTransition>
+											<xaml:BindableVisualPointerTrigger Target="{Binding ElementName=RootGrid}"
+												PointerEvent="PointerExited, PointerCanceled, PointerCaptureLost"/>											
+										</xaml:VisualTransition>
+
+									</xaml:VisualTransitionCollection>
+								</xaml:VisualSetupGroup.Triggers>
+
+								<!-- Setup for when pointer is over the Icon -->
+								<xaml:VisualSetupDynamic ID="PointerOver">
+
+									<!-- Apply the highlight -->
+									<xaml:VisualSetupDynamic.TransitionInStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="HighlightRectangle"
+													Storyboard.TargetProperty="(Rectangle.Opacity)"
+													To="{StaticResource HighlightPresentOpacity}"
+													Duration="{StaticResource HighlightChangeDuration}"/>
+										</Storyboard>
+									</xaml:VisualSetupDynamic.TransitionInStoryboard>
+
+									<!-- Revert the highlight -->
+									<xaml:VisualSetupDynamic.TransitionOutStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="HighlightRectangle"
+													Storyboard.TargetProperty="(Rectangle.Opacity)"
+													To="{StaticResource HighlightHiddenOpacity}"
+													Duration="{StaticResource HighlightChangeDuration}"/>
+										</Storyboard>
+									</xaml:VisualSetupDynamic.TransitionOutStoryboard>
+								
+								</xaml:VisualSetupDynamic>
+							</xaml:VisualSetupGroup>
+
 							<!-- Group responsible for pointer pressed effects -->
 							<xaml:VisualSetupGroup Name="PressGroup">
 
@@ -96,7 +152,14 @@
 								</xaml:VisualSetupDynamic>
 
 							</xaml:VisualSetupGroup>
-						</xaml:VisualManager.VisualSetups>						
+						</xaml:VisualManager.VisualSetups>
+
+						<!-- Serves as highlight -->
+						<Rectangle Name="HighlightRectangle"
+								Fill="{StaticResource HighlightBrush}"
+								Opacity="0"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"/>
 
 						<!-- Container grid which is scaled using the render transform -->
 						<!-- The name is used in code behind to determine the scale origin and should not be changed -->
@@ -104,6 +167,7 @@
 							Padding="{TemplateBinding Padding}"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Stretch">
+
 
 							<!-- Render transforms for child elements, composed of ScaleTransform -->
 							<Grid.RenderTransform>
