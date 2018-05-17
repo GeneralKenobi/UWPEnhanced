@@ -26,9 +26,9 @@
 			Command="{x:Bind command}"
 			FontSize="100"/>
 
+
+
 		
-
-
 		<controls:Menu x:Name="menu" Position="Left" Background="Azure" Padding="0"
 		IconsPanelPadding="2"
 		IconsPanelLength="50"
@@ -44,8 +44,7 @@
 
 			</controls:Menu.Content>
 		</controls:Menu>
-
-
+		
 
 		<!--<StackPanel HorizontalAlignment="Right" Margin="50" BorderThickness="1" BorderBrush="Red">
 			<Button Content="Left" Click="Button_Click" x:Name="test"/>
