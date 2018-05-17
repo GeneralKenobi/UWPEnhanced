@@ -415,8 +415,7 @@
 						</xaml:VisualManager.VisualSetups>
 
 						<!-- Border in which the ContentPresenter for content is located -->
-						<Border Name="Content"
-							BorderThickness="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+						<Border Name="Content"							
 							Padding="{TemplateBinding Padding}"
 							Background="{TemplateBinding Background}"
 							Width="{TemplateBinding ContentLength}"
