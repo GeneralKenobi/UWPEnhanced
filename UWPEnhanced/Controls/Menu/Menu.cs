@@ -14,6 +14,9 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace UWPEnhanced.Controls
 {
+	/// <summary>
+	/// Menu control that can host different content elements and present one at a time.
+	/// </summary>
 	public sealed class Menu : Control, INotifyPropertyChanged
     {
 		#region Constructor
@@ -24,9 +27,15 @@ namespace UWPEnhanced.Controls
 		public Menu()
         {
             this.DefaultStyleKey = typeof(Menu);
-			Content = new ObservableCollection<UIElement>();		
+			this.Loaded += OnLoaded;
+
+			// Initialize the colleciton
+			Content = new ObservableCollection<UIElement>();
+
+			// Make the first calculation of the translate
 			RecalculateContentTranslate();
-			this.Loaded += OnLoaded;			
+
+			// Initialize the ICommands
 			IconPressedCommand = new RelayParametrizedCommand(IconPressed);
 			OpenCloseMenuCommand = new RelayCommand(OpenCloseMenu);
 			RepositionMenuCommand = new RelayParametrizedCommand(RepositionMenu);
@@ -56,7 +65,7 @@ namespace UWPEnhanced.Controls
 		/// The length the menu has when its opened
 		/// </summary>
 		public double OpenLength => IconsPanelLength + ContentLength;
-
+		
 		#endregion
 
 		#region Menu TranslateTransform		
@@ -102,8 +111,19 @@ namespace UWPEnhanced.Controls
 
 		#region ICommands
 
+		/// <summary>
+		/// Attempts to change the content in the control for the parameter
+		/// </summary>
 		public ICommand IconPressedCommand { get; private set; }
+
+		/// <summary>
+		/// Toggles the menu's open/close status
+		/// </summary>
 		public ICommand OpenCloseMenuCommand { get; private set; }
+
+		/// <summary>
+		/// Repositions the menu to the <see cref="MenuPosition"/> given by the parameter
+		/// </summary>
 		public ICommand RepositionMenuCommand { get; private set; }
 
 		#endregion
@@ -255,6 +275,66 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region IconsPanelPadding Dependency Property
+
+		/// <summary>
+		/// Padding for the Icons panel
+		/// </summary>
+		public Thickness IconsPanelPadding
+		{
+			get => (Thickness)GetValue(IconsPanelPaddingProperty);
+			set => SetValue(IconsPanelPaddingProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="IconsPanelPadding"/>
+		/// </summary>
+		public static readonly DependencyProperty IconsPanelPaddingProperty =
+			DependencyProperty.Register(nameof(IconsPanelPadding), typeof(Thickness),
+			typeof(Menu), new PropertyMetadata(default(Thickness)));
+
+		#endregion
+
+		#region SeparatorThickness Dependency Property
+
+		/// <summary>
+		/// Thicknes of the separator lockated in the middle
+		/// </summary>
+		public double SeparatorThickness
+		{
+			get => (double)GetValue(SeparatorThicknessProperty);
+			set => SetValue(SeparatorThicknessProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="SeparatorThickness"/>
+		/// </summary>
+		public static readonly DependencyProperty SeparatorThicknessProperty =
+			DependencyProperty.Register(nameof(SeparatorThickness), typeof(double),
+			typeof(Menu), new PropertyMetadata(default(double)));
+
+		#endregion
+
+		#region ContentBorderBrush Dependency Property
+
+		/// <summary>
+		/// Brush for the Content's border
+		/// </summary>
+		public Brush SeparatorBrush
+		{
+			get => (Brush)GetValue(SeparatorBrushProperty);
+			set => SetValue(SeparatorBrushProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="SeparatorBrush"/>
+		/// </summary>
+		public static readonly DependencyProperty SeparatorBrushProperty =
+			DependencyProperty.Register(nameof(SeparatorBrush), typeof(Brush),
+			typeof(Menu), new PropertyMetadata(default(Brush)));
+
+		#endregion
+
 		#region Glyph Attached Property
 
 		/// <summary>
@@ -309,7 +389,7 @@ namespace UWPEnhanced.Controls
 			if (s is Menu menu)
 			{
 				menu.InvokePropertyChanged(nameof(Position));
-
+				
 				menu.RecalculateContentTranslate();
 			}
 		}
@@ -317,7 +397,7 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region Private Methods
-
+				
 		#region Content TranslateTransform
 
 		/// <summary>

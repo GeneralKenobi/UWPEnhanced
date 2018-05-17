@@ -6,8 +6,10 @@
     xmlns:controls="using:UWPEnhanced.Controls">
 
 
-
+	<!-- Default style for the menu -->
 	<Style TargetType="controls:Menu">
+		<Setter Property="SeparatorThickness" Value="2"/>
+		<Setter Property="SeparatorBrush" Value="Black"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:Menu">
@@ -29,6 +31,8 @@
 									Owner="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 								<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
 								<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
+								<controls:ContentBorderThicknessConverter x:Key="ContentBorderConverter"
+									MenuPosition="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
 								<!--#endregion-->
 
@@ -225,11 +229,13 @@
 
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*"/>
+							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 
@@ -302,12 +308,15 @@
 										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Height" Value="NaN"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Height" Value="NaN"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="1"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
 									<!-- Second setup animates the menu into the screen -->
@@ -328,11 +337,14 @@
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="1"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
 									<!-- Second setup animates the menu into the screen -->
@@ -353,12 +365,15 @@
 										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Height" Value="NaN"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Height" Value="NaN"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Column), Mode=TwoWay}" Value="1"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Column), Mode=TwoWay}" Value="2"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
 									<!-- Second setup animates the menu into the screen -->
@@ -378,12 +393,15 @@
 										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Width" Value="NaN"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Row), Mode=TwoWay}" Value="1"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Row), Mode=TwoWay}" Value="2"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
 									<!-- Second setup animates the menu into the screen -->
@@ -398,12 +416,13 @@
 
 						</xaml:VisualManager.VisualSetups>
 
+						<!-- Border in which the ContentPresenter for content is located -->
 						<Border Name="Content"
+							BorderThickness="{Binding Position, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+							Padding="{TemplateBinding Padding}"
 							Background="{TemplateBinding Background}"
 							Width="{TemplateBinding ContentLength}"
-							Height="{TemplateBinding ContentLength}"
-							BorderBrush="{TemplateBinding BorderBrush}"
-							BorderThickness="{TemplateBinding BorderThickness}">
+							Height="{TemplateBinding ContentLength}">
 
 							<Border.RenderTransform>
 								<!-- These Bindings make sure that when the Menu position changes and the menu is closed its position
@@ -413,21 +432,22 @@
 									Y="{Binding ContentTranslateTransformYCorrection, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 							</Border.RenderTransform>
 
+							<!-- Directly hosts the presented content -->
 							<ContentPresenter Name="ContentOwner"
 								Content="{Binding SelectedContent, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 								HorizontalAlignment="Stretch"
 								VerticalAlignment="Stretch"/>
 
 						</Border>
-
-						<!-- The whole panel with controls -->
-						<controls:ItemsContainer Name="IconsPresenter"							
+						
+						 <!--The whole panel with controls--> 
+						<controls:ItemsContainer Name="IconsPresenter"
 							Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
 							Width="{TemplateBinding IconsPanelLength}"
 							Height="{TemplateBinding IconsPanelLength}"
-							Padding="{TemplateBinding Padding}">
+							Padding="{TemplateBinding IconsPanelPadding}">
 
 							<!-- Expand/Collapse menu Icon -->
 							<controls:Icon Name="OpenCloseMenuIcon"
@@ -494,13 +514,12 @@
 
 							<!-- Icons for the content put into the menu -->
 							<controls:ItemsContainer Name="ContentIconsPresenter"
-								ItemSpacing="10"								
+								ItemSpacing="10"
 								ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}">
 
 								<controls:ItemsContainer.ItemTemplate>
 									<DataTemplate>
-										<controls:Icon
-										Glyph="{Binding Glyph}"
+										<controls:Icon Glyph="{Binding Glyph}"
 										Style="{StaticResource IconWithAnimatedBorderStyle}"
 										ImageSource="{Binding Image}"
 										ImageStretch="Uniform"
@@ -511,6 +530,15 @@
 							</controls:ItemsContainer>
 
 						</controls:ItemsContainer>
+
+						<Rectangle Name="Separator"
+							Grid.Row="1"
+							Grid.Column="1"
+							Fill="{TemplateBinding SeparatorBrush}"
+							Width="{TemplateBinding SeparatorThickness}"
+							Height="{TemplateBinding SeparatorThickness}"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"/>
 
 					</Grid>
 					

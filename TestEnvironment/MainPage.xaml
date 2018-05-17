@@ -29,13 +29,15 @@
 		
 
 
-		<controls:Menu x:Name="menu" Position="Left" Background="Azure" Padding="2 0"
+		<controls:Menu x:Name="menu" Position="Left" Background="Azure" Padding="0"
+		IconsPanelPadding="2"
 		IconsPanelLength="50"
-		BorderThickness="1"
+		BorderThickness="2"
+		SeparatorThickness="0"
 		EnableMenuReposition="True"
 		BorderBrush="Black" Margin="0,0,0,0" >
 			<controls:Menu.Content>
-				<Rectangle Width="50" Height="500" Fill="Green" controls:Menu.Glyph="&#xE700;"
+				<Rectangle Width="50" Height="500" Fill="Green" controls:Menu.Glyph="&#xE700;" HorizontalAlignment="Left"
 				controls:Menu.Image="ms-appx:///Assets/LockScreenLogo.scale-200.png"/>
 				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>
 				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>
