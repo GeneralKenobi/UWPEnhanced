@@ -72,9 +72,7 @@ namespace UWPEnhanced.Xaml
 				await DispatcherHelpers.RunAsync(() =>
 				{
 					// If the storyboard is defined
-					if (TransitionInStoryboard != null &&
-					// or has a defined at least one timeline object or not automatic duration
-					(TransitionInStoryboard.Children.Count > 0 || TransitionInStoryboard.Duration != Duration.Automatic))
+					if (TransitionInStoryboard.WillComplete())
 					{
 						// Mark it for the rest of the Task
 						sbDefined = true;
@@ -151,9 +149,7 @@ namespace UWPEnhanced.Xaml
 				await DispatcherHelpers.RunAsync(() =>
 				{
 					// If the storyboard is defined 
-					if (TransitionOutStoryboard != null &&
-					// or has a defined at least one timeline object or not automatic duration
-					(TransitionOutStoryboard.Children.Count > 0 || TransitionOutStoryboard.Duration != Duration.Automatic))
+					if (TransitionOutStoryboard.WillComplete())
 					{
 						// signal it
 						sbDefined = true;
