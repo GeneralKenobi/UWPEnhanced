@@ -8,7 +8,7 @@
 
 	<!-- Default style for the menu -->
 	<Style TargetType="controls:Menu">
-		<Setter Property="SeparatorThickness" Value="2"/>
+		<Setter Property="SeparatorThickness" Value="1"/>
 		<Setter Property="SeparatorBrush" Value="Black"/>
 		<Setter Property="Template">
 			<Setter.Value>
