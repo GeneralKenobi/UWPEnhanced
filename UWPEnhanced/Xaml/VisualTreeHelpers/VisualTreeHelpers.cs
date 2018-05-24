@@ -233,5 +233,59 @@ namespace UWPEnhanced.Xaml
 		}
 
 		#endregion
+
+		#region Find child by name
+
+		/// <summary>
+		/// Finds and returns the first occurance of a child of type <see cref="FrameworkElement"/> whose
+		/// <see cref="FrameworkElement.Name"/> is equal to the given parameter. Search order is branch by branch.
+		/// </summary>
+		/// <param name="obj">Object whose children to search through</param>
+		/// <param name="name">Child with this name to look for</param>
+		/// <returns>First found child with the given name or null if none was found</returns>
+		public static FrameworkElement FindChild(this DependencyObject obj, string name)
+		{
+			// For each child
+			for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); ++i)
+			{
+				// Get it
+				var nextChild = VisualTreeHelper.GetChild(obj, i);
+
+				// If it's a FrameworkElement and its name is equal to the given name
+				if(nextChild is FrameworkElement frameworkElement && frameworkElement.Name==name)
+				{
+					return frameworkElement;
+				}
+
+				// Otherwise search through its children
+				var subSearchResult = nextChild.FindChild(name);
+
+				// And if there was a child of the given name
+				if (subSearchResult != null)
+				{
+					// Return it
+					return subSearchResult;
+				}
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Finds the first occurance of a child of type <see cref="FrameworkElement"/> with its <see cref="FrameworkElement.Name"/>
+		/// equal to the given parameter. Search order is branch by branch.
+		/// If the child was found it is stored in <paramref name="child"/> and true is returned.
+		/// </summary>
+		/// <param name="obj">Object whose children to search through</param>
+		/// <param name="child">Reference to store the found child in</param>
+		/// <param name="name">Child with this name to look for</param>
+		/// <returns></returns>
+		public static bool TryFindChild(this DependencyObject obj, out FrameworkElement child, string name)
+		{
+			child = FindChild(obj, name);
+			return child != null;
+		}
+
+		#endregion
 	}
 }
