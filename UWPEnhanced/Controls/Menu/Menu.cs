@@ -380,7 +380,7 @@ namespace UWPEnhanced.Controls
 		#region IconsFontSize Dependency Property
 
 		/// <summary>
-		/// 
+		/// Font size for the icons in the icons panel
 		/// </summary>
 		public double IconsFontSize
 		{
@@ -393,7 +393,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty IconsFontSizeProperty =
 			DependencyProperty.Register(nameof(IconsFontSize), typeof(double),
-			typeof(Menu), new PropertyMetadata(default(double)));
+			typeof(Menu), new PropertyMetadata(12d));
 
 		#endregion
 
