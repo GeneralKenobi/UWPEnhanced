@@ -20,12 +20,13 @@ namespace UWPEnhanced.Controls
 		/// Default Constructor
 		/// </summary>
 		public MenuContentIconInfo(string glyph, ImageSource image, ICommand iconPressedCommand,
-			UIElement representedElement)
+			UIElement representedElement, double fontSize)
 		{
 			Glyph = glyph;
 			Image = image;
 			IconPressedCommand = iconPressedCommand;
 			RepresentedElement = representedElement;
+			FontSize = fontSize;
 		}
 
 		#endregion
@@ -51,6 +52,11 @@ namespace UWPEnhanced.Controls
 		/// Command to execute when the Icon is clicked
 		/// </summary>
 		public ICommand IconPressedCommand { get; private set; }
+
+		/// <summary>
+		/// FontSize for the icon's glyph
+		/// </summary>
+		public double FontSize { get; private set; }
 
 		#endregion
 	}

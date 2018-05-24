@@ -14,7 +14,7 @@ namespace UWPEnhanced.Controls
 		#region Owner Dependency Property
 
 		/// <summary>
-		/// 
+		/// Menu which owns the Icon this converter creates info for
 		/// </summary>
 		public Menu Owner
 		{
@@ -41,7 +41,7 @@ namespace UWPEnhanced.Controls
 				foreach (var item in c)
 				{
 					result.Add(new MenuContentIconInfo(Menu.GetGlyph(item), Menu.GetImage(item),
-						Owner == null ? null : Owner.IconPressedCommand, item));
+						Owner == null ? null : Owner.IconPressedCommand, item, Owner.FontSize));
 				}
 
 				return result;

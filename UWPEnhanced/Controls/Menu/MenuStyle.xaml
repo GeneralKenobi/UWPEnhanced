@@ -520,6 +520,7 @@
 										Style="{StaticResource IconWithAnimatedBorderStyle}"
 										ImageSource="{Binding Image}"
 										ImageStretch="Uniform"
+										FontSize="{Binding FontSize}"
 										Command="{Binding IconPressedCommand}"
 										CommandParameter="{Binding RepresentedElement}"/>
 									</DataTemplate>
