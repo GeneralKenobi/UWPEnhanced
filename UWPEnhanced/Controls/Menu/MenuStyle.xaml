@@ -8,6 +8,7 @@
 
 	<!-- Default style for the menu -->
 	<Style TargetType="controls:Menu">
+		<Setter Property="FontSize" Value="12"/>
 		<Setter Property="SeparatorThickness" Value="1"/>
 		<Setter Property="SeparatorBrush" Value="Black"/>
 		<Setter Property="Template">
@@ -450,6 +451,7 @@
 							<controls:Icon Name="OpenCloseMenuIcon"
 								Style="{StaticResource IconWithAnimatedBorderStyle}"
 								Glyph="&#xE700;"
+								FontSize="{TemplateBinding FontSize}"
 								Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
 							<!-- Menu repositioning tool Icon, the name is used in code behind but is not critical
@@ -457,7 +459,8 @@
 							content if the repositioning tool is enabled -->
 							<controls:Icon Name="MenuRepositioningTool"
 								Style="{StaticResource IconWithAnimatedBorderStyle}"
-								Glyph="&#xE759;"								
+								Glyph="&#xE759;"
+								FontSize="{TemplateBinding FontSize}"
 								Command="{Binding IconPressedCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
 
 								<!-- The menu repositioning tool -->

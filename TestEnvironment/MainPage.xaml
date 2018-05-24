@@ -33,6 +33,7 @@
 		IconsPanelPadding="2"
 		IconsPanelLength="50"
 		BorderThickness="2"
+		FontSize="2"
 		SeparatorThickness="0"
 		EnableMenuReposition="True"
 		BorderBrush="Black" Margin="0,0,0,0" >
