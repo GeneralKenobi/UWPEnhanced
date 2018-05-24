@@ -55,6 +55,11 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private Storyboard _FadeInContent = null;
 
+		/// <summary>
+		/// Tool used by the user to reposition the menu
+		/// </summary>
+		private FrameworkElement _MenuRepositioningTool = null;
+
 		#endregion	
 
 		#region Public Properties
@@ -479,9 +484,33 @@ namespace UWPEnhanced.Controls
 		/// <param name="e"></param>
 		private void OnLoaded(object s, RoutedEventArgs e)
 		{
-			GetContentStoryboards();
+			FindContentStoryboards();
+			FindMenuRepositioningTool();
 			DetermineInitialContent();
 		}
+
+		#region Finding elements in visual tree
+
+		/// <summary>
+		/// Attempts to find the <see cref="Storyboard"/>s responsible for animating the Content from
+		/// the RootGrid's resources.
+		/// </summary>
+		private void FindContentStoryboards()
+		{
+			_FadeInContent = (GetTemplateChild("RootGrid") as Grid)?.
+				Resources["TransitionInContentStoryboard"] as Storyboard;
+
+			_FadeOutContent = (GetTemplateChild("RootGrid") as Grid)?.
+				Resources["TransitionOutContentStoryboard"] as Storyboard;
+		}
+
+		/// <summary>
+		/// Attempts to find the MenuRepositioningTool on the visual tree and store it in <see cref="_MenuRepositioningTool"/>
+		/// </summary>
+		private void FindMenuRepositioningTool() => _MenuRepositioningTool = (GetTemplateChild("MenuRepositioningTool") as Icon)?.
+			CommandParameter as FrameworkElement;
+
+		#endregion		
 
 		#endregion
 
@@ -494,14 +523,11 @@ namespace UWPEnhanced.Controls
 		private void DetermineInitialContent()
 		{
 			if(EnableMenuReposition)
-			{
-				// Get the tool from the template
-				var repositioningTool = (GetTemplateChild("MenuRepositioningTool") as Icon)?.CommandParameter as UIElement;
-
-				// If successful, assign it
-				if(repositioningTool != null)
+			{				
+				// If _MenuRepositioningTool was found, assign it
+				if(_MenuRepositioningTool != null)
 				{
-					SelectedContent = repositioningTool;
+					SelectedContent = _MenuRepositioningTool;
 				}
 			}
 
@@ -520,24 +546,7 @@ namespace UWPEnhanced.Controls
 		}
 
 		#endregion
-
-		#region Content Animations
-
-		/// <summary>
-		/// Attempts to find the <see cref="Storyboard"/>s responsible for animating the Content from
-		/// the RootGrid's resources.
-		/// </summary>
-		private void GetContentStoryboards()
-		{
-			_FadeInContent = (GetTemplateChild("RootGrid") as Grid)?.
-				Resources["TransitionInContentStoryboard"] as Storyboard;
-
-			_FadeOutContent = (GetTemplateChild("RootGrid") as Grid)?.
-				Resources["TransitionOutContentStoryboard"] as Storyboard;
-		}	
-
-		#endregion
-
+		
 		#region Command Methods
 
 		/// <summary>
@@ -658,15 +667,23 @@ namespace UWPEnhanced.Controls
 				throw new ArgumentException(nameof(index));
 			}
 
+			// If the menu repositioning tool is enabled
 			if(EnableMenuReposition)
 			{
-				if(index == 0)
+				// Index 0 is reserved for it
+				if(index == 0 && _MenuRepositioningTool != null)
 				{
-					ChangeContent()
+					ChangeContent(_MenuRepositioningTool);
+				}
+				else
+				{
+					ChangeContent(Content[index - 1]);
 				}
 			}
-
-
+			else
+			{
+				ChangeContent(Content[index]);
+			}
 		}
 
 		#endregion
