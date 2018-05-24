@@ -616,5 +616,59 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#endregion
+
+		#region Public Methods
+
+		/// <summary>
+		/// Returns 0-based index of the currently selected content.
+		/// If there is no content selected, returns -1.
+		/// If MenuRepositionTool is enabled it is treated as content on index 0.
+		/// </summary>
+		/// <returns></returns>
+		public int GetSelectedContentIndex()
+		{
+			if (SelectedContent != null)
+			{
+				int index = Content.IndexOf(SelectedContent);
+
+				if (EnableMenuReposition)
+				{
+					++index;
+				}
+
+				return index;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+
+		/// <summary>
+		/// Sets the selected content to the element on the given 0-based index. If MenuRepositioningTool is enabled,
+		/// treats it as content on index 0. Passing -1 will remove the current content.
+		/// </summary>
+		/// <param name="index"></param>
+		public void SetSelectedContentFromIndex(int index)
+		{
+			// If the menu can't be repositioned there maximum index is equal to the number of content elements - 1
+			if(index < -1 || index > Content.Count - (EnableMenuReposition ? 0 : 1))
+			{
+				// If the index is incorrect, throw an exception
+				throw new ArgumentException(nameof(index));
+			}
+
+			if(EnableMenuReposition)
+			{
+				if(index == 0)
+				{
+					ChangeContent()
+				}
+			}
+
+
+		}
+
+		#endregion
 	}
 }
