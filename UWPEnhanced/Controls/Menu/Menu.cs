@@ -578,30 +578,54 @@ namespace UWPEnhanced.Controls
 		/// Method for <see cref="OpenCloseMenuCommand"/>, toggles the <see cref="IsOpen"/> property.
 		/// </summary>
 		private void OpenCloseMenu() => IsOpen = !IsOpen;
+		
+		/// <summary>
+		/// Method for <see cref="RepositionMenuCommand"/>, if the parameter is a <see cref="string"/> that
+		/// can be parsed to <see cref="MenuPosition"/> sets the parsed value to <see cref="Position"/>
+		/// </summary>
+		/// <param name="parameter"></param>
+		private void RepositionMenu(object parameter)
+		{
+			if(parameter is string casted && Enum.TryParse(casted, out MenuPosition newPosition))
+			{
+				Position = newPosition;
+			}
+		}
+
+		#endregion
+
+		#region Changing Content
 
 		/// <summary>
 		/// Handles the user's request to change the presented content
 		/// </summary>
 		/// <param name="newContent"></param>
-		private void ChangeContent(UIElement newContent)
+		private void ChangeContent(UIElement newContent, bool openMenu = true)
 		{
 			// If the user pressed the icon for the currently presented content, toggle the menu's open/close status
-			if(newContent == SelectedContent)
+			if (newContent == SelectedContent)
 			{
 				OpenCloseMenu();
 				return;
 			}
 
 			// If one of the storyboards is undefined just change the content
-			if(_FadeInContent == null || _FadeOutContent == null)
+			if (_FadeInContent == null || _FadeOutContent == null)
 			{
 				SelectedContent = newContent;
+
+				// If requested, open the menu
+				IsOpen = IsOpen || openMenu;
+
 				return;
 			}
 
 			// Create a callback for the FadeOutStoryboard
 			void callback(object s, object e)
 			{
+				// If requested, open the menu
+				IsOpen = IsOpen || openMenu;
+
 				// When completed, change the content
 				SelectedContent = newContent;
 
@@ -620,19 +644,6 @@ namespace UWPEnhanced.Controls
 
 			// Begin the storyboard
 			_FadeOutContent.Begin();
-		}
-
-		/// <summary>
-		/// Method for <see cref="RepositionMenuCommand"/>, if the parameter is a <see cref="string"/> that
-		/// can be parsed to <see cref="MenuPosition"/> sets the parsed value to <see cref="Position"/>
-		/// </summary>
-		/// <param name="parameter"></param>
-		private void RepositionMenu(object parameter)
-		{
-			if(parameter is string casted && Enum.TryParse(casted, out MenuPosition newPosition))
-			{
-				Position = newPosition;
-			}
 		}
 
 		#endregion
