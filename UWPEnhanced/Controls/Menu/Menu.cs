@@ -18,15 +18,15 @@ namespace UWPEnhanced.Controls
 	/// Menu control that can host different content elements and present one at a time.
 	/// </summary>
 	public sealed class Menu : Control, INotifyPropertyChanged
-    {
+	{
 		#region Constructor
 
 		/// <summary>
 		/// Default constructor
 		/// </summary>
 		public Menu()
-        {
-            this.DefaultStyleKey = typeof(Menu);
+		{
+			this.DefaultStyleKey = typeof(Menu);
 			this.Loaded += OnLoaded;
 
 			// Initialize the colleciton
@@ -39,7 +39,7 @@ namespace UWPEnhanced.Controls
 			IconPressedCommand = new RelayParametrizedCommand(IconPressed);
 			OpenCloseMenuCommand = new RelayCommand(OpenCloseMenu);
 			RepositionMenuCommand = new RelayParametrizedCommand(RepositionMenu);
-        }
+		}
 
 		#endregion
 
@@ -60,7 +60,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private FrameworkElement _MenuRepositioningTool = null;
 
-		#endregion	
+		#endregion
 
 		#region Public Properties
 
@@ -70,7 +70,7 @@ namespace UWPEnhanced.Controls
 		/// The length the menu has when its opened
 		/// </summary>
 		public double OpenLength => IconsPanelLength + ContentLength;
-		
+
 		#endregion
 
 		#region Menu TranslateTransform		
@@ -132,7 +132,7 @@ namespace UWPEnhanced.Controls
 		public ICommand RepositionMenuCommand { get; private set; }
 
 		#endregion
-		
+
 		#region INotifyPropertyChanged
 
 		/// <summary>
@@ -156,7 +156,7 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region Dependency Properties
-		
+
 		#region EnableMenuReposition Dependency Property
 
 		/// <summary>
@@ -174,7 +174,7 @@ namespace UWPEnhanced.Controls
 		public static readonly DependencyProperty EnableMenuRepositionProperty =
 			DependencyProperty.Register(nameof(EnableMenuReposition), typeof(bool),
 			typeof(Menu), new PropertyMetadata(true));
-				
+
 		#endregion
 
 		#region Position Dependency Property
@@ -200,7 +200,7 @@ namespace UWPEnhanced.Controls
 		#region IconsPanelLength Dependency Property
 
 		/// <summary>
-		/// 
+		/// Length of the panel with Icons
 		/// </summary>
 		public double IconsPanelLength
 		{
@@ -213,7 +213,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty IconsPanelLengthProperty =
 			DependencyProperty.Register(nameof(IconsPanelLength), typeof(double),
-			typeof(Menu), new PropertyMetadata(25d, new PropertyChangedCallback((s,e) =>
+			typeof(Menu), new PropertyMetadata(25d, new PropertyChangedCallback((s, e) =>
 				(s as Menu)?.InvokePropertyChanged(nameof(IconsPanelLength), nameof(OpenLength)))));
 
 		#endregion
@@ -221,7 +221,7 @@ namespace UWPEnhanced.Controls
 		#region ContentLength Dependency Property
 
 		/// <summary>
-		/// 
+		/// Length of the content part of the menu
 		/// </summary>
 		public double ContentLength
 		{
@@ -234,8 +234,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty ContentLengthProperty =
 			DependencyProperty.Register(nameof(ContentLength), typeof(double),
-			typeof(Menu), new PropertyMetadata(100d, new PropertyChangedCallback((s,e)=>
-			(s as Menu)?.InvokePropertyChanged(nameof(ContentLength), nameof(OpenLength)))));
+			typeof(Menu), new PropertyMetadata(100d, new PropertyChangedCallback(ContentLengthChanged)));
 
 		#endregion
 
@@ -387,6 +386,20 @@ namespace UWPEnhanced.Controls
 		#region Private Static Methods
 
 		/// <summary>
+		/// Callback for when the length of the content changes. Recalculates the dependant values
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="e"></param>
+		private static void ContentLengthChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		{
+			if(s is Menu menu)
+			{
+				menu.RecalculateContentTranslate();
+				menu.InvokePropertyChanged(nameof(ContentLength), nameof(OpenLength));
+			}
+		}		
+
+		/// <summary>
 		/// Recalculates animation values which depend on the position of the menu (MenuTranslate, ContentTranslate).
 		/// </summary>
 		private static void MenuPositionChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
@@ -418,7 +431,7 @@ namespace UWPEnhanced.Controls
 			// Invoke the PropertyChangedEvent for them
 			InvokePropertyChanged(nameof(ContentTranslateTransformX), nameof(ContentTranslateTransformY));
 
-			// If the menu was closes its necessary to move the Content to the new calculated positions
+			// If the menu was closed its necessary to move the Content to the new calculated positions
 			if (!IsOpen)
 			{
 				// So invoke the PropertyChanged for the adjusting properties as well
