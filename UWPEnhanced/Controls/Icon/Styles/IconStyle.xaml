@@ -5,6 +5,7 @@
 	xmlns:converters="using:UWPEnhanced.ValueConverters"
     xmlns:xaml="using:UWPEnhanced.Xaml">
 
+	<converters:BoolToDoubleConverter x:Key="RootGridOpacityConverter" ValueWhenFalse="0.5" ValueWhenTrue="1"/>
 
 	<!-- Default style for an Icon -->
 	<Style TargetType="controls:Icon">
@@ -18,15 +19,15 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:Icon" x:Name="Template">
-									
+					
 					<!-- Main container, presents background and border brush -->
 					<Grid x:Name="RootGrid"
 						Background="{TemplateBinding Background}"
 						BorderBrush="{TemplateBinding BorderBrush}"
 						BorderThickness="{TemplateBinding BorderThickness}"						
 						Width="{TemplateBinding Width}"
-						Height="{TemplateBinding Height}">
-						
+						Height="{TemplateBinding Height}"
+						Opacity="{Binding IsEnabled, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RootGridOpacityConverter}}">
 
 						<!-- Resources -->
 						<!-- Constant values in animations are defined here -->
@@ -35,6 +36,7 @@
 							<x:Double x:Key="ScaleTo">0.9</x:Double>
 							<Duration x:Key="ScaleDuration">0:0:0.05</Duration>
 							<converters:ProductConverter x:Key="Product"/>
+							<converters:BoolToVisibilityConverter x:Key="VisibilityConverter"/>
 						</Grid.Resources>
 
 						<!-- Visual Setups defined for the Icon -->
@@ -132,7 +134,11 @@
 								/>
 
 						</Grid>
-					</Grid>
+
+						<!-- Gray-ish background that also prevents action when the Icon is disabled -->
+						<Rectangle Fill="Black" Opacity="0.1" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibilityConverter}, ConverterParameter=x}"/>
+
+					</Grid>					
 					
 				</ControlTemplate>
 			</Setter.Value>
