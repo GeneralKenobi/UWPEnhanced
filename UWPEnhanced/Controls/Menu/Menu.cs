@@ -7,6 +7,7 @@ using System.Windows.Input;
 using UWPEnhanced.Xaml;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -17,6 +18,7 @@ namespace UWPEnhanced.Controls
 	/// <summary>
 	/// Menu control that can host different content elements and present one at a time.
 	/// </summary>
+	[ContentProperty(Name = nameof(Content))]
 	public sealed class Menu : Control, INotifyPropertyChanged
 	{
 		#region Constructor

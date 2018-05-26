@@ -40,7 +40,7 @@
 		ContentLength="300"
 		EnableMenuReposition="True"
 		BorderBrush="Black" Margin="0,0,0,0" >
-			<controls:Menu.Content>
+			
 				<Rectangle Fill="Green" controls:Menu.Glyph="&#xE700;" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 				controls:Menu.Image="ms-appx:///Assets/LockScreenLogo.scale-200.png"/>
 				<Rectangle Fill="Red" controls:Menu.Glyph="&#xE700;" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -48,7 +48,7 @@
 				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>
 				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>
 
-			</controls:Menu.Content>
+
 		</controls:Menu>
 		
 
