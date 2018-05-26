@@ -31,7 +31,8 @@
 								<controls:MenuContentToIconInfoConverter x:Key="MenuContentConverter"
 									Owner="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 								<converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
-								<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>								
+								<converters:OppositeDoubleConverter x:Key="OppositeDoubleConverter"/>
+								<converters:BoolToVisibilityConverter x:Key="VisibilityConverter"/>
 
 								<!--#endregion-->
 
@@ -441,6 +442,7 @@
 						
 						 <!--The whole panel with controls--> 
 						<controls:ItemsContainer Name="IconsPresenter"
+							ItemSpacing="{TemplateBinding IconsSpacing}"
 							Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
@@ -457,8 +459,9 @@
 
 							<!-- Menu repositioning tool Icon, the name is used in code behind but is not critical
 							for the operation of the control (used to asign this icon's command parameter as the default
-							content if the repositioning tool is enabled -->
+							content if the repositioning tool is enabled) -->
 							<controls:Icon Name="MenuRepositioningTool"
+								Visibility="{Binding EnableMenuReposition, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibilityConverter}}"
 								Style="{StaticResource IconWithAnimatedBorderStyle}"
 								Glyph="&#xE759;"
 								FontSize="{TemplateBinding FontSize}"
@@ -523,7 +526,7 @@
 
 							<!-- Icons for the content put into the menu -->
 							<controls:ItemsContainer Name="ContentIconsPresenter"
-								ItemSpacing="10"
+								ItemSpacing="{TemplateBinding IconsSpacing}"
 								ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}">
 
 								<controls:ItemsContainer.ItemTemplate>

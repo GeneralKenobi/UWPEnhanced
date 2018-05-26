@@ -403,6 +403,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region IconsSpacing Dependency Property
+
+		/// <summary>
+		/// Space between icons in the icons panel
+		/// </summary>
+		public double IconsSpacing
+		{
+			get => (double)GetValue(IconsSpacingProperty);
+			set => SetValue(IconsSpacingProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="IconsSpacing"/>
+		/// </summary>
+		public static readonly DependencyProperty IconsSpacingProperty =
+			DependencyProperty.Register(nameof(IconsSpacing), typeof(double),
+			typeof(Menu), new PropertyMetadata(10d));
+
+		#endregion
+
 		#endregion
 
 		#region Private Static Methods
