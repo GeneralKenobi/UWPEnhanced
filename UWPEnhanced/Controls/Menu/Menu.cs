@@ -381,6 +381,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region RestrictedPositions Dependency Property
+
+		/// <summary>
+		/// <see cref="MenuPosition"/>s restricted for this <see cref="Menu"/>
+		/// </summary>
+		public RestrictedMenuPositions RestrictedPositions
+		{
+			get => (RestrictedMenuPositions)GetValue(RestrictedPositionsProperty);
+			set => SetValue(RestrictedPositionsProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="RestrictedPositions"/>
+		/// </summary>
+		public static readonly DependencyProperty RestrictedPositionsProperty =
+			DependencyProperty.Register(nameof(RestrictedPositions), typeof(RestrictedMenuPositions),
+			typeof(Menu), new PropertyMetadata(default(RestrictedMenuPositions)));
+
+		#endregion
+
 		#endregion
 
 		#region Private Static Methods

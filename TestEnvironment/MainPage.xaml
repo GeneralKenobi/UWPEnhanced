@@ -24,6 +24,7 @@
 		<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
 			Glyph="&#xE705;"
 			Command="{x:Bind command}"
+			IsEnabled="False"
 			FontSize="100"/>
 
 
@@ -34,6 +35,7 @@
 		IconsPanelLength="50"
 		BorderThickness="2"
 		FontSize="22"
+		RestrictedPositions="Vertical, Bottom"
 		SeparatorThickness="0"
 		ContentLength="300"
 		EnableMenuReposition="True"

@@ -469,6 +469,10 @@
 									<Grid Width="{TemplateBinding ContentLength}"
 										Height="{TemplateBinding ContentLength}">
 
+										<Grid.Resources>
+											<controls:RestrictedMenuPositionToBoolConverter x:Key="IconEnabledConverter"/>
+										</Grid.Resources>
+
 										<!-- Make a 3x3 grid for the arrows -->
 										<Grid.RowDefinitions>
 											<RowDefinition Height="*"/>
@@ -485,12 +489,14 @@
 										<!-- Position on the left -->
 										<controls:Icon Glyph="&#xE973;"
 											Grid.Row="1"
+											IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Left}"
 											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											CommandParameter="Left"/>
 
 										<!-- Position on the top -->
 										<controls:Icon Glyph="&#xE971;"
 											Grid.Column="1"
+											IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Top}"
 											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											CommandParameter="Top"/>
 
@@ -498,6 +504,7 @@
 										<controls:Icon Glyph="&#xE974;"
 											Grid.Row="1"
 											Grid.Column="2"
+											IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Right}"
 											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											CommandParameter="Right"/>
 
@@ -505,6 +512,7 @@
 										<controls:Icon Glyph="&#xE972;"
 											Grid.Row="2"
 											Grid.Column="1"
+											IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Bottom}"
 											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 											CommandParameter="Bottom"/>
 
