@@ -116,7 +116,7 @@
     <Compile Include="Controls\ItemsContainer\ItemsContainerPanel\ItemsContainerPanel.cs" />
     <Compile Include="Controls\ItemsContainer\Enums\ItemsDirection.cs" />
     <Compile Include="Controls\Menu\Converters\MenuContentToIconInfoConverter.cs" />
-    <Compile Include="Controls\Menu\Enums\Enums.cs" />
+    <Compile Include="Controls\Menu\Enums\MenuEnums.cs" />
     <Compile Include="Controls\Menu\Menu.cs" />
     <Compile Include="Controls\Menu\MenuContentIconInfo.cs" />
     <Compile Include="Controls\Menu\MenuSamplePage.xaml.cs">
