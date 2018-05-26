@@ -71,7 +71,7 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// The horizontal positions (top and bottom) are restricted
 		/// </summary>
-		Horizontal = 12,
+		Horizontal = 10,
 	}
 
 }
