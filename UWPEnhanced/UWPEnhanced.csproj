@@ -126,6 +126,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueConverters\EnumToIntConverter.cs" />
     <Compile Include="ValueConverters\OppositeDoubleConverter.cs" />
+    <Compile Include="Xaml\BaseAttachedProperty\BaseAttachedProperty.cs" />
     <Compile Include="Xaml\DependencyObjectCollectionOfT\DependencyObjectCollectionOfT.cs" />
     <Compile Include="Xaml\Setters\Interfaces\ITemporaryVisualSetter.cs" />
     <Compile Include="Xaml\Setters\BindablePropertySetters\TemporaryBindablePropertySetter.cs" />
