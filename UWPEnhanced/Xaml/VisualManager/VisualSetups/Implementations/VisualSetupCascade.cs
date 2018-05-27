@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UWPEnhanced.Helpers;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Markup;
 
 namespace UWPEnhanced.Xaml
 {
@@ -22,6 +23,7 @@ namespace UWPEnhanced.Xaml
 	///	The order of transitions is In_A -> Setters_A -> In_B -> Setters_B -> In_C -> Setters_C ... Reset_Temp_Setters_C ->
 	///	Out_C -> Reset_Temp_Setters_B -> Out_B -> Reset_Temp_Setters_A -> Out_A
 	/// </summary>
+	[ContentProperty(Name = nameof(Cascade))]
 	public class VisualSetupCascade : VisualSetup
 	{
 		#region Cascade Dependency Property
