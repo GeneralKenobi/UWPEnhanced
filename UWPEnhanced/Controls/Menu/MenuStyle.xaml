@@ -459,6 +459,8 @@
 								<!-- Expand/Collapse menu Icon -->
 								<controls:Icon Name="OpenCloseMenuIcon"
 									Style="{StaticResource IconWithAnimatedBorderStyle}"
+									Foreground="{TemplateBinding Foreground}"
+									BorderBrush="{TemplateBinding Foreground}"
 									Glyph="&#xE700;"
 									FontSize="{TemplateBinding FontSize}"
 									Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
@@ -467,6 +469,8 @@
 								for the operation of the control (used to asign this icon's command parameter as the default
 								content if the repositioning tool is enabled) -->
 								<controls:Icon Name="MenuRepositioningTool"
+									Foreground="{TemplateBinding Foreground}"
+									BorderBrush="{TemplateBinding Foreground}"
 									Visibility="{Binding EnableMenuReposition, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibilityConverter}}"
 									Style="{StaticResource IconWithAnimatedBorderStyle}"
 									Glyph="&#xE759;"
@@ -541,6 +545,8 @@
 											Style="{StaticResource IconWithAnimatedBorderStyle}"
 											ImageSource="{Binding Image}"
 											ImageStretch="Uniform"
+											Foreground="{Binding Foreground}"
+											BorderBrush="{Binding Foreground}"
 											FontSize="{Binding FontSize}"
 											Command="{Binding IconPressedCommand}"
 											CommandParameter="{Binding RepresentedElement}"/>
