@@ -20,13 +20,14 @@ namespace UWPEnhanced.Controls
 		/// Default Constructor
 		/// </summary>
 		public MenuContentIconInfo(string glyph, ImageSource image, ICommand iconPressedCommand,
-			UIElement representedElement, double fontSize)
+			UIElement representedElement, double fontSize, Brush foreground)
 		{
 			Glyph = glyph;
 			Image = image;
 			IconPressedCommand = iconPressedCommand;
 			RepresentedElement = representedElement;
 			FontSize = fontSize;
+			Foreground = foreground;
 		}
 
 		#endregion
@@ -57,6 +58,11 @@ namespace UWPEnhanced.Controls
 		/// FontSize for the icon's glyph
 		/// </summary>
 		public double FontSize { get; private set; }
+
+		/// <summary>
+		/// Foreground brush
+		/// </summary>
+		public Brush Foreground { get; private set; }
 
 		#endregion
 	}

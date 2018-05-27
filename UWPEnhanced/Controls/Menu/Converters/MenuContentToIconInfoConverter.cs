@@ -41,7 +41,7 @@ namespace UWPEnhanced.Controls
 				foreach (var item in c)
 				{
 					result.Add(new MenuContentIconInfo(Menu.GetGlyph(item), Menu.GetImage(item),
-						Owner == null ? null : Owner.IconPressedCommand, item, Owner.FontSize));
+						Owner == null ? null : Owner.IconPressedCommand, item, Owner.FontSize, Owner.Foreground));
 				}
 
 				return result;
