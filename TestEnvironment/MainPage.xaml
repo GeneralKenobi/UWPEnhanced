@@ -30,7 +30,7 @@
 			FontSize="100"/>
 
 		<controls:ItemsContainer HorizontalAlignment="Stretch" ItemSpacing="50" FlowDirection="TopToBottom" BorderBrush="Black"
-		BorderThickness="2" VerticalAlignment="Bottom">  
+		BorderThickness="2" VerticalAlignment="Stretch">  
 			<Rectangle Width="50" Height="50" Fill="Red"/>
 			<Rectangle Width="50" Height="50" Fill="Green" Visibility="Visible"/>
 			<Rectangle Width="50" Height="50" Fill="Blue"/>

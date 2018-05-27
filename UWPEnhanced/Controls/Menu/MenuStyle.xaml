@@ -312,11 +312,11 @@
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Height" Value="NaN"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Height" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Height" Value="NaN"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="2"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
@@ -337,14 +337,14 @@
 										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
 									</xaml:VisualSetupCascade.Setters>
 									<xaml:VisualSetupCascade.TemporarySetters>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Width" Value="NaN"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Width" Value="NaN"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="2"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
@@ -369,11 +369,11 @@
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Height" Value="NaN"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Height" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Height" Value="NaN"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Column), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.Column), Mode=TwoWay}" Value="2"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
@@ -397,11 +397,11 @@
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Width" Value="NaN"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="Width" Value="NaN"/>
+										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Width" Value="NaN"/>
 										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.Row), Mode=TwoWay}" Value="2"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.Row), Mode=TwoWay}" Value="2"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
+										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
@@ -440,9 +440,8 @@
 
 						</Border>
 						
-						 <!--The whole panel with controls--> 
-						<controls:ItemsContainer Name="IconsPresenter"
-							ItemSpacing="{TemplateBinding IconsSpacing}"
+						<!--The whole panel with controls-->
+						<Border Name="IconsPresenterBorder"
 							Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
@@ -450,99 +449,107 @@
 							Height="{TemplateBinding IconsPanelLength}"
 							Padding="{TemplateBinding IconsPanelPadding}">
 
-							<!-- Expand/Collapse menu Icon -->
-							<controls:Icon Name="OpenCloseMenuIcon"
-								Style="{StaticResource IconWithAnimatedBorderStyle}"
-								Glyph="&#xE700;"
-								FontSize="{TemplateBinding FontSize}"
-								Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-
-							<!-- Menu repositioning tool Icon, the name is used in code behind but is not critical
-							for the operation of the control (used to asign this icon's command parameter as the default
-							content if the repositioning tool is enabled) -->
-							<controls:Icon Name="MenuRepositioningTool"
-								Visibility="{Binding EnableMenuReposition, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibilityConverter}}"
-								Style="{StaticResource IconWithAnimatedBorderStyle}"
-								Glyph="&#xE759;"
-								FontSize="{TemplateBinding FontSize}"
-								Command="{Binding IconPressedCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-
-								<!-- The menu repositioning tool -->
-								<controls:Icon.CommandParameter>
-									<Grid Width="{TemplateBinding ContentLength}"
-										Height="{TemplateBinding ContentLength}">
-
-										<Grid.Resources>
-											<controls:RestrictedMenuPositionToBoolConverter x:Key="IconEnabledConverter"/>
-										</Grid.Resources>
-
-										<!-- Make a 3x3 grid for the arrows -->
-										<Grid.RowDefinitions>
-											<RowDefinition Height="*"/>
-											<RowDefinition Height="*"/>
-											<RowDefinition Height="*"/>
-										</Grid.RowDefinitions>
-
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="*"/>
-											<ColumnDefinition Width="*"/>
-											<ColumnDefinition Width="*"/>
-										</Grid.ColumnDefinitions>
-
-										<!-- Position on the left -->
-										<controls:Icon Glyph="&#xE973;"
-											Grid.Row="1"
-											IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Left}"
-											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-											CommandParameter="Left"/>
-
-										<!-- Position on the top -->
-										<controls:Icon Glyph="&#xE971;"
-											Grid.Column="1"
-											IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Top}"
-											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-											CommandParameter="Top"/>
-
-										<!-- Position on the right -->
-										<controls:Icon Glyph="&#xE974;"
-											Grid.Row="1"
-											Grid.Column="2"
-											IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Right}"
-											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-											CommandParameter="Right"/>
-
-										<!-- Position on the bottom -->
-										<controls:Icon Glyph="&#xE972;"
-											Grid.Row="2"
-											Grid.Column="1"
-											IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Bottom}"
-											Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-											CommandParameter="Bottom"/>
-
-									</Grid>
-								</controls:Icon.CommandParameter>
-
-							</controls:Icon>
-
-							<!-- Icons for the content put into the menu -->
-							<controls:ItemsContainer Name="ContentIconsPresenter"
+							<controls:ItemsContainer Name="IconsPresenter"
+								VerticalAlignment="Top"
+								HorizontalAlignment="Left"
 								ItemSpacing="{TemplateBinding IconsSpacing}"
-								ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}">
+								Width="Auto"
+								Height="Auto">
 
-								<controls:ItemsContainer.ItemTemplate>
-									<DataTemplate>
-										<controls:Icon Glyph="{Binding Glyph}"
-										Style="{StaticResource IconWithAnimatedBorderStyle}"
-										ImageSource="{Binding Image}"
-										ImageStretch="Uniform"
-										FontSize="{Binding FontSize}"
-										Command="{Binding IconPressedCommand}"
-										CommandParameter="{Binding RepresentedElement}"/>
-									</DataTemplate>
-								</controls:ItemsContainer.ItemTemplate>
+								<!-- Expand/Collapse menu Icon -->
+								<controls:Icon Name="OpenCloseMenuIcon"
+									Style="{StaticResource IconWithAnimatedBorderStyle}"
+									Glyph="&#xE700;"
+									FontSize="{TemplateBinding FontSize}"
+									Command="{Binding OpenCloseMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+
+								<!-- Menu repositioning tool Icon, the name is used in code behind but is not critical
+								for the operation of the control (used to asign this icon's command parameter as the default
+								content if the repositioning tool is enabled) -->
+								<controls:Icon Name="MenuRepositioningTool"
+									Visibility="{Binding EnableMenuReposition, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource VisibilityConverter}}"
+									Style="{StaticResource IconWithAnimatedBorderStyle}"
+									Glyph="&#xE759;"
+									FontSize="{TemplateBinding FontSize}"
+									Command="{Binding IconPressedCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+
+									<!-- The menu repositioning tool -->
+									<controls:Icon.CommandParameter>
+										<Grid Width="{TemplateBinding ContentLength}"
+											Height="{TemplateBinding ContentLength}">
+
+											<Grid.Resources>
+												<controls:RestrictedMenuPositionToBoolConverter x:Key="IconEnabledConverter"/>
+											</Grid.Resources>
+
+											<!-- Make a 3x3 grid for the arrows -->
+											<Grid.RowDefinitions>
+												<RowDefinition Height="*"/>
+												<RowDefinition Height="*"/>
+												<RowDefinition Height="*"/>
+											</Grid.RowDefinitions>
+
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="*"/>
+											</Grid.ColumnDefinitions>
+
+											<!-- Position on the left -->
+											<controls:Icon Glyph="&#xE973;"
+												Grid.Row="1"
+												IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Left}"
+												Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												CommandParameter="Left"/>
+
+											<!-- Position on the top -->
+											<controls:Icon Glyph="&#xE971;"
+												Grid.Column="1"
+												IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Top}"
+												Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												CommandParameter="Top"/>
+
+											<!-- Position on the right -->
+											<controls:Icon Glyph="&#xE974;"
+												Grid.Row="1"
+												Grid.Column="2"
+												IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Right}"
+												Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												CommandParameter="Right"/>
+
+											<!-- Position on the bottom -->
+											<controls:Icon Glyph="&#xE972;"
+												Grid.Row="2"
+												Grid.Column="1"
+												IsEnabled="{Binding RestrictedPositions, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconEnabledConverter}, ConverterParameter=Bottom}"
+												Command="{Binding RepositionMenuCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												CommandParameter="Bottom"/>
+
+										</Grid>
+									</controls:Icon.CommandParameter>
+
+								</controls:Icon>
+
+								<!-- Icons for the content put into the menu -->
+								<controls:ItemsContainer Name="ContentIconsPresenter"
+									ItemSpacing="{TemplateBinding IconsSpacing}"
+									ItemsSource="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource MenuContentConverter}}">
+
+									<controls:ItemsContainer.ItemTemplate>
+										<DataTemplate>
+											<controls:Icon Glyph="{Binding Glyph}"
+											Style="{StaticResource IconWithAnimatedBorderStyle}"
+											ImageSource="{Binding Image}"
+											ImageStretch="Uniform"
+											FontSize="{Binding FontSize}"
+											Command="{Binding IconPressedCommand}"
+											CommandParameter="{Binding RepresentedElement}"/>
+										</DataTemplate>
+									</controls:ItemsContainer.ItemTemplate>
+								</controls:ItemsContainer>
+
 							</controls:ItemsContainer>
-
-						</controls:ItemsContainer>
+						</Border>
 
 						<Rectangle Name="Separator"
 							Grid.Row="1"
