@@ -26,14 +26,9 @@ namespace TestEnvironment
         public MainPage()
         {
 			this.InitializeComponent();
-			a();
+
 		}
 
-		private async void a()
-		{
-			await Task.Delay(5000);
-			menu.SetSelectedContentFromIndex(1);
-		}
 
 		public ObservableCollection<string> collection = new ObservableCollection<string>();
 

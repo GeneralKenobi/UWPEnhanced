@@ -24,7 +24,7 @@ namespace UWPEnhanced.Controls
 		{
 			get
 			{
-				int visibleChildren = Children.Where((x) => x.Visibility == Visibility.Collapsed).Count();
+				int visibleChildren = Children.Where((x) => x.Visibility == Visibility.Visible).Count();
 				return visibleChildren > 1 ? (visibleChildren - 1) * ItemSpacing : 0;
 			}
 		}
@@ -248,9 +248,7 @@ namespace UWPEnhanced.Controls
 				greatestHeight = Math.Max(greatestHeight, item.DesiredSize.Height);
 			}
 
-			// Return the maximum from available size and measured size for both dimension
-			return new Size(Math.Max(availableSize.Width, cumulativeChildrenWidth + TotalItemSpacing),
-				Math.Max(availableSize.Height, greatestHeight));
+			return new Size(cumulativeChildrenWidth + TotalItemSpacing,	greatestHeight);
 		}
 
 		/// <summary>
@@ -276,9 +274,7 @@ namespace UWPEnhanced.Controls
 				cumulativeChildrenHeight += item.DesiredSize.Height;
 			}
 			
-			// Return the maximum from available size and measured size for both dimension
-			return new Size(Math.Max(greatestWidth, availableSize.Width),
-				Math.Max(availableSize.Height, cumulativeChildrenHeight + TotalItemSpacing));
+			return new Size(greatestWidth, cumulativeChildrenHeight + TotalItemSpacing);
 		}
 
 		#endregion

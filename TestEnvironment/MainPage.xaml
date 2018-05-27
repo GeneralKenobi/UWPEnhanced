@@ -21,11 +21,20 @@
 
 	<Grid Name="RootGrid" Background="Wheat">
 
+		<Rectangle Width="50" Height="50" x:Name="rect"/>
+
 		<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
 			Glyph="&#xE705;"
 			Command="{x:Bind command}"
 			IsEnabled="False"
 			FontSize="100"/>
+
+		<controls:ItemsContainer HorizontalAlignment="Stretch" ItemSpacing="50" FlowDirection="TopToBottom" BorderBrush="Black"
+		BorderThickness="2" VerticalAlignment="Bottom">  
+			<Rectangle Width="50" Height="50" Fill="Red"/>
+			<Rectangle Width="50" Height="50" Fill="Green" Visibility="Visible"/>
+			<Rectangle Width="50" Height="50" Fill="Blue"/>
+		</controls:ItemsContainer>
 
 
 
@@ -34,11 +43,11 @@
 		IconsPanelPadding="2"
 		IconsPanelLength="50"
 		BorderThickness="2"
+		IconsSpacing="50"
 		FontSize="22"
-		RestrictedPositions="Horizontal"
+		EnableMenuReposition="True"
 		SeparatorThickness="0"
 		ContentLength="300"
-		EnableMenuReposition="True"
 		BorderBrush="Black" Margin="0,0,0,0" >
 			
 				<Rectangle Fill="Green" controls:Menu.Glyph="&#xE700;" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
