@@ -20,7 +20,14 @@ namespace UWPEnhanced.Controls
 		/// The total space between the items in the panel
 		/// </summary>
 		/// <returns></returns>
-		private double TotalItemSpacing => Children.Count > 1 ? (Children.Count - 1) * ItemSpacing : 0;
+		private double TotalItemSpacing
+		{
+			get
+			{
+				int visibleChildren = Children.Where((x) => x.Visibility == Visibility.Collapsed).Count();
+				return visibleChildren > 1 ? (visibleChildren - 1) * ItemSpacing : 0;
+			}
+		}
 
 		#endregion
 
@@ -122,7 +129,7 @@ namespace UWPEnhanced.Controls
 			double maxWidth = 0;
 
 			foreach(var item in Children)
-			{				
+			{
 				maxWidth = Math.Max(item.DesiredSize.Width, Math.Max(finalSize.Width, maxWidth));
 
 				// If the finalSize width is greater than the desired width, assign it instead so that the control may
@@ -130,7 +137,8 @@ namespace UWPEnhanced.Controls
 				item.Arrange(new Rect(0, cumulativeHeight, Math.Max(item.DesiredSize.Width, finalSize.Width),
 					item.DesiredSize.Height));
 
-				cumulativeHeight += item.DesiredSize.Height + ItemSpacing;
+				// If the item is not visible then treat it as non-existant and do not put spacing around it
+				cumulativeHeight += item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
 			}
 			
 			return finalSize;
@@ -147,12 +155,14 @@ namespace UWPEnhanced.Controls
 
 			foreach (var item in Children)
 			{
-				cumulativeHeight += item.DesiredSize.Height + ItemSpacing;
+				// If the item is not visible then treat it as non-existant and do not put spacing around it
+				cumulativeHeight += item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
 			}
 
 			foreach (var item in Children)
 			{
-				cumulativeHeight -= item.DesiredSize.Height + ItemSpacing;
+				// If the item is not visible then treat it as non-existant and do not put spacing around it
+				cumulativeHeight -= item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
 
 				// If the finalSize width is greater than the desired width, assign it instead so that the control may
 				// position itself horizontally as it wishes
@@ -179,7 +189,8 @@ namespace UWPEnhanced.Controls
 				item.Arrange(new Rect(cumulativeWidth, 0, item.DesiredSize.Width,
 					Math.Max(item.DesiredSize.Height, finalSize.Height)));
 
-				cumulativeWidth += item.DesiredSize.Width + ItemSpacing;
+				// If the item is not visible then treat it as non-existant and do not put spacing around it
+				cumulativeWidth += item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
 			}
 
 			return finalSize;
@@ -196,12 +207,14 @@ namespace UWPEnhanced.Controls
 
 			foreach (var item in Children)
 			{
-				cumulativeWidth += item.DesiredSize.Width + ItemSpacing;
+				// If the item is not visible then treat it as non-existant and do not put spacing around it
+				cumulativeWidth += item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
 			}
 
 			foreach (var item in Children)
 			{
-				cumulativeWidth -= item.DesiredSize.Width + ItemSpacing;
+				// If the item is not visible then treat it as non-existant and do not put spacing around it
+				cumulativeWidth -= item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
 
 				// If the finalSize height is greater than the desired height, assign it instead so that the control may
 				// position itself vertically as it wishes
