@@ -219,7 +219,51 @@
 										Duration="{StaticResource ContentFadeDuration}"/>
 								</Storyboard>
 
-								<!--#endregion-->								
+								<!--#endregion-->
+
+								<!--#region VisualSetter collections -->
+
+								<!-- Collection of setters for any vertical alignment -->
+								<xaml:VisualSetterCollection x:Key="VerticalSetters">									
+									<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Stretch"/>
+									<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
+									<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
+									<xaml:PropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="VerticalAlignment" Value="Top"/>
+									<xaml:PropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
+								</xaml:VisualSetterCollection>
+
+								<!-- Collection of setters for any horizontal alignment -->
+								<xaml:VisualSetterCollection x:Key="HorizontalSetters">
+									<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
+									<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
+									<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
+									<xaml:PropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="VerticalAlignment" Value="Stretch"/>
+									<xaml:PropertySetter Target="{Binding ElementName=IconsPresenter, Mode=TwoWay}" Property="HorizontalAlignment" Value="Left"/>
+								</xaml:VisualSetterCollection>
+
+								<!-- Collection of temporary setters for any vertical alignment -->
+								<xaml:TemporaryVisualSetterCollection x:Key="VerticalTemporarySetters">
+									<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Height" Value="NaN"/>
+									<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Height" Value="NaN"/>
+									<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
+									<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
+									<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
+									<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
+									<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
+								</xaml:TemporaryVisualSetterCollection>
+
+								<!-- Collection of temporary setters for any horizontal alignment -->
+								<xaml:TemporaryVisualSetterCollection x:Key="HorizontalTemporarySetters">
+									<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Width" Value="NaN"/>
+									<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Width" Value="NaN"/>
+									<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
+									<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
+									<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
+									<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
+									<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
+								</xaml:TemporaryVisualSetterCollection>
+
+								<!--#endregion-->
 
 							</ResourceDictionary>
 						</Grid.Resources>
@@ -248,7 +292,7 @@
 
 								<!-- Triggers based on IsOpen property on the menu -->
 								<xaml:VisualSetupGroup.Triggers>
-									<xaml:VisualTransitionCollection>										
+									<xaml:VisualTransitionCollection>
 										<xaml:VisualTransition TransitionTo="Open">
 											<xaml:VisualDataTriggerBool Data="{Binding IsOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 												CompareTo="True"/>
@@ -300,116 +344,91 @@
 									</xaml:VisualTransitionCollection>
 								</xaml:VisualSetupGroup.Triggers>
 
-								<!-- First setup applies the setters which reposition the icons and content on the RootGrid -->
+								<!-- First setup which applies the setters characteristic only to the left position -->
 								<xaml:VisualSetupCascade ID="Left">
 									<xaml:VisualSetupCascade.Setters>
 										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Left"/>
-										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Stretch"/>
-										<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
-										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
 									</xaml:VisualSetupCascade.Setters>
-									<xaml:VisualSetupCascade.TemporarySetters>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Height" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Height" Value="NaN"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
+									<xaml:VisualSetupCascade.TemporarySetters>										
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="2"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
-
-									<!-- Second setup animates the menu into the screen -->
-									<xaml:VisualSetupCascade.Cascade>
+									
+									<!-- Second setup which applies setters characteristic to a vertical positioning -->
+									<xaml:VisualSetupCascade Setters="{StaticResource VerticalSetters}"
+										TemporarySetters="{StaticResource VerticalTemporarySetters}">
+								
+										<!-- Third setup animates the menu into and out of the screen -->
 										<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource SlideInFromLeft}"
 											TransitionOutStoryboard="{StaticResource SlideOutToLeft}"/>
-									</xaml:VisualSetupCascade.Cascade>
+										
+									</xaml:VisualSetupCascade>
 
 								</xaml:VisualSetupCascade>
 
-								<!-- First setup applies the setters which reposition the icons and content on the RootGrid -->
+								<!-- First setup which applies the setters characteristic only to the top position -->
 								<xaml:VisualSetupCascade ID="Top">
 									<xaml:VisualSetupCascade.Setters>
-										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
-										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Top"/>
-										<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
-										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Top"/>										
 									</xaml:VisualSetupCascade.Setters>
-									<xaml:VisualSetupCascade.TemporarySetters>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Width" Value="NaN"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Width" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
+									<xaml:VisualSetupCascade.TemporarySetters>										
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="2"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
+									
+									<!-- Second setup which applies setters characteristic to a horizontal positioning -->
+									<xaml:VisualSetupCascade Setters="{StaticResource HorizontalSetters}"
+										TemporarySetters="{StaticResource HorizontalTemporarySetters}">
 
-									<!-- Second setup animates the menu into the screen -->
-									<xaml:VisualSetupCascade.Cascade>
+										<!-- Third setup animates the menu into and out of the screen -->
 										<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource SlideInFromTop}"
 											TransitionOutStoryboard="{StaticResource SlideOutToTop}"/>
-									</xaml:VisualSetupCascade.Cascade>
+
+									</xaml:VisualSetupCascade>
 
 								</xaml:VisualSetupCascade>
-
-								
-								<!-- First setup applies the setters which reposition the icons and content on the RootGrid -->
+																
+								<!-- First setup which applies the setters characteristic only to the right position -->
 								<xaml:VisualSetupCascade ID="Right">
 									<xaml:VisualSetupCascade.Setters>
-										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Right"/>
-										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Stretch"/>
-										<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
-										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="TopToBottom"/>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Right"/>										
 									</xaml:VisualSetupCascade.Setters>
-									<xaml:VisualSetupCascade.TemporarySetters>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Height" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Height" Value="NaN"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Height" Value="NaN"/>
+									<xaml:VisualSetupCascade.TemporarySetters>										
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.Column), Mode=TwoWay}" Value="2"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.RowSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
-									<!-- Second setup animates the menu into the screen -->
-									<xaml:VisualSetupCascade.Cascade>
+									<!-- Second setup which applies setters characteristic to a vertical positioning -->
+									<xaml:VisualSetupCascade Setters="{StaticResource VerticalSetters}"
+										TemporarySetters="{StaticResource VerticalTemporarySetters}">
+										
+										<!-- Third setup animates the menu into and out of the screen -->
 										<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource SlideInFromRight}"
 											TransitionOutStoryboard="{StaticResource SlideOutToRight}"/>
-									</xaml:VisualSetupCascade.Cascade>
+
+									</xaml:VisualSetupCascade>
 
 								</xaml:VisualSetupCascade>
 
-								<!-- First setup applies the setters which reposition the icons and content on the RootGrid -->
+								<!-- First setup which applies the setters characteristic only to the bottom position -->
 								<xaml:VisualSetupCascade ID="Bottom">
 									<xaml:VisualSetupCascade.Setters>
-										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="HorizontalAlignment" Value="Stretch"/>
-										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Bottom"/>
-										<xaml:BindablePropertySetter Property="{Binding ElementName=IconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
-										<xaml:BindablePropertySetter Property="{Binding ElementName=ContentIconsPresenter, Path=FlowDirection, Mode=TwoWay}" Value="LeftToRight"/>
+										<xaml:PropertySetter Target="{Binding ElementName=RootGrid, Mode=TwoWay}" Property="VerticalAlignment" Value="Bottom"/>										
 									</xaml:VisualSetupCascade.Setters>
-									<xaml:VisualSetupCascade.TemporarySetters>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Separator, Mode=TwoWay}" Property="Width" Value="NaN"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.Column), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Separator, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=IconsPresenterBorder, Mode=TwoWay}" Property="Width" Value="NaN"/>
-										<xaml:TemporaryPropertySetter Target="{Binding ElementName=Content, Mode=TwoWay}" Property="Width" Value="NaN"/>
+									<xaml:VisualSetupCascade.TemporarySetters>										
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.Row), Mode=TwoWay}" Value="2"/>
 										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.Row), Mode=TwoWay}" Value="0"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=IconsPresenterBorder, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
-										<xaml:TemporaryBindablePropertySetter Property="{Binding ElementName=Content, Path=(Grid.ColumnSpan), Mode=TwoWay}" Value="3"/>
 									</xaml:VisualSetupCascade.TemporarySetters>
 
-									<!-- Second setup animates the menu into the screen -->
-									<xaml:VisualSetupCascade.Cascade>
+									<!-- Second setup which applies setters characteristic to a vertical positioning -->
+									<xaml:VisualSetupCascade Setters="{StaticResource HorizontalSetters}"
+										TemporarySetters="{StaticResource HorizontalTemporarySetters}">
+
+										<!-- Second setup animates the menu into and out of the screen -->
 										<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource SlideInFromBottom}"
 											TransitionOutStoryboard="{StaticResource SlideOutToBottom}"/>
-									</xaml:VisualSetupCascade.Cascade>
+
+									</xaml:VisualSetupCascade>
 
 								</xaml:VisualSetupCascade>
 
@@ -449,9 +468,7 @@
 							Height="{TemplateBinding IconsPanelLength}"
 							Padding="{TemplateBinding IconsPanelPadding}">
 
-							<controls:ItemsContainer Name="IconsPresenter"
-								VerticalAlignment="Top"
-								HorizontalAlignment="Left"
+							<controls:ItemsContainer Name="IconsPresenter"								
 								ItemSpacing="{TemplateBinding IconsSpacing}"
 								Width="Auto"
 								Height="Auto">

@@ -134,6 +134,8 @@
     <Compile Include="Xaml\Setters\Interfaces\ITemporaryVisualSetter.cs" />
     <Compile Include="Xaml\Setters\BindablePropertySetters\TemporaryBindablePropertySetter.cs" />
     <Compile Include="Xaml\Setters\PropertyPathSetters\TemporaryPropertySetter.cs" />
+    <Compile Include="Xaml\Setters\VisualSetterCollection\TemporaryVisualSetterCollection.cs" />
+    <Compile Include="Xaml\Setters\VisualSetterCollection\VisualSetterCollection.cs" />
     <Compile Include="Xaml\VisualAttachments\AttachableDependencyCollectionOfT\AttachableDependencyCollectionOfT.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachmentCollection\VisualAttachmentCollection.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachments.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="Xaml\Setters\PropertyPathSetters\PropertySetter.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetups\Implementations\VisualSetupCascade.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetups\Implementations\VisualSetupTemporary.cs" />
+    <Compile Include="Xaml\VisualManager\VisualSetups\Implementations\VisualSetupWithPredecessor.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetups\Interfaces\IVisualSetup.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetups\Enums\RepeatedTransitionBehavior.cs" />
     <Compile Include="Xaml\VisualManager\Implementation\VisualManager.cs" />
