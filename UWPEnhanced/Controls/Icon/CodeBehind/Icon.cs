@@ -50,7 +50,7 @@ namespace UWPEnhanced.Controls
 		public Icon()
 		{
 			this.DefaultStyleKey = typeof(Icon);
-			this.PointerPressed += (s, e) => Command?.Execute(CommandParameter);
+			this.PointerReleased += (s, e) => Command?.Execute(CommandParameter);
 
 			// Whenever size changes notify that the observed dimensions changed
 			this.SizeChanged += (s,e) => InvokePropertyChanged(nameof(ObservedWidth), nameof(ObservedHeight));
