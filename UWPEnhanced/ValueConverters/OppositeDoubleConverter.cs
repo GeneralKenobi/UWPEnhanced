@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Data;
 namespace UWPEnhanced.ValueConverters
 {
 	/// <summary>
-	/// Converts value to -value. If value is not <see cref="double"/> return 0.
+	/// Converts value to -value. If value is not <see cref="double"/> returns 0.
 	/// </summary>
 	public class OppositeDoubleConverter : IValueConverter
 	{
