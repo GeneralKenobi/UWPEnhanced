@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
-using UWPEnhanced.ValueConverters;
 
-namespace UWPEnhanced.CustomConverters
+namespace UWPEnhanced.ValueConverters
 {
 	/// <summary>
 	/// Negates both components of a complex number 
