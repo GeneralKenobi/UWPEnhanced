@@ -114,6 +114,7 @@
     <Compile Include="ValueConverters\BoolToDoubleConverter.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\DoubleToRowHeightConverter.cs" />
+    <Compile Include="ValueConverters\QuotientConverter.cs" />
     <Compile Include="ValueConverters\ProductConverter.cs" />
     <Compile Include="Controls\ItemsContainer\CodeBehind\ItemsContainer.cs" />
     <Compile Include="Controls\ItemsContainer\ItemsContainerPanel\ItemsContainerPanel.cs" />
@@ -169,12 +170,21 @@
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTriggerBool.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTriggerDouble.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTriggerInt.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualPointerTrigger\Implementations\BindableVisualPointerTrigger.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualPointerTrigger\PointerTriggerCommand\PointerTriggerCommand.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualPointerTrigger\Enums\PointerEventType.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualPointerTrigger\Implementations\VisualPointerTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\Enums\RelativeTo.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\Implementations\BindableVisualPointerTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\PointerTriggerCommand\PointerTriggerCommand.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\Enums\PointerEventType.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\Implementations\VisualPointerTrigger.cs" />
     <Compile Include="Xaml\VisualTriggers\IVisualTrigger\IVisualTrigger.cs" />
     <Compile Include="Xaml\VisualStateNavigations\VisualStateNavigation\VisualStateNavigation.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\PointerTriggerCommand\PointerTriggerCommandBase.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\PointerTriggerCommand\PointerTriggerCommandPointerPosition.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualRoutedEventTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\BindableVisualTappedTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\TappedTriggerCommand\TappedTriggerCommand.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\TappedTriggerCommand\TappedTriggerCommandBase.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\TappedTriggerCommand\TappedTriggerCommandPointerPosition.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\VisualTappedTrigger.cs" />
     <EmbeddedResource Include="Properties\UWPEnhanced.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +233,7 @@
       <HintPath>..\..\CSharpEnhanced\CSharpEnhanced\bin\Debug\netstandard2.0\CSharpEnhanced.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
