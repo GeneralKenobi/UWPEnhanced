@@ -1,26 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.System;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 
 namespace UWPEnhanced.Xaml
 {
-	public class VisualPointerTrigger : VisualAttachment, IVisualTrigger
+	/// <summary>
+	/// Provides means of notifying whenever one or more pointer routed events is raised with the marked modifiers
+	/// </summary>
+	public class VisualPointerTrigger : VisualRoutedEventTrigger
 	{
-		#region Events
-
-		/// <summary>
-		///  Event fired when the criteria for trigger are met (appropriate pointer event with matching modifiers)
-		/// </summary>
-		public EventHandler Triggered { get; set; }
-
-		#endregion
-
 		#region PointerEvent Dependency Property
 
 		/// <summary>
@@ -267,8 +256,23 @@ namespace UWPEnhanced.Xaml
 			if (ModifiersMatch(e.KeyModifiers))
 			{
 				Triggered?.Invoke(this, EventArgs.Empty);
+
+				OnTriggerEvent(sender, e);
+
+				e.Handled = SetHandled;
 			}
 		}
+
+		#endregion
+
+		#region Protected methods
+
+		/// <summary>
+		/// Method called when <see cref="IVisualTrigger.Triggered"/> fires. May be overriden to make use of the even args
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		protected virtual void OnTriggerEvent(object sender, PointerRoutedEventArgs e) { }
 
 		#endregion
 
