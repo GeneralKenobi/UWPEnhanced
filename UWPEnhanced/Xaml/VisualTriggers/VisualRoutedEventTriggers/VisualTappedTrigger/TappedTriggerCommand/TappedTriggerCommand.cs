@@ -9,18 +9,6 @@ namespace UWPEnhanced.Xaml
 	/// </summary>
 	public class TappedTriggerCommand : TappedTriggerCommandBase
 	{
-		#region Constructor
-
-		/// <summary>
-		/// Default Constructor
-		/// </summary>
-		public TappedTriggerCommand()
-		{
-			this.Triggered += ExecuteCommand;
-		}
-
-		#endregion	
-
 		#region CommandParameter Dependency Property
 
 		/// <summary>
