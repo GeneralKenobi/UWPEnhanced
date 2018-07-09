@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using UWPEnhanced.ValueConverters;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
@@ -52,6 +53,27 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
+		#region Converter Dependency Property
+
+		/// <summary>
+		/// Converter which is used to converter the position before executing the method. If no converter is specified then
+		/// no conversion occurs
+		/// </summary>
+		public IComplexConverter Converter
+		{
+			get => (IComplexConverter)GetValue(ConverterProperty);
+			set => SetValue(ConverterProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="Converter"/>
+		/// </summary>
+		public static readonly DependencyProperty ConverterProperty =
+			DependencyProperty.Register(nameof(Converter), typeof(IComplexConverter),
+			typeof(PointerTriggerCommandPointerPosition), new PropertyMetadata(default(IComplexConverter)));
+
+		#endregion
+
 		#region Protected methods
 
 		/// <summary>
@@ -94,7 +116,9 @@ namespace UWPEnhanced.Xaml
 					break;
 			}
 
-			Command?.Execute(new Complex(pointerInfo.Position.X, pointerInfo.Position.Y));
+			var param = new Complex(pointerInfo.Position.X, pointerInfo.Position.Y);
+
+			Command?.Execute(Converter == null ? param : Converter.Convert(param));
 		}
 
 		#endregion

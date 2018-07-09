@@ -110,6 +110,10 @@
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
     <Compile Include="Controls\Menu\Converters\MenuPositionToItemsDirectionConverter.cs" />
     <Compile Include="Controls\Menu\Converters\RestrictedMenuPositionToBoolConverter.cs" />
+    <Compile Include="CustomConverters\IComplexConverter\IComplexConverter.cs" />
+    <Compile Include="CustomConverters\IComplexConverter\NegateComplexConverter.cs" />
+    <Compile Include="CustomConverters\IComplexConverter\NegateImaginaryComplexConverter.cs" />
+    <Compile Include="CustomConverters\IComplexConverter\NegateRealComplexConverter.cs" />
     <Compile Include="Helpers\Animations\StoryboardHelpers.cs" />
     <Compile Include="ValueConverters\BoolToDoubleConverter.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
