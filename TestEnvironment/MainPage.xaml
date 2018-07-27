@@ -21,7 +21,7 @@
 
 	<Grid>
 	
-		<controls:ValueUnitDisplay Value="01223415" RoundToDigits="5" Unit="V"
+		<controls:ValueUnitDisplay Value="01223415" RoundToDigit="5" Unit="V"
 			UseFullPrefixName="False" PutSpaceBeforeUnit="False"/>
 
 	</Grid>

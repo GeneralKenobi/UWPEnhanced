@@ -55,22 +55,22 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region RoundToDigits Dependency Property
+		#region RoundToDigit Dependency Property
 
 		/// <summary>
-		/// Rounds the value to obtain a number of digits equal to this
+		/// Rounds the value to obtain a number of digits equal to this, negative values are changed to 0
 		/// </summary>
-		public int RoundToDigits
+		public int RoundToDigit
 		{
-			get => (int)GetValue(RoundToDigitsProperty);
-			set => SetValue(RoundToDigitsProperty, value);
+			get => (int)GetValue(RoundToDigitProperty);
+			set => SetValue(RoundToDigitProperty, value >= 0 ? value : 0);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="RoundToDigits"/>
+		/// Backing store for <see cref="RoundToDigit"/>
 		/// </summary>
-		public static readonly DependencyProperty RoundToDigitsProperty =
-			DependencyProperty.Register(nameof(RoundToDigits), typeof(int),
+		public static readonly DependencyProperty RoundToDigitProperty =
+			DependencyProperty.Register(nameof(RoundToDigit), typeof(int),
 			typeof(ValueUnitDisplay), new PropertyMetadata(default(int), new PropertyChangedCallback(NotifyDisplayTextChanged)));
 
 		#endregion
@@ -150,7 +150,7 @@ namespace UWPEnhanced.Controls
 		#region Public properties
 
 		/// <summary>
-		/// Text to display (formatted accordingly to <see cref="Value"/>, <see cref="RoundToDigits"/>, <see cref="Unit"/> and
+		/// Text to display (formatted accordingly to <see cref="Value"/>, <see cref="RoundToDigit"/>, <see cref="Unit"/> and
 		/// <see cref="UseFullPrefixName"/>
 		/// </summary>
 		public string DisplayText
@@ -161,7 +161,7 @@ namespace UWPEnhanced.Controls
 				var prefix = SIHelpers.GetClosestPrefixExcludingSmall(Value);
 
 				// Divide the value by the multiplier of the prefix
-				var roundedValue = (Value / Math.Pow(10, prefix.Base10Power)).RoundToDigit(RoundToDigits);
+				var roundedValue = (Value / Math.Pow(10, prefix.Base10Power)).RoundToDigit(RoundToDigit);
 
 				// Return a string consisting of value, optional space, the name or the symbol of the prefix and the unit
 				return roundedValue.ToString() + (PutSpaceBeforeUnit ? " " : string.Empty) +

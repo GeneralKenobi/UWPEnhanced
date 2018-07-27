@@ -8,6 +8,7 @@
 		<Setter Property="PutSpaceBeforeUnit" Value="False"/>
 		<Setter Property="Foreground" Value="Black"/>
 		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="RoundToDigit" Value="6"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:ValueUnitDisplay">
