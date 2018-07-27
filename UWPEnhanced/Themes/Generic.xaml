@@ -10,11 +10,8 @@
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Icon/Styles/IconStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ItemsContainer/Style/ItemsContainerStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Menu/MenuStyle.xaml"/>
+		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ValueUnitDisplay/ValueUnitDisplayStyle.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	
 	
-
-
-
-
 </ResourceDictionary>

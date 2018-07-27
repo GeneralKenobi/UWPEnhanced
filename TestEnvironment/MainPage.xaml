@@ -19,71 +19,10 @@
 		</ResourceDictionary>
 	</Page.Resources>
 
-	<Grid Name="RootGrid" Background="Wheat">
-
-		<Rectangle Width="50" Height="50" x:Name="rect"/>
-
-		<controls:Icon Style="{StaticResource IconWithAnimatedBorderStyle}"
-			Glyph="&#xE705;"
-			Command="{x:Bind command}"
-			IsEnabled="False"
-			FontSize="100"/>
-
-		<controls:ItemsContainer HorizontalAlignment="Stretch" ItemSpacing="50" FlowDirection="TopToBottom" BorderBrush="Black"
-		BorderThickness="2" VerticalAlignment="Stretch">  
-			<Rectangle Width="50" Height="50" Fill="Red"/>
-			<Rectangle Width="50" Height="50" Fill="Green" Visibility="Visible"/>
-			<Rectangle Width="50" Height="50" Fill="Blue"/>
-		</controls:ItemsContainer>
-
-
-
-		
-		<controls:Menu x:Name="menu" Position="Left" Background="Blue" Padding="0"
-		IconsPanelPadding="2"
-		IconsPanelLength="50"
-		BorderThickness="2"
-		Foreground="White"
-		IconsSpacing="50"
-		FontSize="22"
-		EnableMenuReposition="True"
-		SeparatorThickness="0"
-		ContentLength="300"
-		BorderBrush="Black" Margin="0,0,0,0" >
-			
-				<Rectangle Fill="Green" controls:Menu.Glyph="&#xE700;" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-				controls:Menu.Image="ms-appx:///Assets/LockScreenLogo.scale-200.png"/>
-				<Rectangle Fill="Red" controls:Menu.Glyph="&#xE700;" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-				/>
-				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>
-				<TextBlock Text="sad" controls:Menu.Glyph="&#xE705;"/>
-
-
-		</controls:Menu>
-		
-
-		<!--<StackPanel HorizontalAlignment="Right" Margin="50" BorderThickness="1" BorderBrush="Red">
-			<Button Content="Left" Click="Button_Click" x:Name="test"/>
-			<Button Content="Top" Click="Button_Click_1"/>
-			<Button Content="Right" Click="Button_Click_2"/>
-			<Button Content="Bottom" Click="Button_Click_3"/>
-			<Button Content="Open/Close" Click="Button_Click_4"/>
-			<Button Content="Test" Click="Button_Click_5"/>
-			<Button Content="Add string" Click="Button_Click_6"/>
-			<Button Content="Remove string" Click="Button_Click_7"/>-->
-
-			<!--<controls:ItemsContainer ItemsSource="{x:Bind collection, Mode=OneWay}" FlowDirection="LeftToRight"
-			ItemSpacing="0" BorderThickness="1" BorderBrush="Green">
-				<controls:ItemsContainer.ItemTemplate>
-					<DataTemplate>
-						<Border BorderThickness="1" BorderBrush="Red">
-							<TextBlock Text="{Binding }"/>
-						</Border>
-					</DataTemplate>
-				</controls:ItemsContainer.ItemTemplate>
-			</controls:ItemsContainer>-->
-
-		<!--</StackPanel>-->
+	<Grid>
+	
+		<controls:ValueUnitDisplay Value="01223415" RoundToDigits="5" Unit="V"
+			UseFullPrefixName="False" PutSpaceBeforeUnit="False"/>
 
 	</Grid>
 
