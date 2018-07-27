@@ -119,6 +119,7 @@
     <Compile Include="ValueConverters\BoolToDoubleConverter.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\DoubleToRowHeightConverter.cs" />
+    <Compile Include="ValueConverters\AbsoluteValueConverter.cs" />
     <Compile Include="ValueConverters\SumConverter.cs" />
     <Compile Include="ValueConverters\QuotientConverter.cs" />
     <Compile Include="ValueConverters\ProductConverter.cs" />
