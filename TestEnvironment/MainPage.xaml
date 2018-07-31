@@ -16,13 +16,16 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="ms-appx:///UwpEnhanced/Controls/Icon/Styles/IconWithAnimatedBorderStyle.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
+		<converters:DoubleToSIStringConverter x:Key="converter"/>
 		</ResourceDictionary>
 	</Page.Resources>
 
 	<Grid>
 	
-		<controls:ValueUnitDisplay Value="01223415" RoundToDigit="5" Unit="V"
+		<controls:ValueUnitDisplay Value="{x:Bind D, Mode=OneWay}" RoundToDigit="5" Unit="V"
 			UseFullPrefixName="False" PutSpaceBeforeUnit="False"/>
+
+		<TextBox Margin="0 100 0 0" Text="{x:Bind D, Mode=TwoWay, Converter={StaticResource converter}}"/>
 
 	</Grid>
 

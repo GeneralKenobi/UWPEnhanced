@@ -21,7 +21,7 @@ namespace TestEnvironment
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class MainPage : Page
+	public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         public MainPage()
         {
@@ -29,10 +29,28 @@ namespace TestEnvironment
 
 		}
 
+		#region Events
+
+		/// <summary>
+		/// Event fired whenever a property changes its value
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		#endregion
+
+		private double d;
 
 		public ObservableCollection<string> collection = new ObservableCollection<string>();
 
-		public double D { get; set; } = 1;
+		public double D
+		{
+			get => d;
+			set
+			{
+				d = value;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(D)));
+			}
+		} 
 
 
 		public ICommand command { get; set; } = new RelayCommand(() => Debug.WriteLine("Command Fired"));
