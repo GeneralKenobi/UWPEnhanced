@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -38,11 +39,11 @@ namespace TestEnvironment
 
 		#endregion
 
-		private double d;
+		private Complex d = new Complex(0,0);
 
 		public ObservableCollection<string> collection = new ObservableCollection<string>();
 
-		public double D
+		public Complex D
 		{
 			get => d;
 			set

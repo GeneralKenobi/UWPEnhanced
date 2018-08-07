@@ -21,11 +21,11 @@
 	</Page.Resources>
 
 	<Grid>
-	
-		<controls:ValueUnitDisplay Value="{x:Bind D, Mode=OneWay}" RoundToDigit="5" Unit="V"
-			UseFullPrefixName="False" PutSpaceBeforeUnit="False"/>
 
-		<TextBox Margin="0 100 0 0" Text="{x:Bind D, Mode=TwoWay, Converter={StaticResource converter}}"/>
+		<controls:ComplexValueUnitDisplay Value="{x:Bind D}" Unit="V" PutSpaceBeforeUnit="True"/>
+		<!--UseFullPrefixName="False" PutSpaceBeforeUnit="False"/>-->
+
+		<!--<TextBox Margin="0 100 0 0" Text="{x:Bind D, Mode=TwoWay, Converter={StaticResource converter}}"/>-->
 
 	</Grid>
 

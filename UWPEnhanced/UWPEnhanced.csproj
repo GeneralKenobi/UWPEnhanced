@@ -107,6 +107,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
     <Compile Include="Controls\Menu\Converters\MenuPositionToItemsDirectionConverter.cs" />
     <Compile Include="Controls\Menu\Converters\RestrictedMenuPositionToBoolConverter.cs" />
@@ -202,6 +203,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplayStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Icon\Styles\IconStyleWithHighlight.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
