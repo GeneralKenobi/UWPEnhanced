@@ -1,0 +1,26 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:local="using:UWPEnhanced.Controls">
+
+
+	<Style TargetType="local:ComplexValueUnitDisplay">
+		<Setter Property="UseFullPrefixName" Value="False"/>
+		<Setter Property="PutSpaceBeforeUnit" Value="False"/>
+		<Setter Property="Foreground" Value="Black"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="RoundToDigit" Value="6"/>
+		<Setter Property="UseJAsImaginaryUnit" Value="True"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="local:ComplexValueUnitDisplay">
+					<TextBlock Text="{Binding DisplayText, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+						Foreground="{TemplateBinding Foreground}"
+						FontSize="{TemplateBinding FontSize}"
+						FontFamily="{TemplateBinding FontFamily}"/>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+
+</ResourceDictionary>
