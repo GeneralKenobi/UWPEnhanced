@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
-using CSharpEnhanced.Helpers;
 
 namespace UWPEnhanced.Xaml
 {
@@ -33,21 +28,53 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
-		#region Protected Members
+		#region Protected properties
 
 		/// <summary>
 		/// Collection which serves as a control copy
 		/// </summary>
-		protected readonly List<T> _ControlArchive = new List<T>();
+		protected List<T> _ControlArchive { get; } = new List<T>();
 
 		/// <summary>
 		/// Determines if this collection allows duplicates
 		/// </summary>
-		protected readonly bool _AllowDuplicates = false;
+		protected bool _AllowDuplicates { get; } = false;
 
 		#endregion
 
 		#region Private Methods
+
+		/// <summary>
+		/// Checks the integrity of this collection (if the underlying collection is equal to <see cref="_ControlArchive"/>)
+		/// Dedicated for debug
+		/// </summary>
+		[Conditional("DEBUG")]
+		private void CheckIntegrity()
+		{
+			// Check the count
+			if (this.Count == _ControlArchive.Count)
+			{
+				// For each element
+				for (int i = 0; i < this.Count; ++i)
+				{
+					// If one pair isn't equal signal it by breaking if a debugger is attached
+					if (this[i] != _ControlArchive[i] && Debugger.IsAttached)
+					{
+						// Collection integrity compromised - pair of items wasn't equal
+						Debugger.Break();
+					}
+				}
+			}
+			else if (Debugger.IsAttached)
+			{
+				// Collection integrity compromised - _ControlArchive has a different number of items than underlying collection
+				Debugger.Break();
+			}
+		}
+
+		#endregion
+
+		#region Protected Methods
 
 		/// <summary>
 		/// Handles changes in the main collection. Can be overridden in order to provide custom handling
@@ -144,35 +171,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="item"></param>
 		protected virtual void CleanupRoutine(T item) { }
-
-		/// <summary>
-		/// Checks the integrity of this collection (if the underlying collection is equal to <see cref="_ControlArchive"/>)
-		/// Dedicated for debug
-		/// </summary>
-		[Conditional("DEBUG")]
-		private void CheckIntegrity()
-		{
-			// Check the count
-			if (this.Count == _ControlArchive.Count)
-			{
-				// For each element
-				for (int i = 0; i < this.Count; ++i)
-				{
-					// If one pair isn't equal signal it by breaking if a debugger is attached
-					if (this[i] != _ControlArchive[i] && Debugger.IsAttached)
-					{
-						// Collection integrity compromised - pair of items wasn't equal
-						Debugger.Break();
-					}
-				}
-			}
-			else if (Debugger.IsAttached)
-			{
-				// Collection integrity compromised - _ControlArchive has a different number of items than underlying collection
-				Debugger.Break();
-			}
-		}
-
+		
 		#endregion
 
 		#region Public Methods
