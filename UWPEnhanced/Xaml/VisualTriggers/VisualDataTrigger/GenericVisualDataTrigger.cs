@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
 
 namespace UWPEnhanced.Xaml
 {
@@ -17,14 +12,14 @@ namespace UWPEnhanced.Xaml
 	/// the generic one with specific type is fine.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class GenericVisualDataTrigger<T> : VisualAttachment, IVisualTrigger
+	public class GenericVisualDataTrigger<T> : VisualAttachment, IVisualTrigger<VisualDataTriggerEventArgs<T>>
 	{
 		#region Triggered Event Handler
 
 		/// <summary>
-		/// Event fired when this triggered is triggered
+		/// Event fired when this triggered is triggered. Argument contains the value that caused the trigger
 		/// </summary>
-		public EventHandler Triggered { get; set; }
+		public EventHandler<VisualDataTriggerEventArgs<T>> Triggered { get; set; }
 
 		#endregion
 
@@ -124,7 +119,7 @@ namespace UWPEnhanced.Xaml
 				if(!IgnoreNull && ((ComparisonType == ComparisonType.Equal && CompareTo==null) ||
 					(ComparisonType == ComparisonType.NotEqual && CompareTo != null)))
 				{
-					Triggered?.Invoke(this, EventArgs.Empty);
+					Triggered?.Invoke(this, new VisualDataTriggerEventArgs<T>(Data));
 				}
 
 				return true;
@@ -157,7 +152,7 @@ namespace UWPEnhanced.Xaml
 						{
 							if(trigger.Data.Equals(trigger.CompareTo))
 							{
-								trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
+								trigger.Triggered?.Invoke(trigger, new VisualDataTriggerEventArgs<T>(trigger.Data));
 							}
 						}
 						break;
@@ -167,7 +162,7 @@ namespace UWPEnhanced.Xaml
 						{
 							if (!trigger.Data.Equals(trigger.CompareTo))
 							{
-								trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
+								trigger.Triggered?.Invoke(trigger, new VisualDataTriggerEventArgs<T>(trigger.Data));
 							}
 						}
 						break;
@@ -186,7 +181,7 @@ namespace UWPEnhanced.Xaml
 										{
 											if (comparableData.CompareTo(comparableTo) > 0)
 											{
-												trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
+												trigger.Triggered?.Invoke(trigger, new VisualDataTriggerEventArgs<T>(trigger.Data));
 											}
 										}
 										break;
@@ -195,7 +190,7 @@ namespace UWPEnhanced.Xaml
 										{
 											if (comparableData.CompareTo(comparableTo) >= 0)
 											{
-												trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
+												trigger.Triggered?.Invoke(trigger, new VisualDataTriggerEventArgs<T>(trigger.Data));
 											}
 										}
 										break;
@@ -204,7 +199,7 @@ namespace UWPEnhanced.Xaml
 										{
 											if (comparableData.CompareTo(comparableTo) < 0)
 											{
-												trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
+												trigger.Triggered?.Invoke(trigger, new VisualDataTriggerEventArgs<T>(trigger.Data));
 											}
 										}
 										break;
@@ -213,7 +208,7 @@ namespace UWPEnhanced.Xaml
 										{
 											if (comparableData.CompareTo(comparableTo) <= 0)
 											{
-												trigger.Triggered?.Invoke(trigger, EventArgs.Empty);
+												trigger.Triggered?.Invoke(trigger, new VisualDataTriggerEventArgs<T>(trigger.Data));
 											}
 										}
 										break;

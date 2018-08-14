@@ -7,10 +7,10 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Provides means of notifying whenever tapped routed events is raised
 	/// </summary>
-	public class VisualTappedTrigger : VisualRoutedEventTrigger
-	{		
+	public class VisualTappedTrigger : VisualRoutedEventTrigger<TappedRoutedEventArgs>
+	{
 		#region Private Methods
-
+		
 		/// <summary>
 		/// Subscribes to the <paramref name="type"/> event on attached <see cref="UIElement"/>
 		/// </summary>
@@ -51,7 +51,7 @@ namespace UWPEnhanced.Xaml
 		/// <param name="e"></param>
 		private void TriggerEvent(object sender, TappedRoutedEventArgs e)
 		{
-			Triggered?.Invoke(this, EventArgs.Empty);
+			Triggered?.Invoke(this, e);
 
 			OnTriggerEvent(sender, e);
 

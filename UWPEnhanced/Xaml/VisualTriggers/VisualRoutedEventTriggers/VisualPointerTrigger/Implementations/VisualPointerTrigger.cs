@@ -8,7 +8,7 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Provides means of notifying whenever one or more pointer routed events is raised with the marked modifiers
 	/// </summary>
-	public class VisualPointerTrigger : VisualRoutedEventTrigger
+	public class VisualPointerTrigger : VisualRoutedEventTrigger<PointerRoutedEventArgs>
 	{
 		#region PointerEvent Dependency Property
 
@@ -255,7 +255,7 @@ namespace UWPEnhanced.Xaml
 		{
 			if (ModifiersMatch(e.KeyModifiers))
 			{
-				Triggered?.Invoke(this, EventArgs.Empty);
+				Triggered?.Invoke(this, e);
 
 				OnTriggerEvent(sender, e);
 
