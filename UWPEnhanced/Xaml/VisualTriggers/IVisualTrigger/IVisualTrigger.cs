@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UWPEnhanced.Xaml
 {
 	/// <summary>
-	/// Interface for triggers used in xaml
+	/// General interface not meant for any specific EventArgs type
 	/// </summary>
-	public interface IVisualTrigger : IAttachable
-	{
-		/// <summary>
-		/// Event fired when the trigger is triggered
-		/// </summary>
-		EventHandler Triggered { get; set; }
-	}
+	public interface IVisualTrigger : IVisualTrigger<EventArgs> { }
 }
