@@ -12,14 +12,14 @@ namespace UWPEnhanced.Xaml
 	/// the generic one with specific type is fine.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class GenericVisualDataTrigger<T> : VisualAttachment, IVisualTrigger<VisualDataTriggerEventArgs<T>>
+	public class GenericVisualDataTrigger<T> : VisualAttachment, IVisualTrigger
 	{
 		#region Triggered Event Handler
 
 		/// <summary>
 		/// Event fired when this triggered is triggered. Argument contains the value that caused the trigger
 		/// </summary>
-		public EventHandler<VisualDataTriggerEventArgs<T>> Triggered { get; set; }
+		public EventHandler<object> Triggered { get; set; }
 
 		#endregion
 
