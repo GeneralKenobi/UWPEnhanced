@@ -222,13 +222,13 @@
 
 										<!-- Transitions into PointerOver-->
 										<xaml:VisualTransition TransitionTo="PointerOver">
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerEntered"
+											<xaml:VisualPointerTrigger PointerEvent="PointerEntered"
 												Target="{Binding ElementName=RootGrid}"/>
 										</xaml:VisualTransition>
 
 										<!-- Transition out (to null state) -->
 										<xaml:VisualTransition>
-											<xaml:BindableVisualPointerTrigger Target="{Binding ElementName=RootGrid}"
+											<xaml:VisualPointerTrigger Target="{Binding ElementName=RootGrid}"
 												PointerEvent="PointerExited, PointerCanceled, PointerCaptureLost"/>											
 										</xaml:VisualTransition>
 
@@ -251,13 +251,13 @@
 
 										<!-- Transition into PointerPressed -->
 										<xaml:VisualTransition TransitionTo="PointerPressed">
-											<xaml:BindableVisualPointerTrigger PointerEvent="PointerPressed"
+											<xaml:VisualPointerTrigger PointerEvent="PointerPressed"
 												Target="{Binding ElementName=RootGrid}"/>
 										</xaml:VisualTransition>
 
 										<!-- Transition out of state (to null state) -->
 										<xaml:VisualTransition>
-											<xaml:BindableVisualPointerTrigger Target="{Binding ElementName=RootGrid}"
+											<xaml:VisualPointerTrigger Target="{Binding ElementName=RootGrid}"
 												PointerEvent="PointerReleased, PointerExited, PointerCanceled, PointerCaptureLost"/>
 										</xaml:VisualTransition>
 
