@@ -42,7 +42,7 @@ namespace UWPEnhanced.Xaml
 				{
 					// If the old value could be casted to enum, unsubscribe from the old event
 					var tOld = (PointerEventType)e.OldValue;
-					trigger.Unsubcribe(tOld);
+					trigger.Unsubscribe(tOld);
 				}
 				catch (Exception) { }
 
@@ -50,7 +50,7 @@ namespace UWPEnhanced.Xaml
 				{
 					// If the new value could be casted to enum, unsubscribe from the old event
 					var tNew = (PointerEventType)e.NewValue;
-					trigger.Subcribe(tNew);
+					trigger.Subscribe(tNew);
 				}
 				catch(Exception) { }
 			}
@@ -109,52 +109,61 @@ namespace UWPEnhanced.Xaml
 		/// Subscribes to the <paramref name="type"/> event on attached <see cref="UIElement"/>
 		/// </summary>
 		/// <param name="type"></param>
-		private void Subcribe(PointerEventType type)
+		private void Subscribe(PointerEventType type)
 		{
-			// Get the attached
-			var element = AttachedTo as UIElement;
-			
-			// If it's not null (i.e. this event trigger is attached to something)
-			if (element != null)
+			// Get the attached, if it's not null (i.e. this event trigger is attached to something)
+			if (AttachedTo is UIElement element)
 			{
-				if(type.HasFlag(PointerEventType.PointerCanceled))
+				// Subscribe to an appropriate event
+				switch (type)
 				{
-					element.PointerCanceled += TriggerEvent;
-				}
+					case PointerEventType.PointerCanceled:
+						{
+							element.PointerCanceled += TriggerEvent;
+						}
+						break;
 
-				if(type.HasFlag(PointerEventType.PointerCaptureLost))
-				{
-					element.PointerCaptureLost += TriggerEvent;
-				}
+					case PointerEventType.PointerCaptureLost:
+						{
+							element.PointerCaptureLost += TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerEntered))
-				{
-					element.PointerEntered += TriggerEvent;
-				}
+					case PointerEventType.PointerEntered:
+						{
+							element.PointerEntered += TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerExited))
-				{
-					element.PointerExited += TriggerEvent;
-				}
+					case PointerEventType.PointerExited:
+						{
+							element.PointerExited += TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerMoved))
-				{
-					element.PointerMoved += TriggerEvent;
-				}
+					case PointerEventType.PointerMoved:
+						{
+							element.PointerMoved += TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerPressed))
-				{
-					element.PointerPressed += TriggerEvent;
-				}
+					case PointerEventType.PointerPressed:
+						{
+							element.PointerPressed += TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerReleased))
-				{
-					element.PointerReleased += TriggerEvent;
-				}
+					case PointerEventType.PointerReleased:
+						{
+							element.PointerReleased += TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerWheelChanged))
-				{
-					element.PointerWheelChanged += TriggerEvent;
+					case PointerEventType.PointerWheelChanged:
+						{
+							element.PointerWheelChanged += TriggerEvent;
+						}
+						break;
 				}
 			}
 		}
@@ -163,80 +172,88 @@ namespace UWPEnhanced.Xaml
 		/// Unsubscribes from the <paramref name="type"/> event on attached <see cref="UIElement"/>
 		/// </summary>
 		/// <param name="type"></param>
-		private void Unsubcribe(PointerEventType type)
+		private void Unsubscribe(PointerEventType type)
 		{
-			// Get the attached
-			var element = AttachedTo as UIElement;
-
-			// If it's not null (i.e. this event trigger is attached to something)
-			if (element != null)
+			// Get the attached, if it's not null (i.e. this event trigger is attached to something)
+			if (AttachedTo is UIElement element)
 			{
-				if (type.HasFlag(PointerEventType.PointerCanceled))
+				// Unsubscribe from an appropriate event
+				switch (type)
 				{
-					element.PointerCanceled -= TriggerEvent;
-				}
+					case PointerEventType.PointerCanceled:
+						{
+							element.PointerCanceled -= TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerCaptureLost))
-				{
-					element.PointerCaptureLost -= TriggerEvent;
-				}
+					case PointerEventType.PointerCaptureLost:
+						{
+							element.PointerCaptureLost -= TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerEntered))
-				{
-					element.PointerExited -= TriggerEvent;
-				}
+					case PointerEventType.PointerEntered:
+						{
+							element.PointerEntered -= TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerExited))
-				{
-					element.PointerExited -= TriggerEvent;
-				}
+					case PointerEventType.PointerExited:
+						{
+							element.PointerExited -= TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerMoved))
-				{
-					element.PointerMoved -= TriggerEvent;
-				}
+					case PointerEventType.PointerMoved:
+						{
+							element.PointerMoved -= TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerPressed))
-				{
-					element.PointerPressed -= TriggerEvent;
-				}
+					case PointerEventType.PointerPressed:
+						{
+							element.PointerPressed -= TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerReleased))
-				{
-					element.PointerReleased -= TriggerEvent;
-				}
+					case PointerEventType.PointerReleased:
+						{
+							element.PointerReleased -= TriggerEvent;
+						}
+						break;
 
-				if (type.HasFlag(PointerEventType.PointerWheelChanged))
-				{
-					element.PointerWheelChanged -= TriggerEvent;
+					case PointerEventType.PointerWheelChanged:
+						{
+							element.PointerWheelChanged -= TriggerEvent;
+						}
+						break;
 				}
 			}
 		}
 
 		/// <summary>
 		/// Returns true if the modifiers specified by <see cref="Modifiers"/> are found with appropriate test determined by
-		/// <see cref="StrictModifierCheck"/> in the <paramref name="keyModifiers"/>
+		/// <see cref="StrictModifierCheck"/> in the <see cref="Modifiers"/>
 		/// </summary>
-		/// <param name="keyModifiers">Modifiers to check in (the handled event modifiers)</param>
 		/// <returns></returns>
-		private bool ModifiersMatch(VirtualKeyModifiers keyModifiers)
+		private bool ModifiersMatch()
 		{
 			// uint.Max means modifiers are not taken into account
-			if((uint)Modifiers==uint.MaxValue)
+			if((uint)Modifiers == uint.MaxValue)
 			{
 				return true;
 			}
 
 			if (StrictModifierCheck)
 			{
-				if (Modifiers != keyModifiers)
+				if (this.Modifiers != Modifiers)
 				{
 					return false;
 				}
 			}
 			else
 			{
-				if (!keyModifiers.HasFlag(Modifiers))
+				if (!Modifiers.HasFlag(this.Modifiers))
 				{
 					return false;
 				}
@@ -245,81 +262,32 @@ namespace UWPEnhanced.Xaml
 			return true;
 		}
 
-		/// <summary>
-		/// Method to subscribe with to Pointer Events on the attatched UIElement. It will check if modifiers match and, if so,
-		/// raise the <see cref="Triggered"/> event
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void TriggerEvent(object sender, PointerRoutedEventArgs e)
-		{
-			if (ModifiersMatch(e.KeyModifiers))
-			{
-				Triggered?.Invoke(this, e);
-
-				OnTriggerEvent(sender, e);
-
-				e.Handled = SetHandled;
-			}
-		}
-
 		#endregion
 
 		#region Protected methods
 
 		/// <summary>
-		/// Method called when <see cref="IVisualTrigger.Triggered"/> fires. May be overriden to make use of the even args
+		/// Assigns SetHandled value to <see cref="PointerRoutedEventArgs.Handled"/> property
 		/// </summary>
-		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected virtual void OnTriggerEvent(object sender, PointerRoutedEventArgs e) { }
-
-		#endregion
-
-		#region Public Methods
+		protected override void AssignHandled(PointerRoutedEventArgs e) => e.Handled = SetHandled;
 
 		/// <summary>
-		/// On top of the standard functionality, it unsubscribes from the old <see cref="UIElement"/> and subscribes to
-		/// the new one
+		/// Subscribes to the <see cref="PointerEvent"/> event on attached <see cref="UIElement"/>
 		/// </summary>
-		/// <param name="obj"></param>
-		public override void Attach(DependencyObject obj)
-		{
-			if (AttachedTo != null)
-			{
-				Unsubcribe(PointerEvent);
-			}
-
-			// Only UIElements and above have pointer events
-			if (obj is UIElement)
-			{
-				base.Attach(obj);
-
-				if (AttachedTo != null)
-				{
-					Subcribe(PointerEvent);
-				}
-			}
-			else
-			{
-				throw new ArgumentException("Pointer Events are introduced in " + nameof(UIElement) + "; " +
-					nameof(obj) + " has to derive from " + nameof(UIElement));
-			}
-		}
+		protected override void Subscribe() => Subscribe(PointerEvent);
 
 		/// <summary>
-		/// On top of the standard functionality also unsubscribes from the detatched object
+		/// Unsubscribes from the <see cref="PointerEvent"/> event on attached <see cref="UIElement"/>
 		/// </summary>
-		public override void Detach()
-		{
-			if (AttachedTo != null)
-			{
-				Unsubcribe(PointerEvent);
-			}
+		protected override void Unsubcribe() => Unsubscribe(PointerEvent);
 
-			base.Detach();
-		}
+		/// <summary>
+		/// Checks whether modifiers match to determine whether event may fire
+		/// </summary>
+		/// <returns></returns>
+		protected override bool TriggerConditionsMet() => ModifiersMatch();
 
 		#endregion
-	}	
+	}
 }
