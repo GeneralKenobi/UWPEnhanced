@@ -3,7 +3,17 @@
 namespace UWPEnhanced.Xaml
 {
 	/// <summary>
-	/// General interface not meant for any specific EventArgs type
+	/// General interface with <see cref="object"/> event args
 	/// </summary>
-	public interface IVisualTrigger : IVisualTrigger<EventArgs> { }
+	public interface IVisualTrigger : IAttachable
+	{
+		#region Events
+
+		/// <summary>
+		/// Notifies when the trigger is fired
+		/// </summary>
+		EventHandler<object> Triggered { get; set; }
+
+		#endregion
+	}
 }
