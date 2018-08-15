@@ -95,7 +95,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		private void TriggerFired(object sender, EventArgs args) =>
+		private void TriggerFired(object sender, object args) =>
 			TransitionTriggered?.Invoke(this, new VisualTransitionTriggeredEventArgs(
 				sender as IVisualTrigger, TransitionTo, UseTransitions));
 

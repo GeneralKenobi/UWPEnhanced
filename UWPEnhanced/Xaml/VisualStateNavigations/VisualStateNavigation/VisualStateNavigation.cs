@@ -113,7 +113,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void NavigationTriggered(object sender, EventArgs e)
+		private void NavigationTriggered(object sender, object e)
 		{
 			if (_VisualStateHolder != null ||
 				// Often the parent cannot be found when during Attach so in case AttachedTo is not null try to find it again
