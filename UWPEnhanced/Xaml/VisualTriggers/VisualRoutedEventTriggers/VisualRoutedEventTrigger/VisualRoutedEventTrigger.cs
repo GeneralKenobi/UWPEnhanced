@@ -53,7 +53,7 @@ namespace UWPEnhanced.Xaml
 			new PropertyMetadata(default(UIElement), new PropertyChangedCallback(TargetChangedCallback)));
 
 		#endregion
-
+		
 		#region Protected methods
 
 		/// <summary>
@@ -64,7 +64,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Unsubscribes from the specific RoutedEvent
 		/// </summary>
-		protected abstract void Unsubcribe();
+		protected abstract void Unsubscribe();
 
 		/// <summary>
 		/// Sets the Handled property on a specific <see cref="RoutedEventArgs"/>
@@ -76,16 +76,18 @@ namespace UWPEnhanced.Xaml
 		/// Check method, event won't be fired if it returns false. By default returns true. May be overriden to provide specific checks
 		/// </summary>
 		/// <returns></returns>
-		protected virtual bool TriggerConditionsMet() => true;
+		/// <param name="e">Argument of the event</param>
+		protected virtual bool TriggerConditionsMet(T e) => true;
 
 		/// <summary>
-		/// Method calling <see cref="AssignHandled(T)"/> and then firing the Triggered event
+		/// Method checking whether the trigger is eligible for firing(<see cref="TriggerConditionsMet(T)"/>) and calling
+		/// <see cref="AssignHandled(T)"/> and then firing the Triggered event. It is the default candidate to use when subscribing to event
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected void TriggerEvent(object sender, T e)
+		protected virtual void TriggerEvent(object sender, T e)
 		{
-			if (TriggerConditionsMet())
+			if (TriggerConditionsMet(e))
 			{
 				// Let the derived classes set the Handled property on their specific RoutedEventArgs
 				AssignHandled(e);
@@ -106,9 +108,9 @@ namespace UWPEnhanced.Xaml
 		/// <param name="obj"></param>
 		public override void Attach(DependencyObject obj)
 		{
-			if (AttachedTo != null)
+			if (IsAttached)
 			{
-				Unsubcribe();
+				Detach();
 			}
 
 			// Only UIElements and above have routed events
@@ -135,7 +137,7 @@ namespace UWPEnhanced.Xaml
 		{
 			if (AttachedTo != null)
 			{
-				Unsubcribe();
+				Unsubscribe();
 			}
 
 			base.Detach();
