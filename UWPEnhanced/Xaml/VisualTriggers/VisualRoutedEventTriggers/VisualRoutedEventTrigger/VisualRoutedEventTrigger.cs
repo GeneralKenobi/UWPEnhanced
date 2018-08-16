@@ -36,7 +36,10 @@ namespace UWPEnhanced.Xaml
 
 		/// <summary>
 		/// Target to listen to (attach to) instead of the default one determined by means of <see cref="VisualAttachment"/>'s
-		/// inherited methods. To use the default one this property should be left unset
+		/// inherited methods. To use the default one this property should be left unset. If set it will cancel any calls to
+		/// <see cref="Attach(DependencyObject)"/> unless the argument is <see cref="Target"/>. When reset it won't retrieve the previously
+		/// AttachedTo element, it has to be manually reattached (although manually reconfiguring the <see cref="Target"/> is not,
+		/// <see cref="VisualTrigger"/>s should be fully configured (usually somewhere in a xaml file) upon creation.
 		/// </summary>
 		public UIElement Target
 		{
@@ -108,6 +111,12 @@ namespace UWPEnhanced.Xaml
 		/// <param name="obj"></param>
 		public override void Attach(DependencyObject obj)
 		{
+			// If anyone tries to reattach the object but it's bound to something by Target property then don't do anything
+			if(Target != null && obj != Target)
+			{
+				return;
+			}
+
 			if (IsAttached)
 			{
 				Detach();

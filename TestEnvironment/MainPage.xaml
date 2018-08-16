@@ -37,6 +37,13 @@
 				Width="200"
 				Height="200">
 
+				<xaml:VisualAttachments.AttachedVisuals>
+					<xaml:ParametrizedVisualCommand Command="{x:Bind command}">
+						<xaml:VisualPointerTrigger PointerEvent="PointerExited,PointerCanceled,PointerCaptureLost"
+							/>
+					</xaml:ParametrizedVisualCommand>
+				</xaml:VisualAttachments.AttachedVisuals>
+
 				<Button.KeyboardAccelerators>
 					<KeyboardAccelerator Key="P" Modifiers="Shift"/>
 					<KeyboardAccelerator Key="K"/>
@@ -47,7 +54,7 @@
 			<!--<controls:ComplexValueUnitDisplay Value="{x:Bind D}" Unit="V" PutSpaceBeforeUnit="True"/>-->
 
 
-			<Border Width="200" Height="200" HorizontalAlignment="Right" Background="Red">
+			<Border Width="200" Height="200" HorizontalAlignment="Right" Background="Red" Name="border">
 				<xaml:VisualAttachments.AttachedVisuals>
 
 					<xaml:ParametrizedVisualCommand Command="{x:Bind command}">
