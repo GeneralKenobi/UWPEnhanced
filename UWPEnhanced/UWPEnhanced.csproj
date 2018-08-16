@@ -157,6 +157,11 @@
     <Compile Include="Xaml\Setters\BindablePropertySetters\BindablePropertySetter.cs" />
     <Compile Include="Xaml\Setters\Interfaces\IVisualSetter.cs" />
     <Compile Include="Xaml\Setters\PropertyPathSetters\PropertySetter.cs" />
+    <Compile Include="Xaml\VisualCommands\BaseVisualCommand\EventArgsTypedBaseVisualCommand.cs" />
+    <Compile Include="Xaml\VisualCommands\ParametrizedVisualCommand\ParametrizedVisualCommand.cs" />
+    <Compile Include="Xaml\VisualCommands\BaseVisualCommand\BaseVisualCommand.cs" />
+    <Compile Include="Xaml\VisualCommands\PointerPositionRelatedVisualCommands\BasePointerPositionVisualCommand\BasePointerPositionVisualCommand.cs" />
+    <Compile Include="Xaml\VisualCommands\PointerPositionRelatedVisualCommands\KeyVisualCommand\KeyVisualCommand.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetups\Implementations\VisualSetupCascade.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetups\Implementations\VisualSetupTemporary.cs" />
     <Compile Include="Xaml\VisualManager\VisualSetups\Implementations\VisualSetupWithPredecessor.cs" />
@@ -174,32 +179,33 @@
     <Compile Include="Xaml\VisualManager\VisualTransition\EventArgs\VisualTransitionTriggeredEventArgs.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\ComparisonType.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\DataTriggerCommand\DataTriggerCommand.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\VisualDataTriggerEventArgs.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\GenericVisualDataTrigger.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTrigger.cs" />
     <Compile Include="Controls\Menu\VisualDataTriggers\VisualDataTriggerMenuPosition.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTriggerBool.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTriggerDouble.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTriggerInt.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\Enums\RelativeTo.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\Implementations\BindableVisualPointerTrigger.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\PointerTriggerCommand\PointerTriggerCommand.cs" />
+    <Compile Include="Xaml\VisualCommands\PointerPositionRelatedVisualCommands\Enums\RelativeTo.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTrigger\Enums\KeyEventType.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTrigger\KeyDownTriggerCommand\IVirtualKeyConverter.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTrigger\VisualKeyTrigger.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\Enums\PointerEventType.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\Implementations\VisualPointerTrigger.cs" />
     <Compile Include="Xaml\VisualTriggers\IVisualTrigger\IVisualTrigger.cs" />
     <Compile Include="Xaml\VisualStateNavigations\VisualStateNavigation\VisualStateNavigation.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\PointerTriggerCommand\PointerTriggerCommandBase.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\PointerTriggerCommand\PointerTriggerCommandPointerPosition.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualRoutedEventTrigger.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\BindableVisualTappedTrigger.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\TappedTriggerCommand\TappedTriggerCommand.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\TappedTriggerCommand\TappedTriggerCommandBase.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\TappedTriggerCommand\TappedTriggerCommandPointerPosition.cs" />
+    <Compile Include="Xaml\VisualCommands\PointerPositionRelatedVisualCommands\PointerPositionVisualCommand\PointerPositionVisualCommand.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualRoutedEventTriggerWithModifiers\ModifiersHelpers.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualRoutedEventTriggerWithModifiers\VisualRoutedEventTriggerWithModifiers.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualRoutedEventTrigger\VisualRoutedEventTrigger.cs" />
+    <Compile Include="Xaml\VisualCommands\PointerPositionRelatedVisualCommands\TappedPointerPositionVisualCommand\TappedPointerPositionVisualCommand.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualTappedTrigger\VisualTappedTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualTrigger\VisualTrigger.cs" />
     <EmbeddedResource Include="Properties\UWPEnhanced.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.7</Version>
+      <Version>6.1.7</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -55,6 +55,15 @@ namespace TestEnvironment
 
 
 		public ICommand command { get; set; } = new RelayCommand(() => Debug.WriteLine("Command Fired"));
+		public ICommand parametercommand { get; set; } = 
+			new RelayParametrizedCommand((x) => Debug.WriteLine("Command Fired with argument: " + x.ToString()));
+
+		public FrameworkElement pageeade => this;
+
+		private void RootGrid_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+		{
+
+		}
 
 		//private void Button_Click(object sender, RoutedEventArgs e)
 		//{

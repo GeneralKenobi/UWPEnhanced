@@ -8,8 +8,11 @@
 	xmlns:controls="using:UWPEnhanced.Controls"
 	xmlns:converters="using:UWPEnhanced.ValueConverters"
 	xmlns:xaml="using:UWPEnhanced.Xaml"
-    mc:Ignorable="d"
-	Name="page">
+	xmlns:system="using:Windows.System"
+	mc:Ignorable="d"
+	KeyDown="RootGrid_KeyDown"
+	Name="page"
+	IsHitTestVisible="True">
 
 	<Page.Resources>
 		<ResourceDictionary>
@@ -20,13 +23,52 @@
 		</ResourceDictionary>
 	</Page.Resources>
 
-	<Grid>
+	<Border>
+		<Grid Background="Azure" Name="RootGrid"
+			KeyDown="RootGrid_KeyDown"
+			IsHitTestVisible="True"
+			>
 
-		<controls:ComplexValueUnitDisplay Value="{x:Bind D}" Unit="V" PutSpaceBeforeUnit="True"/>
-		<!--UseFullPrefixName="False" PutSpaceBeforeUnit="False"/>-->
+			<Grid.KeyboardAccelerators>
+				
+			</Grid.KeyboardAccelerators>
 
-		<!--<TextBox Margin="0 100 0 0" Text="{x:Bind D, Mode=TwoWay, Converter={StaticResource converter}}"/>-->
+			<Button Command="{x:Bind command}" Name="button"
+				Width="200"
+				Height="200">
 
-	</Grid>
+				<Button.KeyboardAccelerators>
+					<KeyboardAccelerator Key="P" Modifiers="Shift"/>
+					<KeyboardAccelerator Key="K"/>
+					<KeyboardAccelerator Key="L" Modifiers="Shift,Control"/>
+				</Button.KeyboardAccelerators>
 
+			</Button>
+			<!--<controls:ComplexValueUnitDisplay Value="{x:Bind D}" Unit="V" PutSpaceBeforeUnit="True"/>-->
+
+			<xaml:VisualAttachments.AttachedVisuals>
+
+				<xaml:KeyVisualCommand Command="{x:Bind parametercommand}">
+					<xaml:VisualKeyTrigger EventType="KeyDown"
+					BlacklistModifierKeys="True"
+					Target="{x:Bind page}"/>
+				</xaml:KeyVisualCommand>
+
+				<!--<xaml:PointerPositionVisualCommand Command="{x:Bind parametercommand}"
+					RelativeToElement="{x:Bind RootGrid}">
+
+					<xaml:VisualPointerTrigger Target="{x:Bind RootGrid}"
+						PointerEvent="PointerReleased"/>
+
+				</xaml:PointerPositionVisualCommand>-->
+
+			</xaml:VisualAttachments.AttachedVisuals>
+
+			<!--<controls:Icon Command="{x:Bind command}" Background="Red" Width="50" Height="50"/>-->
+			<!--UseFullPrefixName="False" PutSpaceBeforeUnit="False"/>-->
+
+			<!--<TextBox Margin="0 100 0 0" Text="{x:Bind D, Mode=TwoWay, Converter={StaticResource converter}}"/>-->
+
+		</Grid>
+	</Border>
 </Page>
