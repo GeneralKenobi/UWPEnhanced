@@ -6,7 +6,7 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Provides means of notifying whenever tapped routed events is raised
 	/// </summary>
-	public class VisualTappedTrigger : VisualRoutedEventTrigger<TappedRoutedEventArgs>
+	public class VisualTappedTrigger : VisualRoutedEventTriggerWithModifiers<TappedRoutedEventArgs>
 	{
 		#region Protected methods
 		
@@ -27,7 +27,7 @@ namespace UWPEnhanced.Xaml
 		/// Unsubscribes from the <paramref name="type"/> event on attached <see cref="UIElement"/>
 		/// </summary>
 		/// <param name="type"></param>
-		protected override void Unsubcribe()
+		protected override void Unsubscribe()
 		{
 			// Get the attached, if it's not null (i.e. this event trigger is attached to something)
 			if (AttachedTo is UIElement element)
