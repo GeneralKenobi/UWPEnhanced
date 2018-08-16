@@ -8,7 +8,7 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Provides means of notifying whenever one or more pointer routed events is raised with the marked modifiers
 	/// </summary>
-	public class VisualPointerTrigger : VisualRoutedEventTrigger<PointerRoutedEventArgs>
+	public class VisualPointerTrigger : VisualRoutedEventTriggerWithModifiers<PointerRoutedEventArgs>
 	{
 		#region PointerEvent Dependency Property
 
@@ -55,51 +55,6 @@ namespace UWPEnhanced.Xaml
 				catch(Exception) { }
 			}
 		}
-
-		#endregion
-
-		#region Modifiers Dependency Property
-
-		/// <summary>
-		/// Modifiers that will warrant the trigger. Setting <see cref="uint.MaxValue"/> (which is the default value)
-		/// will ignore modifiers
-		/// </summary>
-		public VirtualKeyModifiers Modifiers
-		{
-			get => (VirtualKeyModifiers)GetValue(ModifiersProperty);
-			set => SetValue(ModifiersProperty, value);
-		}
-
-		/// <summary>
-		/// Backing store for <see cref="Modifiers"/>
-		/// </summary>
-		public static readonly DependencyProperty ModifiersProperty =
-			DependencyProperty.Register(nameof(Modifiers), typeof(VirtualKeyModifiers),
-			typeof(VisualPointerTrigger), new PropertyMetadata((VirtualKeyModifiers)uint.MaxValue));
-
-		#endregion
-
-		#region StrictModifierCheck Dependency Property
-
-		/// <summary>
-		/// If true, the event will be fired if and only if all modifiers match the current value.
-		/// If false, the event will be fired if the modifiers contain the specified modifiers.
-		/// Ex: If set modifier are Ctrl only, if true the trigger will fire if and only if the pointer event has Ctrl modifier only,
-		/// if false the trigger will trigger for, among others, Ctrl; Ctrl+Shift; Ctrl+Menu+Shift.
-		/// Default value is false
-		/// </summary>
-		public bool StrictModifierCheck
-		{
-			get => (bool)GetValue(StrictModifierCheckProperty);
-			set => SetValue(StrictModifierCheckProperty, value);
-		}
-
-		/// <summary>
-		/// Backing store for <see cref="StrictModifierCheck"/>
-		/// </summary>
-		public static readonly DependencyProperty StrictModifierCheckProperty =
-			DependencyProperty.Register(nameof(StrictModifierCheck), typeof(bool),
-			typeof(VisualPointerTrigger), new PropertyMetadata(false));
 
 		#endregion
 
@@ -231,37 +186,6 @@ namespace UWPEnhanced.Xaml
 			}
 		}
 
-		/// <summary>
-		/// Returns true if the modifiers specified by <see cref="Modifiers"/> are found with appropriate test determined by
-		/// <see cref="StrictModifierCheck"/> in the <see cref="Modifiers"/>
-		/// </summary>
-		/// <returns></returns>
-		private bool ModifiersMatch()
-		{
-			// uint.Max means modifiers are not taken into account
-			if((uint)Modifiers == uint.MaxValue)
-			{
-				return true;
-			}
-
-			if (StrictModifierCheck)
-			{
-				if (this.Modifiers != Modifiers)
-				{
-					return false;
-				}
-			}
-			else
-			{
-				if (!Modifiers.HasFlag(this.Modifiers))
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-
 		#endregion
 
 		#region Protected methods
@@ -280,13 +204,14 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Unsubscribes from the <see cref="PointerEvent"/> event on attached <see cref="UIElement"/>
 		/// </summary>
-		protected override void Unsubcribe() => Unsubscribe(PointerEvent);
+		protected override void Unsubscribe() => Unsubscribe(PointerEvent);
 
 		/// <summary>
-		/// Checks whether modifiers match to determine whether event may fire
+		/// Returns modifiers present during the event
 		/// </summary>
+		/// <param name="e"></param>
 		/// <returns></returns>
-		protected override bool TriggerConditionsMet() => ModifiersMatch();
+		protected override VirtualKeyModifiers GetModifiers(PointerRoutedEventArgs e) => e.KeyModifiers;
 
 		#endregion
 	}
