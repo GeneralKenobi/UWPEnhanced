@@ -46,24 +46,24 @@
 			</Button>
 			<!--<controls:ComplexValueUnitDisplay Value="{x:Bind D}" Unit="V" PutSpaceBeforeUnit="True"/>-->
 
-			<xaml:VisualAttachments.AttachedVisuals>
 
-				<xaml:KeyVisualCommand Command="{x:Bind parametercommand}">
-					<xaml:VisualKeyTrigger EventType="KeyDown"
-					BlacklistModifierKeys="True"
-					Target="{x:Bind page}"/>
-				</xaml:KeyVisualCommand>
+			<Border Width="200" Height="200" HorizontalAlignment="Right" Background="Red">
+				<xaml:VisualAttachments.AttachedVisuals>
 
-				<!--<xaml:PointerPositionVisualCommand Command="{x:Bind parametercommand}"
-					RelativeToElement="{x:Bind RootGrid}">
+					<xaml:ParametrizedVisualCommand Command="{x:Bind command}">
+						<xaml:VisualPointerTrigger PointerEvent="PointerExited,PointerCanceled,PointerCaptureLost"/>
+					</xaml:ParametrizedVisualCommand>
 
-					<xaml:VisualPointerTrigger Target="{x:Bind RootGrid}"
-						PointerEvent="PointerReleased"/>
+					<!--<xaml:PointerPositionVisualCommand Command="{x:Bind parametercommand}"
+						RelativeToElement="{x:Bind RootGrid}">
 
-				</xaml:PointerPositionVisualCommand>-->
+						<xaml:VisualPointerTrigger Target="{x:Bind RootGrid}"
+							PointerEvent="PointerReleased"/>
 
-			</xaml:VisualAttachments.AttachedVisuals>
+					</xaml:PointerPositionVisualCommand>-->
 
+				</xaml:VisualAttachments.AttachedVisuals>
+			</Border>
 			<!--<controls:Icon Command="{x:Bind command}" Background="Red" Width="50" Height="50"/>-->
 			<!--UseFullPrefixName="False" PutSpaceBeforeUnit="False"/>-->
 
