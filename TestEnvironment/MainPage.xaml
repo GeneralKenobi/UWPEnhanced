@@ -39,8 +39,8 @@
 
 				<xaml:VisualAttachments.AttachedVisuals>
 					<xaml:ParametrizedVisualCommand Command="{x:Bind command}">
-						<xaml:VisualPointerTrigger PointerEvent="PointerExited,PointerCanceled,PointerCaptureLost"
-							/>
+						<xaml:VisualKeyTrigger/>
+						<xaml:VisualSpecificKeyTrigger Key="Y"/>
 					</xaml:ParametrizedVisualCommand>
 				</xaml:VisualAttachments.AttachedVisuals>
 
@@ -58,7 +58,7 @@
 				<xaml:VisualAttachments.AttachedVisuals>
 
 					<xaml:ParametrizedVisualCommand Command="{x:Bind command}">
-						<xaml:VisualPointerTrigger PointerEvent="PointerExited,PointerCanceled,PointerCaptureLost"/>
+						<xaml:VisualPointerTrigger PointerEvent="PointerExited,PointerCanceled,PointerCaptureLost"/>						
 					</xaml:ParametrizedVisualCommand>
 
 					<!--<xaml:PointerPositionVisualCommand Command="{x:Bind parametercommand}"

@@ -187,9 +187,11 @@
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTriggerDouble.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualDataTrigger\SpecificCases\VisualDataTriggerInt.cs" />
     <Compile Include="Xaml\VisualCommands\PointerPositionRelatedVisualCommands\Enums\RelativeTo.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTrigger\Enums\KeyEventType.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTriggers\BaseVisualKeyTrigger\BaseVisualKeyTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTriggers\Enums\KeyEventType.cs" />
     <Compile Include="Xaml\VisualCommands\KeyRelatedVisualCommand\IVirtualKeyConverter\IVirtualKeyConverter.cs" />
-    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTrigger\VisualKeyTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTriggers\VisualKeyTrigger\VisualKeyTrigger.cs" />
+    <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualKeyTriggers\VisualSpecificKeyTrigger\VisualSpecificKeyTrigger.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\Enums\PointerEventType.cs" />
     <Compile Include="Xaml\VisualTriggers\VisualRoutedEventTriggers\VisualPointerTrigger\Implementations\VisualPointerTrigger.cs" />
     <Compile Include="Xaml\VisualTriggers\IVisualTrigger\IVisualTrigger.cs" />
