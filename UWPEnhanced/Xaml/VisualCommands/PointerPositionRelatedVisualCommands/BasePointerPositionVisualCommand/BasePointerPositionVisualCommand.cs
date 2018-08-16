@@ -7,9 +7,9 @@ namespace UWPEnhanced.Xaml
 	/// Base class for pointer commands that use the position of the click as Command's parameter. Introduces dependency properties
 	/// that allow for customization of how the pointer position is determined.
 	/// </summary>
-	/// <typeparam name="T">Specific type of the visual trigger to use</typeparam>
-	public abstract class BasePointerPositionVisualCommand<T> : BaseVisualCommand<T>
-		where T : class, IVisualTrigger
+	/// <typeparam name="TVisualTrigger">Specific type of the visual trigger to use</typeparam>
+	public abstract class BasePointerPositionVisualCommand<TVisualTrigger, TEventArgs> : BaseVisualCommand<TVisualTrigger, TEventArgs>
+		where TVisualTrigger : class, IVisualTrigger
 	{
 		#region RelativeTo Dependency Property
 
@@ -27,7 +27,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty RelativeToOptionProperty =
 			DependencyProperty.Register(nameof(RelativeToOption), typeof(RelativeTo),
-			typeof(BasePointerPositionVisualCommand<T>), new PropertyMetadata(RelativeTo.AttachedTo));
+			typeof(BasePointerPositionVisualCommand<TVisualTrigger, TEventArgs>), new PropertyMetadata(RelativeTo.AttachedTo));
 
 		#endregion
 
@@ -47,7 +47,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty RelativeToElementProperty =
 			DependencyProperty.Register(nameof(RelativeToElement), typeof(UIElement),
-			typeof(BasePointerPositionVisualCommand<T>), new PropertyMetadata(default(UIElement)));
+			typeof(BasePointerPositionVisualCommand<TVisualTrigger, TEventArgs>), new PropertyMetadata(default(UIElement)));
 
 		#endregion
 
@@ -68,7 +68,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		public static readonly DependencyProperty ConverterProperty =
 			DependencyProperty.Register(nameof(Converter), typeof(IComplexConverter),
-			typeof(BasePointerPositionVisualCommand<T>), new PropertyMetadata(default(IComplexConverter)));
+			typeof(BasePointerPositionVisualCommand<TVisualTrigger, TEventArgs>), new PropertyMetadata(default(IComplexConverter)));
 
 		#endregion
 	}
