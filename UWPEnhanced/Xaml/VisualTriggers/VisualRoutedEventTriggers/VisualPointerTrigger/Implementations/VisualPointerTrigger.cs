@@ -69,56 +69,46 @@ namespace UWPEnhanced.Xaml
 			// Get the attached, if it's not null (i.e. this event trigger is attached to something)
 			if (AttachedTo is UIElement element)
 			{
-				// Subscribe to an appropriate event
-				switch (type)
+				// Subscribe to appropriate event
+				
+				if(type.HasFlag(PointerEventType.PointerCanceled))
 				{
-					case PointerEventType.PointerCanceled:
-						{
-							element.PointerCanceled += TriggerEvent;
-						}
-						break;
+					element.PointerCanceled += TriggerEvent;
+				}
 
-					case PointerEventType.PointerCaptureLost:
-						{
-							element.PointerCaptureLost += TriggerEvent;
-						}
-						break;
+				if(type.HasFlag(PointerEventType.PointerCaptureLost))
+				{
+					element.PointerCaptureLost += TriggerEvent;
+				}
 
-					case PointerEventType.PointerEntered:
-						{
-							element.PointerEntered += TriggerEvent;
-						}
-						break;
+				if(type.HasFlag(PointerEventType.PointerEntered))
+				{
+					element.PointerEntered += TriggerEvent;
+				}
 
-					case PointerEventType.PointerExited:
-						{
-							element.PointerExited += TriggerEvent;
-						}
-						break;
+				if(type.HasFlag(PointerEventType.PointerExited))
+				{
+					element.PointerExited += TriggerEvent;
+				}
 
-					case PointerEventType.PointerMoved:
-						{
-							element.PointerMoved += TriggerEvent;
-						}
-						break;
+				if(type.HasFlag(PointerEventType.PointerMoved))
+				{
+					element.PointerMoved += TriggerEvent;
+				}
 
-					case PointerEventType.PointerPressed:
-						{
-							element.PointerPressed += TriggerEvent;
-						}
-						break;
+				if(type.HasFlag(PointerEventType.PointerPressed))
+				{
+					element.PointerPressed += TriggerEvent;
+				}
 
-					case PointerEventType.PointerReleased:
-						{
-							element.PointerReleased += TriggerEvent;
-						}
-						break;
+				if(type.HasFlag(PointerEventType.PointerReleased))
+				{
+					element.PointerReleased += TriggerEvent;
+				}
 
-					case PointerEventType.PointerWheelChanged:
-						{
-							element.PointerWheelChanged += TriggerEvent;
-						}
-						break;
+				if(type.HasFlag(PointerEventType.PointerWheelChanged))
+				{
+					element.PointerWheelChanged += TriggerEvent;
 				}
 			}
 		}
@@ -132,56 +122,46 @@ namespace UWPEnhanced.Xaml
 			// Get the attached, if it's not null (i.e. this event trigger is attached to something)
 			if (AttachedTo is UIElement element)
 			{
-				// Unsubscribe from an appropriate event
-				switch (type)
+				// Unsubscribe from appropriate event
+
+				if (type.HasFlag(PointerEventType.PointerCanceled))
 				{
-					case PointerEventType.PointerCanceled:
-						{
-							element.PointerCanceled -= TriggerEvent;
-						}
-						break;
+					element.PointerCanceled -= TriggerEvent;
+				}
 
-					case PointerEventType.PointerCaptureLost:
-						{
-							element.PointerCaptureLost -= TriggerEvent;
-						}
-						break;
+				if (type.HasFlag(PointerEventType.PointerCaptureLost))
+				{
+					element.PointerCaptureLost -= TriggerEvent;
+				}
 
-					case PointerEventType.PointerEntered:
-						{
-							element.PointerEntered -= TriggerEvent;
-						}
-						break;
+				if (type.HasFlag(PointerEventType.PointerEntered))
+				{
+					element.PointerEntered -= TriggerEvent;
+				}
 
-					case PointerEventType.PointerExited:
-						{
-							element.PointerExited -= TriggerEvent;
-						}
-						break;
+				if (type.HasFlag(PointerEventType.PointerExited))
+				{
+					element.PointerExited -= TriggerEvent;
+				}
 
-					case PointerEventType.PointerMoved:
-						{
-							element.PointerMoved -= TriggerEvent;
-						}
-						break;
+				if (type.HasFlag(PointerEventType.PointerMoved))
+				{
+					element.PointerMoved -= TriggerEvent;
+				}
 
-					case PointerEventType.PointerPressed:
-						{
-							element.PointerPressed -= TriggerEvent;
-						}
-						break;
+				if (type.HasFlag(PointerEventType.PointerPressed))
+				{
+					element.PointerPressed -= TriggerEvent;
+				}
 
-					case PointerEventType.PointerReleased:
-						{
-							element.PointerReleased -= TriggerEvent;
-						}
-						break;
+				if (type.HasFlag(PointerEventType.PointerReleased))
+				{
+					element.PointerReleased -= TriggerEvent;
+				}
 
-					case PointerEventType.PointerWheelChanged:
-						{
-							element.PointerWheelChanged -= TriggerEvent;
-						}
-						break;
+				if (type.HasFlag(PointerEventType.PointerWheelChanged))
+				{
+					element.PointerWheelChanged -= TriggerEvent;
 				}
 			}
 		}
