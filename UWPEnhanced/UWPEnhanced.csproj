@@ -142,6 +142,8 @@
     <Compile Include="ValueConverters\OppositeDoubleConverter.cs" />
     <Compile Include="Xaml\BaseAttachedProperty\BaseAttachedProperty.cs" />
     <Compile Include="Xaml\DependencyObjectCollectionOfT\DependencyObjectCollectionOfT.cs" />
+    <Compile Include="Xaml\MultiBinding\IMultiBindingValueConverter.cs" />
+    <Compile Include="Xaml\MultiBinding\MultiBinding.cs" />
     <Compile Include="Xaml\Setters\Interfaces\ITemporaryVisualSetter.cs" />
     <Compile Include="Xaml\Setters\BindablePropertySetters\TemporaryBindablePropertySetter.cs" />
     <Compile Include="Xaml\Setters\PropertyPathSetters\TemporaryPropertySetter.cs" />
