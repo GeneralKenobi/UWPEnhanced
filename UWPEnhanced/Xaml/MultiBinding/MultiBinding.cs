@@ -20,12 +20,37 @@ namespace UWPEnhanced.Xaml
 
 		#endregion
 
+		#region Private members
+
+		/// <summary>
+		/// Backing store for <see cref="CombinedValue"/>
+		/// </summary>
+		private object mCombinedValue;
+
+		#endregion
+
 		#region Public properties
 
 		/// <summary>
 		/// The value obtained by combining <see cref="Value1"/>, <see cref="Value2"/>, <see cref="Value3"/> and 
 		/// </summary>
-		public object CombinedValue { get; private set; }
+		public object CombinedValue
+		{
+			get => mCombinedValue;
+
+			private set
+			{
+				// If the new value is different than the old one
+				if(!Equals(mCombinedValue, value))
+				{
+					// Assign it
+					mCombinedValue = value;
+
+					// And notify about it
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CombinedValue)));
+				}
+			}
+		}
 
 		#endregion
 
@@ -145,9 +170,6 @@ namespace UWPEnhanced.Xaml
 
 			// Compute new value
 			CombinedValue = Converter.Convert(Value1, Value2, Value3, ConverterParameter);
-
-			// Notify about it
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CombinedValue)));
 		}
 
 		#endregion
