@@ -108,6 +108,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
+    <Compile Include="Controls\Graph\Graph.cs" />
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
     <Compile Include="Controls\Menu\Converters\MenuPositionToItemsDirectionConverter.cs" />
     <Compile Include="Controls\Menu\Converters\RestrictedMenuPositionToBoolConverter.cs" />
@@ -222,6 +223,10 @@
     <Page Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplayStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Graph\GraphStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Icon\Styles\IconStyleWithHighlight.xaml">
       <Generator>MSBuild:Compile</Generator>
