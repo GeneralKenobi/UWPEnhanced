@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -9,6 +10,7 @@ namespace UWPEnhanced.Controls
 	/// <summary>
 	/// Control presenting X-Y data on a graph
 	/// </summary>
+	[TemplatePart(Name = mGraphAreaName, Type = typeof(FrameworkElement))]
 	public sealed class Graph : Control, INotifyPropertyChanged
 	{
 		#region Constructors
@@ -19,17 +21,35 @@ namespace UWPEnhanced.Controls
 		public Graph()
 		{
 			this.DefaultStyleKey = typeof(Graph);
-			this.SizeChanged += SizeChangedCallback;
 		}
 
 		#endregion
-
+		
 		#region Events
 
 		/// <summary>
 		/// Event fired whenever a property changes its value
 		/// </summary>
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		#endregion
+
+		#region Private fields
+
+		/// <summary>
+		/// Name of the control containing the graph visuals (without any margin/padding)
+		/// </summary>
+		public const string mGraphAreaName = "PART_GraphArea";
+
+		#endregion
+
+		#region Private properties
+
+		/// <summary>
+		/// Control wrapping the area on which points are presented. Its ActualWidth and ActualHeight should correspond exactly to the
+		/// on-screen area in which graph points are to be rendered
+		/// </summary>
+		private FrameworkElement _GraphArea { get; set; }
 
 		#endregion
 
@@ -87,6 +107,35 @@ namespace UWPEnhanced.Controls
 		#region Private methods
 
 		/// <summary>
+		/// Sets new value to <see cref="_GraphArea"/>. Additonally calls <see cref="TransformAndUpdateData"/>
+		/// </summary>
+		private void SetGraphArea(FrameworkElement newGraphArea)
+		{
+			// If value is the same, simply return
+			if (_GraphArea == newGraphArea)
+			{
+				return;
+			}
+
+			// If the old value was not null, unsubscribe from its SizeChanged
+			if (_GraphArea != null)
+			{
+				_GraphArea.SizeChanged -= SizeChangedCallback;
+			}
+
+			_GraphArea = newGraphArea;
+
+			// If the new value is not null, subscribe to its SizeChanged
+			if (_GraphArea != null)
+			{
+				_GraphArea.SizeChanged += SizeChangedCallback;
+			}
+
+			// Transform and update the data
+			TransformAndUpdateData();
+		}
+
+		/// <summary>
 		/// Transfrorms a value to into an absolute position inside this <see cref="Graph"/>
 		/// </summary>
 		/// <param name="value"></param>
@@ -109,13 +158,19 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private void TransformAndUpdateData()
 		{
+			// Check if graph area was found
+			if(_GraphArea == null)
+			{
+				return;
+			}
+
 			// Update the layout to make sure that width and height have up-to-date values
 			UpdateLayout();
 
 			// Get the dimensions of the graph area (subtract the PointDiameter so that all points are inside the area - their
 			// coordinates are the left, bottom corner of the point)
-			var graphAreaWidth = ActualWidth - PointDiameter;
-			var graphAreaHeight = ActualHeight - PointDiameter;
+			var graphAreaWidth = _GraphArea.ActualWidth - PointDiameter;
+			var graphAreaHeight = _GraphArea.ActualHeight - PointDiameter;
 			
 			// Get the minimum values on both axes
 			var minX = Data.Min((point) => point.Key);
@@ -132,6 +187,20 @@ namespace UWPEnhanced.Controls
 
 			// Notify that data changed
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DataDisplayPoints)));
+		}
+
+		#endregion
+
+		#region Protected methods
+
+		/// <summary>
+		/// Additionally finds the control with name <see cref="mGraphAreaName"/>
+		/// </summary>
+		protected override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+
+			SetGraphArea((GetTemplateChild(mGraphAreaName) as FrameworkElement) ?? throw new Exception("Graph area control not found"));
 		}
 
 		#endregion
