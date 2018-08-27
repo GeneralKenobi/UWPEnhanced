@@ -145,8 +145,10 @@
     <Compile Include="ValueConverters\MarkupExtensionBased\BoolToParameter\BoolToParameterMEC.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\BoolToVisibility\BoolToVisibilityMEC.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\BoolToVisibility\BoolToVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\MarkupExtensionBased\NumberToSIStringMEC\NumerToSIStringConverter.cs" />
-    <Compile Include="ValueConverters\MarkupExtensionBased\NumberToSIStringMEC\NumberToSIStringMEC.cs" />
+    <Compile Include="ValueConverters\MarkupExtensionBased\NumberToSIString\NumerToSIStringConverter.cs" />
+    <Compile Include="ValueConverters\MarkupExtensionBased\NumberToSIString\NumberToSIStringMEC.cs" />
+    <Compile Include="ValueConverters\MarkupExtensionBased\SumConverter\SumConverter.cs" />
+    <Compile Include="ValueConverters\MarkupExtensionBased\SumConverter\SumMEC.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\ProductConverter\ProductConverter.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\ProductConverter\ProductMEC.cs" />
     <Compile Include="Xaml\BaseAttachedProperty\BaseAttachedProperty.cs" />
