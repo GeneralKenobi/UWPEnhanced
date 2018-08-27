@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace UWPEnhanced.Controls
 {
@@ -101,6 +102,46 @@ namespace UWPEnhanced.Controls
 		public static readonly DependencyProperty PointDiameterProperty =
 			DependencyProperty.Register(nameof(PointDiameter), typeof(double),
 			typeof(Graph), new PropertyMetadata(default(double)));
+
+		#endregion
+
+		#region GraphAreaBackground Dependency Property
+
+		/// <summary>
+		/// Brush used directly behind the graph
+		/// </summary>
+		public Brush GraphAreaBackground
+		{
+			get => (Brush)GetValue(GraphAreaBackgroundProperty);
+			set => SetValue(GraphAreaBackgroundProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="GraphAreaBackground"/>
+		/// </summary>
+		public static readonly DependencyProperty GraphAreaBackgroundProperty =
+			DependencyProperty.Register(nameof(GraphAreaBackground), typeof(Brush),
+			typeof(Graph), new PropertyMetadata(default(Brush)));
+
+		#endregion
+
+		#region GraphForeground Dependency Property
+
+		/// <summary>
+		/// Brush used to paint the points/lines composing the graph
+		/// </summary>
+		public Brush GraphForeground
+		{
+			get => (Brush)GetValue(GraphForegroundProperty);
+			set => SetValue(GraphForegroundProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="GraphForeground"/>
+		/// </summary>
+		public static readonly DependencyProperty GraphForegroundProperty =
+			DependencyProperty.Register(nameof(GraphForeground), typeof(Brush),
+			typeof(Graph), new PropertyMetadata(default(Brush)));
 
 		#endregion
 
