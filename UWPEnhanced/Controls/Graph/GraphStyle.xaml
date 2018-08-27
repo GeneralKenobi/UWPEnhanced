@@ -14,12 +14,7 @@
 						Background="Gray"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-
-						<Grid.Resources>							
-							<converters:SumConverter x:Key="SumConverter"/>
-						</Grid.Resources>
-
-
+						
 						<Border Name="GraphArea" DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
 							<ItemsControl Name="DataPresenter"
 								ItemsSource="{Binding DataDisplayPoints}">
@@ -41,7 +36,7 @@
 
 											<Ellipse.RenderTransform>
 												<TranslateTransform X="{Binding Key}"
-													Y="{Binding Value}"/>
+													Y="{Binding Value, Converter={converters:ProductMEC Multiplier=-1}}"/>
 											</Ellipse.RenderTransform>
 										
 										</Ellipse>
