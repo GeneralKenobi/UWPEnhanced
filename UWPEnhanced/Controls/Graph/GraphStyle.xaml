@@ -14,8 +14,8 @@
 						Background="Gray"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-						
-						<Border Name="GraphArea" DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
+
+						<Border Name="PART_GraphArea" DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
 							<ItemsControl Name="DataPresenter"
 								ItemsSource="{Binding DataDisplayPoints}">
 
@@ -27,8 +27,8 @@
 
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
-										<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=GraphArea}"
-											Height="{Binding Path=DataContext.PointDiameter, ElementName=GraphArea}"
+										<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
+											Height="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
 											Fill="Red"
 											RenderTransformOrigin="0 1"
 											VerticalAlignment="Bottom"
