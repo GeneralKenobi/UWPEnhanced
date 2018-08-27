@@ -105,42 +105,42 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region GraphAreaBackground Dependency Property
+		#region DataBackground Dependency Property
 
 		/// <summary>
 		/// Brush used directly behind the graph
 		/// </summary>
-		public Brush GraphAreaBackground
+		public Brush DataBackground
 		{
-			get => (Brush)GetValue(GraphAreaBackgroundProperty);
-			set => SetValue(GraphAreaBackgroundProperty, value);
+			get => (Brush)GetValue(DataBackgroundProperty);
+			set => SetValue(DataBackgroundProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="GraphAreaBackground"/>
+		/// Backing store for <see cref="DataBackground"/>
 		/// </summary>
-		public static readonly DependencyProperty GraphAreaBackgroundProperty =
-			DependencyProperty.Register(nameof(GraphAreaBackground), typeof(Brush),
+		public static readonly DependencyProperty DataBackgroundProperty =
+			DependencyProperty.Register(nameof(DataBackground), typeof(Brush),
 			typeof(Graph), new PropertyMetadata(default(Brush)));
 
 		#endregion
 
-		#region GraphForeground Dependency Property
+		#region DataForeground Dependency Property
 
 		/// <summary>
 		/// Brush used to paint the points/lines composing the graph
 		/// </summary>
-		public Brush GraphForeground
+		public Brush DataForeground
 		{
-			get => (Brush)GetValue(GraphForegroundProperty);
-			set => SetValue(GraphForegroundProperty, value);
+			get => (Brush)GetValue(DataForegroundProperty);
+			set => SetValue(DataForegroundProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="GraphForeground"/>
+		/// Backing store for <see cref="DataForeground"/>
 		/// </summary>
-		public static readonly DependencyProperty GraphForegroundProperty =
-			DependencyProperty.Register(nameof(GraphForeground), typeof(Brush),
+		public static readonly DependencyProperty DataForegroundProperty =
+			DependencyProperty.Register(nameof(DataForeground), typeof(Brush),
 			typeof(Graph), new PropertyMetadata(default(Brush)));
 
 		#endregion

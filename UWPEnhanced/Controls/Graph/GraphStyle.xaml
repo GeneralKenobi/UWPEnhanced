@@ -8,8 +8,8 @@
 	<Style TargetType="local:Graph">
 		<Setter Property="PointDiameter" Value="5"/>
 		<Setter Property="Background" Value="LightGray"/>
-		<Setter Property="GraphAreaBackground" Value="White"/>
-		<Setter Property="GraphForeground" Value="Black"/>
+		<Setter Property="DataBackground" Value="White"/>
+		<Setter Property="DataForeground" Value="Black"/>
 		<Setter Property="Foreground" Value="Black"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="BorderBrush" Value="Black"/>
@@ -40,12 +40,12 @@
 						<Border Name="PART_GraphArea"
 							DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
 							Grid.Column="1"
-							Background="{TemplateBinding GraphAreaBackground}">
+							Background="{TemplateBinding DataBackground}">
 
 							<!-- Presents the data points -->
 							<ItemsControl Name="DataPresenter"
 								ItemsSource="{Binding DataDisplayPoints}"
-								Foreground="{TemplateBinding GraphForeground}">
+								Foreground="{TemplateBinding DataForeground}">
 
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
