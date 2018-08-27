@@ -179,12 +179,15 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Transfrorms a value to into an absolute position inside this <see cref="Graph"/>
 		/// </summary>
-		/// <param name="value"></param>
-		/// <param name="smallest"></param>
-		/// <param name="range"></param>
-		/// <param name="graphAreaLength"></param>
+		/// <param name="value">Value to transform</param>
+		/// <param name="smallest">The smallest value in the dimension</param>
+		/// <param name="range">Difference between the greatest and the smallest value in the dimension</param>
+		/// <param name="graphAreaLength">Length of the dimension assigned to the <see cref="_GraphArea"/> control</param>
 		/// <returns></returns>
 		private double ValueTransform(double value, double smallest, double range, double graphAreaLength) =>
+			// First subtract the smallest value (so that the data starts from the left), then divide by range (which causes
+			// the greatest value in the set to be 1) and multiply by graphAreaLength (which causes the greatest value in the set to
+			// be equal to the total length of the control - thus spanning the data fully from left to right).
 			(value - smallest) * graphAreaLength / range;
 
 		/// <summary>
