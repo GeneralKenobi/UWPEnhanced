@@ -1,4 +1,5 @@
 ﻿using CSharpEnhanced.Helpers;
+using CSharpEnhanced.Maths;
 using System;
 using System.Numerics;
 using Windows.UI.Xaml.Data;
@@ -72,83 +73,6 @@ namespace UWPEnhanced.ValueConverters
 
 			#endregion
 
-			#region Private methods
-
-			/// <summary>
-			/// Tries to cast value to each numeral type. If it succeeds, assigns it to <paramref name="result"/> and returns true.
-			/// Otherwise returns false;
-			/// </summary>
-			/// <param name="value"></param>
-			/// <param name="result"></param>
-			/// <returns></returns>
-			private bool TryCastToDouble(object value, out double result)
-			{
-				if (value is sbyte sb)
-				{
-					result = sb;
-					return true;
-				}
-
-				if (value is byte b)
-				{
-					result = b;
-					return true;
-				}
-
-				if (value is short s)
-				{
-					result = s;
-					return true;
-				}
-
-				if (value is ushort us)
-				{
-					result = us;
-					return true;
-				}
-
-				if (value is int i)
-				{
-					result = i;
-					return true;
-				}
-
-				if (value is uint ui)
-				{
-					result = ui;
-					return true;
-				}
-
-				if (value is long l)
-				{
-					result = l;
-					return true;
-				}
-
-				if (value is ulong ul)
-				{
-					result = ul;
-					return true;
-				}
-
-				if (value is float f)
-				{
-					result = f;
-					return true;
-				}
-
-				if (value is double d)
-				{
-					result = d;
-					return true;
-				}
-
-				result = 0;
-				return false;
-			}
-
-			#endregion
-
 			#region Public methods
 
 			/// <summary>
@@ -161,7 +85,7 @@ namespace UWPEnhanced.ValueConverters
 			/// <returns></returns>
 			public object Convert(object value, Type targetType, object parameter, string language)
 			{
-				if (TryCastToDouble(value, out var result))
+				if (MathsHelpers.TryCastToDouble(value, out var result))
 				{
 					return _ExcludeSmallPrefixes ?
 						SIHelpers.ToSIStringExcludingSmallPrefixes(result, _Unit, _RoundToDigit, _MidpointRounding, _UseFullName) :
