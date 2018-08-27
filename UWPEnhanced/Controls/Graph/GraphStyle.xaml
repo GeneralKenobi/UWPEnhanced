@@ -11,6 +11,8 @@
 		<Setter Property="GraphAreaBackground" Value="White"/>
 		<Setter Property="GraphForeground" Value="Black"/>
 		<Setter Property="Foreground" Value="Black"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="BorderBrush" Value="Black"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Graph">
@@ -18,11 +20,29 @@
 						Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-						>
+						Padding="5">
 
+						<Grid.RowDefinitions>
+							<!-- Data display -->
+							<RowDefinition Height="*"/>
+							<!-- Axis description -->
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+
+						<Grid.ColumnDefinitions>
+							<!-- Axis description -->
+							<ColumnDefinition Width="Auto"/>
+							<!-- Data display -->
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>						
+
+						<!-- Contains the core part of the graph -->
 						<Border Name="PART_GraphArea"
 							DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+							Grid.Column="1"
 							Background="{TemplateBinding GraphAreaBackground}">
+
+							<!-- Presents the data points -->
 							<ItemsControl Name="DataPresenter"
 								ItemsSource="{Binding DataDisplayPoints}"
 								Foreground="{TemplateBinding GraphForeground}">
@@ -43,6 +63,7 @@
 											HorizontalAlignment="Left">
 
 											<Ellipse.RenderTransform>
+												<!-- Positions the point on the x-y axes -->
 												<TranslateTransform X="{Binding Key}"
 													Y="{Binding Value, Converter={converters:ProductMEC Multiplier=-1}}"/>
 											</Ellipse.RenderTransform>
