@@ -64,6 +64,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region PointDiameter Dependency Property
+
+		/// <summary>
+		/// Diameter of a displayed point
+		/// </summary>
+		public double PointDiameter
+		{
+			get => (double)GetValue(PointDiameterProperty);
+			set => SetValue(PointDiameterProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="PointDiameter"/>
+		/// </summary>
+		public static readonly DependencyProperty PointDiameterProperty =
+			DependencyProperty.Register(nameof(PointDiameter), typeof(double),
+			typeof(Graph), new PropertyMetadata(default(double)));
+
+		#endregion
+
 		#region Private methods
 
 		/// <summary>
@@ -79,7 +99,7 @@ namespace UWPEnhanced.Controls
 		private void TransformAndUpdateData()
 		{
 			UpdateLayout();
-			var width = ActualWidth - 5;
+			var width = ActualWidth - PointDiameter;
 			var first = Data.Min((point) => point.Key);
 			var dataXRange = Data.Max((point) => point.Key) - first;
 			DataDisplayPoints = Data.

@@ -6,22 +6,23 @@
 	
 
 	<Style TargetType="local:Graph">
+		<Setter Property="PointDiameter" Value="5"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Graph">
-					<Grid Background="Gray"
+					<Grid x:Name="RootGrid"
+						Background="Gray"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
 
-						<Grid.Resources>
-							<local:DataTransformValueConverter x:Key="DataTransform" Height="{Binding ElementName=GraphArea, Path=ActualWidth}"/>
+						<Grid.Resources>							
 							<converters:SumConverter x:Key="SumConverter"/>
 						</Grid.Resources>
 
 
-						<Border Name="GraphArea">
+						<Border Name="GraphArea" DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
 							<ItemsControl Name="DataPresenter"
-								ItemsSource="{Binding DataDisplayPoints, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+								ItemsSource="{Binding DataDisplayPoints}">
 
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
@@ -31,8 +32,8 @@
 
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
-										<Ellipse Width="5"
-											Height="5"
+										<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=GraphArea}"
+											Height="{Binding Path=DataContext.PointDiameter, ElementName=GraphArea}"
 											Fill="Red"
 											RenderTransformOrigin="0 1"
 											VerticalAlignment="Bottom"
