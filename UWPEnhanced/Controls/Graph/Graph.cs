@@ -145,6 +145,46 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region XAxisLabelsCount Dependency Property
+
+		/// <summary>
+		/// Number of labels present on X axis
+		/// </summary>
+		public int XAxisLabelsCount
+		{
+			get => (int)GetValue(XAxisLabelsCountProperty);
+			set => SetValue(XAxisLabelsCountProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="XAxisLabelsCount"/>
+		/// </summary>
+		public static readonly DependencyProperty XAxisLabelsCountProperty =
+			DependencyProperty.Register(nameof(XAxisLabelsCount), typeof(int),
+			typeof(Graph), new PropertyMetadata(default(int)));
+
+		#endregion
+
+		#region YAxisLabelsCount Dependency Property
+
+		/// <summary>
+		/// Number of labels present on Y axis		
+		/// </summary>
+		public int YAxisLabelsCount
+		{
+			get => (int)GetValue(YAxisLabelsCountProperty);
+			set => SetValue(YAxisLabelsCountProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="YAxisLabelsCount"/>
+		/// </summary>
+		public static readonly DependencyProperty YAxisLabelsCountProperty =
+			DependencyProperty.Register(nameof(YAxisLabelsCount), typeof(int),
+			typeof(Graph), new PropertyMetadata(default(int)));
+
+		#endregion
+
 		#region Private methods
 
 		/// <summary>
