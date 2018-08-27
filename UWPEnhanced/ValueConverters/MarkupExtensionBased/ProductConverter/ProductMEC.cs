@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Markup;
 namespace UWPEnhanced.ValueConverters
 {
 	/// <summary> 
-	/// If value is a numeral type (except <see cref="Complex"/>), it is to double and multiplied by <see cref="Multiplier"/>.
+	/// If value is a numeral type (except <see cref="Complex"/>), it is cast to double and multiplied by <see cref="Multiplier"/>.
 	/// Otherwise returns the value without changing it. By default <see cref="Multiplier"/> is 1.
 	/// </summary>
 	[MarkupExtensionReturnType(ReturnType = typeof(IValueConverter))]

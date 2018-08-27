@@ -8,7 +8,7 @@ namespace UWPEnhanced.ValueConverters
 	public partial class ProductMEC : MarkupExtension
 	{
 		/// <summary> 
-		/// If value is a numeral type (except <see cref="Complex"/>), it is to double and multiplied by <see cref="_Multiplier"/>.
+		/// If value is a numeral type (except <see cref="Complex"/>), it is cast to double and multiplied by <see cref="_Multiplier"/>.
 		/// Otherwise returns the value without changing it.
 		/// </summary>
 		private class ProductConverter : IValueConverter
