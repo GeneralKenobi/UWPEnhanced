@@ -87,6 +87,17 @@ namespace UWPEnhanced.Controls
 		#region Private methods
 
 		/// <summary>
+		/// Transfrorms a value to into an absolute position inside this <see cref="Graph"/>
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="smallest"></param>
+		/// <param name="range"></param>
+		/// <param name="graphAreaLength"></param>
+		/// <returns></returns>
+		private double ValueTransform(double value, double smallest, double range, double graphAreaLength) =>
+			(value - smallest) * graphAreaLength / range;
+
+		/// <summary>
 		/// Callback for when size changes (recalculates <see cref="DataDisplayPoints"/>)
 		/// </summary>
 		/// <param name="sender"></param>
@@ -98,14 +109,28 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private void TransformAndUpdateData()
 		{
+			// Update the layout to make sure that width and height have up-to-date values
 			UpdateLayout();
-			var width = ActualWidth - PointDiameter;
-			var first = Data.Min((point) => point.Key);
-			var dataXRange = Data.Max((point) => point.Key) - first;
+
+			// Get the dimensions of the graph area (subtract the PointDiameter so that all points are inside the area - their
+			// coordinates are the left, bottom corner of the point)
+			var graphAreaWidth = ActualWidth - PointDiameter;
+			var graphAreaHeight = ActualHeight - PointDiameter;
+			
+			// Get the minimum values on both axes
+			var minX = Data.Min((point) => point.Key);
+			var minY = Data.Min((point) => point.Value);
+
+			// Get the range of values on botx axes (maximum value - minimum value)
+			var xRange = Data.Max((point) => point.Key) - minX;
+			var yRange = Data.Max((point) => point.Value) - minY;
+
+			// Assign to DataDisplayPoints the 
 			DataDisplayPoints = Data.
-				Select((point) => new KeyValuePair<double, double>(point.Key - first, point.Value)).
-				Select((point) => new KeyValuePair<double, double>(point.Key * width / dataXRange, point.Value)).
-				Select((point) => new KeyValuePair<double, double>(point.Key, -point.Value));
+				Select((point) => new KeyValuePair<double, double>(ValueTransform(point.Key, minX, xRange, graphAreaWidth),
+				ValueTransform(point.Value, minY, yRange, graphAreaHeight)));
+
+			// Notify that data changed
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DataDisplayPoints)));
 		}
 
