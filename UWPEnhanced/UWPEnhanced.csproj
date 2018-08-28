@@ -110,6 +110,8 @@
     <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
     <Compile Include="Controls\Graph\Graph.cs" />
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
+    <Compile Include="Controls\UniformItemsContainer\CodeBehind\UniformItemsContainer.cs" />
+    <Compile Include="Controls\UniformItemsContainer\UniformItemsContainerPanel\UniformItemsContainerPanel.cs" />
     <Compile Include="Controls\Menu\Converters\MenuPositionToItemsDirectionConverter.cs" />
     <Compile Include="Controls\Menu\Converters\RestrictedMenuPositionToBoolConverter.cs" />
     <Compile Include="Controls\ValueUnitDisplay\ValueUnitDisplay.cs" />
@@ -259,6 +261,11 @@
     <Page Include="Controls\Menu\MenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Controls\UniformItemsContainer\Style\UniformItemsContainerStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Controls\ValueUnitDisplay\ValueUnitDisplayStyle.xaml">
