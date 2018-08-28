@@ -89,7 +89,7 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Backing store for <see cref="FlowDirection"/>
 		/// </summary>
-		public static readonly DependencyProperty FlowDirectionProperty =
+		public new static readonly DependencyProperty FlowDirectionProperty =
 			DependencyProperty.Register(nameof(FlowDirection), typeof(ItemsDirection),
 			typeof(ItemsContainer), new PropertyMetadata(DefaultFlowDirection, DirectionChanged));
 
