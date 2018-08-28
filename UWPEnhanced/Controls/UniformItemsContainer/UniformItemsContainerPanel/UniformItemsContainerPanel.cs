@@ -44,7 +44,7 @@ namespace UWPEnhanced.Controls
 		/// <param name="e"></param>
 		private static void FlowDirectionChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
 		{
-			if (s is ItemsContainerPanel panel && e.NewValue is ItemsDirection newDirection &&
+			if (s is UniformItemsContainerPanel panel && e.NewValue is ItemsDirection newDirection &&
 				e.OldValue is ItemsDirection oldDirection && newDirection != oldDirection)
 			{
 				// If the change didn't change the axis of item placement (ex: old and new placement are both vertical)
