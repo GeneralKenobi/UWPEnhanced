@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -71,51 +68,7 @@ namespace UWPEnhanced.Controls
 			typeof(ItemsContainerPanel), new PropertyMetadata(ItemsContainer.DefaultItemSpacing, ItemSpacingChanged));
 
 		#endregion
-
-		#region Private static methods
-
-		/// <summary>
-		/// Callback for <see cref="ItemSpacingProperty"/> changed, updates the UI if the new value differs from the old one
-		/// </summary>
-		/// <param name="s"></param>
-		/// <param name="e"></param>
-		private static void ItemSpacingChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
-		{
-			if(s is ItemsContainerPanel panel && e.NewValue != e.OldValue)
-			{
-				panel.InvalidateMeasure();
-			}
-		}
-
-		/// <summary>
-		/// Callback for <see cref="FlowDirectionProperty"/> changed, updates the UI if the new value differs from the old one
-		/// </summary>
-		/// <param name="s"></param>
-		/// <param name="e"></param>
-		private static void FlowDirectionChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
-		{
-			if (s is ItemsContainerPanel panel && e.NewValue is ItemsDirection newDirection &&
-				e.OldValue is ItemsDirection oldDirection && newDirection != oldDirection)
-			{
-				// If the change didn't change the axis of item placement (ex: old and new placement are both vertical)
-				if((newDirection == ItemsDirection.LeftToRight && oldDirection == ItemsDirection.RightToLeft) ||
-					(newDirection == ItemsDirection.RightToLeft && oldDirection == ItemsDirection.LeftToRight) ||
-					(newDirection == ItemsDirection.TopToBottom && oldDirection == ItemsDirection.BottomToTop) ||
-					(newDirection == ItemsDirection.BottomToTop && oldDirection == ItemsDirection.TopToBottom))
-				{
-					// Then only rearrange the items
-					panel.InvalidateArrange();
-				}
-				else
-				{
-					// Otherwise remeasure and rearrange
-					panel.InvalidateMeasure();
-				}
-			}
-		}
-
-		#endregion
-
+		
 		#region Private Methods
 
 		/// <summary>
@@ -329,5 +282,49 @@ namespace UWPEnhanced.Controls
 		}
 
 		#endregion		
+
+		#region Private static methods
+
+		/// <summary>
+		/// Callback for <see cref="ItemSpacingProperty"/> changed, updates the UI if the new value differs from the old one
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="e"></param>
+		private static void ItemSpacingChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		{
+			if(s is ItemsContainerPanel panel && e.NewValue != e.OldValue)
+			{
+				panel.InvalidateMeasure();
+			}
+		}
+
+		/// <summary>
+		/// Callback for <see cref="FlowDirectionProperty"/> changed, updates the UI if the new value differs from the old one
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="e"></param>
+		private static void FlowDirectionChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		{
+			if (s is ItemsContainerPanel panel && e.NewValue is ItemsDirection newDirection &&
+				e.OldValue is ItemsDirection oldDirection && newDirection != oldDirection)
+			{
+				// If the change didn't change the axis of item placement (ex: old and new placement are both vertical)
+				if((newDirection == ItemsDirection.LeftToRight && oldDirection == ItemsDirection.RightToLeft) ||
+					(newDirection == ItemsDirection.RightToLeft && oldDirection == ItemsDirection.LeftToRight) ||
+					(newDirection == ItemsDirection.TopToBottom && oldDirection == ItemsDirection.BottomToTop) ||
+					(newDirection == ItemsDirection.BottomToTop && oldDirection == ItemsDirection.TopToBottom))
+				{
+					// Then only rearrange the items
+					panel.InvalidateArrange();
+				}
+				else
+				{
+					// Otherwise remeasure and rearrange
+					panel.InvalidateMeasure();
+				}
+			}
+		}
+
+		#endregion
 	}
 }
