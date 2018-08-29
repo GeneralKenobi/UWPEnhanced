@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:converters="using:UWPEnhanced.ValueConverters"
+	xmlns:controls="using:UWPEnhanced.Controls"
     xmlns:local="using:UWPEnhanced.Controls">
 	
 
@@ -20,7 +21,9 @@
 						Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-						Padding="5">
+						Padding="10 20 20 10"
+						ColumnSpacing="10"
+						RowSpacing="10">
 
 						<Grid.RowDefinitions>
 							<!-- Data display -->
@@ -34,18 +37,27 @@
 							<ColumnDefinition Width="Auto"/>
 							<!-- Data display -->
 							<ColumnDefinition Width="*"/>
-						</Grid.ColumnDefinitions>						
+						</Grid.ColumnDefinitions>
+
+
+						<controls:ItemsContainer Grid.Row="1"
+							Grid.Column="1"
+							FlowDirection="LeftToRight"
+							UniformSpacing="True"
+							HorizontalAlignment="Stretch"
+							Margin="0 0 -15 0"/>
 
 						<!-- Contains the core part of the graph -->
 						<Border Name="PART_GraphArea"
 							DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
 							Grid.Column="1"
 							Background="{TemplateBinding DataBackground}">
-
+							
 							<!-- Presents the data points -->
 							<ItemsControl Name="DataPresenter"
+								Grid.Column="1"
 								ItemsSource="{Binding DataDisplayPoints}"
-								Foreground="{TemplateBinding DataForeground}">
+								Foreground="{TemplateBinding DataForeground}">								
 
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
