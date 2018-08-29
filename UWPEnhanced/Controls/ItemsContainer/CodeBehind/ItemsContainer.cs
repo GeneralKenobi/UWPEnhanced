@@ -1,5 +1,4 @@
-﻿using UWPEnhanced.Xaml;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace UWPEnhanced.Controls
@@ -65,7 +64,7 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region Direction Dependency Property
+		#region FlowDirection Dependency Property
 
 		/// <summary>
 		/// Direction of item placement in this container. Hides the inherited <see cref="FrameworkElement.FlowDirection"/>.
@@ -83,7 +82,29 @@ namespace UWPEnhanced.Controls
 			DependencyProperty.Register(nameof(FlowDirection), typeof(ItemsDirection),
 			typeof(ItemsContainer), new PropertyMetadata(DefaultFlowDirection, DirectionChanged));
 
-		#endregion		
+		#endregion
+
+		#region UniformSpacing Dependency Property
+
+		/// <summary>
+		/// If true, items positioned so that space between each two neighbouring items is the same (and <see cref="ItemSpacing"/> will
+		/// be ignored). If the container has infinite available width/length (depending on <see cref="FlowDirection"/>) uniform
+		/// spacing will not be performed (a finite value is needed to determine uniform spacing value)
+		/// </summary>
+		public bool UniformSpacing
+		{
+			get => (bool)GetValue(UniformSpacingProperty);
+			set => SetValue(UniformSpacingProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="UniformSpacing"/>
+		/// </summary>
+		public static readonly DependencyProperty UniformSpacingProperty =
+			DependencyProperty.Register(nameof(UniformSpacing), typeof(bool),
+			typeof(ItemsContainer), new PropertyMetadata(default(bool), UniformSpacingChanged));
+
+		#endregion
 
 		#region Private Methods
 
@@ -101,6 +122,18 @@ namespace UWPEnhanced.Controls
 
 				UpdateDirectionOnUnderylingPanel();
 				UpdateItemSpacingOnUnderylingPanel();
+				UpdateUniformSpacingOnUnderylingPanel();
+			}
+		}
+
+		/// <summary>
+		/// Assigns the spacing to the <see cref="UnderlyingPanel"/> and forces it to update UI
+		/// </summary>
+		private void UpdateUniformSpacingOnUnderylingPanel()
+		{
+			if (mUnderlyingPanel != null)
+			{
+				mUnderlyingPanel.UniformSpacing = UniformSpacing;
 			}
 		}
 
@@ -129,6 +162,19 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region Private static methods
+
+		/// <summary>
+		/// Callback for when <see cref="UniformSpacingProperty"/> changes
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="e"></param>
+		private static void UniformSpacingChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		{
+			if (s is ItemsContainer container && e.NewValue != e.OldValue)
+			{
+				container.UpdateUniformSpacingOnUnderylingPanel();
+			}
+		}
 
 		/// <summary>
 		/// Callback for when <see cref="ItemSpacingProperty"/> changes

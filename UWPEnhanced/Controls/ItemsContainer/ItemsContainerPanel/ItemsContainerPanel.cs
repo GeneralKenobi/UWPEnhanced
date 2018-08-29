@@ -11,23 +11,6 @@ namespace UWPEnhanced.Controls
 	/// </summary>
 	internal class ItemsContainerPanel : Panel
 	{
-		#region Private Properties
-
-		/// <summary>
-		/// The total space between the items in the panel
-		/// </summary>
-		/// <returns></returns>
-		private double TotalItemSpacing
-		{
-			get
-			{
-				int visibleChildren = Children.Where((x) => x.Visibility == Visibility.Visible).Count();
-				return visibleChildren > 1 ? (visibleChildren - 1) * ItemSpacing : 0;
-			}
-		}
-
-		#endregion
-
 		#region FlowDirection Dependency Property
 
 		/// <summary>
@@ -68,8 +51,93 @@ namespace UWPEnhanced.Controls
 			typeof(ItemsContainerPanel), new PropertyMetadata(ItemsContainer.DefaultItemSpacing, ItemSpacingChanged));
 
 		#endregion
-		
+
+		#region UniformSpacing Dependency Property
+
+		/// <summary>
+		/// If true, items positioned so that space between each two neighbouring items is the same (and <see cref="ItemSpacing"/> will
+		/// be ignored). If the container has infinite available width/length (depending on <see cref="FlowDirection"/>) uniform
+		/// spacing will not be performed (a finite value is needed to determine uniform spacing value)
+		/// </summary>
+		public bool UniformSpacing
+		{
+			get => (bool)GetValue(UniformSpacingProperty);
+			set => SetValue(UniformSpacingProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="UniformSpacing"/>
+		/// </summary>
+		public static readonly DependencyProperty UniformSpacingProperty =
+			DependencyProperty.Register(nameof(UniformSpacing), typeof(bool),
+			typeof(ItemsContainerPanel), new PropertyMetadata(default(bool), ItemSpacingChanged));
+
+		#endregion
+
 		#region Private Methods
+
+		/// <summary>
+		/// Calculates the value of item spacing (takes into account <see cref="UniformSpacing"/> and <see cref="ItemSpacing"/> that
+		/// should be between two neighbouring items
+		/// </summary>
+		/// <param name="finalSize"></param>
+		/// <returns></returns>
+		private double CalculateItemSpacing(Size finalSize) =>
+			// Calculate the total spacing and divide it by (n-1) because for n children there are n-1 gaps
+			CalculateTotalItemSpacing(finalSize) / (Children.Where((x) => x.Visibility == Visibility.Visible).Count() - 1);
+
+		/// <summary>
+		/// Returns length of spacing between all items
+		/// </summary>
+		/// <param name="availableSize"></param>
+		/// <returns></returns>
+		private double CalculateTotalItemSpacing(Size availableSize)
+		{
+			// Get the number visible children
+			int visibleChildren = Children.Where((x) => x.Visibility == Visibility.Visible).Count();
+
+			// If there are less than 2 children then return 0
+			if(visibleChildren < 2)
+			{
+				return 0;
+			}
+
+			// If the spacing is to be uniform
+			if(UniformSpacing)
+			{
+				switch(FlowDirection)
+				{
+					// In case it's a vertical arrangement
+					case ItemsDirection.TopToBottom:
+					case ItemsDirection.BottomToTop:
+						{
+							// The spacing is equal to the available height minus total height of visible children
+							return (availableSize.Height - Children.Where((child) => child.Visibility == Visibility.Visible).
+								Sum((element) => element.DesiredSize.Height));
+						}
+
+					// In case it's a horizontal arrangement
+					case ItemsDirection.LeftToRight:
+					case ItemsDirection.RightToLeft:
+						{
+							// The spacing is equal to the available width minus total width of visible children
+							return (availableSize.Width - Children.Where((child) => child.Visibility == Visibility.Visible).
+								Sum((element) => element.DesiredSize.Width));
+						}
+											
+					default:
+						{
+							throw new Exception("Unexpected case");
+						}
+				}
+			}
+			else
+			{
+				// For non-uniform spacing return (n-1)*ItemSpacing: for n items there is n-1 spacings. Remember to exclude collapsed
+				// children.
+				return (visibleChildren - 1) * ItemSpacing;
+			}
+		}
 
 		/// <summary>
 		/// Arranges the items in a top to bottom direction. Helper of <see cref="ArrangeOverride(Size)"/>.
@@ -80,6 +148,7 @@ namespace UWPEnhanced.Controls
 		{
 			double cumulativeHeight = 0;
 			double maxWidth = 0;
+			var spacing = CalculateItemSpacing(finalSize);
 
 			foreach(var item in Children)
 			{
@@ -91,7 +160,7 @@ namespace UWPEnhanced.Controls
 					item.DesiredSize.Height));
 
 				// If the item is not visible then treat it as non-existant and do not put spacing around it
-				cumulativeHeight += item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
+				cumulativeHeight += item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? spacing : 0);
 			}
 			
 			return finalSize;
@@ -105,17 +174,18 @@ namespace UWPEnhanced.Controls
 		private Size ArrangeBottomToTop(Size finalSize)
 		{
 			double cumulativeHeight = 0;
+			var spacing = CalculateItemSpacing(finalSize);
 
 			foreach (var item in Children)
 			{
 				// If the item is not visible then treat it as non-existant and do not put spacing around it
-				cumulativeHeight += item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
+				cumulativeHeight += item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? spacing : 0);
 			}
 
 			foreach (var item in Children)
 			{
 				// If the item is not visible then treat it as non-existant and do not put spacing around it
-				cumulativeHeight -= item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
+				cumulativeHeight -= item.DesiredSize.Height + (item.Visibility == Visibility.Visible ? spacing : 0);
 
 				// If the finalSize width is greater than the desired width, assign it instead so that the control may
 				// position itself horizontally as it wishes
@@ -134,8 +204,9 @@ namespace UWPEnhanced.Controls
 		private Size ArrangeLeftToRight(Size finalSize)
 		{
 			double cumulativeWidth = 0;
+			var spacing = CalculateItemSpacing(finalSize);
 
-			foreach(var item in Children)
+			foreach (var item in Children)
 			{
 				// If the finalSize height is greater than the desired height, assign it instead so that the control may
 				// position itself vertically as it wishes
@@ -143,7 +214,7 @@ namespace UWPEnhanced.Controls
 					Math.Max(item.DesiredSize.Height, finalSize.Height)));
 
 				// If the item is not visible then treat it as non-existant and do not put spacing around it
-				cumulativeWidth += item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
+				cumulativeWidth += item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? spacing : 0);
 			}
 
 			return finalSize;
@@ -157,17 +228,18 @@ namespace UWPEnhanced.Controls
 		private Size ArrangeRightToLeft(Size finalSize)
 		{
 			double cumulativeWidth = 0;
+			var spacing = CalculateItemSpacing(finalSize);
 
 			foreach (var item in Children)
 			{
 				// If the item is not visible then treat it as non-existant and do not put spacing around it
-				cumulativeWidth += item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
+				cumulativeWidth += item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? spacing : 0);
 			}
 
 			foreach (var item in Children)
 			{
 				// If the item is not visible then treat it as non-existant and do not put spacing around it
-				cumulativeWidth -= item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? ItemSpacing : 0);
+				cumulativeWidth -= item.DesiredSize.Width + (item.Visibility == Visibility.Visible ? spacing : 0);
 
 				// If the finalSize height is greater than the desired height, assign it instead so that the control may
 				// position itself vertically as it wishes
@@ -201,7 +273,7 @@ namespace UWPEnhanced.Controls
 				greatestHeight = Math.Max(greatestHeight, item.DesiredSize.Height);
 			}
 
-			return new Size(cumulativeChildrenWidth + TotalItemSpacing,	greatestHeight);
+			return new Size(cumulativeChildrenWidth + CalculateTotalItemSpacing(availableSize), greatestHeight);
 		}
 
 		/// <summary>
@@ -227,7 +299,7 @@ namespace UWPEnhanced.Controls
 				cumulativeChildrenHeight += item.DesiredSize.Height;
 			}
 			
-			return new Size(greatestWidth, cumulativeChildrenHeight + TotalItemSpacing);
+			return new Size(greatestWidth, cumulativeChildrenHeight + CalculateTotalItemSpacing(availableSize));
 		}
 
 		#endregion
@@ -275,13 +347,11 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		/// <param name="availableSize"></param>
 		/// <returns></returns>
-		protected override Size MeasureOverride(Size availableSize)
-		{
-			return (FlowDirection == ItemsDirection.RightToLeft || FlowDirection == ItemsDirection.LeftToRight) ?
+		protected override Size MeasureOverride(Size availableSize) =>
+			(FlowDirection == ItemsDirection.RightToLeft || FlowDirection == ItemsDirection.LeftToRight) ?
 				MeasureWhenHorizontal(availableSize) : MeasureWhenVertical(availableSize);
-		}
 
-		#endregion		
+		#endregion
 
 		#region Private static methods
 
