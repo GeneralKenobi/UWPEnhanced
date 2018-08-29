@@ -27,17 +27,7 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Backing store for <see cref="UnderlyingPanel"/>
 		/// </summary>
-		private ItemsContainerPanel _UnderlyingPanel = null;
-
-		#endregion
-
-		#region Private properties
-
-		/// <summary>
-		/// The <see cref="ItemsContainerPanel"/> that is associated with this control
-		/// </summary>
-		private ItemsContainerPanel UnderlyingPanel => (_UnderlyingPanel != null || this.TryFindChild(out _UnderlyingPanel)) ?
-			_UnderlyingPanel : null;
+		private ItemsContainerPanel mUnderlyingPanel = null;
 
 		#endregion
 
@@ -93,19 +83,25 @@ namespace UWPEnhanced.Controls
 			DependencyProperty.Register(nameof(FlowDirection), typeof(ItemsDirection),
 			typeof(ItemsContainer), new PropertyMetadata(DefaultFlowDirection, DirectionChanged));
 
-		#endregion
+		#endregion		
 
 		#region Private Methods
 
 		/// <summary>
-		/// When the control is loaded assigns the first <see cref="ItemSpacing"/> value to the <see cref="UnderlyingPanel"/>
+		/// Checks whether <see cref="ItemsControl.ItemsPanelRoot"/> is a <see cref="ItemsContainerPanel"/>, if so assigns it to
+		/// <see cref="mUnderlyingPanel"/> and assigns initial dependency property values to it
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void ItemsContainerLoaded(object sender, RoutedEventArgs e)
 		{
-			UpdateDirectionOnUnderylingPanel();
-			UpdateItemSpacingOnUnderylingPanel();
+			if (ItemsPanelRoot is ItemsContainerPanel container)
+			{
+				mUnderlyingPanel = container;
+
+				UpdateDirectionOnUnderylingPanel();
+				UpdateItemSpacingOnUnderylingPanel();
+			}
 		}
 
 		/// <summary>
@@ -113,9 +109,9 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private void UpdateItemSpacingOnUnderylingPanel()
 		{			
-			if (UnderlyingPanel != null)
+			if (mUnderlyingPanel != null)
 			{
-				UnderlyingPanel.ItemSpacing = ItemSpacing;				
+				mUnderlyingPanel.ItemSpacing = ItemSpacing;				
 			}
 		}
 
@@ -124,9 +120,9 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private void UpdateDirectionOnUnderylingPanel()
 		{
-			if (UnderlyingPanel != null)
+			if (mUnderlyingPanel != null)
 			{
-				UnderlyingPanel.FlowDirection = FlowDirection;				
+				mUnderlyingPanel.FlowDirection = FlowDirection;				
 			}
 		}
 
