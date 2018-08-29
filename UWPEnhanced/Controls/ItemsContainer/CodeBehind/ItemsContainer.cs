@@ -35,12 +35,12 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// The default spacing between items
 		/// </summary>
-		public static double DefaultItemSpacing => 5;
+		public static double DefaultItemSpacing { get; } = 5;
 
 		/// <summary>
 		/// The default direction of items
 		/// </summary>
-		public static ItemsDirection DefaultFlowDirection => ItemsDirection.TopToBottom;
+		public static ItemsDirection DefaultFlowDirection { get; } = ItemsDirection.TopToBottom;
 
 		#endregion
 
@@ -106,6 +106,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region UseAllAvailableSpace Dependency Property
+
+		/// <summary>
+		/// If true, uses all available space rather than only the minimum required to present all children
+		/// </summary>
+		public bool UseAllAvailableSpace
+		{
+			get => (bool)GetValue(UseAllAvailableSpaceProperty);
+			set => SetValue(UseAllAvailableSpaceProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="UseAllAvailableSpace"/>
+		/// </summary>
+		public static readonly DependencyProperty UseAllAvailableSpaceProperty =
+			DependencyProperty.Register(nameof(UseAllAvailableSpace), typeof(bool),
+			typeof(ItemsContainer), new PropertyMetadata(default(bool), UseAllAvailableSpaceChanged));
+
+		#endregion
+
 		#region Private Methods
 
 		/// <summary>
@@ -123,11 +143,23 @@ namespace UWPEnhanced.Controls
 				UpdateDirectionOnUnderylingPanel();
 				UpdateItemSpacingOnUnderylingPanel();
 				UpdateUniformSpacingOnUnderylingPanel();
+				UpdateUseAllAvailableSpaceOnUnderylingPanel();
 			}
 		}
 
 		/// <summary>
-		/// Assigns the spacing to the <see cref="UnderlyingPanel"/> and forces it to update UI
+		/// Assigns the <see cref="UseAllAvailableSpace"/> value to the <see cref="UnderlyingPanel"/> and forces it to update UI
+		/// </summary>
+		private void UpdateUseAllAvailableSpaceOnUnderylingPanel()
+		{
+			if (mUnderlyingPanel != null)
+			{
+				mUnderlyingPanel.UseAllAvailableSpace = UseAllAvailableSpace;
+			}
+		}
+
+		/// <summary>
+		/// Assigns the <see cref="UniformSpacing"/> value to the <see cref="UnderlyingPanel"/> and forces it to update UI
 		/// </summary>
 		private void UpdateUniformSpacingOnUnderylingPanel()
 		{
@@ -138,7 +170,7 @@ namespace UWPEnhanced.Controls
 		}
 
 		/// <summary>
-		/// Assigns the spacing to the <see cref="UnderlyingPanel"/> and forces it to update UI
+		/// Assigns the <see cref="ItemSpacing"/> to the <see cref="UnderlyingPanel"/> and forces it to update UI
 		/// </summary>
 		private void UpdateItemSpacingOnUnderylingPanel()
 		{			
@@ -149,7 +181,7 @@ namespace UWPEnhanced.Controls
 		}
 
 		/// <summary>
-		/// Assigns the spacing to the <see cref="UnderlyingPanel"/> and forces it to update UI
+		/// Assigns the <see cref="FlowDirection"/> to the <see cref="UnderlyingPanel"/> and forces it to update UI
 		/// </summary>
 		private void UpdateDirectionOnUnderylingPanel()
 		{
@@ -162,6 +194,19 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region Private static methods
+
+		/// <summary>
+		/// Callback for when <see cref="UseAllAvailableSpaceProperty"/> changes
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="e"></param>
+		private static void UseAllAvailableSpaceChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		{
+			if (s is ItemsContainer container && e.NewValue != e.OldValue)
+			{
+				container.UpdateUseAllAvailableSpaceOnUnderylingPanel();
+			}
+		}
 
 		/// <summary>
 		/// Callback for when <see cref="UniformSpacingProperty"/> changes
@@ -190,7 +235,7 @@ namespace UWPEnhanced.Controls
 		}
 
 		/// <summary>
-		/// Callback for when <see cref="ItemSpacingProperty"/> changes
+		/// Callback for when <see cref="FlowDirectionProperty"/> changes
 		/// </summary>
 		/// <param name="s"></param>
 		/// <param name="e"></param>

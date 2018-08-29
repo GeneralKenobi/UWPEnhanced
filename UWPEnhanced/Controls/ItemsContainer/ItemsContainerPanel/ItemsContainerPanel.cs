@@ -48,7 +48,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty ItemSpacingProperty =
 			DependencyProperty.Register(nameof(ItemSpacing), typeof(double),
-			typeof(ItemsContainerPanel), new PropertyMetadata(ItemsContainer.DefaultItemSpacing, ItemSpacingChanged));
+			typeof(ItemsContainerPanel), new PropertyMetadata(ItemsContainer.DefaultItemSpacing, MeasureDeterminingPropertyChanged));
 
 		#endregion
 
@@ -70,7 +70,27 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty UniformSpacingProperty =
 			DependencyProperty.Register(nameof(UniformSpacing), typeof(bool),
-			typeof(ItemsContainerPanel), new PropertyMetadata(default(bool), ItemSpacingChanged));
+			typeof(ItemsContainerPanel), new PropertyMetadata(default(bool), MeasureDeterminingPropertyChanged));
+
+		#endregion
+
+		#region UseAllAvailableSpace Dependency Property
+
+		/// <summary>
+		/// If true, uses all available space rather than only the minimum required to present all children
+		/// </summary>
+		public bool UseAllAvailableSpace
+		{
+			get => (bool)GetValue(UseAllAvailableSpaceProperty);
+			set => SetValue(UseAllAvailableSpaceProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="UseAllAvailableSpace"/>
+		/// </summary>
+		public static readonly DependencyProperty UseAllAvailableSpaceProperty =
+			DependencyProperty.Register(nameof(UseAllAvailableSpace), typeof(bool),
+			typeof(ItemsContainerPanel), new PropertyMetadata(default(bool), MeasureDeterminingPropertyChanged));
 
 		#endregion
 
@@ -347,9 +367,22 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		/// <param name="availableSize"></param>
 		/// <returns></returns>
-		protected override Size MeasureOverride(Size availableSize) =>
-			(FlowDirection == ItemsDirection.RightToLeft || FlowDirection == ItemsDirection.LeftToRight) ?
+		protected override Size MeasureOverride(Size availableSize)
+		{
+			// Get the required size
+			var requiredSize = (FlowDirection == ItemsDirection.RightToLeft || FlowDirection == ItemsDirection.LeftToRight) ?
 				MeasureWhenHorizontal(availableSize) : MeasureWhenVertical(availableSize);
+
+			// If using all available space is required
+			if (UseAllAvailableSpace)
+			{
+				// If a dimension has more length available than required, use that length
+				requiredSize =
+					new Size(Math.Max(requiredSize.Width, availableSize.Width), Math.Max(requiredSize.Height, availableSize.Height));
+			}
+
+			return requiredSize;
+		}
 
 		#endregion
 
@@ -360,7 +393,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		/// <param name="s"></param>
 		/// <param name="e"></param>
-		private static void ItemSpacingChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		private static void MeasureDeterminingPropertyChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
 		{
 			if(s is ItemsContainerPanel panel && e.NewValue != e.OldValue)
 			{
