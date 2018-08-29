@@ -131,18 +131,34 @@ namespace UWPEnhanced.Controls
 					case ItemsDirection.TopToBottom:
 					case ItemsDirection.BottomToTop:
 						{
-							// The spacing is equal to the available height minus total height of visible children
-							return (availableSize.Height - Children.Where((child) => child.Visibility == Visibility.Visible).
-								Sum((element) => element.DesiredSize.Height));
+							if (double.IsInfinity(availableSize.Height))
+							{
+								// If there's an unlimited amount of space it's not possible to determine uniform spacing, return 0
+								return 0;
+							}
+							else
+							{
+								// The spacing is equal to the available height minus total height of visible children
+								return (availableSize.Height - Children.Where((child) => child.Visibility == Visibility.Visible).
+									Sum((element) => element.DesiredSize.Height));
+							}
 						}
 
 					// In case it's a horizontal arrangement
 					case ItemsDirection.LeftToRight:
 					case ItemsDirection.RightToLeft:
 						{
-							// The spacing is equal to the available width minus total width of visible children
-							return (availableSize.Width - Children.Where((child) => child.Visibility == Visibility.Visible).
-								Sum((element) => element.DesiredSize.Width));
+							if (double.IsInfinity(availableSize.Width))
+							{
+								// If there's an unlimited amount of space it's not possible to determine uniform spacing, return 0
+								return 0;
+							}
+							else
+							{
+								// The spacing is equal to the available width minus total width of visible children
+								return (availableSize.Width - Children.Where((child) => child.Visibility == Visibility.Visible).
+									Sum((element) => element.DesiredSize.Width));
+							}
 						}
 											
 					default:
