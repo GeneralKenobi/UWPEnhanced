@@ -39,7 +39,12 @@
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 
+						<!-- Container for vertical axis labels -->
+						<controls:ItemsContainer FlowDirection="TopToBottom"
+							UniformSpacing="True"
+							Margin="0 -8 0 -5"/>
 
+						<!-- Container for horizontal axis labels -->
 						<controls:ItemsContainer Grid.Row="1"
 							Grid.Column="1"
 							FlowDirection="LeftToRight"
