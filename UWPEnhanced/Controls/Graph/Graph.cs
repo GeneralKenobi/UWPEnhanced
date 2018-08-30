@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpEnhanced.Maths;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace UWPEnhanced.Controls
 		}
 
 		#endregion
-		
+
 		#region Events
 
 		/// <summary>
@@ -61,6 +62,18 @@ namespace UWPEnhanced.Controls
 		/// TranslateTransform. Their position relative to each other is not changed. 0,0 is considered to be the bottom left corner.
 		/// </summary>
 		public IEnumerable<KeyValuePair<double, double>> DataDisplayPoints { get; private set; }
+
+		/// <summary>
+		/// Collection of points obtained by transforming <see cref="Data"/> so that they may be used to visualize the data with
+		/// TranslateTransform. Their position relative to each other is not changed. 0,0 is considered to be the bottom left corner.
+		/// </summary>
+		public IEnumerable<string> HorizontalAxisLabels { get; private set; }
+
+		/// <summary>
+		/// Collection of points obtained by transforming <see cref="Data"/> so that they may be used to visualize the data with
+		/// TranslateTransform. Their position relative to each other is not changed. 0,0 is considered to be the bottom left corner.
+		/// </summary>
+		public IEnumerable<string> VerticalAxisLabels { get; private set; }
 
 		#endregion
 
@@ -161,7 +174,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty XAxisLabelsCountProperty =
 			DependencyProperty.Register(nameof(XAxisLabelsCount), typeof(int),
-			typeof(Graph), new PropertyMetadata(default(int)));
+			typeof(Graph), new PropertyMetadata(5));
 
 		#endregion
 
@@ -181,7 +194,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty YAxisLabelsCountProperty =
 			DependencyProperty.Register(nameof(YAxisLabelsCount), typeof(int),
-			typeof(Graph), new PropertyMetadata(default(int)));
+			typeof(Graph), new PropertyMetadata(5));
 
 		#endregion
 
@@ -243,7 +256,7 @@ namespace UWPEnhanced.Controls
 		private void TransformAndUpdateData()
 		{
 			// Check if graph area was found
-			if(_GraphArea == null)
+			if (_GraphArea == null)
 			{
 				return;
 			}
@@ -255,7 +268,7 @@ namespace UWPEnhanced.Controls
 			// coordinates are the left, bottom corner of the point)
 			var graphAreaWidth = _GraphArea.ActualWidth - PointDiameter;
 			var graphAreaHeight = _GraphArea.ActualHeight - PointDiameter;
-			
+
 			// Get the minimum values on both axes
 			var minX = Data.Min((point) => point.Key);
 			var minY = Data.Min((point) => point.Value);
@@ -273,6 +286,18 @@ namespace UWPEnhanced.Controls
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DataDisplayPoints)));
 		}
 
+		/// <summary>
+		/// Generates horizontal axis labels for the current data
+		/// </summary>
+		private void GenerateHorizontalAxisLabels() => HorizontalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Key),
+			Data.Max((x) => x.Key), XAxisLabelsCount).Select((x) => x.ToString());
+
+		/// <summary>
+		/// Generates vertical axis labels for the current data
+		/// </summary>
+		private void GenerateVerticalAxisLabels() => VerticalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Value),
+			Data.Max((x) => x.Value), YAxisLabelsCount).Select((x) => x.ToString());
+		
 		#endregion
 
 		#region Protected methods
@@ -302,6 +327,8 @@ namespace UWPEnhanced.Controls
 			if(sender is Graph g && e.NewValue is IEnumerable<KeyValuePair<double, double>> nv)
 			{
 				g.TransformAndUpdateData();
+				g.GenerateHorizontalAxisLabels();
+				g.GenerateVerticalAxisLabels();
 			}
 		}
 

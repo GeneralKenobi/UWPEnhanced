@@ -42,7 +42,8 @@
 						<!-- Container for vertical axis labels -->
 						<controls:ItemsContainer FlowDirection="TopToBottom"
 							UniformSpacing="True"
-							Margin="0 -8 0 -5"/>
+							Margin="0 -8 0 -5"
+							ItemsSource="{Binding VerticalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
 						<!-- Container for horizontal axis labels -->
 						<controls:ItemsContainer Grid.Row="1"
@@ -50,7 +51,8 @@
 							FlowDirection="LeftToRight"
 							UniformSpacing="True"
 							HorizontalAlignment="Stretch"
-							Margin="0 0 -15 0"/>
+							Margin="0 0 -15 0"
+							ItemsSource="{Binding HorizontalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
 						<!-- Contains the core part of the graph -->
 						<Border Name="PART_GraphArea"
