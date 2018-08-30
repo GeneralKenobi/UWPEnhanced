@@ -174,7 +174,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty HorziontalAxisLabelsCountProperty =
 			DependencyProperty.Register(nameof(HorizontalAxisLabelsCount), typeof(int),
-			typeof(Graph), new PropertyMetadata(5));
+			typeof(Graph), new PropertyMetadata(DefaultLabelsCount));
 
 		#endregion
 
@@ -194,7 +194,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty VerticalAxisLabelsCountProperty =
 			DependencyProperty.Register(nameof(VerticalAxisLabelsCount), typeof(int),
-			typeof(Graph), new PropertyMetadata(5));
+			typeof(Graph), new PropertyMetadata(DefaultLabelsCount));
 
 		#endregion
 
@@ -311,6 +311,15 @@ namespace UWPEnhanced.Controls
 
 			SetGraphArea((GetTemplateChild(mGraphAreaName) as FrameworkElement) ?? throw new Exception("Graph area control not found"));
 		}
+
+		#endregion
+
+		#region Public static properties
+
+		/// <summary>
+		/// The default number of labels on a <see cref="Graph"/>
+		/// </summary>
+		public static int DefaultLabelsCount { get; } = 5;
 
 		#endregion
 
