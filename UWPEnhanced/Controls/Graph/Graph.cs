@@ -158,42 +158,42 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region XAxisLabelsCount Dependency Property
+		#region HorizontalAxisLabelsCount Dependency Property
 
 		/// <summary>
 		/// Number of labels present on X axis
 		/// </summary>
-		public int XAxisLabelsCount
+		public int HorizontalAxisLabelsCount
 		{
-			get => (int)GetValue(XAxisLabelsCountProperty);
-			set => SetValue(XAxisLabelsCountProperty, value);
+			get => (int)GetValue(HorziontalAxisLabelsCountProperty);
+			set => SetValue(HorziontalAxisLabelsCountProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="XAxisLabelsCount"/>
+		/// Backing store for <see cref="HorizontalAxisLabelsCount"/>
 		/// </summary>
-		public static readonly DependencyProperty XAxisLabelsCountProperty =
-			DependencyProperty.Register(nameof(XAxisLabelsCount), typeof(int),
+		public static readonly DependencyProperty HorziontalAxisLabelsCountProperty =
+			DependencyProperty.Register(nameof(HorizontalAxisLabelsCount), typeof(int),
 			typeof(Graph), new PropertyMetadata(5));
 
 		#endregion
 
-		#region YAxisLabelsCount Dependency Property
+		#region VerticalAxisLabelsCount Dependency Property
 
 		/// <summary>
 		/// Number of labels present on Y axis		
 		/// </summary>
-		public int YAxisLabelsCount
+		public int VerticalAxisLabelsCount
 		{
-			get => (int)GetValue(YAxisLabelsCountProperty);
-			set => SetValue(YAxisLabelsCountProperty, value);
+			get => (int)GetValue(VerticalAxisLabelsCountProperty);
+			set => SetValue(VerticalAxisLabelsCountProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="YAxisLabelsCount"/>
+		/// Backing store for <see cref="VerticalAxisLabelsCount"/>
 		/// </summary>
-		public static readonly DependencyProperty YAxisLabelsCountProperty =
-			DependencyProperty.Register(nameof(YAxisLabelsCount), typeof(int),
+		public static readonly DependencyProperty VerticalAxisLabelsCountProperty =
+			DependencyProperty.Register(nameof(VerticalAxisLabelsCount), typeof(int),
 			typeof(Graph), new PropertyMetadata(5));
 
 		#endregion
@@ -290,13 +290,13 @@ namespace UWPEnhanced.Controls
 		/// Generates horizontal axis labels for the current data
 		/// </summary>
 		private void GenerateHorizontalAxisLabels() => HorizontalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Key),
-			Data.Max((x) => x.Key), XAxisLabelsCount).Select((x) => x.ToString());
+			Data.Max((x) => x.Key), HorizontalAxisLabelsCount).Select((x) => x.ToString());
 
 		/// <summary>
 		/// Generates vertical axis labels for the current data
 		/// </summary>
 		private void GenerateVerticalAxisLabels() => VerticalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Value),
-			Data.Max((x) => x.Value), YAxisLabelsCount).Select((x) => x.ToString());
+			Data.Max((x) => x.Value), VerticalAxisLabelsCount).Select((x) => x.ToString());
 		
 		#endregion
 
