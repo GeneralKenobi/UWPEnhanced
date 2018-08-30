@@ -258,6 +258,46 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region Title Dependency Property
+
+		/// <summary>
+		/// Text to display above the graph as its title
+		/// </summary>
+		public string Title
+		{
+			get => (string)GetValue(TitleProperty);
+			set => SetValue(TitleProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="Title"/>
+		/// </summary>
+		public static readonly DependencyProperty TitleProperty =
+			DependencyProperty.Register(nameof(Title), typeof(string),
+			typeof(Graph), new PropertyMetadata(default(string)));
+
+		#endregion
+
+		#region TitleFontSize Dependency Property
+
+		/// <summary>
+		/// Font size of the title
+		/// </summary>
+		public double TitleFontSize
+		{
+			get => (double)GetValue(TitleFontSizeProperty);
+			set => SetValue(TitleFontSizeProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="TitleFontSize"/>
+		/// </summary>
+		public static readonly DependencyProperty TitleFontSizeProperty =
+			DependencyProperty.Register(nameof(TitleFontSize), typeof(double),
+			typeof(Graph), new PropertyMetadata(default(double)));
+
+		#endregion
+
 		#region Private methods
 
 		/// <summary>

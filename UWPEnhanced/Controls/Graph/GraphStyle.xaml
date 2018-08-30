@@ -8,6 +8,7 @@
 
 	<Style TargetType="local:Graph">
 		<Setter Property="PointDiameter" Value="5"/>
+		<Setter Property="TitleFontSize" Value="26"/>
 		<Setter Property="Background" Value="LightGray"/>
 		<Setter Property="DataBackground" Value="White"/>
 		<Setter Property="DataForeground" Value="Black"/>
@@ -34,7 +35,8 @@
 						</Grid.RowDefinitions>
 
 						<!-- Presents title of the graph -->
-						<TextBlock Text="Graph Title"
+						<TextBlock Text="{TemplateBinding Title}"
+							FontSize="{TemplateBinding TitleFontSize}"
 							Foreground="{TemplateBinding Foreground}"
 							FontFamily="{TemplateBinding FontFamily}"
 							HorizontalAlignment="Center"/>
