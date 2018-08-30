@@ -17,106 +17,126 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Graph">
-					<Grid x:Name="RootGrid"
-						Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
+
+					<!-- Root container -->
+					<Grid Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
 						Padding="10 20 20 10"
-						ColumnSpacing="10"
-						RowSpacing="10">
+						VerticalAlignment="Stretch"
+						RowSpacing="20">
 
 						<Grid.RowDefinitions>
-							<!-- Data display -->
+							<!-- Graph title -->
+							<RowDefinition Height="Auto"/>
+							<!-- The rest of the graph -->
 							<RowDefinition Height="*"/>
-							<!-- Axis labels -->
-							<RowDefinition Height="Auto"/>
-							<!-- Axis description/unit -->
-							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
 
-						<Grid.ColumnDefinitions>
-							<!-- Axis description/unit -->
-							<ColumnDefinition Width="Auto"/>
-							<!-- Axis description -->
-							<ColumnDefinition Width="Auto"/>
-							<!-- Data display -->
-							<ColumnDefinition Width="*"/>
-						</Grid.ColumnDefinitions>
-
-						<!-- Horizontal axis description -->
-						<TextBlock Text="{TemplateBinding HorizontalAxisDescription}"
+						<!-- Presents title of the graph -->
+						<TextBlock Text="Graph Title"
 							Foreground="{TemplateBinding Foreground}"
-							FontSize="{TemplateBinding FontSize}"
 							FontFamily="{TemplateBinding FontFamily}"
-							Grid.Row="2"
-							Grid.Column="2"
 							HorizontalAlignment="Center"/>
 
-						<!-- Vertical axis description -->
-						<!-- TODO: Make the text appear rotated 90 degrees -->
-						<TextBlock Text="{TemplateBinding VerticalAxisDescription}"
-							Foreground="{TemplateBinding Foreground}"
-							FontSize="{TemplateBinding FontSize}"
-							FontFamily="{TemplateBinding FontFamily}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Left"
-							FlowDirection="RightToLeft"/>
+						<!-- Contains the rest of the graph -->
+						<Grid ColumnSpacing="10"
+							RowSpacing="10"
+							Grid.Row="1">
 
-						<!-- Container for vertical axis labels -->
-						<controls:ItemsContainer FlowDirection="TopToBottom"
-							Grid.Column="1"
-							UniformSpacing="True"
-							Margin="0 -8 0 -5"
-							ItemsSource="{Binding VerticalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+							<Grid.RowDefinitions>
+								<!-- Data display -->
+								<RowDefinition Height="*"/>
+								<!-- Axis labels -->
+								<RowDefinition Height="Auto"/>
+								<!-- Axis description/unit -->
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
 
-						<!-- Container for horizontal axis labels -->
-						<controls:ItemsContainer Grid.Row="1"
-							Grid.Column="2"
-							FlowDirection="LeftToRight"
-							UniformSpacing="True"
-							HorizontalAlignment="Stretch"
-							Margin="0 0 -15 0"
-							ItemsSource="{Binding HorizontalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+							<Grid.ColumnDefinitions>
+								<!-- Axis description/unit -->
+								<ColumnDefinition Width="Auto"/>
+								<!-- Axis description -->
+								<ColumnDefinition Width="Auto"/>
+								<!-- Data display -->
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
 
-						<!-- Contains the core part of the graph -->
-						<Border Name="PART_GraphArea"
-							DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
-							Grid.Column="2"
-							Background="{TemplateBinding DataBackground}">
+							<!-- Horizontal axis description -->
+							<TextBlock Text="{TemplateBinding HorizontalAxisDescription}"
+								Foreground="{TemplateBinding Foreground}"
+								FontSize="{TemplateBinding FontSize}"
+								FontFamily="{TemplateBinding FontFamily}"
+								Grid.Row="2"
+								Grid.Column="2"
+								HorizontalAlignment="Center"/>
+
+							<!-- Vertical axis description -->
+							<!-- TODO: Make the text appear rotated 90 degrees -->
+							<TextBlock Text="{TemplateBinding VerticalAxisDescription}"
+								Foreground="{TemplateBinding Foreground}"
+								FontSize="{TemplateBinding FontSize}"
+								FontFamily="{TemplateBinding FontFamily}"
+								VerticalAlignment="Center"
+								HorizontalAlignment="Left"
+								FlowDirection="RightToLeft"/>
+
+							<!-- Container for vertical axis labels -->
+							<controls:ItemsContainer FlowDirection="BottomToTop"
+								Grid.Column="1"
+								UniformSpacing="True"
+								Margin="0 -8 0 -5"
+								ItemsSource="{Binding VerticalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+
+							<!-- Container for horizontal axis labels -->
+							<controls:ItemsContainer Grid.Row="1"
+								Grid.Column="2"
+								FlowDirection="LeftToRight"
+								UniformSpacing="True"
+								HorizontalAlignment="Stretch"
+								Margin="0 0 -15 0"
+								ItemsSource="{Binding HorizontalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+
+							<!-- Contains the core part of the graph -->
+							<Border Name="PART_GraphArea"
+								DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+								Grid.Column="2"
+								Background="{TemplateBinding DataBackground}">
 							
-							<!-- Presents the data points -->
-							<ItemsControl Name="DataPresenter"								
-								ItemsSource="{Binding DataDisplayPoints}"
-								Foreground="{TemplateBinding DataForeground}">								
+								<!-- Presents the data points -->
+								<ItemsControl Name="DataPresenter"								
+									ItemsSource="{Binding DataDisplayPoints}"
+									Foreground="{TemplateBinding DataForeground}">								
 
-								<ItemsControl.ItemsPanel>
-									<ItemsPanelTemplate>
-										<Grid />
-									</ItemsPanelTemplate>
-								</ItemsControl.ItemsPanel>
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<Grid />
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>
 
-								<ItemsControl.ItemTemplate>
-									<DataTemplate>
-										<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
-											Height="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
-											Fill="{Binding ElementName=DataPresenter, Path=Foreground}"
-											RenderTransformOrigin="0 1"
-											VerticalAlignment="Bottom"
-											HorizontalAlignment="Left">
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
+												Height="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
+												Fill="{Binding ElementName=DataPresenter, Path=Foreground}"
+												RenderTransformOrigin="0 1"
+												VerticalAlignment="Bottom"
+												HorizontalAlignment="Left">
 
-											<Ellipse.RenderTransform>
-												<!-- Positions the point on the x-y axes -->
-												<TranslateTransform X="{Binding Key}"
-													Y="{Binding Value, Converter={converters:ProductMEC Multiplier=-1}}"/>
-											</Ellipse.RenderTransform>
+												<Ellipse.RenderTransform>
+													<!-- Positions the point on the x-y axes -->
+													<TranslateTransform X="{Binding Key}"
+														Y="{Binding Value, Converter={converters:ProductMEC Multiplier=-1}}"/>
+												</Ellipse.RenderTransform>
 										
-										</Ellipse>
-									</DataTemplate>							
-								</ItemsControl.ItemTemplate>
+											</Ellipse>
+										</DataTemplate>							
+									</ItemsControl.ItemTemplate>
 
-							</ItemsControl>
-						</Border>
+								</ItemsControl>
+							</Border>
 
+						</Grid>
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
