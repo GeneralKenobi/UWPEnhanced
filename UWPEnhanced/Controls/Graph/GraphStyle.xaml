@@ -28,26 +28,50 @@
 						<Grid.RowDefinitions>
 							<!-- Data display -->
 							<RowDefinition Height="*"/>
-							<!-- Axis description -->
+							<!-- Axis labels -->
+							<RowDefinition Height="Auto"/>
+							<!-- Axis description/unit -->
 							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
 
 						<Grid.ColumnDefinitions>
+							<!-- Axis description/unit -->
+							<ColumnDefinition Width="Auto"/>
 							<!-- Axis description -->
 							<ColumnDefinition Width="Auto"/>
 							<!-- Data display -->
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 
+						<!-- Horizontal axis description -->
+						<TextBlock Text="Horizontal Axis"
+							Foreground="{TemplateBinding Foreground}"
+							FontSize="{TemplateBinding FontSize}"
+							FontFamily="{TemplateBinding FontFamily}"
+							Grid.Row="2"
+							Grid.Column="2"
+							HorizontalAlignment="Center"/>
+
+						<!-- Vertical axis description -->
+						<!-- TODO: Make the text appear rotated 90 degrees -->
+						<TextBlock Text="Vertical Axis"
+							Foreground="{TemplateBinding Foreground}"
+							FontSize="{TemplateBinding FontSize}"
+							FontFamily="{TemplateBinding FontFamily}"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Left"
+							FlowDirection="RightToLeft"/>
+
 						<!-- Container for vertical axis labels -->
 						<controls:ItemsContainer FlowDirection="TopToBottom"
+							Grid.Column="1"
 							UniformSpacing="True"
 							Margin="0 -8 0 -5"
 							ItemsSource="{Binding VerticalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
 						<!-- Container for horizontal axis labels -->
 						<controls:ItemsContainer Grid.Row="1"
-							Grid.Column="1"
+							Grid.Column="2"
 							FlowDirection="LeftToRight"
 							UniformSpacing="True"
 							HorizontalAlignment="Stretch"
@@ -57,12 +81,11 @@
 						<!-- Contains the core part of the graph -->
 						<Border Name="PART_GraphArea"
 							DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
-							Grid.Column="1"
+							Grid.Column="2"
 							Background="{TemplateBinding DataBackground}">
 							
 							<!-- Presents the data points -->
-							<ItemsControl Name="DataPresenter"
-								Grid.Column="1"
+							<ItemsControl Name="DataPresenter"								
 								ItemsSource="{Binding DataDisplayPoints}"
 								Foreground="{TemplateBinding DataForeground}">								
 
