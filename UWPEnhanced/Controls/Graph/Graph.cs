@@ -165,16 +165,16 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public int HorizontalAxisLabelsCount
 		{
-			get => (int)GetValue(HorziontalAxisLabelsCountProperty);
-			set => SetValue(HorziontalAxisLabelsCountProperty, value);
+			get => (int)GetValue(HorizontalAxisLabelsCountProperty);
+			set => SetValue(HorizontalAxisLabelsCountProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="HorizontalAxisLabelsCount"/>
+		/// Backing store for <see cref="VerticalAxisLabelsCount"/>
 		/// </summary>
-		public static readonly DependencyProperty HorziontalAxisLabelsCountProperty =
+		public static readonly DependencyProperty HorizontalAxisLabelsCountProperty =
 			DependencyProperty.Register(nameof(HorizontalAxisLabelsCount), typeof(int),
-			typeof(Graph), new PropertyMetadata(DefaultLabelsCount, new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+			typeof(Graph), new PropertyMetadata(default(int), new PropertyChangedCallback(LabelConfigurationChangedCallback)));
 
 		#endregion
 
@@ -194,7 +194,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty VerticalAxisLabelsCountProperty =
 			DependencyProperty.Register(nameof(VerticalAxisLabelsCount), typeof(int),
-			typeof(Graph), new PropertyMetadata(DefaultLabelsCount, new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+			typeof(Graph), new PropertyMetadata(default(int), new PropertyChangedCallback(LabelConfigurationChangedCallback)));
 
 		#endregion
 
@@ -214,7 +214,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty RoundLabelToDigitProperty =
 			DependencyProperty.Register(nameof(RoundLabelToDigit), typeof(int),
-			typeof(Graph), new PropertyMetadata(DefaultRoundLabelToDigit, new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+			typeof(Graph), new PropertyMetadata(default(int), new PropertyChangedCallback(LabelConfigurationChangedCallback)));
 
 		#endregion
 
@@ -398,6 +398,19 @@ namespace UWPEnhanced.Controls
 		private void GenerateVerticalAxisLabels() => VerticalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Value),
 			Data.Max((x) => x.Value), VerticalAxisLabelsCount).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
 		
+		/// <summary>
+		/// Generates horizontal and vertical labels using <see cref="GenerateHorizontalAxisLabels"/> and
+		/// <see cref="GenerateVerticalAxisLabels"/>
+		/// </summary>
+		private void GenerateLabels()
+		{
+			if(Data != null)
+			{
+				GenerateHorizontalAxisLabels();
+				GenerateVerticalAxisLabels();
+			}
+		}
+
 		#endregion
 
 		#region Protected methods
@@ -414,20 +427,6 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region Public static properties
-
-		/// <summary>
-		/// The default number of labels on a <see cref="Graph"/>
-		/// </summary>
-		public static int DefaultLabelsCount => 5;
-
-		/// <summary>
-		/// The defualt digit to round values in labels to
-		/// </summary>
-		public static int DefaultRoundLabelToDigit => 4;
-
-		#endregion
-
 		#region Private static methods
 
 		/// <summary>
@@ -439,8 +438,7 @@ namespace UWPEnhanced.Controls
 		{
 			if (sender is Graph g && e.NewValue != e.OldValue)
 			{
-				g.GenerateHorizontalAxisLabels();
-				g.GenerateVerticalAxisLabels();
+				g.GenerateLabels();
 			}
 		}
 
@@ -455,8 +453,7 @@ namespace UWPEnhanced.Controls
 			if(sender is Graph g && e.NewValue is IEnumerable<KeyValuePair<double, double>> nv)
 			{
 				g.TransformAndUpdateData();
-				g.GenerateHorizontalAxisLabels();
-				g.GenerateVerticalAxisLabels();
+				g.GenerateLabels();
 			}
 		}
 

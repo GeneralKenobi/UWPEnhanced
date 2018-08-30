@@ -9,6 +9,9 @@
 	<Style TargetType="local:Graph">
 		<Setter Property="PointDiameter" Value="5"/>
 		<Setter Property="TitleFontSize" Value="26"/>
+		<Setter Property="RoundLabelToDigit" Value="4"/>
+		<Setter Property="VerticalAxisLabelsCount" Value="5"/>
+		<Setter Property="HorizontalAxisLabelsCount" Value="5"/>
 		<Setter Property="Background" Value="LightGray"/>
 		<Setter Property="DataBackground" Value="White"/>
 		<Setter Property="DataForeground" Value="Black"/>
