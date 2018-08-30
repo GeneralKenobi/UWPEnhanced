@@ -218,6 +218,46 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region HorizontalAxisDescription Dependency Property
+
+		/// <summary>
+		/// Description displayed below the horizontal axis (name of the quantity, unit, etc.)
+		/// </summary>
+		public string HorizontalAxisDescription
+		{
+			get => (string)GetValue(HorizontalAxisDescriptionProperty);
+			set => SetValue(HorizontalAxisDescriptionProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="HorizontalAxisDescription"/>
+		/// </summary>
+		public static readonly DependencyProperty HorizontalAxisDescriptionProperty =
+			DependencyProperty.Register(nameof(HorizontalAxisDescription), typeof(string),
+			typeof(Graph), new PropertyMetadata(default(string)));
+
+		#endregion
+
+		#region VerticalAxisDescription Dependency Property
+
+		/// <summary>
+		/// Description displayed on the left of the vertical axis (name of the quantity, unit, etc.)
+		/// </summary>
+		public string VerticalAxisDescription
+		{
+			get => (string)GetValue(VerticalAxisDescriptionProperty);
+			set => SetValue(VerticalAxisDescriptionProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="VerticalAxisDescription"/>
+		/// </summary>
+		public static readonly DependencyProperty VerticalAxisDescriptionProperty =
+			DependencyProperty.Register(nameof(VerticalAxisDescription), typeof(string),
+			typeof(Graph), new PropertyMetadata(default(string)));
+
+		#endregion
+
 		#region Private methods
 
 		/// <summary>

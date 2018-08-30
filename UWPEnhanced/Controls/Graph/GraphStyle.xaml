@@ -44,7 +44,7 @@
 						</Grid.ColumnDefinitions>
 
 						<!-- Horizontal axis description -->
-						<TextBlock Text="Horizontal Axis"
+						<TextBlock Text="{TemplateBinding HorizontalAxisDescription}"
 							Foreground="{TemplateBinding Foreground}"
 							FontSize="{TemplateBinding FontSize}"
 							FontFamily="{TemplateBinding FontFamily}"
@@ -54,7 +54,7 @@
 
 						<!-- Vertical axis description -->
 						<!-- TODO: Make the text appear rotated 90 degrees -->
-						<TextBlock Text="Vertical Axis"
+						<TextBlock Text="{TemplateBinding VerticalAxisDescription}"
 							Foreground="{TemplateBinding Foreground}"
 							FontSize="{TemplateBinding FontSize}"
 							FontFamily="{TemplateBinding FontFamily}"
