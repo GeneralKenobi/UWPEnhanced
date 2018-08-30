@@ -174,7 +174,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty HorziontalAxisLabelsCountProperty =
 			DependencyProperty.Register(nameof(HorizontalAxisLabelsCount), typeof(int),
-			typeof(Graph), new PropertyMetadata(DefaultLabelsCount));
+			typeof(Graph), new PropertyMetadata(DefaultLabelsCount, new PropertyChangedCallback(LabelConfigurationChangedCallback)));
 
 		#endregion
 
@@ -194,7 +194,27 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty VerticalAxisLabelsCountProperty =
 			DependencyProperty.Register(nameof(VerticalAxisLabelsCount), typeof(int),
-			typeof(Graph), new PropertyMetadata(DefaultLabelsCount));
+			typeof(Graph), new PropertyMetadata(DefaultLabelsCount, new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+
+		#endregion
+
+		#region RoundLabelToDigit Dependency Property
+
+		/// <summary>
+		/// Digit to round the values in labels to
+		/// </summary>
+		public int RoundLabelToDigit
+		{
+			get => (int)GetValue(RoundLabelToDigitProperty);
+			set => SetValue(RoundLabelToDigitProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="RoundLabelToDigit"/>
+		/// </summary>
+		public static readonly DependencyProperty RoundLabelToDigitProperty =
+			DependencyProperty.Register(nameof(RoundLabelToDigit), typeof(int),
+			typeof(Graph), new PropertyMetadata(DefaultRoundLabelToDigit, new PropertyChangedCallback(LabelConfigurationChangedCallback)));
 
 		#endregion
 
@@ -290,13 +310,13 @@ namespace UWPEnhanced.Controls
 		/// Generates horizontal axis labels for the current data
 		/// </summary>
 		private void GenerateHorizontalAxisLabels() => HorizontalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Key),
-			Data.Max((x) => x.Key), HorizontalAxisLabelsCount).Select((x) => x.ToString());
+			Data.Max((x) => x.Key), HorizontalAxisLabelsCount).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
 
 		/// <summary>
 		/// Generates vertical axis labels for the current data
 		/// </summary>
 		private void GenerateVerticalAxisLabels() => VerticalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Value),
-			Data.Max((x) => x.Value), VerticalAxisLabelsCount).Select((x) => x.ToString());
+			Data.Max((x) => x.Value), VerticalAxisLabelsCount).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
 		
 		#endregion
 
@@ -319,11 +339,30 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// The default number of labels on a <see cref="Graph"/>
 		/// </summary>
-		public static int DefaultLabelsCount { get; } = 5;
+		public static int DefaultLabelsCount => 5;
+
+		/// <summary>
+		/// The defualt digit to round values in labels to
+		/// </summary>
+		public static int DefaultRoundLabelToDigit => 4;
 
 		#endregion
 
 		#region Private static methods
+
+		/// <summary>
+		/// Callback for when a property that determines appearance of labels changes - updates all labels
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private static void LabelConfigurationChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+		{
+			if (sender is Graph g && e.NewValue != e.OldValue)
+			{
+				g.GenerateHorizontalAxisLabels();
+				g.GenerateVerticalAxisLabels();
+			}
+		}
 
 		/// <summary>
 		/// Callback for when <see cref="Data"/> changes, if new value is the same type as <see cref="Data"/>, calls
