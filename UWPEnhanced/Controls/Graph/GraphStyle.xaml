@@ -4,7 +4,7 @@
 	xmlns:converters="using:UWPEnhanced.ValueConverters"
 	xmlns:controls="using:UWPEnhanced.Controls"
     xmlns:local="using:UWPEnhanced.Controls">
-	
+
 
 	<Style TargetType="local:Graph">
 		<Setter Property="PointDiameter" Value="5"/>
@@ -39,6 +39,8 @@
 							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 
+						<!--#region Graph title-->
+
 						<!-- Presents title of the graph -->
 						<TextBlock Text="{TemplateBinding Title}"
 							Visibility="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={converters:StringToVisibilityMEC}}"
@@ -47,10 +49,16 @@
 							FontFamily="{TemplateBinding FontFamily}"
 							HorizontalAlignment="Center"/>
 
+						<!--#endregion--> 
+
+						<!--#region Rest of the graph-->
+
 						<!-- Contains the rest of the graph -->
 						<Grid ColumnSpacing="10"
 							RowSpacing="10"
 							Grid.Row="1">
+
+							<!--#region  Row and column definitions-->
 
 							<Grid.RowDefinitions>
 								<!-- Data display -->
@@ -69,6 +77,10 @@
 								<!-- Data display -->
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
+
+							<!--#endregion-->
+
+							<!--#region Axes descriptions-->
 
 							<!-- Horizontal axis description -->
 							<TextBlock Text="{TemplateBinding HorizontalAxisDescription}"
@@ -90,6 +102,10 @@
 								VerticalAlignment="Center"
 								HorizontalAlignment="Left"
 								FlowDirection="RightToLeft"/>
+
+							<!--#endregion-->
+
+							<!--#region Axes labels-->
 
 							<!-- Container for vertical axis labels -->
 							<controls:ItemsContainer FlowDirection="BottomToTop"
@@ -116,16 +132,20 @@
 								Margin="-4 0 -8 0"
 								ItemsSource="{Binding HorizontalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
+							<!--#endregion-->
+
+							<!--#region Data display-->
+
 							<!-- Contains the core part of the graph -->
 							<Border Name="PART_GraphArea"
 								DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
 								Grid.Column="2"
 								Background="{TemplateBinding DataBackground}">
-							
+
 								<!-- Presents the data points -->
 								<ItemsControl Name="DataPresenter"								
 									ItemsSource="{Binding DataDisplayPoints}"
-									Foreground="{TemplateBinding DataForeground}">								
+									Foreground="{TemplateBinding DataForeground}">
 
 									<ItemsControl.ItemsPanel>
 										<ItemsPanelTemplate>
@@ -147,15 +167,20 @@
 													<TranslateTransform X="{Binding Key}"
 														Y="{Binding Value, Converter={converters:ProductMEC Multiplier=-1}}"/>
 												</Ellipse.RenderTransform>
-										
+
 											</Ellipse>
-										</DataTemplate>							
+										</DataTemplate>
 									</ItemsControl.ItemTemplate>
 
 								</ItemsControl>
+
 							</Border>
 
+							<!--#endregion-->
+
 						</Grid>
+
+						<!--#endregion--> 
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>

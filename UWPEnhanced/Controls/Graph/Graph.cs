@@ -129,6 +129,8 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region Dependency properties
+
 		#region Data Dependency Property		
 
 		/// <summary>
@@ -389,6 +391,8 @@ namespace UWPEnhanced.Controls
 		public static readonly DependencyProperty AutoLabelVerticalFrequencyProperty =
 			DependencyProperty.Register(nameof(AutoLabelVerticalFrequency), typeof(double),
 			typeof(Graph), new PropertyMetadata(default(double), new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+
+		#endregion
 
 		#endregion
 
