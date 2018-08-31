@@ -20,6 +20,7 @@
 		<Setter Property="Foreground" Value="Black"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="BorderBrush" Value="Black"/>
+		<Setter Property="UseSIPrefixes" Value="True"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Graph">
