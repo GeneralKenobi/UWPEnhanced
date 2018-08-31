@@ -49,6 +49,11 @@ namespace UWPEnhanced.ValueConverters
 			/// <returns></returns>
 			public object Convert(object value, Type targetType, object parameter, string language)
 			{
+				if(value == null)
+				{
+					return _InvertConversion ? Visibility.Visible : Visibility.Collapsed;
+				}
+
 				if (value is string s)
 				{
 					return (string.IsNullOrWhiteSpace(s) ^ _InvertConversion) ? Visibility.Collapsed : Visibility.Visible;
