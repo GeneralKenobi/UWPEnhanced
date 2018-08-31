@@ -113,7 +113,7 @@
 								FlowDirection="LeftToRight"
 								UniformSpacing="True"
 								HorizontalAlignment="Stretch"
-								Margin="0 0 -15 0"
+								Margin="-4 0 -8 0"
 								ItemsSource="{Binding HorizontalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
 							<!-- Contains the core part of the graph -->
