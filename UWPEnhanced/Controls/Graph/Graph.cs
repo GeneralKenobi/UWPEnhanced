@@ -395,23 +395,24 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region UseSIPrefixes Dependency Property
+		#region SIPrefixConfig Dependency Property
 
 		/// <summary>
 		/// If true, SI prefixes are used when displaying labels
 		/// </summary>
-		public bool UseSIPrefixes
+		public SIPrefixConfiguration SIPrefixConfig
 		{
-			get => (bool)GetValue(UseSIPrefixesProperty);
-			set => SetValue(UseSIPrefixesProperty, value);
+			get => (SIPrefixConfiguration)GetValue(SIPrefixConfigProperty);
+			set => SetValue(SIPrefixConfigProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="UseSIPrefixes"/>
+		/// Backing store for <see cref="SIPrefixConfig"/>
 		/// </summary>
-		public static readonly DependencyProperty UseSIPrefixesProperty =
-			DependencyProperty.Register(nameof(UseSIPrefixes), typeof(bool),
-			typeof(Graph), new PropertyMetadata(default(bool), new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+		public static readonly DependencyProperty SIPrefixConfigProperty =
+			DependencyProperty.Register(nameof(SIPrefixConfig), typeof(SIPrefixConfiguration),
+			typeof(Graph), new PropertyMetadata(default(SIPrefixConfiguration),
+				new PropertyChangedCallback(LabelConfigurationChangedCallback)));
 
 		#endregion
 
@@ -566,16 +567,64 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Generates horizontal axis labels for the current data
 		/// </summary>
-		private void GenerateHorizontalAxisLabels() => HorizontalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Key),
-			Data.Max((x) => x.Key), GetHorizontalLabelsCount()).Select((x) => UseSIPrefixes ?
-			SIHelpers.ToSIStringExcludingSmallPrefixes(x, roundToDigit: RoundLabelToDigit) : x.RoundToDigit(RoundLabelToDigit).ToString());
+		private void GenerateHorizontalAxisLabels() => HorizontalAxisLabels = ConvertToLabels(MathsHelpers.CalculateMidPoints(
+			Data.Min((x) => x.Key), Data.Max((x) => x.Key), GetHorizontalLabelsCount()));
 
 		/// <summary>
 		/// Generates vertical axis labels for the current data
 		/// </summary>
-		private void GenerateVerticalAxisLabels() => VerticalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Value),
-			Data.Max((x) => x.Value), GetVerticalLabelsCount()).Select((x) => UseSIPrefixes ?
-			SIHelpers.ToSIStringExcludingSmallPrefixes(x,roundToDigit:RoundLabelToDigit) : x.RoundToDigit(RoundLabelToDigit).ToString());
+		private void GenerateVerticalAxisLabels() => VerticalAxisLabels = ConvertToLabels(MathsHelpers.CalculateMidPoints(
+			Data.Min((x) => x.Value), Data.Max((x) => x.Value), GetVerticalLabelsCount()));
+
+		/// <summary>
+		/// Converts a data set to a set of labels constructed with <see cref="SIPrefixConfig"/> taken into account
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		private IEnumerable<string> ConvertToLabels(IEnumerable<double> data)
+		{
+			// Don't do anything for empty sequences
+			if(data.Count() == 0)
+			{				
+				return Enumerable.Empty<string>();
+			}
+
+			switch(SIPrefixConfig)
+			{
+				case SIPrefixConfiguration.None:
+					{
+						// Round and convert to string
+						return data.Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
+					}
+
+				case SIPrefixConfiguration.MinForAll:
+					{
+						// Get the prefix of the smallest magnitude
+						var prefix = SIHelpers.GetClosestPrefixExcludingSmall(data.Min((x) => Math.Abs(x)));
+						// And use it to create SIStrings of all values
+						return data.Select((x) => SIHelpers.ToSIString(x, prefix, roundToDigit:RoundLabelToDigit));
+					}
+
+				case SIPrefixConfiguration.MaxForAll:
+					{
+						// Get the prefix of the greatest magnitude
+						var prefix = SIHelpers.GetClosestPrefixExcludingSmall(data.Max((x) => Math.Abs(x)));
+						// And use it to create SIStrings of all values
+						return data.Select((x) => SIHelpers.ToSIString(x, prefix, roundToDigit: RoundLabelToDigit));
+					}
+
+				case SIPrefixConfiguration.Adequate:
+					{
+						// Create each SIString with its own adequate prefix
+						return data.Select((x) => SIHelpers.ToSIString(x, roundToDigit: RoundLabelToDigit));
+					}
+
+				default:
+					{
+						throw new Exception("Unexpected case");
+					}
+			}
+		}
 		
 		/// <summary>
 		/// Generates horizontal and vertical labels using <see cref="GenerateHorizontalAxisLabels"/> and
