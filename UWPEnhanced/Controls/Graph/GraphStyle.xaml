@@ -93,8 +93,17 @@
 							<controls:ItemsContainer FlowDirection="BottomToTop"
 								Grid.Column="1"
 								UniformSpacing="True"
-								Margin="0 -8 0 -5"
-								ItemsSource="{Binding VerticalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+								Margin="0 -8 0 -5"					
+								ItemsSource="{Binding VerticalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+
+								<controls:ItemsContainer.ItemTemplate>
+									<DataTemplate>
+										<TextBlock Text="{Binding }"
+											HorizontalAlignment="Right"/>
+									</DataTemplate>
+								</controls:ItemsContainer.ItemTemplate>
+
+							</controls:ItemsContainer>
 
 							<!-- Container for horizontal axis labels -->
 							<controls:ItemsContainer Grid.Row="1"
