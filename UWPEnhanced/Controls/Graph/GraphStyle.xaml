@@ -39,6 +39,7 @@
 
 						<!-- Presents title of the graph -->
 						<TextBlock Text="{TemplateBinding Title}"
+							Visibility="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={converters:StringToVisibilityMEC}}"
 							FontSize="{TemplateBinding TitleFontSize}"
 							Foreground="{TemplateBinding Foreground}"
 							FontFamily="{TemplateBinding FontFamily}"
@@ -69,6 +70,7 @@
 
 							<!-- Horizontal axis description -->
 							<TextBlock Text="{TemplateBinding HorizontalAxisDescription}"
+								Visibility="{Binding HorizontalAxisDescription, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={converters:StringToVisibilityMEC}}"
 								Foreground="{TemplateBinding Foreground}"
 								FontSize="{TemplateBinding FontSize}"
 								FontFamily="{TemplateBinding FontFamily}"
@@ -79,6 +81,7 @@
 							<!-- Vertical axis description -->
 							<!-- TODO: Make the text appear rotated 90 degrees -->
 							<TextBlock Text="{TemplateBinding VerticalAxisDescription}"
+								Visibility="{Binding VerticalAxisDescription, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={converters:StringToVisibilityMEC}}"
 								Foreground="{TemplateBinding Foreground}"
 								FontSize="{TemplateBinding FontSize}"
 								FontFamily="{TemplateBinding FontFamily}"
