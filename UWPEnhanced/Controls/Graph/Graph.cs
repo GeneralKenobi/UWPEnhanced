@@ -39,6 +39,25 @@ namespace UWPEnhanced.Controls
 		#region Private fields
 
 		/// <summary>
+		/// Backing store for <see cref="DataDisplayPoints"/>
+		/// </summary>
+		private IEnumerable<KeyValuePair<double, double>> mDataDisplayPoints;
+
+		/// <summary>
+		/// Backing store for <see cref="HorizontalAxisLabels"/>
+		/// </summary>
+		private IEnumerable<string> mHorizontalAxisLabels;
+
+		/// <summary>
+		/// Backing store for <see cref="VerticalAxisLabels"/>
+		/// </summary>
+		private IEnumerable<string> mVerticalAxisLabels;
+
+		#endregion
+
+		#region Public fields
+
+		/// <summary>
 		/// Name of the control containing the graph visuals (without any margin/padding)
 		/// </summary>
 		public const string mGraphAreaName = "PART_GraphArea";
@@ -61,19 +80,52 @@ namespace UWPEnhanced.Controls
 		/// Collection of points obtained by transforming <see cref="Data"/> so that they may be used to visualize the data with
 		/// TranslateTransform. Their position relative to each other is not changed. 0,0 is considered to be the bottom left corner.
 		/// </summary>
-		public IEnumerable<KeyValuePair<double, double>> DataDisplayPoints { get; private set; }
+		public IEnumerable<KeyValuePair<double, double>> DataDisplayPoints
+		{
+			get => mDataDisplayPoints;
+			set
+			{
+				if(mDataDisplayPoints != value)
+				{
+					mDataDisplayPoints = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DataDisplayPoints)));
+				}
+			}
+		}
 
 		/// <summary>
 		/// Collection of points obtained by transforming <see cref="Data"/> so that they may be used to visualize the data with
 		/// TranslateTransform. Their position relative to each other is not changed. 0,0 is considered to be the bottom left corner.
 		/// </summary>
-		public IEnumerable<string> HorizontalAxisLabels { get; private set; }
+		public IEnumerable<string> HorizontalAxisLabels
+		{
+			get => mHorizontalAxisLabels;
+			set
+			{
+				if (mHorizontalAxisLabels != value)
+				{
+					mHorizontalAxisLabels = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HorizontalAxisLabels)));
+				}
+			}
+		}
 
 		/// <summary>
 		/// Collection of points obtained by transforming <see cref="Data"/> so that they may be used to visualize the data with
 		/// TranslateTransform. Their position relative to each other is not changed. 0,0 is considered to be the bottom left corner.
 		/// </summary>
-		public IEnumerable<string> VerticalAxisLabels { get; private set; }
+		public IEnumerable<string> VerticalAxisLabels
+		{
+			get => mVerticalAxisLabels;
+			set
+			{
+				if (mVerticalAxisLabels != value)
+				{
+					mVerticalAxisLabels = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerticalAxisLabels)));
+				}
+			}
+		}
 
 		#endregion
 
@@ -298,7 +350,103 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region AutoLabelHorizontalFrequency Dependency Property
+
+		/// <summary>
+		/// The frequency of horizontal labels when they are generated automatically. One label is placed every
+		/// <see cref="AutoLabelHorizontalFrequency"/> units of length. If this value is not positive then no lables are generated.
+		/// </summary>
+		public double AutoLabelHorizontalFrequency
+		{
+			get => (double)GetValue(AutoLabelHorizontalFrequencyProperty);
+			set => SetValue(AutoLabelHorizontalFrequencyProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="AutoLabelHorizontalFrequency"/>
+		/// </summary>
+		public static readonly DependencyProperty AutoLabelHorizontalFrequencyProperty =
+			DependencyProperty.Register(nameof(AutoLabelHorizontalFrequency), typeof(double),
+			typeof(Graph), new PropertyMetadata(default(double), new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+
+		#endregion
+
+		#region AutoLabelVerticalFrequency Dependency Property
+
+		/// <summary>
+		/// The frequency of vertical labels when they are generated automatically. One label is placed every
+		/// <see cref="AutoLabelHorizontalFrequency"/> units of length. If this value is not positive then no lables are generated.
+		/// </summary>
+		public double AutoLabelVerticalFrequency
+		{
+			get => (double)GetValue(AutoLabelVerticalFrequencyProperty);
+			set => SetValue(AutoLabelVerticalFrequencyProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="AutoLabelVerticalFrequency"/>
+		/// </summary>
+		public static readonly DependencyProperty AutoLabelVerticalFrequencyProperty =
+			DependencyProperty.Register(nameof(AutoLabelVerticalFrequency), typeof(double),
+			typeof(Graph), new PropertyMetadata(default(double), new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+
+		#endregion
+
 		#region Private methods
+
+		/// <summary>
+		/// Returns the number of horizontal labels which is <see cref="HorizontalAxisLabelsCount"/> if that value is nonnegative,
+		/// otherwise calculates 
+		/// </summary>
+		/// <returns></returns>
+		private int GetHorizontalLabelsCount()
+		{
+			// If the fixed value is specified (greater than or equal to 0), return it
+			if (HorizontalAxisLabelsCount >= 0)
+			{
+				return HorizontalAxisLabelsCount;
+			}
+			else
+			{
+				// If the frequency is smaller than or equal to 0 or the graph area was not resolved properly, return 0
+				if(AutoLabelHorizontalFrequency <= 0 || _GraphArea == null)
+				{
+					return 0;
+				}
+				else
+				{
+					// Otherwise calculate the dynamic value which is width divided by frequency, rounded up
+					return (int)Math.Ceiling(_GraphArea.ActualWidth / AutoLabelHorizontalFrequency);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns the number of vertical labels which is <see cref="VerticalAxisLabelsCount"/> if that value is nonnegative,
+		/// otherwise calculates 
+		/// </summary>
+		/// <returns></returns>
+		private int GetVerticalLabelsCount()
+		{
+			// If the fixed value is specified (greater than or equal to 0), return it
+			if (VerticalAxisLabelsCount >= 0)
+			{
+				return VerticalAxisLabelsCount;
+			}
+			else
+			{
+				// If the frequency is smaller than or equal to 0 or the graph area was not resolved properly, return 0
+				if (AutoLabelVerticalFrequency <= 0 || _GraphArea == null)
+				{
+					return 0;
+				}
+				else
+				{
+					// Otherwise calculate the dynamic value which is width divided by frequency, rounded up
+					return (int)Math.Ceiling(_GraphArea.ActualHeight / AutoLabelVerticalFrequency);
+				}
+			}
+		}
 
 		/// <summary>
 		/// Sets new value to <see cref="_GraphArea"/>. Additonally calls <see cref="TransformAndUpdateData"/>
@@ -327,6 +475,9 @@ namespace UWPEnhanced.Controls
 
 			// Transform and update the data
 			TransformAndUpdateData();
+
+			// Generate labels
+			GenerateLabels();
 		}
 
 		/// <summary>
@@ -348,7 +499,11 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void SizeChangedCallback(object sender, SizeChangedEventArgs e) => TransformAndUpdateData();
+		private void SizeChangedCallback(object sender, SizeChangedEventArgs e)
+		{
+			TransformAndUpdateData();
+			GenerateLabels();
+		}
 
 		/// <summary>
 		/// Calculates new positions for display points (based on <see cref="Data"/>) and assigns them to <see cref="DataDisplayPoints"/>
@@ -381,22 +536,19 @@ namespace UWPEnhanced.Controls
 			DataDisplayPoints = Data.
 				Select((point) => new KeyValuePair<double, double>(ValueTransform(point.Key, minX, xRange, graphAreaWidth),
 				ValueTransform(point.Value, minY, yRange, graphAreaHeight)));
-
-			// Notify that data changed
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DataDisplayPoints)));
 		}
 
 		/// <summary>
 		/// Generates horizontal axis labels for the current data
 		/// </summary>
 		private void GenerateHorizontalAxisLabels() => HorizontalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Key),
-			Data.Max((x) => x.Key), HorizontalAxisLabelsCount).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
+			Data.Max((x) => x.Key), GetHorizontalLabelsCount()).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
 
 		/// <summary>
 		/// Generates vertical axis labels for the current data
 		/// </summary>
 		private void GenerateVerticalAxisLabels() => VerticalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Value),
-			Data.Max((x) => x.Value), VerticalAxisLabelsCount).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
+			Data.Max((x) => x.Value), GetVerticalLabelsCount()).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
 		
 		/// <summary>
 		/// Generates horizontal and vertical labels using <see cref="GenerateHorizontalAxisLabels"/> and
