@@ -9,9 +9,11 @@
 	<Style TargetType="local:Graph">
 		<Setter Property="PointDiameter" Value="5"/>
 		<Setter Property="TitleFontSize" Value="26"/>
-		<Setter Property="RoundLabelToDigit" Value="4"/>
-		<Setter Property="VerticalAxisLabelsCount" Value="5"/>
-		<Setter Property="HorizontalAxisLabelsCount" Value="5"/>
+		<Setter Property="RoundLabelToDigit" Value="3"/>
+		<Setter Property="VerticalAxisLabelsCount" Value="-1"/>
+		<Setter Property="HorizontalAxisLabelsCount" Value="-1"/>
+		<Setter Property="AutoLabelHorizontalFrequency" Value="100"/>
+		<Setter Property="AutoLabelVerticalFrequency" Value="100"/>
 		<Setter Property="Background" Value="LightGray"/>
 		<Setter Property="DataBackground" Value="White"/>
 		<Setter Property="DataForeground" Value="Black"/>
