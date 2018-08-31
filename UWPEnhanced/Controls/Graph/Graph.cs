@@ -1,4 +1,5 @@
 ﻿using CSharpEnhanced.Maths;
+using CSharpEnhanced.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -394,6 +395,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region UseSIPrefixes Dependency Property
+
+		/// <summary>
+		/// If true, SI prefixes are used when displaying labels
+		/// </summary>
+		public bool UseSIPrefixes
+		{
+			get => (bool)GetValue(UseSIPrefixesProperty);
+			set => SetValue(UseSIPrefixesProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="UseSIPrefixes"/>
+		/// </summary>
+		public static readonly DependencyProperty UseSIPrefixesProperty =
+			DependencyProperty.Register(nameof(UseSIPrefixes), typeof(bool),
+			typeof(Graph), new PropertyMetadata(default(bool), new PropertyChangedCallback(LabelConfigurationChangedCallback)));
+
+		#endregion
+
 		#endregion
 
 		#region Private methods
@@ -546,13 +567,15 @@ namespace UWPEnhanced.Controls
 		/// Generates horizontal axis labels for the current data
 		/// </summary>
 		private void GenerateHorizontalAxisLabels() => HorizontalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Key),
-			Data.Max((x) => x.Key), GetHorizontalLabelsCount()).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
+			Data.Max((x) => x.Key), GetHorizontalLabelsCount()).Select((x) => UseSIPrefixes ?
+			SIHelpers.ToSIStringExcludingSmallPrefixes(x, roundToDigit: RoundLabelToDigit) : x.RoundToDigit(RoundLabelToDigit).ToString());
 
 		/// <summary>
 		/// Generates vertical axis labels for the current data
 		/// </summary>
 		private void GenerateVerticalAxisLabels() => VerticalAxisLabels = MathsHelpers.CalculateMidPoints(Data.Min((x) => x.Value),
-			Data.Max((x) => x.Value), GetVerticalLabelsCount()).Select((x) => x.RoundToDigit(RoundLabelToDigit).ToString());
+			Data.Max((x) => x.Value), GetVerticalLabelsCount()).Select((x) => UseSIPrefixes ?
+			SIHelpers.ToSIStringExcludingSmallPrefixes(x,roundToDigit:RoundLabelToDigit) : x.RoundToDigit(RoundLabelToDigit).ToString());
 		
 		/// <summary>
 		/// Generates horizontal and vertical labels using <see cref="GenerateHorizontalAxisLabels"/> and
