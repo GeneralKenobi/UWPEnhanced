@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:converters="using:UWPEnhanced.ValueConverters"
 	xmlns:controls="using:UWPEnhanced.Controls"
+	xmlns:xaml="using:UWPEnhanced.Xaml"
     xmlns:local="using:UWPEnhanced.Controls">
 
 
@@ -57,7 +58,7 @@
 						<!--#region Rest of the graph-->
 
 						<!-- Contains the rest of the graph -->
-						<Grid ColumnSpacing="10"
+						<Grid ColumnSpacing="15"
 							RowSpacing="10"
 							Grid.Row="1">
 
@@ -95,17 +96,32 @@
 								Grid.Column="2"
 								HorizontalAlignment="Center"/>
 
+
 							<!-- Vertical axis description -->
-							<!-- TODO: Make the text appear rotated 90 degrees -->
-							<TextBlock Text="{TemplateBinding VerticalAxisDescription}"
+							<Canvas Width="{Binding ElementName=VerticalAxisDescriptionSizeBinding, Path=Height}"
+								VerticalAlignment="Center">
+							
+								<TextBlock Name="TB"
+								Text="{TemplateBinding VerticalAxisDescription}"
 								Visibility="{Binding VerticalAxisDescription, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={converters:StringToVisibilityMEC}}"
 								Foreground="{TemplateBinding Foreground}"
 								FontSize="{TemplateBinding FontSize}"
 								FontFamily="{TemplateBinding FontFamily}"
-								VerticalAlignment="Center"
-								HorizontalAlignment="Left"
-								FlowDirection="RightToLeft"/>
+								RenderTransformOrigin="0 0.5"
+								UseLayoutRounding="False">
+									
+									<xaml:VisualAttachments.AttachedVisuals>
+										<xaml:SizeBindingHelper x:Name="VerticalAxisDescriptionSizeBinding"/>
+									</xaml:VisualAttachments.AttachedVisuals>
 
+									<TextBlock.RenderTransform>
+										<CompositeTransform Rotation="270"
+											TranslateX="15"
+											TranslateY="{Binding ElementName=VerticalAxisDescriptionSizeBinding, Path=Width, Converter={converters:ProductMEC Multiplier=0.5}}"/>
+									</TextBlock.RenderTransform>
+
+								</TextBlock>
+							</Canvas>
 							<!--#endregion-->
 
 							<!--#region Axes labels-->
