@@ -21,6 +21,8 @@
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="BorderBrush" Value="Black"/>
 		<Setter Property="SIPrefixConfig" Value="Adequate"/>
+		<Setter Property="DataBorderBrush" Value="Black"/>
+		<Setter Property="DataBorderThickness" Value="1"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Graph">
@@ -138,13 +140,14 @@
 							<!--#region Data display-->
 
 							<!-- Contains the core part of the graph -->
-							<Border Name="PART_GraphArea"
-								DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+							<Border	DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
 								Grid.Column="2"
+								BorderThickness="{TemplateBinding DataBorderThickness}"
+								BorderBrush="{TemplateBinding DataBorderBrush}"
 								Background="{TemplateBinding DataBackground}">
 
 								<!-- Presents the data points -->
-								<ItemsControl Name="DataPresenter"								
+								<ItemsControl Name="PART_GraphArea"
 									ItemsSource="{Binding DataDisplayPoints}"
 									Foreground="{TemplateBinding DataForeground}">
 
@@ -158,7 +161,7 @@
 										<DataTemplate>
 											<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
 												Height="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
-												Fill="{Binding ElementName=DataPresenter, Path=Foreground}"
+												Fill="{Binding ElementName=PART_GraphArea, Path=Foreground}"
 												RenderTransformOrigin="0 1"
 												VerticalAlignment="Bottom"
 												HorizontalAlignment="Left">
