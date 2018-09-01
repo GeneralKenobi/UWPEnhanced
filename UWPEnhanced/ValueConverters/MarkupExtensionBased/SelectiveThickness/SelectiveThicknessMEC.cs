@@ -16,7 +16,7 @@ namespace UWPEnhanced.ValueConverters
 		/// <summary>
 		/// Sides that whose values are returned (all others are set to 0)
 		/// </summary>
-		Side SelectedSides { get; set; }
+		public Side SelectedSides { get; set; }
 
 		#endregion
 
