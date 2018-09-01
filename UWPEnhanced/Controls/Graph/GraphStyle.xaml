@@ -111,10 +111,12 @@
 							<!--#region Axes labels-->
 
 							<!-- Container for vertical axis labels -->
+							<!-- Padding is used to offset the lables for border thickness around the data -->
 							<controls:ItemsContainer FlowDirection="BottomToTop"
 								Grid.Column="1"
 								UniformSpacing="True"
-								Margin="0 -8 0 -5"					
+								Margin="0 -8 0 -5"
+								Padding="{Binding DataBorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={converters:SelectiveThicknessMEC SelectedSides=TopBottom}}"
 								ItemsSource="{Binding VerticalAxisLabels, RelativeSource={RelativeSource Mode=TemplatedParent}}">
 
 								<controls:ItemsContainer.ItemTemplate>
@@ -127,7 +129,9 @@
 							</controls:ItemsContainer>
 
 							<!-- Container for horizontal axis labels -->
+							<!-- Padding is used to offset the lables for border thickness around the data -->
 							<controls:ItemsContainer Grid.Row="1"
+								Padding="{Binding DataBorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={converters:SelectiveThicknessMEC SelectedSides=LeftRight}}"
 								Grid.Column="2"
 								FlowDirection="LeftToRight"
 								UniformSpacing="True"
