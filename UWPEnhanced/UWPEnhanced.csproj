@@ -109,7 +109,7 @@
   <ItemGroup>
     <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
     <Compile Include="Controls\Graph\Enums\SIPrefixConfiguration.cs" />
-    <Compile Include="Controls\Graph\Graph.cs" />
+    <Compile Include="Controls\Graph\CodeBehind\Graph.cs" />
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
     <Compile Include="Controls\Menu\Converters\MenuPositionToItemsDirectionConverter.cs" />
     <Compile Include="Controls\Menu\Converters\RestrictedMenuPositionToBoolConverter.cs" />
@@ -235,7 +235,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Graph\GraphStyle.xaml">
+    <Page Include="Controls\Graph\Style\GraphStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

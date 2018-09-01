@@ -12,7 +12,7 @@
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Menu/MenuStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ValueUnitDisplay/ValueUnitDisplayStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ComplexValueUnitDisplay/ComplexValueUnitDisplayStyle.xaml"/>
-		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Graph/GraphStyle.xaml"/>
+		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Graph/Style/GraphStyle.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	
 </ResourceDictionary>
