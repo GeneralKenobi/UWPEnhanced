@@ -416,6 +416,46 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region DataBorderBrush Dependency Property
+
+		/// <summary>
+		/// Brush for border around data display
+		/// </summary>
+		public Brush DataBorderBrush
+		{
+			get => (Brush)GetValue(DataBorderBrushProperty);
+			set => SetValue(DataBorderBrushProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="DataBorderBrush"/>
+		/// </summary>
+		public static readonly DependencyProperty DataBorderBrushProperty =
+			DependencyProperty.Register(nameof(DataBorderBrush), typeof(Brush),
+			typeof(Graph), new PropertyMetadata(default(Brush)));
+
+		#endregion
+
+		#region DataBorderThickness Dependency Property
+
+		/// <summary>
+		/// Thickness of border around data display
+		/// </summary>
+		public Thickness DataBorderThickness
+		{
+			get => (Thickness)GetValue(DataBorderThicknessProperty);
+			set => SetValue(DataBorderThicknessProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="DataBorderThickness"/>
+		/// </summary>
+		public static readonly DependencyProperty DataBorderThicknessProperty =
+			DependencyProperty.Register(nameof(DataBorderThickness), typeof(Thickness),
+			typeof(Graph), new PropertyMetadata(default(Thickness)));
+
+		#endregion
+
 		#endregion
 
 		#region Private methods
