@@ -1,0 +1,34 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:xaml="using:UWPEnhanced.Xaml"
+	xmlns:converters="using:UWPEnhanced.ValueConverters"
+    xmlns:local="using:UWPEnhanced.Controls">
+
+	
+	<Style TargetType="local:RotatableControl">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="local:RotatableControl">
+					<Canvas Name="PART_Canvas"
+					UseLayoutRounding="False">
+
+						<ContentPresenter Name="PART_ChildPresenter"
+							Content="{TemplateBinding Child}">
+							<!--<ContentPresenter.RenderTransform>
+								<CompositeTransform Rotation="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RotationAngle, Converter={converters:ProductMEC Multiplier=-1}}"
+									TranslateY="23"/>
+							</ContentPresenter.RenderTransform>-->				
+					
+							<xaml:VisualAttachments.AttachedVisuals>
+								<xaml:SizeBindingHelper x:Name="Helper2"/>
+							</xaml:VisualAttachments.AttachedVisuals>
+
+						</ContentPresenter>
+					</Canvas>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>
