@@ -8,11 +8,12 @@
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Icon/Styles/IconStyle.xaml"/>
-		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ItemsContainer/Style/ItemsContainerStyle.xaml"/>		
+		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ItemsContainer/Style/ItemsContainerStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Menu/MenuStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ValueUnitDisplay/ValueUnitDisplayStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/ComplexValueUnitDisplay/ComplexValueUnitDisplayStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Graph/Style/GraphStyle.xaml"/>
+		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/RotatableControl/Style/RotatableControlStyle.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
-	
+
 </ResourceDictionary>
