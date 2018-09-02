@@ -1,5 +1,6 @@
 ﻿using CSharpEnhanced.Maths;
 using System;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -153,15 +154,17 @@ namespace UWPEnhanced.Controls
 				_ChildPresenter.UpdateLayout();
 				
 				// Simple calculus based on trigonometric functions
-				mCanvasContainer.Width = 
-					_ChildPresenter.ActualWidth * Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)) +
-					_ChildPresenter.ActualHeight * Math.Cos(MathsHelpers.ConvertAngle(90 - RotationAngle, AngleUnit.Degrees, AngleUnit.Radians));
+				mCanvasContainer.Width = Math.Abs(_ChildPresenter.ActualWidth *
+					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
+					Math.Abs(_ChildPresenter.ActualHeight *
+					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
 
 				// Simple calculus based on trigonometric functions
-				mCanvasContainer.Height =
-					_ChildPresenter.ActualWidth * Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)) +
-					_ChildPresenter.ActualHeight * Math.Sin(MathsHelpers.ConvertAngle(90 - RotationAngle, AngleUnit.Degrees, AngleUnit.Radians));
-
+				mCanvasContainer.Height = Math.Abs(_ChildPresenter.ActualWidth *
+					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
+					Math.Abs(_ChildPresenter.ActualHeight *
+					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
+				
 				// Create render transform for the content presenter
 				_ChildPresenter.RenderTransform = new CompositeTransform()
 				{
