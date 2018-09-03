@@ -24,6 +24,7 @@
 		<Setter Property="SIPrefixConfig" Value="Adequate"/>
 		<Setter Property="DataBorderBrush" Value="Black"/>
 		<Setter Property="DataBorderThickness" Value="1"/>
+		<Setter Property="InterpolationLineThickness" Value="1"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Graph">
@@ -146,45 +147,71 @@
 							<!--#region Data display-->
 
 							<!-- Contains the core part of the graph -->
-							<Border	DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+							<Grid DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
 								Grid.Column="2"
 								BorderThickness="{TemplateBinding DataBorderThickness}"
 								BorderBrush="{TemplateBinding DataBorderBrush}"
 								Background="{TemplateBinding DataBackground}">
 
-								<!-- Presents the data points -->
-								<ItemsControl Name="PART_GraphArea"
-									ItemsSource="{Binding DataDisplayPoints}"
-									Foreground="{TemplateBinding DataForeground}">
+								<Grid Name="PART_GraphArea">
 
-									<ItemsControl.ItemsPanel>
-										<ItemsPanelTemplate>
-											<Grid />
-										</ItemsPanelTemplate>
-									</ItemsControl.ItemsPanel>
+									<Grid.Resources>
+										<local:DataPointsToPolylinePointsConverter x:Key="DataPointsPolylineConverter"/>
+									</Grid.Resources>
 
-									<ItemsControl.ItemTemplate>
-										<DataTemplate>
-											<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
-												Height="{Binding Path=DataContext.PointDiameter, ElementName=PART_GraphArea}"
-												Fill="{Binding ElementName=PART_GraphArea, Path=Foreground}"
-												RenderTransformOrigin="0 1"
-												VerticalAlignment="Bottom"
-												HorizontalAlignment="Left">
+									<!-- Interpolation line -->
+									<Polyline Points="{Binding DataDisplayPoints, Converter={StaticResource DataPointsPolylineConverter}}"
+										VerticalAlignment="Bottom"
+										Stroke="{Binding DataForeground}"
+										Visibility="Visible"
+										StrokeMiterLimit="0"
+										StrokeThickness="{TemplateBinding InterpolationLineThickness}"
+										HorizontalAlignment="Left"
+										Margin="0 0 0 -1">
 
-												<Ellipse.RenderTransform>
-													 <!-- Positions the point on the x-y axes --> 
-													<TranslateTransform X="{Binding Key}"
-														Y="{Binding Value, Converter={converters:ProductMEC Multiplier=-1}}"/>
-												</Ellipse.RenderTransform>
+										<!-- Offset the line to go through center of the points -->
+										<Polyline.RenderTransform>
+											<TranslateTransform X="{Binding PointDiameter, Converter={converters:ProductMEC Multiplier=0.5}}"
+												Y="{Binding PointDiameter, Converter={converters:ProductMEC Multiplier=-0.5}}"/>
+										</Polyline.RenderTransform>
+										
+									</Polyline>
 
-											</Ellipse>
-										</DataTemplate>
-									</ItemsControl.ItemTemplate>
+									<!-- Presents the data points -->
+									<ItemsControl Name="DataPoints"
+										Visibility="Visible"
+										ItemsSource="{Binding DataDisplayPoints}"
+										Foreground="{TemplateBinding DataForeground}">
 
-								</ItemsControl>
+										<ItemsControl.ItemsPanel>
+											<ItemsPanelTemplate>
+												<Grid />
+											</ItemsPanelTemplate>
+										</ItemsControl.ItemsPanel>
 
-							</Border>
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=DataPoints}"
+													Height="{Binding Path=DataContext.PointDiameter, ElementName=DataPoints}"
+													Fill="{Binding ElementName=DataPoints, Path=Foreground}"													
+													VerticalAlignment="Bottom"
+													HorizontalAlignment="Left">
+
+													<Ellipse.RenderTransform>
+														 <!-- Positions the point on the x-y axes --> 
+														<TranslateTransform X="{Binding Key}"
+															Y="{Binding Value, Converter={converters:ProductMEC Multiplier=-1}}"/>
+													</Ellipse.RenderTransform>
+
+												</Ellipse>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+
+									</ItemsControl>
+
+								</Grid>
+
+							</Grid>
 
 							<!--#endregion-->
 
