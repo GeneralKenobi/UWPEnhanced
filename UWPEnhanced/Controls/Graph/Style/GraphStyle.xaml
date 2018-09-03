@@ -152,15 +152,10 @@
 								BorderBrush="{TemplateBinding DataBorderBrush}"
 								Background="{TemplateBinding DataBackground}">
 
-								<Border.Resources>
-									<local:DataPointsMarginConverter x:Key="DataPointsMarginConverter"/>
-								</Border.Resources>
-
 								<!-- Presents the data points -->
 								<ItemsControl Name="PART_GraphArea"
 									ItemsSource="{Binding DataDisplayPoints}"
-									Foreground="{TemplateBinding DataForeground}"
-									Margin="{Binding PointDiameter, Converter={StaticResource DataPointsMarginConverter}}">
+									Foreground="{TemplateBinding DataForeground}">
 
 									<ItemsControl.ItemsPanel>
 										<ItemsPanelTemplate>
