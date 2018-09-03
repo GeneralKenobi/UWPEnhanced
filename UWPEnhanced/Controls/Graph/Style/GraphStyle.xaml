@@ -96,11 +96,8 @@
 								Grid.Column="2"
 								HorizontalAlignment="Center"/>
 
-
 							<!-- Vertical axis description -->
-							<Canvas Width="{Binding ElementName=VerticalAxisDescriptionSizeBinding, Path=Height}"
-								VerticalAlignment="Center">
-							
+							<controls:RotatableControl RotationAngle="90">
 								<TextBlock Name="TB"
 								Text="{TemplateBinding VerticalAxisDescription}"
 								Visibility="{Binding VerticalAxisDescription, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={converters:StringToVisibilityMEC}}"
@@ -108,20 +105,9 @@
 								FontSize="{TemplateBinding FontSize}"
 								FontFamily="{TemplateBinding FontFamily}"
 								RenderTransformOrigin="0 0.5"
-								UseLayoutRounding="False">
-									
-									<xaml:VisualAttachments.AttachedVisuals>
-										<xaml:SizeBindingHelper x:Name="VerticalAxisDescriptionSizeBinding"/>
-									</xaml:VisualAttachments.AttachedVisuals>
+								UseLayoutRounding="False"/>
+							</controls:RotatableControl>
 
-									<TextBlock.RenderTransform>
-										<CompositeTransform Rotation="270"
-											TranslateX="15"
-											TranslateY="{Binding ElementName=VerticalAxisDescriptionSizeBinding, Path=Width, Converter={converters:ProductMEC Multiplier=0.5}}"/>
-									</TextBlock.RenderTransform>
-
-								</TextBlock>
-							</Canvas>
 							<!--#endregion-->
 
 							<!--#region Axes labels-->
