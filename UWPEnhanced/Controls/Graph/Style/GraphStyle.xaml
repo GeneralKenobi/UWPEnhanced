@@ -152,10 +152,15 @@
 								BorderBrush="{TemplateBinding DataBorderBrush}"
 								Background="{TemplateBinding DataBackground}">
 
+								<Border.Resources>
+									<local:DataPointsMarginConverter x:Key="DataPointsMarginConverter"/>
+								</Border.Resources>
+
 								<!-- Presents the data points -->
 								<ItemsControl Name="PART_GraphArea"
 									ItemsSource="{Binding DataDisplayPoints}"
-									Foreground="{TemplateBinding DataForeground}">
+									Foreground="{TemplateBinding DataForeground}"
+									Margin="{Binding PointDiameter, Converter={StaticResource DataPointsMarginConverter}}">
 
 									<ItemsControl.ItemsPanel>
 										<ItemsPanelTemplate>
@@ -173,7 +178,7 @@
 												HorizontalAlignment="Left">
 
 												<Ellipse.RenderTransform>
-													<!-- Positions the point on the x-y axes -->
+													 <!-- Positions the point on the x-y axes --> 
 													<TranslateTransform X="{Binding Key}"
 														Y="{Binding Value, Converter={converters:ProductMEC Multiplier=-1}}"/>
 												</Ellipse.RenderTransform>
