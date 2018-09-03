@@ -169,7 +169,7 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static readonly DependencyProperty PointDiameterProperty =
 			DependencyProperty.Register(nameof(PointDiameter), typeof(double),
-			typeof(Graph), new PropertyMetadata(default(double)));
+			typeof(Graph), new PropertyMetadata(default(double), new PropertyChangedCallback(DataChangedCallback)));
 
 		#endregion
 
@@ -738,7 +738,7 @@ namespace UWPEnhanced.Controls
 		/// <param name="e"></param>
 		private static void DataChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
 		{
-			if(sender is Graph g && e.NewValue is IEnumerable<KeyValuePair<double, double>> nv)
+			if(sender is Graph g && e.NewValue != e.OldValue)
 			{
 				g.TransformAndUpdateData();
 				g.GenerateLabels();
