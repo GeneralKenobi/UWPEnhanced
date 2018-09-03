@@ -113,6 +113,7 @@
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
     <Compile Include="Controls\Menu\Converters\MenuPositionToItemsDirectionConverter.cs" />
     <Compile Include="Controls\Menu\Converters\RestrictedMenuPositionToBoolConverter.cs" />
+    <Compile Include="Controls\RotatableControl\CodeBehind\RotatableControl.cs" />
     <Compile Include="Controls\ValueUnitDisplay\ValueUnitDisplay.cs" />
     <Compile Include="CustomConverters\IComplexConverter\IComplexConverter.cs" />
     <Compile Include="CustomConverters\IComplexConverter\NegateComplexConverter.cs" />
@@ -267,6 +268,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Controls\RotatableControl\Style\RotatableControlStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ValueUnitDisplay\ValueUnitDisplayStyle.xaml">
       <SubType>Designer</SubType>
