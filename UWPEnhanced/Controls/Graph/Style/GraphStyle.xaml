@@ -146,19 +146,21 @@
 							<!--#region Data display-->
 
 							<!-- Contains the core part of the graph -->
-							<Grid DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
-								Grid.Column="2"
+							<Grid Grid.Column="2"
 								BorderThickness="{TemplateBinding DataBorderThickness}"
 								BorderBrush="{TemplateBinding DataBorderBrush}"
 								Background="{TemplateBinding DataBackground}">
 
-								<Grid Name="PART_GraphArea">
+								<!-- Grid used to measure the available display area -->
+								<Grid Name="PART_GraphArea"
+									DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
 
 									<Grid.Resources>
 										<local:DataPointsToPolylinePointsConverter x:Key="DataPointsPolylineConverter"/>
 									</Grid.Resources>
 
-									<!-- Interpolation line -->
+									<!-- Interpolation line, margin is used to position the line so that it is closer to data
+										point's center -->
 									<Polyline Points="{Binding DataDisplayPoints, Converter={StaticResource DataPointsPolylineConverter}}"
 										Stroke="{Binding DataForeground}"
 										StrokeThickness="{TemplateBinding InterpolationLineThickness}"
@@ -176,11 +178,12 @@
 									</Polyline>
 
 									<!-- Presents the data points -->
-									<ItemsControl Name="DataPoints"
-										Visibility="Visible"
+									<ItemsControl Name="DataPointsContainer"
 										ItemsSource="{Binding DataDisplayPoints}"
 										Foreground="{TemplateBinding DataForeground}">
 
+										<!-- Use Grid so that by default points are stacked on top of each other and can be positioned
+											using the render transform-->
 										<ItemsControl.ItemsPanel>
 											<ItemsPanelTemplate>
 												<Grid />
@@ -189,9 +192,9 @@
 
 										<ItemsControl.ItemTemplate>
 											<DataTemplate>
-												<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=DataPoints}"
-													Height="{Binding Path=DataContext.PointDiameter, ElementName=DataPoints}"
-													Fill="{Binding ElementName=DataPoints, Path=Foreground}"													
+												<Ellipse Width="{Binding Path=DataContext.PointDiameter, ElementName=DataPointsContainer}"
+													Height="{Binding Path=DataContext.PointDiameter, ElementName=DataPointsContainer}"
+													Fill="{Binding ElementName=DataPointsContainer, Path=Foreground}"													
 													VerticalAlignment="Bottom"
 													HorizontalAlignment="Left">
 
