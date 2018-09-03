@@ -1,6 +1,5 @@
 ﻿using CSharpEnhanced.Maths;
 using System;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -10,7 +9,12 @@ namespace UWPEnhanced.Controls
 {
 	/// <summary>
 	/// Control that may rotate its child and which will update its Width/Height based on the position produced due to rotation
-	/// (the rotation has to be performed using <see cref="RotationAngle"/>)
+	/// (the rotation has to be performed using <see cref="RotationAngle"/>). ChildPresenter (named <see cref="ChildPresenterName"/>)
+	/// will have a render transform assigned to it by this class, because of that it should not be given any other render transforms.
+	/// <see cref="FrameworkElement"/> named <see cref="ChildPresenterName"/> is used to present and measure the child.
+	/// <see cref="Canvas"/> named <see cref="CanvasContainerName"/> is used to store the <see cref="FrameworkElement"/> named
+	/// <see cref="ChildPresenterName"/> (so that it's not clipped by going out of bounds, for example like in a border) and to
+	/// extort sizing of the control that is exactly wrapping the rotated child in a rectangle shape.
 	/// </summary>
 	[ContentProperty(Name = nameof(Child))]	
 	[TemplatePart(Name = ChildPresenterName, Type = typeof(FrameworkElement))]
@@ -72,18 +76,20 @@ namespace UWPEnhanced.Controls
 					return;
 				}
 
-				// If there was an old container, unsubscribe from its size changed event
+				// If there was an old container, unsubscribe from its size changed event and remove its render transform
 				if (mChildPresenter != null)
 				{
 					mChildPresenter.SizeChanged -= ChildPresenterSizeChangedCallback;
+					mChildPresenter.RenderTransform = null;
 				}
 
 				mChildPresenter = value;
 
-				// If the new container is not null, subscribe to its size changed event
+				// If the new container is not null, subscribe to its size changed event and assign render transform
 				if (mChildPresenter != null)
 				{
 					mChildPresenter.SizeChanged += ChildPresenterSizeChangedCallback;
+					mChildPresenter.RenderTransform = _ChildPresenterRenderTransform;
 				}
 			}
 		}
@@ -93,9 +99,10 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		private bool _Operational => _ChildPresenter != null && mCanvasContainer != null;
 
-		#endregion
-
-		#region Public properties
+		/// <summary>
+		/// Render transform applied to child presenter to position it inside the bounds of this control.
+		/// </summary>
+		private CompositeTransform _ChildPresenterRenderTransform { get; } = new CompositeTransform();
 
 		#endregion
 
@@ -144,72 +151,87 @@ namespace UWPEnhanced.Controls
 		#region Private methods
 
 		/// <summary>
+		/// Assigns appropriate values to <see cref="_ChildPresenterRenderTransform"/> based on newly calculated size and
+		/// <see cref="RotationAngle"/>
+		/// </summary>
+		/// <param name="widthFromWidth">Rotated width as a function of normal width</param>
+		/// <param name="widthFromHeight">Rotated width as a function of normal height</param>
+		/// <param name="heightFromWidth">Rotated height as a function of normal width</param>
+		/// <param name="heightFromHeight">Rotated height as a function of normal height</param>
+		private void AssignRenderTransformTranslates(double widthFromWidth, double widthFromHeight, double heightFromWidth,
+			double heightFromHeight)
+		{
+			// Reduce the angle to work in the 0-360 range
+			var angle = MathsHelpers.ReduceAngle(RotationAngle, AngleUnit.Degrees);
+
+			// Reset translates
+			_ChildPresenterRenderTransform.TranslateX = 0;
+			_ChildPresenterRenderTransform.TranslateY = 0;
+
+			// Assign the angle
+			_ChildPresenterRenderTransform.Rotation = -angle;
+
+			// For first and second quadrant
+			if (angle <= 180)
+			{
+				// Add height calculated from normal width to y translate
+				_ChildPresenterRenderTransform.TranslateY += heightFromWidth;
+			}
+
+			// For second and third quadrant
+			if (angle > 90 && angle <= 270)
+			{
+				// Add height calculated from height to y translate
+				_ChildPresenterRenderTransform.TranslateY += heightFromHeight;
+				// And add width calculated from width to x translate
+				_ChildPresenterRenderTransform.TranslateX += widthFromWidth;
+			}
+
+			// For third and fourth quadrant
+			if(angle > 180)
+			{
+				// Add width calculated from height to x translate
+				_ChildPresenterRenderTransform.TranslateX += widthFromHeight;
+			}
+		}
+
+		/// <summary>
 		/// Updates <see cref="mCanvasContainer"/> size, <see cref="_ChildPresenter"/> render transform.
 		/// </summary>
 		private void UpdateSize()
 		{
 			if (_Operational)
 			{
+				// Reduce the angle to work in the 0-360 degree range
+				var angle = MathsHelpers.ReduceAngle(RotationAngle, AngleUnit.Degrees);
+
 				// Update the layout
 				_ChildPresenter.UpdateLayout();
-				
-				// Simple calculus based on trigonometric functions
-				mCanvasContainer.Width = Math.Abs(_ChildPresenter.ActualWidth *
-					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
-					Math.Abs(_ChildPresenter.ActualHeight *
-					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
 
-				// Simple calculus based on trigonometric functions
-				mCanvasContainer.Height = Math.Abs(_ChildPresenter.ActualWidth *
-					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
-					Math.Abs(_ChildPresenter.ActualHeight *
+				// All values are calculated based on model developed using pen and paper and trigonometric functions
+
+				// Rotated width as a function of normal width
+				double widthFromWidth = Math.Abs(_ChildPresenter.ActualWidth *
 					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
 
-				var transform = new CompositeTransform();
-				transform.Rotation = -RotationAngle;
-
-				if(RotationAngle <= 90)
-				{
-					transform.TranslateY = Math.Abs(_ChildPresenter.ActualWidth *
+				// Rotated width as a function of normal height
+				double widthFromHeight = Math.Abs(_ChildPresenter.ActualHeight *
 					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
-				}
 
-				if(RotationAngle > 90 && RotationAngle <= 180)
-				{
-					transform.TranslateY = Math.Abs(_ChildPresenter.ActualWidth *
-					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
-					Math.Abs(_ChildPresenter.ActualHeight *
-					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
-				}
-
-				if(RotationAngle > 180 && RotationAngle <= 270)
-				{
-					transform.TranslateY = Math.Abs(_ChildPresenter.ActualHeight *
-					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
-				}
-
-				if (RotationAngle > 90 && RotationAngle <= 180)
-				{
-					transform.TranslateX = Math.Abs(_ChildPresenter.ActualWidth *
-					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
-				}
-
-				if (RotationAngle > 180 && RotationAngle <= 270)
-				{
-					transform.TranslateX = Math.Abs(_ChildPresenter.ActualWidth *
-					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
-					Math.Abs(_ChildPresenter.ActualHeight *
+				// Rotated height as a function of normal width
+				double heightFromWidth = Math.Abs(_ChildPresenter.ActualWidth *
 					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
-				}
 
-				if (RotationAngle > 270 && RotationAngle <= 360)
-				{
-					transform.TranslateX = Math.Abs(_ChildPresenter.ActualHeight *
-					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
-				}
+				// Rotated height as a function of normal height
+				double heightFromHeight = Math.Abs(_ChildPresenter.ActualHeight *
+					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
 
-				// Create render transform for the content presenter
-				_ChildPresenter.RenderTransform = transform;
+				// Assign new widths/heights 
+				mCanvasContainer.Width = widthFromWidth + widthFromHeight;
+				mCanvasContainer.Height = heightFromWidth + heightFromHeight;
+
+				// Finally assign render transform values
+				AssignRenderTransformTranslates(widthFromWidth, widthFromHeight, heightFromWidth, heightFromHeight);
 			}
 		}
 
