@@ -164,15 +164,52 @@ namespace UWPEnhanced.Controls
 					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
 					Math.Abs(_ChildPresenter.ActualHeight *
 					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
-				
-				// Create render transform for the content presenter
-				_ChildPresenter.RenderTransform = new CompositeTransform()
+
+				var transform = new CompositeTransform();
+				transform.Rotation = -RotationAngle;
+
+				if(RotationAngle <= 90)
 				{
-					// Negate the angle because the render transform counts it clockwise
-					Rotation = -RotationAngle,
-					// Simple calculus based on trigonometric functions
-					TranslateY = _ChildPresenter.ActualWidth * Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)),
-				};
+					transform.TranslateY = Math.Abs(_ChildPresenter.ActualWidth *
+					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
+				}
+
+				if(RotationAngle > 90 && RotationAngle <= 180)
+				{
+					transform.TranslateY = Math.Abs(_ChildPresenter.ActualWidth *
+					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
+					Math.Abs(_ChildPresenter.ActualHeight *
+					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
+				}
+
+				if(RotationAngle > 180 && RotationAngle <= 270)
+				{
+					transform.TranslateY = Math.Abs(_ChildPresenter.ActualHeight *
+					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
+				}
+
+				if (RotationAngle > 90 && RotationAngle <= 180)
+				{
+					transform.TranslateX = Math.Abs(_ChildPresenter.ActualWidth *
+					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
+				}
+
+				if (RotationAngle > 180 && RotationAngle <= 270)
+				{
+					transform.TranslateX = Math.Abs(_ChildPresenter.ActualWidth *
+					Math.Cos(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians))) +
+					Math.Abs(_ChildPresenter.ActualHeight *
+					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
+				}
+
+				if (RotationAngle > 270 && RotationAngle <= 360)
+				{
+					transform.TranslateX = Math.Abs(_ChildPresenter.ActualHeight *
+					Math.Sin(MathsHelpers.ConvertAngle(RotationAngle, AngleUnit.Degrees, AngleUnit.Radians)));
+				}
+
+				// Create render transform for the content presenter
+				_ChildPresenter.RenderTransform = transform;
 			}
 		}
 
