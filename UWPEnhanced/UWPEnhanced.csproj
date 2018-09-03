@@ -108,6 +108,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
+    <Compile Include="Controls\Graph\Converters\DataPointsMarginConverter.cs" />
     <Compile Include="Controls\Graph\Enums\SIPrefixConfiguration.cs" />
     <Compile Include="Controls\Graph\CodeBehind\Graph.cs" />
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
