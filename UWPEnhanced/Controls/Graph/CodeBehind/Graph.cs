@@ -456,6 +456,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region InterpolationLineThickness Dependency Property
+
+		/// <summary>
+		/// Thickness of the interpolation line
+		/// </summary>
+		public double InterpolationLineThickness
+		{
+			get => (double)GetValue(InterpolationLineThicknessProperty);
+			set => SetValue(InterpolationLineThicknessProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="InterpolationLineThickness"/>
+		/// </summary>
+		public static readonly DependencyProperty InterpolationLineThicknessProperty =
+			DependencyProperty.Register(nameof(InterpolationLineThickness), typeof(double),
+			typeof(Graph), new PropertyMetadata(default(double)));
+
+		#endregion
+
 		#endregion
 
 		#region Private methods
