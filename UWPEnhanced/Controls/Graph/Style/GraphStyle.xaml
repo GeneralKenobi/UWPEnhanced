@@ -3,8 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:converters="using:UWPEnhanced.ValueConverters"
 	xmlns:controls="using:UWPEnhanced.Controls"
-	xmlns:xaml="using:UWPEnhanced.Xaml"
-    xmlns:local="using:UWPEnhanced.Controls">
+	xmlns:local="using:UWPEnhanced.Controls">
 
 
 	<Style TargetType="local:Graph">
@@ -161,12 +160,11 @@
 
 									<!-- Interpolation line -->
 									<Polyline Points="{Binding DataDisplayPoints, Converter={StaticResource DataPointsPolylineConverter}}"
-										VerticalAlignment="Bottom"
 										Stroke="{Binding DataForeground}"
-										Visibility="Visible"
-										StrokeMiterLimit="0"
 										StrokeThickness="{TemplateBinding InterpolationLineThickness}"
+										VerticalAlignment="Bottom"
 										HorizontalAlignment="Left"
+										StrokeMiterLimit="0"
 										Margin="0 0 0 -1">
 
 										<!-- Offset the line to go through center of the points -->
