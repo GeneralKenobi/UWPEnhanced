@@ -676,7 +676,7 @@ namespace UWPEnhanced.Controls
 				case SIPrefixConfiguration.Adequate:
 					{
 						// Create each SIString with its own adequate prefix
-						return data.Select((x) => SIHelpers.ToSIString(x, roundToDigit: RoundLabelToDigit));
+						return data.Select((x) => SIHelpers.ToSIStringExcludingSmallPrefixes(x, roundToDigit: RoundLabelToDigit));
 					}
 
 				default:
