@@ -163,6 +163,7 @@
     <Compile Include="ValueConverters\MarkupExtensionBased\ProductConverter\ProductMEC.cs" />
     <Compile Include="Xaml\BaseAttachedProperty\BaseAttachedProperty.cs" />
     <Compile Include="Xaml\DependencyObjectCollectionOfT\DependencyObjectCollectionOfT.cs" />
+    <Compile Include="Xaml\DummyItemsSource\DummyItemsSource.cs" />
     <Compile Include="Xaml\MultiBinding\IMultiBindingValueConverter.cs" />
     <Compile Include="Xaml\MultiBinding\MultiBinding.cs" />
     <Compile Include="Xaml\Setters\Interfaces\ITemporaryVisualSetter.cs" />
