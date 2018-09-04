@@ -171,6 +171,7 @@
     <Compile Include="Xaml\Setters\VisualSetterCollection\TemporaryVisualSetterCollection.cs" />
     <Compile Include="Xaml\Setters\VisualSetterCollection\VisualSetterCollection.cs" />
     <Compile Include="Xaml\SizeBindingHelper\SizeBindingHelper.cs" />
+    <Compile Include="Xaml\ThicknessBindingHelper\ThicknessBindingHelper.cs" />
     <Compile Include="Xaml\VisualAttachments\AttachableDependencyCollectionOfT\AttachableDependencyCollectionOfT.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachmentCollection\VisualAttachmentCollection.cs" />
     <Compile Include="Xaml\VisualAttachments\VisualAttachments.cs" />
