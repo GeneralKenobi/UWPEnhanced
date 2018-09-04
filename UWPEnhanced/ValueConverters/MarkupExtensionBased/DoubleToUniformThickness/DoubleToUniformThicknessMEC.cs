@@ -5,8 +5,9 @@ namespace UWPEnhanced.ValueConverters
 {
 	/// <summary> 
 	/// If value is a numeral type, it is cast to double and a new thickness with all entries marked in
-	/// <see cref="SelectedSides"/> equal to the value (and all entries not marked in <see cref="SelectedSides"/> equal to 0)
-	/// is returned. If value is not a numeral type, returns thickness with all entries equal to 0.
+	/// <see cref="SelectedSides"/> equal to the value times <see cref="Multiplier"/> (and all entries not marked in
+	/// <see cref="SelectedSides"/> equal to 0) is returned. If value is not a numeral type, returns thickness with all
+	/// entries equal to 0. By default <see cref="Multiplier"/> is equal to 1.
 	/// </summary>
 	[MarkupExtensionReturnType(ReturnType = typeof(IValueConverter))]
 	public partial class DoubleToUniformThicknessMEC : MarkupExtension
@@ -18,6 +19,11 @@ namespace UWPEnhanced.ValueConverters
 		/// </summary>
 		public Side SelectedSides { get; set; }
 
+		/// <summary>
+		/// Mutliples the final thickness by this value. By default it's 1.
+		/// </summary>
+		public double Multiplier { get; set; } = 1;
+
 		#endregion
 
 		#region Protected methods
@@ -28,7 +34,7 @@ namespace UWPEnhanced.ValueConverters
 		/// If value is not a Thickenss, returns thickness with all entries equal to 0.
 		/// </summary>
 		/// <returns></returns>
-		protected override object ProvideValue() => new DoubleToUniformThicknessConverter(SelectedSides);
+		protected override object ProvideValue() => new DoubleToUniformThicknessConverter(SelectedSides, Multiplier);
 
 		#endregion
 	}
