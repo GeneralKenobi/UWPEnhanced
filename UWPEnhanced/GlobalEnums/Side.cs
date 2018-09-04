@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UWPEnhanced.ValueConverters
+namespace UWPEnhanced
 {
 	/// <summary>
 	/// Enumeration of possible side configurations
