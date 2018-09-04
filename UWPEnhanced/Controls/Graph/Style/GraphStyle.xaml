@@ -21,15 +21,16 @@
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="BorderBrush" Value="Black"/>
 		<Setter Property="SIPrefixConfig" Value="Adequate"/>
-		<Setter Property="DataBorderBrush" Value="Black"/>
-		<Setter Property="DataBorderThickness" Value="1"/>
+		<Setter Property="GridlinesBrush" Value="Black"/>
+		<Setter Property="GridlineThickness" Value="2"/>
 		<Setter Property="InterpolationLineThickness" Value="1"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Graph">
 
 					<!-- Root container -->
-					<Grid Background="{TemplateBinding Background}"
+					<Grid Name="RootGrid"
+						Background="{TemplateBinding Background}"
 						BorderBrush="{TemplateBinding BorderBrush}"
 						BorderThickness="{TemplateBinding BorderThickness}"
 						Padding="10 20 20 10"
@@ -62,7 +63,7 @@
 							RowSpacing="10"
 							Grid.Row="1">
 
-							<!--#region  Row and column definitions-->
+							<!--#region Row and column definitions-->
 
 							<Grid.RowDefinitions>
 								<!-- Data display -->
@@ -147,12 +148,59 @@
 
 							<!-- Contains the core part of the graph -->
 							<Grid Grid.Column="2"
-								BorderThickness="{TemplateBinding DataBorderThickness}"
-								BorderBrush="{TemplateBinding DataBorderBrush}"
+								UseLayoutRounding="False"
 								Background="{TemplateBinding DataBackground}">
 
-								<!-- Grid used to measure the available display area -->
+								<!--#region Gridlines-->
+
+								<!-- Contains the gridlines -->
+								<Grid Name="GridlineContainer"
+									DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+									UseLayoutRounding="False">
+
+									<!-- Vertical gridlines -->
+									<controls:ItemsContainer UniformSpacing="True"
+										UseAllAvailableSpace="True"
+										HorizontalAlignment="Stretch"
+										FlowDirection="LeftToRight"
+										ItemsSource="{Binding HorizontalAxisLabels}">
+
+										<controls:ItemsContainer.ItemTemplate>
+											<DataTemplate>
+												<Border VerticalAlignment="Stretch"
+													Width="{Binding ElementName=GridlineContainer, Path=DataContext.GridlineThickness}"												
+													Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"/>
+											</DataTemplate>
+										</controls:ItemsContainer.ItemTemplate>
+								
+									</controls:ItemsContainer>
+
+									<!-- Horizontal gridlines -->
+									<controls:ItemsContainer UniformSpacing="True"
+										UseAllAvailableSpace="True"
+										VerticalAlignment="Stretch"
+										FlowDirection="TopToBottom"
+										ItemsSource="{Binding VerticalAxisLabels}">
+
+										<controls:ItemsContainer.ItemTemplate>
+											<DataTemplate>
+												<Border HorizontalAlignment="Stretch"
+													Height="{Binding ElementName=GridlineContainer, Path=DataContext.GridlineThickness}"
+													Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"/>
+											</DataTemplate>
+										</controls:ItemsContainer.ItemTemplate>
+
+									</controls:ItemsContainer>
+
+								</Grid>
+
+								<!--#endregion-->
+
+								<!--#region Data points and interpolation line -->
+
+								<!-- Grid used to measure the available display area, it directly stores the  -->
 								<Grid Name="PART_GraphArea"
+									Margin="{Binding GridlineThickness, Converter={converters:DoubleToUniformThicknessMEC Multiplier=0.5}}"
 									DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
 
 									<Grid.Resources>
@@ -160,27 +208,20 @@
 									</Grid.Resources>
 
 									<!-- Interpolation line, margin is used to position the line so that it is closer to data
-										point's center -->
-									<Polyline Points="{Binding DataDisplayPoints, Converter={StaticResource DataPointsPolylineConverter}}"
-										Stroke="{Binding DataForeground}"
-										StrokeThickness="{TemplateBinding InterpolationLineThickness}"
-										VerticalAlignment="Bottom"
-										HorizontalAlignment="Left"
-										StrokeMiterLimit="0"
-										Margin="0 0 0 -1">
-
-										<!-- Offset the line to go through center of the points -->
-										<Polyline.RenderTransform>
-											<TranslateTransform X="{Binding PointDiameter, Converter={converters:ProductMEC Multiplier=0.5}}"
-												Y="{Binding PointDiameter, Converter={converters:ProductMEC Multiplier=-0.5}}"/>
-										</Polyline.RenderTransform>
-										
-									</Polyline>
+										point's center. It's wrapped in a Canvas so as not to be clipped when thickness is too big -->
+									<Canvas HorizontalAlignment="Left"
+										VerticalAlignment="Bottom">
+										<Polyline Points="{Binding DataDisplayPoints, Converter={StaticResource DataPointsPolylineConverter}}"
+											Stroke="{Binding DataForeground}"
+											StrokeThickness="{TemplateBinding InterpolationLineThickness}"									
+											StrokeMiterLimit="0"/>
+									</Canvas>
 
 									<!-- Presents the data points -->
 									<ItemsControl Name="DataPointsContainer"
 										ItemsSource="{Binding DataDisplayPoints}"
-										Foreground="{TemplateBinding DataForeground}">
+										Foreground="{TemplateBinding DataForeground}"
+										Margin="{Binding PointDiameter, Converter={converters:DoubleToUniformThicknessMEC Multiplier=-0.5, SelectedSides=LeftBottom}}">
 
 										<!-- Use Grid so that by default points are stacked on top of each other and can be positioned
 											using the render transform-->
@@ -211,6 +252,8 @@
 									</ItemsControl>
 
 								</Grid>
+
+								<!--#endregion-->
 
 							</Grid>
 
