@@ -146,6 +146,8 @@
     <Compile Include="ValueConverters\IValueConverterImplementations\OppositeDoubleConverter.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\BoolToParameter\BoolToParameterConverter.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\BoolToParameter\BoolToParameterMEC.cs" />
+    <Compile Include="ValueConverters\MarkupExtensionBased\DoubleToUniformThickness\DoubleToUniformThicknessConverter.cs" />
+    <Compile Include="ValueConverters\MarkupExtensionBased\DoubleToUniformThickness\DoubleToUniformThicknessMEC.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\SelectiveThickness\SelectiveThicknessConverter.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\SelectiveThickness\SelectiveThicknessMEC.cs" />
     <Compile Include="ValueConverters\MarkupExtensionBased\BoolToVisibility\BoolToVisibilityMEC.cs" />
