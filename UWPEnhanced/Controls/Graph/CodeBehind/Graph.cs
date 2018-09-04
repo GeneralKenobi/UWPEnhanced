@@ -416,43 +416,43 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
-		#region DataBorderBrush Dependency Property
+		#region GridlinesBrush Dependency Property
 
 		/// <summary>
-		/// Brush for border around data display
+		/// Brush for gridlines
 		/// </summary>
-		public Brush DataBorderBrush
+		public Brush GridlinesBrush
 		{
-			get => (Brush)GetValue(DataBorderBrushProperty);
-			set => SetValue(DataBorderBrushProperty, value);
+			get => (Brush)GetValue(GridlinesBrushProperty);
+			set => SetValue(GridlinesBrushProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="DataBorderBrush"/>
+		/// Backing store for <see cref="GridlinesBrush"/>
 		/// </summary>
-		public static readonly DependencyProperty DataBorderBrushProperty =
-			DependencyProperty.Register(nameof(DataBorderBrush), typeof(Brush),
+		public static readonly DependencyProperty GridlinesBrushProperty =
+			DependencyProperty.Register(nameof(GridlinesBrush), typeof(Brush),
 			typeof(Graph), new PropertyMetadata(default(Brush)));
 
 		#endregion
 
-		#region DataBorderThickness Dependency Property
+		#region GridlinesThickness Dependency Property
 
 		/// <summary>
-		/// Thickness of border around data display
+		/// Thickness of gridlines
 		/// </summary>
-		public Thickness DataBorderThickness
+		public double GridlinesThickness
 		{
-			get => (Thickness)GetValue(DataBorderThicknessProperty);
-			set => SetValue(DataBorderThicknessProperty, value);
+			get => (double)GetValue(GridlinesThicknessProperty);
+			set => SetValue(GridlinesThicknessProperty, value);
 		}
 
 		/// <summary>
-		/// Backing store for <see cref="DataBorderThickness"/>
+		/// Backing store for <see cref="GridlinesThickness"/>
 		/// </summary>
-		public static readonly DependencyProperty DataBorderThicknessProperty =
-			DependencyProperty.Register(nameof(DataBorderThickness), typeof(Thickness),
-			typeof(Graph), new PropertyMetadata(default(Thickness)));
+		public static readonly DependencyProperty GridlinesThicknessProperty =
+			DependencyProperty.Register(nameof(GridlinesThickness), typeof(double),
+			typeof(Graph), new PropertyMetadata(default(double)));
 
 		#endregion
 
@@ -607,8 +607,8 @@ namespace UWPEnhanced.Controls
 
 			// Get the dimensions of the graph area (subtract the PointDiameter so that all points are inside the area - their
 			// coordinates are the left, bottom corner of the point)
-			var graphAreaWidth = _GraphArea.ActualWidth - PointDiameter;
-			var graphAreaHeight = _GraphArea.ActualHeight - PointDiameter;
+			var graphAreaWidth = _GraphArea.ActualWidth;
+			var graphAreaHeight = _GraphArea.ActualHeight;
 
 			// Get the minimum values on both axes
 			var minX = Data.Min((point) => point.Key);
