@@ -13,23 +13,6 @@ namespace UWPEnhanced.ValueConverters
 	/// </summary>
 	public class DoubleToUniformThicknessConverter : DependencyObject, IValueConverter
 	{
-		#region Constructors
-
-		/// <summary>
-		/// Default constructor
-		/// </summary>
-		public DoubleToUniformThicknessConverter() { }
-
-		/// <summary>
-		/// Constructor with parameter
-		/// </summary>
-		public DoubleToUniformThicknessConverter(Side selectedSides)
-		{
-			SelectedSides = selectedSides;
-		}
-
-		#endregion
-		
 		#region SelectedSides Dependency Property
 
 		/// <summary>
