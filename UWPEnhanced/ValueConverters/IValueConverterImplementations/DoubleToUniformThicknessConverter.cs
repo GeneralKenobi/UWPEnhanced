@@ -7,7 +7,7 @@ namespace UWPEnhanced.ValueConverters
 {
 	/// <summary> 
 	/// If value is a numeral type, it is cast to double and a new thickness with all entries marked in
-	/// <see cref="SelectedSides"/> equal to the value times multiplier (and all entries not marked in
+	/// <see cref="SelectedSides"/> equal to the value (and all entries not marked in
 	/// <see cref="SelectedSides"/> equal to 0) is returned. If value is not a numeral type, returns thickness with all
 	/// entries equal to 0.
 	/// </summary>
@@ -75,7 +75,7 @@ namespace UWPEnhanced.ValueConverters
 
 		/// <summary> 
 		/// If value is a numeral type, it is cast to double and a new thickness with all entries marked in
-		/// <see cref="SelectedSides"/> equal to the valuet times multiplier (and all entries not marked in
+		/// <see cref="SelectedSides"/> equal to the valuet (and all entries not marked in
 		/// <see cref="SelectedSides"/> equal to 0) is returned. If value is not a numeral type, returns thickness with all
 		/// entries equal to 0.
 		/// </summary>
