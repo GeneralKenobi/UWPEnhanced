@@ -12,7 +12,7 @@ namespace UWPEnhanced.ValueConverters
 	/// By default <see cref="SelectedSides"/> is equal to <see cref="Side.All"/>.
 	/// </summary>
 	[MarkupExtensionReturnType(ReturnType = typeof(IValueConverter))]
-	public partial class DoubleToUniformThicknessMEC : MarkupExtension
+	public class DoubleToUniformThicknessMEC : MarkupExtension
 	{
 		#region Public properties
 
@@ -36,7 +36,11 @@ namespace UWPEnhanced.ValueConverters
 		/// If value is not a Thickenss, returns thickness with all entries equal to 0.
 		/// </summary>
 		/// <returns></returns>
-		protected override object ProvideValue() => new DoubleToUniformThicknessConverter(SelectedSides, Multiplier);
+		protected override object ProvideValue() => new DoubleToUniformThicknessWithMultiplierConverter()
+		{
+			SelectedSides = this.SelectedSides,
+			Multiplier = this.Multiplier,
+		};
 
 		#endregion
 	}
