@@ -127,6 +127,7 @@
     <Compile Include="ValueConverters\IValueConverterImplementations\AbsoluteValueConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\ComplexToSIStringConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\DoubleToSIStringConverter.cs" />
+    <Compile Include="ValueConverters\IValueConverterImplementations\DoubleToUniformThicknessWithMultiplierConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\SumConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\QuotientConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\ProductConverter.cs" />
