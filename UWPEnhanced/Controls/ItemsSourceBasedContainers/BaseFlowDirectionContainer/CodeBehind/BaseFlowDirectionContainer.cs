@@ -6,7 +6,7 @@ namespace UWPEnhanced.Controls
 	/// <summary>
 	/// Base class for containers that position children based on <see cref="ItemsDirection"/>
 	/// </summary>
-	public class BaseFlowDirectionContainer : ItemsControl
+	public abstract class BaseFlowDirectionContainer : ItemsControl
     {
 		#region Constructor
 
@@ -15,7 +15,6 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public BaseFlowDirectionContainer()
         {
-            this.DefaultStyleKey = typeof(BaseFlowDirectionContainer);
 			this.Loaded += ItemsContainerLoaded;
         }
 
