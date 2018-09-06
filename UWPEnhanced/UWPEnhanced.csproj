@@ -108,8 +108,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
-    <Compile Include="Controls\EqualChildSpaceContainer\CodeBehind\EqualChildSpaceContainer.cs" />
-    <Compile Include="Controls\EqualChildSpaceContainer\EqualChildSpaceContainerPanel\EqualChildSpaceContainerPanel.cs" />
+    <Compile Include="Controls\ItemsSourceBasedContainers\EqualChildSpaceContainer\CodeBehind\EqualChildSpaceContainer.cs" />
+    <Compile Include="Controls\ItemsSourceBasedContainers\EqualChildSpaceContainer\EqualChildSpaceContainerPanel\EqualChildSpaceContainerPanel.cs" />
     <Compile Include="Controls\Graph\Enums\SIPrefixConfiguration.cs" />
     <Compile Include="Controls\Graph\CodeBehind\Graph.cs" />
     <Compile Include="Controls\Graph\ValueConverters\DataPointsToPolylinePointsConverter.cs" />
@@ -134,9 +134,9 @@
     <Compile Include="ValueConverters\IValueConverterImplementations\SumConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\QuotientConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\ProductConverter.cs" />
-    <Compile Include="Controls\ItemsContainer\CodeBehind\ItemsContainer.cs" />
-    <Compile Include="Controls\ItemsContainer\ItemsContainerPanel\ItemsContainerPanel.cs" />
-    <Compile Include="Controls\ItemsContainer\Enums\ItemsDirection.cs" />
+    <Compile Include="Controls\ItemsSourceBasedContainers\ItemsContainer\CodeBehind\ItemsContainer.cs" />
+    <Compile Include="Controls\ItemsSourceBasedContainers\ItemsContainer\ItemsContainerPanel\ItemsContainerPanel.cs" />
+    <Compile Include="Controls\ItemsSourceBasedContainers\ItemsContainer\Enums\ItemsDirection.cs" />
     <Compile Include="Controls\Menu\Converters\MenuContentToIconInfoConverter.cs" />
     <Compile Include="Controls\Menu\Enums\MenuEnums.cs" />
     <Compile Include="Controls\Menu\Menu.cs" />
@@ -245,7 +245,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\EqualChildSpaceContainer\Style\EqualChildSpaceContainerStyle.xaml">
+    <Page Include="Controls\ItemsSourceBasedContainers\EqualChildSpaceContainer\Style\EqualChildSpaceContainerStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -269,7 +269,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Controls\ItemsContainer\Style\ItemsContainerStyle.xaml">
+    <Page Include="Controls\ItemsSourceBasedContainers\ItemsContainer\Style\ItemsContainerStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
