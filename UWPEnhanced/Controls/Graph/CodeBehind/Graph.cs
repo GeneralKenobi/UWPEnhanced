@@ -516,6 +516,46 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region SecondaryGridlinesThickness Dependency Property
+
+		/// <summary>
+		/// Thickness of secondary gridlines
+		/// </summary>
+		public double SecondaryGridlinesThickness
+		{
+			get => (double)GetValue(SecondaryGridlinesThicknessProperty);
+			set => SetValue(SecondaryGridlinesThicknessProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="SecondaryGridlinesThickness"/>
+		/// </summary>
+		public static readonly DependencyProperty SecondaryGridlinesThicknessProperty =
+			DependencyProperty.Register(nameof(SecondaryGridlinesThickness), typeof(double),
+			typeof(Graph), new PropertyMetadata(default(double)));
+
+		#endregion
+
+		#region SecondaryGridlinesBrush Dependency Property
+
+		/// <summary>
+		/// Brush applied to secondary gridlines
+		/// </summary>
+		public Brush SecondaryGridlinesBrush
+		{
+			get => (Brush)GetValue(SecondaryGridlinesBrushProperty);
+			set => SetValue(SecondaryGridlinesBrushProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="SecondaryGridlinesBrush"/>
+		/// </summary>
+		public static readonly DependencyProperty SecondaryGridlinesBrushProperty =
+			DependencyProperty.Register(nameof(SecondaryGridlinesBrush), typeof(Brush),
+			typeof(Graph), new PropertyMetadata(default(Brush)));
+
+		#endregion
+
 		#endregion
 
 		#region Private methods
