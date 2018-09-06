@@ -476,6 +476,46 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region SecondaryHorizontalGridlinesCount Dependency Property
+
+		/// <summary>
+		/// Number of secondary grid lines between two neighbouring horizontal gridlines
+		/// </summary>
+		public int SecondaryHorizontalGridlinesCount
+		{
+			get => (int)GetValue(SecondaryHorizontalGridlinesCountProperty);
+			set => SetValue(SecondaryHorizontalGridlinesCountProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="SecondaryHorizontalGridlinesCount"/>
+		/// </summary>
+		public static readonly DependencyProperty SecondaryHorizontalGridlinesCountProperty =
+			DependencyProperty.Register(nameof(SecondaryHorizontalGridlinesCount), typeof(int),
+			typeof(Graph), new PropertyMetadata(default(int)));
+
+		#endregion
+
+		#region SecondaryVerticalGridlinesCount Dependency Property
+
+		/// <summary>
+		/// Number of secondary grid lines between two neighbouring vertical gridlines		
+		/// </summary>
+		public int SecondaryVerticalGridlinesCount
+		{
+			get => (int)GetValue(SecondaryVerticalGridlinesCountProperty);
+			set => SetValue(SecondaryVerticalGridlinesCountProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="SecondaryVerticalGridlinesCount"/>
+		/// </summary>
+		public static readonly DependencyProperty SecondaryVerticalGridlinesCountProperty =
+			DependencyProperty.Register(nameof(SecondaryVerticalGridlinesCount), typeof(int),
+			typeof(Graph), new PropertyMetadata(default(int)));
+
+		#endregion
+
 		#endregion
 
 		#region Private methods
