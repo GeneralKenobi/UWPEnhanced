@@ -136,7 +136,7 @@
     <Compile Include="ValueConverters\IValueConverterImplementations\ProductConverter.cs" />
     <Compile Include="Controls\ItemsSourceBasedContainers\ItemsContainer\CodeBehind\ItemsContainer.cs" />
     <Compile Include="Controls\ItemsSourceBasedContainers\ItemsContainer\ItemsContainerPanel\ItemsContainerPanel.cs" />
-    <Compile Include="Controls\ItemsSourceBasedContainers\ItemsContainer\Enums\ItemsDirection.cs" />
+    <Compile Include="Controls\ItemsSourceBasedContainers\BaseFlowDirectionContainer\Enums\ItemsDirection.cs" />
     <Compile Include="Controls\Menu\Converters\MenuContentToIconInfoConverter.cs" />
     <Compile Include="Controls\Menu\Enums\MenuEnums.cs" />
     <Compile Include="Controls\Menu\Menu.cs" />
