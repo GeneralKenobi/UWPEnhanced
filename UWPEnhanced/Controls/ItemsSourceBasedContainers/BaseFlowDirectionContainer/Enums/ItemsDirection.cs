@@ -1,7 +1,7 @@
 ﻿namespace UWPEnhanced.Controls
 {
 	/// <summary>
-	/// Direction of item placement in a <see cref="ItemsContainerPanel"/>
+	/// Direction of possible items order
 	/// </summary>
 	public enum ItemsDirection
 	{
