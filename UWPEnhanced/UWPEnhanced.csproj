@@ -108,6 +108,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
+    <Compile Include="Controls\ItemsSourceBasedContainers\BaseFlowDirectionContainer\CodeBehind\BaseFlowDirectionContainer.cs" />
+    <Compile Include="Controls\ItemsSourceBasedContainers\BaseFlowDirectionContainer\Panel\BaseFlowDirectionContainerPanel.cs" />
     <Compile Include="Controls\ItemsSourceBasedContainers\EqualChildSpaceContainer\CodeBehind\EqualChildSpaceContainer.cs" />
     <Compile Include="Controls\ItemsSourceBasedContainers\EqualChildSpaceContainer\EqualChildSpaceContainerPanel\EqualChildSpaceContainerPanel.cs" />
     <Compile Include="Controls\Graph\Enums\SIPrefixConfiguration.cs" />
