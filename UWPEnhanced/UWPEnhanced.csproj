@@ -108,9 +108,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
+    <Compile Include="Controls\EqualChildSpaceContainer\CodeBehind\EqualChildSpaceContainer.cs" />
+    <Compile Include="Controls\EqualChildSpaceContainer\EqualChildSpaceContainerPanel\EqualChildSpaceContainerPanel.cs" />
     <Compile Include="Controls\Graph\Enums\SIPrefixConfiguration.cs" />
     <Compile Include="Controls\Graph\CodeBehind\Graph.cs" />
     <Compile Include="Controls\Graph\ValueConverters\DataPointsToPolylinePointsConverter.cs" />
+    <Compile Include="Controls\Graph\ValueConverters\SecondaryGridLinesMarginConverter.cs" />
     <Compile Include="Controls\Icon\CodeBehind\Icon.cs" />
     <Compile Include="Controls\Menu\Converters\MenuPositionToItemsDirectionConverter.cs" />
     <Compile Include="Controls\Menu\Converters\RestrictedMenuPositionToBoolConverter.cs" />
@@ -241,6 +244,11 @@
     <Page Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplayStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\EqualChildSpaceContainer\Style\EqualChildSpaceContainerStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Controls\Graph\Style\GraphStyle.xaml">
       <SubType>Designer</SubType>
