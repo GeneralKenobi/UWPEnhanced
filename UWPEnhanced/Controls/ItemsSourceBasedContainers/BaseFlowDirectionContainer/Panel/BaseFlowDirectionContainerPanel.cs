@@ -8,7 +8,7 @@ namespace UWPEnhanced.Controls
 	/// <summary>
 	/// Base class for <see cref="Panel"/>s that position children based on <see cref="ItemsDirection"/>
 	/// </summary>
-	public class BaseFlowDirectionContainerPanel : Panel
+	public abstract class BaseFlowDirectionContainerPanel : Panel
 	{
 		#region FlowDirection Dependency Property
 
@@ -28,7 +28,7 @@ namespace UWPEnhanced.Controls
 		public new static readonly DependencyProperty FlowDirectionProperty =
 			DependencyProperty.Register(nameof(FlowDirection), typeof(ItemsDirection),
 			typeof(BaseFlowDirectionContainerPanel),
-			new PropertyMetadata(EqualChildSpaceContainer.DefaultFlowDirection, FlowDirectionChanged));
+			new PropertyMetadata(ItemsDirection.TopToBottom, FlowDirectionChanged));
 
 		#endregion
 		
