@@ -1,12 +1,11 @@
 ﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace UWPEnhanced.Controls
 {
 	/// <summary>
 	/// Basic container for items that puts them in specified order with specified spacing
 	/// </summary>
-	public sealed class ItemsContainer : ItemsControl
+	public sealed class ItemsContainer : BaseFlowDirectionContainer
     {
 		#region Constructor
 
@@ -37,11 +36,6 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		public static double DefaultItemSpacing { get; } = 5;
 
-		/// <summary>
-		/// The default direction of items
-		/// </summary>
-		public static ItemsDirection DefaultFlowDirection { get; } = ItemsDirection.TopToBottom;
-
 		#endregion
 
 		#region ItemSpacing Dependency Property
@@ -63,27 +57,7 @@ namespace UWPEnhanced.Controls
 			typeof(ItemsContainer), new PropertyMetadata(DefaultItemSpacing, ItemSpacingChanged));
 
 		#endregion
-
-		#region FlowDirection Dependency Property
-
-		/// <summary>
-		/// Direction of item placement in this container. Hides the inherited <see cref="FrameworkElement.FlowDirection"/>.
-		/// </summary>
-		public new ItemsDirection FlowDirection
-		{
-			get => (ItemsDirection)GetValue(FlowDirectionProperty);
-			set => SetValue(FlowDirectionProperty, value);
-		}
-
-		/// <summary>
-		/// Backing store for <see cref="FlowDirection"/>
-		/// </summary>
-		public new static readonly DependencyProperty FlowDirectionProperty =
-			DependencyProperty.Register(nameof(FlowDirection), typeof(ItemsDirection),
-			typeof(ItemsContainer), new PropertyMetadata(DefaultFlowDirection, DirectionChanged));
-
-		#endregion
-
+		
 		#region UniformSpacing Dependency Property
 
 		/// <summary>
@@ -139,8 +113,7 @@ namespace UWPEnhanced.Controls
 			if (ItemsPanelRoot is ItemsContainerPanel container)
 			{
 				mUnderlyingPanel = container;
-
-				UpdateDirectionOnUnderylingPanel();
+				
 				UpdateItemSpacingOnUnderylingPanel();
 				UpdateUniformSpacingOnUnderylingPanel();
 				UpdateUseAllAvailableSpaceOnUnderylingPanel();
@@ -177,17 +150,6 @@ namespace UWPEnhanced.Controls
 			if (mUnderlyingPanel != null)
 			{
 				mUnderlyingPanel.ItemSpacing = ItemSpacing;				
-			}
-		}
-
-		/// <summary>
-		/// Assigns the <see cref="FlowDirection"/> to the <see cref="UnderlyingPanel"/> and forces it to update UI
-		/// </summary>
-		private void UpdateDirectionOnUnderylingPanel()
-		{
-			if (mUnderlyingPanel != null)
-			{
-				mUnderlyingPanel.FlowDirection = FlowDirection;				
 			}
 		}
 
@@ -231,19 +193,6 @@ namespace UWPEnhanced.Controls
 			if (s is ItemsContainer container && e.NewValue != e.OldValue)
 			{
 				container.UpdateItemSpacingOnUnderylingPanel();
-			}
-		}
-
-		/// <summary>
-		/// Callback for when <see cref="FlowDirectionProperty"/> changes
-		/// </summary>
-		/// <param name="s"></param>
-		/// <param name="e"></param>
-		private static void DirectionChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
-		{
-			if (s is ItemsContainer container && e.NewValue != e.OldValue)
-			{
-				container.UpdateDirectionOnUnderylingPanel();
 			}
 		}
 
