@@ -49,7 +49,7 @@ namespace UWPEnhanced.ValueConverters
 			{
 				if (MathsHelpers.TryCastToDouble(value, out var casted))
 				{
-					return casted * _Summand;
+					return casted + _Summand;
 				}
 
 				return value;
