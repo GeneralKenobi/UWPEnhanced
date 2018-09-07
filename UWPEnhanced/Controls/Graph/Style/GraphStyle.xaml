@@ -25,6 +25,10 @@
 		<Setter Property="GridlinesBrush" Value="Black"/>
 		<Setter Property="GridlinesThickness" Value="2"/>
 		<Setter Property="InterpolationLineThickness" Value="1"/>
+		<Setter Property="SecondaryHorizontalGridlinesCount" Value="2"/>
+		<Setter Property="SecondaryVerticalGridlinesCount" Value="2"/>
+		<Setter Property="SecondaryGridlinesThickness" Value="1"/>
+		<Setter Property="SecondaryGridlinesBrush" Value="Gray"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Graph">
