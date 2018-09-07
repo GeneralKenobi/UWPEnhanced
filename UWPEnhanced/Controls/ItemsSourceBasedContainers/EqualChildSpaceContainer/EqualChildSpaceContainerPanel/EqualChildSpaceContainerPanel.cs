@@ -166,7 +166,15 @@ namespace UWPEnhanced.Controls
 		/// </summary>
 		/// <param name="availableSize"></param>
 		/// <returns></returns>
-		protected override Size MeasureOverride(Size availableSize) => availableSize;
+		protected override Size MeasureOverride(Size availableSize)
+		{
+			foreach (var item in Children)
+			{
+				item.Measure(availableSize);
+			}
+
+			return availableSize;
+		}
 
 		#endregion
 	}
