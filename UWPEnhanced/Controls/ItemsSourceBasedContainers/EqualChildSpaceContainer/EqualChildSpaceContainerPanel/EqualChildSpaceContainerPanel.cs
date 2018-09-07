@@ -168,10 +168,24 @@ namespace UWPEnhanced.Controls
 		/// <returns></returns>
 		protected override Size MeasureOverride(Size availableSize)
 		{
-			foreach (var item in Children)
+			var visibleChildrenCount = Children.Where((child) => child.Visibility == Visibility.Visible).Count();
+
+			if (FlowDirection == ItemsDirection.LeftToRight || FlowDirection == ItemsDirection.RightToLeft)
 			{
-				item.Measure(availableSize);
+				foreach (var item in Children)
+				{
+					// Each item recieves the same amount of width, excluding invisible children
+					item.Measure(new Size(availableSize.Width / visibleChildrenCount, availableSize.Height));
+				}
 			}
+			else
+			{
+				foreach (var item in Children)
+				{
+					// Each item recieves the same amount of height, excluding invisible children
+					item.Measure(new Size(availableSize.Width, availableSize.Height / visibleChildrenCount));
+				}
+			}			
 
 			return availableSize;
 		}
