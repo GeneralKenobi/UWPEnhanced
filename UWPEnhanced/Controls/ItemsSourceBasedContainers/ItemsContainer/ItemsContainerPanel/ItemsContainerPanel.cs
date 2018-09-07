@@ -10,6 +10,18 @@ namespace UWPEnhanced.Controls
 	/// </summary>
 	internal class ItemsContainerPanel : BaseFlowDirectionContainerPanel
 	{
+		#region Private properties
+
+		/// <summary>
+		/// Returns the number of spacing areas in the container
+		/// </summary>
+		private int SpacingAreasCount =>
+			// Count all visible children. The number of spacings is the number of children minus 1 (one spacing between each two
+			// neighbouring children). Additionally, if there should be spacings between edges and outer children, add two to the result)
+			Children.Where((x) => x.Visibility == Visibility.Visible).Count() + (OuterSpacing ? 1 : -1);
+
+		#endregion
+
 		#region ItemSpacing Dependency Property
 
 		/// <summary>
@@ -72,6 +84,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region OuterSpacing Dependency Property
+
+		/// <summary>
+		/// If true, spacing will also be added between the edge of the container and the first (and last) child
+		/// </summary>
+		public bool OuterSpacing
+		{
+			get => (bool)GetValue(OuterSpacingProperty);
+			set => SetValue(OuterSpacingProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="OuterSpacing"/>
+		/// </summary>
+		public static readonly DependencyProperty OuterSpacingProperty =
+			DependencyProperty.Register(nameof(OuterSpacing), typeof(bool),
+			typeof(ItemsContainerPanel), new PropertyMetadata(default(bool), new PropertyChangedCallback(MeasureDeterminingPropertyChanged)));
+
+		#endregion
+
 		#region Private Methods
 
 		/// <summary>
@@ -82,7 +114,7 @@ namespace UWPEnhanced.Controls
 		/// <returns></returns>
 		private double CalculateItemSpacing(Size finalSize) =>
 			// Calculate the total spacing and divide it by (n-1) because for n children there are n-1 gaps
-			CalculateTotalItemSpacing(finalSize) / (Children.Where((x) => x.Visibility == Visibility.Visible).Count() - 1);
+			CalculateTotalItemSpacing(finalSize) / SpacingAreasCount;
 
 		/// <summary>
 		/// Returns length of spacing between all items
@@ -94,8 +126,8 @@ namespace UWPEnhanced.Controls
 			// Get the number visible children
 			int visibleChildren = Children.Where((x) => x.Visibility == Visibility.Visible).Count();
 
-			// If there are less than 2 children then return 0
-			if(visibleChildren < 2)
+			// If there are no visible children or there is only one visible child but there are no outer spacing areas, return 0
+			if(visibleChildren == 0 || (visibleChildren == 1 && !OuterSpacing))
 			{
 				return 0;
 			}
@@ -147,9 +179,8 @@ namespace UWPEnhanced.Controls
 			}
 			else
 			{
-				// For non-uniform spacing return (n-1)*ItemSpacing: for n items there is n-1 spacings. Remember to exclude collapsed
-				// children.
-				return (visibleChildren - 1) * ItemSpacing;
+				// For non-uniform spacing return the number of expected spacing areas times ItemSpacing
+				return SpacingAreasCount * ItemSpacing;
 			}
 		}
 
@@ -160,9 +191,11 @@ namespace UWPEnhanced.Controls
 		/// <returns></returns>
 		private Size ArrangeTopToBottom(Size finalSize)
 		{
-			double cumulativeHeight = 0;
 			double maxWidth = 0;
-			var spacing = CalculateItemSpacing(finalSize);
+			var spacing = CalculateItemSpacing(finalSize);			
+
+			// If there is outer spacing, instead of starting at 0, add the first spacing
+			double cumulativeHeight = OuterSpacing ? spacing : 0;
 
 			foreach(var item in Children)
 			{
@@ -187,8 +220,10 @@ namespace UWPEnhanced.Controls
 		/// <returns></returns>
 		private Size ArrangeBottomToTop(Size finalSize)
 		{
-			double cumulativeHeight = 0;
 			var spacing = CalculateItemSpacing(finalSize);
+
+			// If there is outer spacing, instead of starting at 0, add the first spacing
+			double cumulativeHeight = OuterSpacing ? spacing : 0;
 
 			foreach (var item in Children)
 			{
@@ -217,8 +252,10 @@ namespace UWPEnhanced.Controls
 		/// <returns></returns>
 		private Size ArrangeLeftToRight(Size finalSize)
 		{
-			double cumulativeWidth = 0;
 			var spacing = CalculateItemSpacing(finalSize);
+
+			// If there is outer spacing, instead of starting at 0, add the first spacing
+			double cumulativeWidth = OuterSpacing ? spacing : 0;
 
 			foreach (var item in Children)
 			{
@@ -241,8 +278,10 @@ namespace UWPEnhanced.Controls
 		/// <returns></returns>
 		private Size ArrangeRightToLeft(Size finalSize)
 		{
-			double cumulativeWidth = 0;
 			var spacing = CalculateItemSpacing(finalSize);
+
+			// If there is outer spacing, instead of starting at 0, add the first spacing
+			double cumulativeWidth = OuterSpacing ? spacing : 0;
 
 			foreach (var item in Children)
 			{

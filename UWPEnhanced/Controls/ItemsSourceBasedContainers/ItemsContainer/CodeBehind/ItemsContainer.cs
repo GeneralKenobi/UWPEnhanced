@@ -100,6 +100,26 @@ namespace UWPEnhanced.Controls
 
 		#endregion
 
+		#region OuterSpacing Dependency Property
+
+		/// <summary>
+		/// If true, spacing will also be added between the edge of the container and the first (and last) child		
+		/// </summary>
+		public bool OuterSpacing
+		{
+			get => (bool)GetValue(OuterSpacingProperty);
+			set => SetValue(OuterSpacingProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="OuterSpacing"/>
+		/// </summary>
+		public static readonly DependencyProperty OuterSpacingProperty =
+			DependencyProperty.Register(nameof(OuterSpacing), typeof(bool),
+			typeof(ItemsContainer), new PropertyMetadata(default(bool), new PropertyChangedCallback(OuterSpacingChanged)));
+
+		#endregion
+
 		#region Private Methods
 
 		/// <summary>
@@ -117,6 +137,17 @@ namespace UWPEnhanced.Controls
 				UpdateItemSpacingOnUnderylingPanel();
 				UpdateUniformSpacingOnUnderylingPanel();
 				UpdateUseAllAvailableSpaceOnUnderylingPanel();
+			}
+		}
+
+		/// <summary>
+		/// Assigns the <see cref="UseAllAvailableSpace"/> value to the <see cref="UnderlyingPanel"/> and forces it to update UI
+		/// </summary>
+		private void UpdateOuterSpacingOnUnderylingPanel()
+		{
+			if (mUnderlyingPanel != null)
+			{
+				mUnderlyingPanel.OuterSpacing = OuterSpacing;
 			}
 		}
 
@@ -156,6 +187,19 @@ namespace UWPEnhanced.Controls
 		#endregion
 
 		#region Private static methods
+
+		/// <summary>
+		/// Callback for when <see cref="OuterSpacingProperty"/> changes
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="e"></param>
+		private static void OuterSpacingChanged(DependencyObject s, DependencyPropertyChangedEventArgs e)
+		{
+			if (s is ItemsContainer container && e.NewValue != e.OldValue)
+			{
+				container.UpdateOuterSpacingOnUnderylingPanel();
+			}
+		}
 
 		/// <summary>
 		/// Callback for when <see cref="UseAllAvailableSpaceProperty"/> changes
