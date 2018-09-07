@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:converters="using:UWPEnhanced.ValueConverters"
 	xmlns:controls="using:UWPEnhanced.Controls"
+	xmlns:xaml="using:UWPEnhanced.Xaml"
 	xmlns:local="using:UWPEnhanced.Controls">
 
 
@@ -153,12 +154,12 @@
 
 								<!--#region Gridlines-->
 
-								<!-- Contains the gridlines -->
+								<!-- Contains the gridlines
 								<Grid Name="GridlineContainer"
 									DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
 									UseLayoutRounding="False">
 
-									<!-- Vertical gridlines -->
+									 Vertical gridlines 
 									<controls:ItemsContainer UniformSpacing="True"
 										UseAllAvailableSpace="True"
 										HorizontalAlignment="Stretch"
@@ -172,10 +173,10 @@
 													Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"/>
 											</DataTemplate>
 										</controls:ItemsContainer.ItemTemplate>
-								
+
 									</controls:ItemsContainer>
 
-									<!-- Horizontal gridlines -->
+									--><!-- Horizontal gridlines --><!--
 									<controls:ItemsContainer UniformSpacing="True"
 										UseAllAvailableSpace="True"
 										VerticalAlignment="Stretch"
@@ -192,6 +193,161 @@
 
 									</controls:ItemsContainer>
 
+								</Grid>-->
+
+								<!-- Contains the gridlines -->
+								<Grid Name="GridlineContainer"
+									DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+									UseLayoutRounding="False">
+
+									<!-- Vertical gridlines -->
+									<Grid>
+
+										<Grid.ColumnDefinitions>
+											<!-- Auto-generated gridlines -->
+											<ColumnDefinition Width="*"/>
+											<!-- Final (fixed) gridline -->
+											<ColumnDefinition Width="Auto"/>
+										</Grid.ColumnDefinitions>
+
+										<!-- One segment containing primary gridline (on the left) and secondary gridlines between two
+										neighbouring gridlines -->
+										<controls:EqualChildSpaceContainer HorizontalAlignment="Stretch"
+											FlowDirection="LeftToRight"
+											ItemsSource="{Binding ElementName=VerticalAxisGridlinesItemsSource, Path=ItemsSource}">
+
+											<xaml:VisualAttachments.AttachedVisuals>
+
+												<!-- Dummy ItemsSource for the segments -->
+												<xaml:DummyItemsSource x:Name="VerticalAxisGridlinesItemsSource"
+													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalAxisLabelsCount, Converter={converters:SumMEC Summand=-1}}"/>
+											</xaml:VisualAttachments.AttachedVisuals>
+
+											<controls:EqualChildSpaceContainer.ItemTemplate>
+												<DataTemplate>
+																									
+													<Grid HorizontalAlignment="Stretch"
+														VerticalAlignment="Stretch">
+
+														<!-- Primary gridline -->
+														<Border VerticalAlignment="Stretch"
+															Width="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesThickness}"
+															Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"
+															HorizontalAlignment="Left"/>
+
+														<!-- Container with secondary gridlines -->
+														<controls:ItemsContainer UniformSpacing="True"
+															OuterSpacing="True"
+															UseAllAvailableSpace="True"
+															FlowDirection="LeftToRight"
+															HorizontalAlignment="Stretch"
+															VerticalAlignment="Stretch"
+															ItemsSource="{Binding ElementName=SecondaryGridlinesItemsSource, Path=ItemsSource}">
+
+															<xaml:VisualAttachments.AttachedVisuals>
+																<!-- Dummy ItemsSource for the secondary gridlines -->
+																<xaml:DummyItemsSource x:Name="SecondaryGridlinesItemsSource"
+																	ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.SecondaryVerticalGridlinesCount}"/>
+															</xaml:VisualAttachments.AttachedVisuals>
+
+															<controls:ItemsContainer.ItemTemplate>
+																<DataTemplate>
+																	<!-- Secondary gridline data template -->
+																	<Border VerticalAlignment="Stretch"
+																		Width="{Binding ElementName=GridlineContainer, Path=DataContext.SecondaryGridlinesThickness}"
+																		Background="{Binding ElementName=GridlineContainer, Path=DataContext.SecondaryGridlinesBrush}"/>
+																</DataTemplate>
+															</controls:ItemsContainer.ItemTemplate>
+															
+														</controls:ItemsContainer>
+
+													</Grid>
+												</DataTemplate>
+											</controls:EqualChildSpaceContainer.ItemTemplate>
+										
+											</controls:EqualChildSpaceContainer>
+
+										<!-- The last gridline (on the right) with no secondary gridlines on the right -->
+										<Border VerticalAlignment="Stretch" Grid.Column="1"
+											Width="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesThickness}"												
+											Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"/>
+
+									</Grid>
+
+									<!-- Horizontal gridlines -->
+									<Grid>
+
+										<Grid.RowDefinitions>
+											<!-- Auto-generated gridlines -->
+											<RowDefinition Height="*"/>
+											<!-- Final (fixed) gridline -->
+											<RowDefinition Height="Auto"/>
+										</Grid.RowDefinitions>
+
+										<!-- One segment containing primary gridline (on the top) and secondary gridlines between two
+										neighbouring gridlines -->
+										<controls:EqualChildSpaceContainer HorizontalAlignment="Stretch"
+											FlowDirection="TopToBottom"
+											ItemsSource="{Binding ElementName=HorizontalAxisGridlinesItemsSource, Path=ItemsSource}">
+
+											<xaml:VisualAttachments.AttachedVisuals>
+												<!-- Dummy ItemsSource for the segments -->
+												<xaml:DummyItemsSource x:Name="HorizontalAxisGridlinesItemsSource"
+													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalAxisLabelsCount, Converter={converters:SumMEC Summand=-1}}"/>
+											</xaml:VisualAttachments.AttachedVisuals>
+
+											<controls:EqualChildSpaceContainer.ItemTemplate>
+												<DataTemplate>
+
+													<Grid HorizontalAlignment="Stretch"
+														VerticalAlignment="Stretch">
+
+														<!-- Primary gridline -->
+														<Border HorizontalAlignment="Stretch"
+															Height="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesThickness}"
+															Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"
+															VerticalAlignment="Top"/>
+
+														<!-- Container with secondary gridlines -->
+														<controls:ItemsContainer UniformSpacing="True"
+															OuterSpacing="True"
+															UseAllAvailableSpace="True"
+															FlowDirection="TopToBottom"
+															HorizontalAlignment="Stretch"
+															VerticalAlignment="Stretch"
+															ItemsSource="{Binding ElementName=SecondaryGridlinesItemsSource, Path=ItemsSource}">
+
+															<xaml:VisualAttachments.AttachedVisuals>
+																<!-- Dummy ItemsSource for the secondary gridlines -->
+																<xaml:DummyItemsSource x:Name="SecondaryGridlinesItemsSource"
+																	ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.SecondaryHorizontalGridlinesCount}"/>
+															</xaml:VisualAttachments.AttachedVisuals>
+
+															<controls:ItemsContainer.ItemTemplate>
+																<DataTemplate>
+																	<!-- Secondary gridline data template -->
+																	<Border HorizontalAlignment="Stretch"
+																		Height="{Binding ElementName=GridlineContainer, Path=DataContext.SecondaryGridlinesThickness}"
+																		Background="{Binding ElementName=GridlineContainer, Path=DataContext.SecondaryGridlinesBrush}"/>
+																</DataTemplate>
+															</controls:ItemsContainer.ItemTemplate>
+
+														</controls:ItemsContainer>
+
+													</Grid>
+												</DataTemplate>
+											</controls:EqualChildSpaceContainer.ItemTemplate>
+
+										</controls:EqualChildSpaceContainer>
+
+										<!-- The last gridline (on the right) with no secondary gridlines on the right -->
+										<Border HorizontalAlignment="Stretch"
+											Grid.Row="1"
+											Height="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesThickness}"												
+											Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"/>
+
+									</Grid>
+
 								</Grid>
 
 								<!--#endregion-->
@@ -202,6 +358,10 @@
 								<Grid Name="PART_GraphArea"
 									Margin="{Binding GridlinesThickness, Converter={converters:DoubleToUniformThicknessMEC Multiplier=0.5}}"
 									DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
+
+									<xaml:VisualAttachments.AttachedVisuals>
+										<xaml:SizeBindingHelper x:Name="DataDisplaySize"/>
+									</xaml:VisualAttachments.AttachedVisuals>
 
 									<Grid.Resources>
 										<local:DataPointsToPolylinePointsConverter x:Key="DataPointsPolylineConverter"/>
