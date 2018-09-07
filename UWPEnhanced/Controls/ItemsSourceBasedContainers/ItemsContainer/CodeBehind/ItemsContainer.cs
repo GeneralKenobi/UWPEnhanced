@@ -137,6 +137,7 @@ namespace UWPEnhanced.Controls
 				UpdateItemSpacingOnUnderylingPanel();
 				UpdateUniformSpacingOnUnderylingPanel();
 				UpdateUseAllAvailableSpaceOnUnderylingPanel();
+				UpdateOuterSpacingOnUnderylingPanel();
 			}
 		}
 
