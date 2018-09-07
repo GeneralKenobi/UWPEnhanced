@@ -119,7 +119,8 @@ namespace UWPEnhanced.Controls
 				case ItemsDirection.RightToLeft:
 					{
 						// Height is the maximum value out of desired height of any child and the available height
-						double childHeight = Math.Max(finalSize.Height, Children.Max((child) => child.DesiredSize.Height));
+						double childHeight = Children.Count > 0 ?
+							Math.Max(finalSize.Height, Children.Max((child) => child.DesiredSize.Height)) : finalSize.Height;
 
 						if (double.IsInfinity(finalSize.Height))
 						{
@@ -137,7 +138,8 @@ namespace UWPEnhanced.Controls
 				case ItemsDirection.TopToBottom:
 					{
 						// Width is the maximum value out of desired width of any child and the available width
-						double childWidth = Math.Max(finalSize.Width, Children.Max((child) => child.DesiredSize.Width));						
+						double childWidth = Children.Count > 0 ?
+							Math.Max(finalSize.Width, Children.Max((child) => child.DesiredSize.Width)) : finalSize.Width;
 
 						if (double.IsInfinity(finalSize.Height))
 						{
