@@ -158,47 +158,6 @@
 
 								<!--#region Gridlines-->
 
-								<!-- Contains the gridlines
-								<Grid Name="GridlineContainer"
-									DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
-									UseLayoutRounding="False">
-
-									 Vertical gridlines 
-									<controls:ItemsContainer UniformSpacing="True"
-										UseAllAvailableSpace="True"
-										HorizontalAlignment="Stretch"
-										FlowDirection="LeftToRight"
-										ItemsSource="{Binding HorizontalAxisLabels}">
-
-										<controls:ItemsContainer.ItemTemplate>
-											<DataTemplate>
-												<Border VerticalAlignment="Stretch"
-													Width="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesThickness}"												
-													Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"/>
-											</DataTemplate>
-										</controls:ItemsContainer.ItemTemplate>
-
-									</controls:ItemsContainer>
-
-									--><!-- Horizontal gridlines --><!--
-									<controls:ItemsContainer UniformSpacing="True"
-										UseAllAvailableSpace="True"
-										VerticalAlignment="Stretch"
-										FlowDirection="TopToBottom"
-										ItemsSource="{Binding VerticalAxisLabels}">
-
-										<controls:ItemsContainer.ItemTemplate>
-											<DataTemplate>
-												<Border HorizontalAlignment="Stretch"
-													Height="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesThickness}"
-													Background="{Binding ElementName=GridlineContainer, Path=DataContext.GridlinesBrush}"/>
-											</DataTemplate>
-										</controls:ItemsContainer.ItemTemplate>
-
-									</controls:ItemsContainer>
-
-								</Grid>-->
-
 								<!-- Contains the gridlines -->
 								<Grid Name="GridlineContainer"
 									DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
