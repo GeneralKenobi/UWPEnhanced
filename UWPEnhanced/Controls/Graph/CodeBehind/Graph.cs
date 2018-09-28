@@ -86,7 +86,7 @@ namespace UWPEnhanced.Controls
 			get => mDataDisplayPoints;
 			set
 			{
-				if(mDataDisplayPoints != value)
+				if (mDataDisplayPoints != value)
 				{
 					mDataDisplayPoints = value;
 					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DataDisplayPoints)));
@@ -125,6 +125,32 @@ namespace UWPEnhanced.Controls
 					mVerticalAxisLabels = value;
 					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerticalAxisLabels)));
 				}
+			}
+		}
+
+		/// <summary>
+		/// Number of horizontal gridlines to generate
+		/// </summary>
+		public int HorizontalGridlinesCount
+		{
+			get
+			{
+				var labelsCount = GetVerticalLabelsCount();
+
+				return labelsCount == 1 ? 3 : Math.Max(labelsCount, 2);
+			}
+		}
+
+		/// <summary>
+		/// Number of vertical gridlines to generate
+		/// </summary>
+		public int VerticalGridlinesCount
+		{
+			get
+			{
+				var labelsCount = GetHorizontalLabelsCount();
+
+				return labelsCount == 1 ? 3 : Math.Max(labelsCount, 2);
 			}
 		}
 
@@ -776,6 +802,11 @@ namespace UWPEnhanced.Controls
 			{
 				GenerateHorizontalAxisLabels();
 				GenerateVerticalAxisLabels();
+
+				// Notify that the number of gridlines may have changed
+
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HorizontalGridlinesCount)));
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerticalGridlinesCount)));
 			}
 		}
 
