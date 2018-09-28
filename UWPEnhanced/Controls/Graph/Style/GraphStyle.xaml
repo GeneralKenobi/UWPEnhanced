@@ -67,6 +67,10 @@
 						<Grid ColumnSpacing="15"
 							RowSpacing="10"
 							Grid.Row="1">
+							
+							<Grid.Resources>
+								<local:GridlinesCountConverter x:Key="GridlinesCountConverter"/>
+							</Grid.Resources>
 
 							<!--#region Row and column definitions-->
 
@@ -183,7 +187,7 @@
 
 												<!-- Dummy ItemsSource for the segments -->
 												<xaml:DummyItemsSource x:Name="VerticalAxisGridlinesItemsSource"
-													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalAxisLabelsCount, Converter={converters:SumMEC Summand=-1}}"/>
+													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalAxisLabelsCount, Converter={StaticResource GridlinesCountConverter}}"/>
 											</xaml:VisualAttachments.AttachedVisuals>
 
 											<controls:EqualChildSpaceContainer.ItemTemplate>
@@ -256,7 +260,7 @@
 											<xaml:VisualAttachments.AttachedVisuals>
 												<!-- Dummy ItemsSource for the segments -->
 												<xaml:DummyItemsSource x:Name="HorizontalAxisGridlinesItemsSource"
-													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalAxisLabelsCount, Converter={converters:SumMEC Summand=-1}}"/>
+													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalAxisLabelsCount, Converter={StaticResource GridlinesCountConverter}}"/>
 											</xaml:VisualAttachments.AttachedVisuals>
 
 											<controls:EqualChildSpaceContainer.ItemTemplate>
