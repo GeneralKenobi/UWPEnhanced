@@ -181,13 +181,13 @@
 										neighbouring gridlines -->
 										<controls:EqualChildSpaceContainer HorizontalAlignment="Stretch"
 											FlowDirection="LeftToRight"
-											ItemsSource="{Binding ElementName=VerticalAxisGridlinesItemsSource, Path=ItemsSource}">
+											ItemsSource="{Binding ElementName=VerticalGridlinesItemsSource, Path=ItemsSource}">
 
 											<xaml:VisualAttachments.AttachedVisuals>
 
 												<!-- Dummy ItemsSource for the segments -->
-												<xaml:DummyItemsSource x:Name="VerticalAxisGridlinesItemsSource"
-													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalAxisLabelsCount, Converter={StaticResource GridlinesCountConverter}}"/>
+												<xaml:DummyItemsSource x:Name="VerticalGridlinesItemsSource"
+													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.VerticalGridlinesCount, Converter={StaticResource GridlinesCountConverter}}"/>
 											</xaml:VisualAttachments.AttachedVisuals>
 
 											<controls:EqualChildSpaceContainer.ItemTemplate>
@@ -255,12 +255,12 @@
 										neighbouring gridlines -->
 										<controls:EqualChildSpaceContainer HorizontalAlignment="Stretch"
 											FlowDirection="TopToBottom"
-											ItemsSource="{Binding ElementName=HorizontalAxisGridlinesItemsSource, Path=ItemsSource}">
+											ItemsSource="{Binding ElementName=HorizontalGridlinesItemsSource, Path=ItemsSource}">
 
 											<xaml:VisualAttachments.AttachedVisuals>
 												<!-- Dummy ItemsSource for the segments -->
-												<xaml:DummyItemsSource x:Name="HorizontalAxisGridlinesItemsSource"
-													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalAxisLabelsCount, Converter={StaticResource GridlinesCountConverter}}"/>
+												<xaml:DummyItemsSource x:Name="HorizontalGridlinesItemsSource"
+													ItemsCount="{Binding ElementName=GridlineContainer, Path=DataContext.HorizontalGridlinesCount, Converter={StaticResource GridlinesCountConverter}}"/>
 											</xaml:VisualAttachments.AttachedVisuals>
 
 											<controls:EqualChildSpaceContainer.ItemTemplate>
