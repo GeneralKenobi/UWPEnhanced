@@ -61,7 +61,7 @@ namespace UWPEnhanced.Xaml
 		{
 			if(sender is DummyItemsSource source && e.NewValue != e.OldValue && e.NewValue is int newVal)
 			{
-				source.ItemsSource = new byte[newVal];
+				source.ItemsSource = new byte[newVal >= 0 ? newVal : 0];
 				source.PropertyChanged?.Invoke(source, new PropertyChangedEventArgs(nameof(ItemsSource)));
 			}
 		}
