@@ -114,7 +114,7 @@ namespace UWPEnhanced.Controls
 		/// <returns></returns>
 		private double CalculateItemSpacing(Size finalSize) =>
 			// Calculate the total spacing and divide it by (n-1) because for n children there are n-1 gaps
-			CalculateTotalItemSpacing(finalSize) / SpacingAreasCount;
+			SpacingAreasCount > 0 ? CalculateTotalItemSpacing(finalSize) / SpacingAreasCount : 0;
 
 		/// <summary>
 		/// Returns length of spacing between all items
