@@ -29,7 +29,7 @@ namespace UWPEnhanced.Xaml
 		/// <summary>
 		/// Contains all rules that define this <see cref="TypeBasedDataTemplateSelector"/>'s behaviour
 		/// </summary>
-		public ICollection<ITemplateRule> Rules { get; } = new Collection<ITemplateRule>();
+		public ICollection<ITemplateTypeRule> Rules { get; } = new Collection<ITemplateTypeRule>();
 
 		#endregion
 

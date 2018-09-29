@@ -6,12 +6,12 @@ namespace UWPEnhanced.Xaml
 	/// <summary>
 	/// Interface for classes that are used in <see cref="TypeBasedDataTemplateSelector"/> to determine matching templates
 	/// </summary>
-	public interface ITemplateRule
+	public interface ITemplateTypeRule
 	{
 		#region Properties
 
 		/// <summary>
-		/// Template to use whan a <see cref="Type"/> is compatible with this <see cref="ITemplateRule"/>
+		/// Template to use whan a <see cref="Type"/> is compatible with this <see cref="ITemplateTypeRule"/>
 		/// </summary>
 		DataTemplate Template { get; }
 
@@ -20,7 +20,7 @@ namespace UWPEnhanced.Xaml
 		#region Methods
 
 		/// <summary>
-		/// Returns true if <paramref name="type"/> fulfills this <see cref="ITemplateRule"/>
+		/// Returns true if <paramref name="type"/> fulfills this <see cref="ITemplateTypeRule"/>
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
