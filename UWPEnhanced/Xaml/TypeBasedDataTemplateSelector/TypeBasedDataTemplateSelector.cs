@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -22,6 +25,42 @@ namespace UWPEnhanced.Xaml
 		/// True if this <see cref="IAttachable"/> is attached
 		/// </summary>
 		public bool IsAttached => AttachedTo != null;
+
+		/// <summary>
+		/// Contains all rules that define this <see cref="TypeBasedDataTemplateSelector"/>'s behaviour
+		/// </summary>
+		public ICollection<ITemplateRule> Rules { get; } = new Collection<ITemplateRule>();
+
+		#endregion
+
+		#region Private methods
+
+		/// <summary>
+		/// Selects the proper template to use out of those defined in <see cref="Rules"/>
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		private DataTemplate SelectTemplateLogic(Type type) => Rules.FirstOrDefault((rule) => rule.Compatible(type))?.Template;
+
+		#endregion
+
+		#region Protected methods
+
+		/// <summary>
+		/// Uses <see cref="SelectTemplateLogic(Type)"/> to determine a template
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		protected override DataTemplate SelectTemplateCore(object item) => SelectTemplateLogic(item.GetType());
+
+		/// <summary>
+		/// Uses <see cref="SelectTemplateLogic(Type)"/> to determine a template
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="container"></param>
+		/// <returns></returns>
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container) =>
+			SelectTemplateLogic(item.GetType());
 
 		#endregion
 
