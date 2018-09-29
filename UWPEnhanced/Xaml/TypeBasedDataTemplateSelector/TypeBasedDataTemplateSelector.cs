@@ -40,7 +40,8 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		private DataTemplate SelectTemplateLogic(Type type) => Rules.FirstOrDefault((rule) => rule.Compatible(type))?.Template;
+		private DataTemplate SelectTemplateLogic(Type type) =>
+			type == null ? null : Rules.FirstOrDefault((rule) => rule.Compatible(type))?.Template;
 
 		#endregion
 
@@ -51,7 +52,7 @@ namespace UWPEnhanced.Xaml
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		protected override DataTemplate SelectTemplateCore(object item) => SelectTemplateLogic(item.GetType());
+		protected override DataTemplate SelectTemplateCore(object item) => SelectTemplateLogic(item?.GetType());
 
 		/// <summary>
 		/// Uses <see cref="SelectTemplateLogic(Type)"/> to determine a template
@@ -60,7 +61,7 @@ namespace UWPEnhanced.Xaml
 		/// <param name="container"></param>
 		/// <returns></returns>
 		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container) =>
-			SelectTemplateLogic(item.GetType());
+			SelectTemplateLogic(item?.GetType());
 
 		#endregion
 
