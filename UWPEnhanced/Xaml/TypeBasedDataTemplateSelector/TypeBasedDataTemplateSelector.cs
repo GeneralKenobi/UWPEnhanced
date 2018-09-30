@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 
 namespace UWPEnhanced.Xaml
 {
@@ -12,6 +13,7 @@ namespace UWPEnhanced.Xaml
 	/// <see cref="DataTemplateSelector"/> that chooses a template from a collection of provided templates based on the type of
 	/// the Data that will be presented.
 	/// </summary>
+	[ContentProperty(Name = nameof(Rules))]
 	public class TypeBasedDataTemplateSelector : DataTemplateSelector, IAttachable
 	{
 		#region Public properties
