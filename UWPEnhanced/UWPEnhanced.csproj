@@ -126,6 +126,14 @@
     <Compile Include="CustomConverters\IComplexConverter\NegateImaginaryComplexConverter.cs" />
     <Compile Include="CustomConverters\IComplexConverter\NegateRealComplexConverter.cs" />
     <Compile Include="Helpers\Animations\StoryboardHelpers.cs" />
+    <Compile Include="Xaml\XamlTypeSetting\TypeSetter.cs" />
+    <Compile Include="Xaml\XamlTypeSetting\TypeResolver.cs" />
+    <Compile Include="Xaml\AttachableObjectWrapper\AttachableObjectWrapper.cs" />
+    <Compile Include="Xaml\TypeBasedDataTemplateSelector\ITemplateTypeRule\ITemplateTypeRule.cs" />
+    <Compile Include="Xaml\TypeBasedDataTemplateSelector\TemplateRules\BaseTemplateTypeRule.cs" />
+    <Compile Include="Xaml\TypeBasedDataTemplateSelector\TemplateRules\LazyTemplateTypeRule.cs" />
+    <Compile Include="Xaml\TypeBasedDataTemplateSelector\TemplateRules\StrictTemplateRule.cs" />
+    <Compile Include="Xaml\TypeBasedDataTemplateSelector\TypeBasedDataTemplateSelector.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\BoolToDoubleConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\DoubleToRowHeightConverter.cs" />
