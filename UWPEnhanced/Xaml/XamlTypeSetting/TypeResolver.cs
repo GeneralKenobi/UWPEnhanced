@@ -2,13 +2,13 @@
 using System;
 using Windows.UI.Xaml.Markup;
 
-namespace UWPEnhanced.MarkupExtensions
+namespace UWPEnhanced.Xaml
 {
 	/// <summary>
 	/// Helps with assigning <see cref="Type"/> properties in xaml
 	/// </summary>
 	[MarkupExtensionReturnType(ReturnType = typeof(Type))]
-	public class TypeSetter : MarkupExtension
+	public class TypeResolver : MarkupExtension
 	{
 		#region Public properties
 
