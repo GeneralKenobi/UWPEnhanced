@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpEnhanced.Helpers;
+using System;
 using Windows.UI.Xaml.Markup;
 
 namespace UWPEnhanced.MarkupExtensions
@@ -12,9 +13,9 @@ namespace UWPEnhanced.MarkupExtensions
 		#region Public properties
 
 		/// <summary>
-		/// Type to return as this <see cref="MarkupExtension"/>'s return value.
+		/// Name of the type to return as this <see cref="MarkupExtension"/>'s return value.
 		/// </summary>
-		public Type Type { get; set; }
+		public string TypeName { get; set; }
 
 		#endregion
 
@@ -24,7 +25,7 @@ namespace UWPEnhanced.MarkupExtensions
 		/// Returns <see cref="Type"/>
 		/// </summary>
 		/// <returns></returns>
-		protected override object ProvideValue() => Type;
+		protected override object ProvideValue() => TypeHelpers.GetType(TypeName);
 
 		#endregion
 	}
