@@ -7,6 +7,8 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace UWPEnhanced.Controls
 {
@@ -581,7 +583,7 @@ namespace UWPEnhanced.Controls
 			typeof(Graph), new PropertyMetadata(default(Brush)));
 
 		#endregion
-
+		
 		#endregion
 
 		#region Private methods
@@ -700,7 +702,7 @@ namespace UWPEnhanced.Controls
 		/// <summary>
 		/// Calculates new positions for display points (based on <see cref="Data"/>) and assigns them to <see cref="DataDisplayPoints"/>
 		/// </summary>
-		private void TransformAndUpdateData()
+		private async void TransformAndUpdateData()
 		{
 			// Check if graph area was found
 			if (_GraphArea == null)
@@ -715,19 +717,22 @@ namespace UWPEnhanced.Controls
 			// coordinates are the left, bottom corner of the point)
 			var graphAreaWidth = _GraphArea.ActualWidth;
 			var graphAreaHeight = _GraphArea.ActualHeight;
-
+			
 			// Get the minimum values on both axes
 			var minX = Data.Min((point) => point.Key);
 			var minY = Data.Min((point) => point.Value);
-
+			
 			// Get the range of values on botx axes (maximum value - minimum value)
 			var xRange = Data.Max((point) => point.Key) - minX;
 			var yRange = Data.Max((point) => point.Value) - minY;
-
+			
 			// Assign to DataDisplayPoints the 
-			DataDisplayPoints = Data.
+			var datacopy = Data;
+
+			// Too heavy for UI thread - large collections of points cause visible freeze - use task to fix that
+			DataDisplayPoints = await Task.Run(() => datacopy.
 				Select((point) => new KeyValuePair<double, double>(ValueTransform(point.Key, minX, xRange, graphAreaWidth),
-				ValueTransform(point.Value, minY, yRange, graphAreaHeight)));
+				ValueTransform(point.Value, minY, yRange, graphAreaHeight))));
 		}
 
 		/// <summary>
@@ -800,9 +805,11 @@ namespace UWPEnhanced.Controls
 		{
 			if(Data != null)
 			{
+				Stopwatch s = new Stopwatch();
+				s.Start();
 				GenerateHorizontalAxisLabels();
 				GenerateVerticalAxisLabels();
-
+				Debug.WriteLine("Labels: " + s.ElapsedMilliseconds);
 				// Notify that the number of gridlines may have changed
 
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HorizontalGridlinesCount)));

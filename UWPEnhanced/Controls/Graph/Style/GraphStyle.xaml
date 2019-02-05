@@ -346,6 +346,7 @@
 
 									<!-- Presents the data points -->
 									<ItemsControl Name="DataPointsContainer"
+										Visibility="{Binding PointDiameter, Converter={converters:DoubleToVisibilityMEC TargetNumber=0, InvertConvesion=True}}"
 										ItemsSource="{Binding DataDisplayPoints}"
 										Foreground="{TemplateBinding DataForeground}"
 										Margin="{Binding PointDiameter, Converter={converters:DoubleToUniformThicknessMEC Multiplier=-0.5, SelectedSides=LeftBottom}}">
