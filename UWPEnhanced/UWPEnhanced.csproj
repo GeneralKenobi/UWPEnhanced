@@ -126,6 +126,8 @@
     <Compile Include="CustomConverters\IComplexConverter\NegateImaginaryComplexConverter.cs" />
     <Compile Include="CustomConverters\IComplexConverter\NegateRealComplexConverter.cs" />
     <Compile Include="Helpers\Animations\StoryboardHelpers.cs" />
+    <Compile Include="ValueConverters\MarkupExtensionBased\DoubleToVisibility\DoubleToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\MarkupExtensionBased\DoubleToVisibility\DoubleToVisibilityMEC.cs" />
     <Compile Include="Xaml\XamlTypeSetting\TypeSetter.cs" />
     <Compile Include="Xaml\XamlTypeSetting\TypeResolver.cs" />
     <Compile Include="Xaml\AttachableObjectWrapper\AttachableObjectWrapper.cs" />
