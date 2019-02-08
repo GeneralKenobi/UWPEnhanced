@@ -805,13 +805,10 @@ namespace UWPEnhanced.Controls
 		{
 			if(Data != null)
 			{
-				Stopwatch s = new Stopwatch();
-				s.Start();
 				GenerateHorizontalAxisLabels();
 				GenerateVerticalAxisLabels();
-				Debug.WriteLine("Labels: " + s.ElapsedMilliseconds);
+			
 				// Notify that the number of gridlines may have changed
-
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HorizontalGridlinesCount)));
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerticalGridlinesCount)));
 			}
