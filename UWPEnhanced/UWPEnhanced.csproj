@@ -140,7 +140,7 @@
     <Compile Include="Xaml\TypeBasedDataTemplateSelector\TypeBasedDataTemplateSelector.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\BoolToDoubleConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\BoolToVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\IValueConverterImplementations\DoubleToRowHeightConverter.cs" />
+    <Compile Include="ValueConverters\IValueConverterImplementations\DoubleToGridLengthConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\AbsoluteValueConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\ComplexToSIStringConverter.cs" />
     <Compile Include="ValueConverters\IValueConverterImplementations\DoubleToSIStringConverter.cs" />
