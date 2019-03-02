@@ -16,7 +16,9 @@
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/Graph/Style/GraphStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/RotatableControl/Style/RotatableControlStyle.xaml"/>
 		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/MultiDropDownList/Style/MultiDropDownListStyle.xaml"/>
+		<ResourceDictionary Source="ms-appx:///UWPEnhanced/Controls/DropDownControl/Style/DropDownControlStyle.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
+
 
 
 </ResourceDictionary>

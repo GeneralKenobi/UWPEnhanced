@@ -108,6 +108,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplay.cs" />
+    <Compile Include="Controls\DropDownControl\DropDownControl.cs" />
     <Compile Include="Controls\Graph\ValueConverters\GridlinesCountConverter.cs" />
     <Compile Include="Controls\ItemsSourceBasedContainers\BaseFlowDirectionContainer\CodeBehind\BaseFlowDirectionContainer.cs" />
     <Compile Include="Controls\ItemsSourceBasedContainers\BaseFlowDirectionContainer\Panel\BaseFlowDirectionContainerPanel.cs" />
@@ -257,6 +258,10 @@
     <Page Include="Controls\ComplexValueUnitDisplay\ComplexValueUnitDisplayStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DropDownControl\Style\DropDownControlStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ItemsSourceBasedContainers\EqualChildSpaceContainer\Style\EqualChildSpaceContainerStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
