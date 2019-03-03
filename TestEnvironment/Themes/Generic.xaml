@@ -1,10 +1,28 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:xaml="using:UWPEnhanced.Xaml"
     xmlns:local="using:TestEnvironment">
 
-	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="ms-appx:///TestEnvironment/NewFolder1/Dictionary1.xaml"/>
-	</ResourceDictionary.MergedDictionaries>
-  
+
+    <Style TargetType="local:CustomControl1" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:CustomControl1">
+                    <Border Width="200" Height="200"
+                        Background="Red"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+
+						<xaml:VisualAttachments.AttachedVisuals>
+							<xaml:ParametrizedVisualCommand Command="{Binding command, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+								<xaml:VisualSpecificKeyTrigger Key="Q" SetHandled="True"
+									Target="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+							</xaml:ParametrizedVisualCommand>
+						</xaml:VisualAttachments.AttachedVisuals>
+					</Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
