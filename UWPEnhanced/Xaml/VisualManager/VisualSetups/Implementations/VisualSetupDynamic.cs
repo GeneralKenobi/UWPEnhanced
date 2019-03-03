@@ -78,7 +78,7 @@ namespace UWPEnhanced.Xaml
 						sbDefined = true;
 
 						// Pause the transition out storyboard
-						TransitionOutStoryboard.Pause();
+						TransitionOutStoryboard?.Pause();
 						// Run the transition in storyboard
 						TransitionInStoryboard?.Begin();
 					}
@@ -155,9 +155,9 @@ namespace UWPEnhanced.Xaml
 						sbDefined = true;
 
 						// Pause the transition in storyboard
-						TransitionInStoryboard.Pause();
+						TransitionInStoryboard?.Pause();
 						// Run the transition out storyboard
-						TransitionOutStoryboard.Begin();
+						TransitionOutStoryboard?.Begin();
 					}
 				});
 
