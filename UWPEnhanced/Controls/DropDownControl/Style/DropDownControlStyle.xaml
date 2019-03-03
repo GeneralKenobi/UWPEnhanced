@@ -1,18 +1,155 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UWPEnhanced.Controls">
+    xmlns:controls="using:UWPEnhanced.Controls"
+	xmlns:xaml="using:UWPEnhanced.Xaml"
+	xmlns:converters="using:UWPEnhanced.ValueConverters">
 
 
-	<Style TargetType="local:DropDownControl">
+	<Style TargetType="controls:DropDownControl">
+		<Setter Property="FontSize" Value="18"/>
+		<Setter Property="Foreground" Value="White"/>
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="local:DropDownControl">
-					<Border
-                        Background="Red"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-					</Border>
+				<ControlTemplate TargetType="controls:DropDownControl">
+
+					<Grid Background="Blue" Width="{TemplateBinding Width}">
+
+						<Grid.Resources>
+							<ResourceDictionary>
+
+								<!--#region Fade animations values -->
+
+								<Duration x:Key="FadeDuration">0:0:0.1</Duration>
+								<x:Double x:Key="DroppedOpacity">1</x:Double>
+								<x:Double x:Key="CollapsedOpacity">0</x:Double>
+								<ExponentialEase x:Key="FadeEase" EasingMode="EaseInOut"/>
+
+								<!--#endregion-->
+
+								<!--#region Transition storyboards -->
+
+								<!-- Fades in the expanded part of control by animating opacity -->
+								<Storyboard x:Key="TransitionIntoDroppedStoryboard">
+									<DoubleAnimation Storyboard.TargetName="ContentInDropDown"
+										Storyboard.TargetProperty="Opacity"
+										EnableDependentAnimation="True"
+										Duration="{StaticResource FadeDuration}"
+										To="{StaticResource DroppedOpacity}"
+										EasingFunction="{StaticResource FadeEase}"/>
+								</Storyboard>
+
+								<!-- Fades out the expanded part of control by animating opacity -->
+								<Storyboard x:Key="TransitionIntoCollapsedStoryboard">
+									<DoubleAnimation Storyboard.TargetName="ContentInDropDown"
+										Storyboard.TargetProperty="Opacity"
+										EnableDependentAnimation="True"
+										Duration="{StaticResource FadeDuration}"
+										To="{StaticResource CollapsedOpacity}"
+										EasingFunction="{StaticResource FadeEase}"/>
+								</Storyboard>
+
+								<!--#endregion--> 
+
+								<!--#region VisualSetup setters -->
+
+								<!-- -->
+								<xaml:VisualSetterCollection x:Key="DroppedSetters">
+									<xaml:PropertySetter Target="{Binding ElementName=ContentInDropDown, Mode=TwoWay}"
+										Property="Visibility"
+										Value="Visible"/>
+								</xaml:VisualSetterCollection>
+
+								<xaml:VisualSetterCollection x:Key="CollapsedSetters">
+									<xaml:PropertySetter Target="{Binding ElementName=ContentInDropDown, Mode=TwoWay}"
+										Property="Visibility"
+										Value="Collapsed"/>
+								</xaml:VisualSetterCollection>
+
+								<!--#endregion-->
+
+							</ResourceDictionary>
+						</Grid.Resources>
+
+						<Grid.RowDefinitions>
+							<!-- Header -->
+							<RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HeaderHeight, Converter={converters:DoubleToGridLengthMEC Unit=Pixel}}"/>
+							<!-- Dropdown content -->
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+
+						<xaml:VisualManager.VisualSetups>
+							<xaml:VisualSetupGroup Name="DropDownGroup">
+
+								<!-- Triggers for transitions between setups	-->
+								<xaml:VisualSetupGroup.Triggers>
+									<xaml:VisualTransitionCollection>
+
+										<!-- Transition to Dropped when IsDropped is set to true -->
+										<xaml:VisualTransition TransitionTo="Dropped">
+											<xaml:VisualDataTriggerBool Data="{Binding IsDropped, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+												CompareTo="True"/>
+										</xaml:VisualTransition>
+
+										<!-- Transition to Collapsed when IsDropped is set to false -->
+										<xaml:VisualTransition TransitionTo="Collapsed">
+											<xaml:VisualDataTriggerBool Data="{Binding IsDropped, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+											CompareTo="False"/>
+										</xaml:VisualTransition>
+									</xaml:VisualTransitionCollection>									
+								</xaml:VisualSetupGroup.Triggers>
+
+								<!-- State for when the control is expanded -->
+								<!-- Cascade setup is used because first the visibility has to be set to visible (in order for the control to appear
+									in the layout) and only then the second setup may start animating the opacity -->
+								<xaml:VisualSetupCascade ID="Dropped" Setters="{StaticResource DroppedSetters}">
+									<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource TransitionIntoDroppedStoryboard}"/>
+								</xaml:VisualSetupCascade>
+
+								<!-- State for when the control is collapsed, here the transition in will first animate out the expanded section
+									and then it will have invisibility set to collapsed -->
+								<xaml:VisualSetup ID="Collapsed"
+									TransitionInStoryboard="{StaticResource TransitionIntoCollapsedStoryboard}"
+									Setters="{StaticResource CollapsedSetters}"/>
+
+							</xaml:VisualSetupGroup>
+						</xaml:VisualManager.VisualSetups>
+
+						<!-- Header -->
+						<Grid Background="BlueViolet">
+							<Grid.ColumnDefinitions>
+								<!-- Arrow indicating if control is dropped down or not, bind the width to the height of the header
+									the Icon is rectangular -->
+								<ColumnDefinition Width="Auto"/>
+								<!-- Separator column with constant width -->
+								<ColumnDefinition Width="10"/>
+								<!-- Column for header text display -->
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+
+							<!-- Icon used to represent the state of the drop down control -->
+							<FontIcon FontSize="{TemplateBinding FontSize}"
+								Foreground="{TemplateBinding Foreground}"
+								Glyph="&#xE76C;"
+								Margin="10 0 0 0"/>
+
+							<!-- Header text -->
+							<TextBlock Text="{TemplateBinding HeaderText}"
+								Grid.Column="2"
+								Margin="0 0 10 0"
+								HorizontalAlignment="Center"
+								Foreground="{TemplateBinding Foreground}"
+								FontSize="{TemplateBinding FontSize}"
+								VerticalAlignment="Center"/>
+							
+						</Grid>
+
+						<ContentPresenter x:Name="ContentInDropDown" 
+							Grid.Row="1"/>
+
+					</Grid>
+
+
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
