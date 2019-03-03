@@ -189,6 +189,11 @@ namespace UWPEnhanced.Xaml
 
 		#region Private Methods
 
+		/// <summary>
+		/// Callback for when one of triggers in <see cref="Triggers"/> is activated, transitions to new setup.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void TriggerCallback(object sender, VisualTransitionTriggeredEventArgs e) => GoToSetup(e.TransitionTo, e.UseTransitions);
 
 		/// <summary>
