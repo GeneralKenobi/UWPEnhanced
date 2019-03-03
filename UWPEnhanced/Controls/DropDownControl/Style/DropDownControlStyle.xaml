@@ -20,7 +20,7 @@
 
 								<!--#region Fade animations values -->
 
-								<Duration x:Key="TransitionDuration">0:0:0.1</Duration>
+								<Duration x:Key="TransitionDuration">0:0:0.05</Duration>
 								<x:Double x:Key="DroppedOpacity">1</x:Double>
 								<x:Double x:Key="CollapsedOpacity">0</x:Double>
 								<x:Double x:Key="DroppedIconRotationAngle">90</x:Double>
@@ -128,7 +128,7 @@
 
 								<!-- State for when the control is collapsed, here the transition in will first animate out the expanded section
 									and then it will have invisibility set to collapsed -->
-								<xaml:VisualSetup ID="Collapsed"
+								<xaml:VisualSetupDynamic ID="Collapsed"
 									TransitionInStoryboard="{StaticResource TransitionIntoCollapsedStoryboard}"
 									Setters="{StaticResource CollapsedSetters}"/>
 
@@ -137,6 +137,13 @@
 
 						<!-- Header -->
 						<Grid Background="BlueViolet">
+
+							<xaml:VisualAttachments.AttachedVisuals>
+								<xaml:ParametrizedVisualCommand Command="{Binding ToggleControlStateCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+									<xaml:VisualTappedTrigger SetHandled="True"/>
+								</xaml:ParametrizedVisualCommand>
+							</xaml:VisualAttachments.AttachedVisuals>
+
 							<Grid.ColumnDefinitions>
 								<!-- Arrow indicating if control is dropped down or not, bind the width to the height of the header
 									the Icon is rectangular -->
@@ -169,10 +176,12 @@
 								Foreground="{TemplateBinding Foreground}"
 								FontSize="{TemplateBinding FontSize}"
 								VerticalAlignment="Center"/>
-							
+								
 						</Grid>
 
 						<ContentPresenter x:Name="ContentInDropDown"
+							Opacity="{StaticResource CollapsedOpacity}"
+							Visibility="Collapsed"
 							Grid.Row="1"/>
 
 					</Grid>

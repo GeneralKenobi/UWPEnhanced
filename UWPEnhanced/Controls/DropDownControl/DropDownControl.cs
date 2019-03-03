@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using CSharpEnhanced.ICommands;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -23,7 +26,18 @@ namespace UWPEnhanced.Controls
 		public DropDownControl()
 		{
 			this.DefaultStyleKey = typeof(DropDownControl);
+
+			ToggleControlStateCommand = new RelayCommand(ToggleControlState);
 		}
+
+		#endregion
+
+		#region Public properties
+
+		/// <summary>
+		/// Command that toggles the state of the control - control goes from collapsed/dropped to dropped/collapsed
+		/// </summary>
+		public ICommand ToggleControlStateCommand { get; }
 
 		#endregion
 
@@ -89,6 +103,15 @@ namespace UWPEnhanced.Controls
 			typeof(DropDownControl), new PropertyMetadata(default(bool), NotifyPropertyChangedCallback(nameof(IsDropped))));
 
 		#endregion
+
+		#endregion
+
+		#region Private methods
+
+		/// <summary>
+		/// Method for <see cref="ToggleControlStateCommand"/>
+		/// </summary>
+		private void ToggleControlState() => IsDropped = !IsDropped;
 
 		#endregion
 
