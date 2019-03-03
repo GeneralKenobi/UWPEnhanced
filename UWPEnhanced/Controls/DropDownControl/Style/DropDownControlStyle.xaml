@@ -179,7 +179,10 @@
 								
 						</Grid>
 
+						<!-- Presents content in the expanded section, by default visibility is set to collapsed and opacity is set to value
+							assigned to collapsed state -->
 						<ContentPresenter x:Name="ContentInDropDown"
+							Content="{TemplateBinding Content}"
 							Opacity="{StaticResource CollapsedOpacity}"
 							Visibility="Collapsed"
 							Grid.Row="1"/>

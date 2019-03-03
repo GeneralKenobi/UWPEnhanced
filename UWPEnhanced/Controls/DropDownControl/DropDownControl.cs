@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 
 namespace UWPEnhanced.Controls
 {
+	[ContentProperty(Name = nameof(Content))]
 	public sealed class DropDownControl : Control, INotifyPropertyChanged
 	{
 		#region Events
@@ -101,6 +103,26 @@ namespace UWPEnhanced.Controls
 		public static readonly DependencyProperty IsDroppedProperty =
 			DependencyProperty.Register(nameof(IsDropped), typeof(bool),
 			typeof(DropDownControl), new PropertyMetadata(default(bool), NotifyPropertyChangedCallback(nameof(IsDropped))));
+
+		#endregion
+
+		#region Content Dependency Property
+
+		/// <summary>
+		/// Content presented upon drop-down
+		/// </summary>
+		public UIElement Content
+		{
+			get => (UIElement)GetValue(ContentProperty);
+			set => SetValue(ContentProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="Content"/>
+		/// </summary>
+		public static readonly DependencyProperty ContentProperty =
+			DependencyProperty.Register(nameof(Content), typeof(UIElement),
+			typeof(DropDownControl), new PropertyMetadata(default(UIElement)));
 
 		#endregion
 
