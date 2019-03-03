@@ -20,33 +20,53 @@
 
 								<!--#region Fade animations values -->
 
-								<Duration x:Key="FadeDuration">0:0:0.1</Duration>
+								<Duration x:Key="TransitionDuration">0:0:0.1</Duration>
 								<x:Double x:Key="DroppedOpacity">1</x:Double>
 								<x:Double x:Key="CollapsedOpacity">0</x:Double>
-								<ExponentialEase x:Key="FadeEase" EasingMode="EaseInOut"/>
+								<x:Double x:Key="DroppedIconRotationAngle">90</x:Double>
+								<x:Double x:Key="CollapsedIconRotationAngle">0</x:Double>
+								<ExponentialEase x:Key="TransitionEase" EasingMode="EaseInOut"/>
 
 								<!--#endregion-->
 
 								<!--#region Transition storyboards -->
 
-								<!-- Fades in the expanded part of control by animating opacity -->
+								<!-- Fades in the expanded part of control by animating opacity and rotates the arrow icon in the header to
+									point downwards -->
 								<Storyboard x:Key="TransitionIntoDroppedStoryboard">
+									<!-- Fade in animation -->
 									<DoubleAnimation Storyboard.TargetName="ContentInDropDown"
 										Storyboard.TargetProperty="Opacity"
 										EnableDependentAnimation="True"
-										Duration="{StaticResource FadeDuration}"
+										Duration="{StaticResource TransitionDuration}"
 										To="{StaticResource DroppedOpacity}"
-										EasingFunction="{StaticResource FadeEase}"/>
+										EasingFunction="{StaticResource TransitionEase}"/>
+									<!-- Icon rotation animation -->
+									<DoubleAnimation Storyboard.TargetName="HeaderIconRotateTransform"
+										Storyboard.TargetProperty="Angle"
+										EnableDependentAnimation="True"
+										Duration="{StaticResource TransitionDuration}"
+										To="{StaticResource DroppedIconRotationAngle}"
+										EasingFunction="{StaticResource TransitionEase}"/>
 								</Storyboard>
 
-								<!-- Fades out the expanded part of control by animating opacity -->
+								<!-- Fades out the expanded part of control by animating opacity and rotates the arrow icon in the header to
+									point to the right -->
 								<Storyboard x:Key="TransitionIntoCollapsedStoryboard">
+									<!-- Fade out animation -->
 									<DoubleAnimation Storyboard.TargetName="ContentInDropDown"
 										Storyboard.TargetProperty="Opacity"
 										EnableDependentAnimation="True"
-										Duration="{StaticResource FadeDuration}"
+										Duration="{StaticResource TransitionDuration}"
 										To="{StaticResource CollapsedOpacity}"
-										EasingFunction="{StaticResource FadeEase}"/>
+										EasingFunction="{StaticResource TransitionEase}"/>
+									<!-- Icon rotation animation -->
+									<DoubleAnimation Storyboard.TargetName="HeaderIconRotateTransform"
+										Storyboard.TargetProperty="Angle"
+										EnableDependentAnimation="True"
+										Duration="{StaticResource TransitionDuration}"
+										To="{StaticResource CollapsedIconRotationAngle}"
+										EasingFunction="{StaticResource TransitionEase}"/>
 								</Storyboard>
 
 								<!--#endregion--> 
@@ -131,7 +151,15 @@
 							<FontIcon FontSize="{TemplateBinding FontSize}"
 								Foreground="{TemplateBinding Foreground}"
 								Glyph="&#xE76C;"
-								Margin="10 0 0 0"/>
+								Margin="10 0 0 0"
+								RenderTransformOrigin="0.5 0.5">
+
+								<!-- Rotate transform used to animate the arrow when the control is dropped and collapsed -->
+								<FontIcon.RenderTransform>
+									<RotateTransform x:Name="HeaderIconRotateTransform"/>
+								</FontIcon.RenderTransform>
+								
+							</FontIcon>
 
 							<!-- Header text -->
 							<TextBlock Text="{TemplateBinding HeaderText}"
@@ -144,7 +172,7 @@
 							
 						</Grid>
 
-						<ContentPresenter x:Name="ContentInDropDown" 
+						<ContentPresenter x:Name="ContentInDropDown"
 							Grid.Row="1"/>
 
 					</Grid>
