@@ -20,7 +20,7 @@
 
 								<!--#region Fade animations values -->
 
-								<Duration x:Key="TransitionDuration">0:0:0.05</Duration>
+								<Duration x:Key="TransitionDuration">0:0:0.08</Duration>
 								<x:Double x:Key="DroppedOpacity">1</x:Double>
 								<x:Double x:Key="CollapsedOpacity">0</x:Double>
 								<x:Double x:Key="DroppedIconRotationAngle">90</x:Double>
@@ -52,7 +52,7 @@
 
 								<!-- Fades out the expanded part of control by animating opacity and rotates the arrow icon in the header to
 									point to the right -->
-								<Storyboard x:Key="TransitionIntoCollapsedStoryboard">
+								<Storyboard x:Key="TransitionOutOfDroppedStoryboard">
 									<!-- Fade out animation -->
 									<DoubleAnimation Storyboard.TargetName="ContentInDropDown"
 										Storyboard.TargetProperty="Opacity"
@@ -106,7 +106,7 @@
 									<xaml:VisualTransitionCollection>
 
 										<!-- Transition to Dropped when IsDropped is set to true -->
-										<xaml:VisualTransition TransitionTo="Dropped">
+										<xaml:VisualTransition TransitionTo="DroppedEntryPoint">
 											<xaml:VisualDataTriggerBool Data="{Binding IsDropped, RelativeSource={RelativeSource Mode=TemplatedParent}}"
 												CompareTo="True"/>
 										</xaml:VisualTransition>
@@ -119,17 +119,19 @@
 									</xaml:VisualTransitionCollection>									
 								</xaml:VisualSetupGroup.Triggers>
 
-								<!-- State for when the control is expanded -->
-								<!-- Cascade setup is used because first the visibility has to be set to visible (in order for the control to appear
-									in the layout) and only then the second setup may start animating the opacity -->
-								<xaml:VisualSetupCascade ID="Dropped" Setters="{StaticResource DroppedSetters}">
-									<xaml:VisualSetupCascade TransitionInStoryboard="{StaticResource TransitionIntoDroppedStoryboard}"/>
-								</xaml:VisualSetupCascade>
+								<!-- Dropped setup is created in the following way: first the DroppedEntryPoint is entered in order to set the
+									expanded content to visible. Then animations that transition into that state happen - otherwise they wouldn't
+									be seen. The animations (both in and out of state) are provided by DroppedAnimations setup -->
+								<xaml:VisualSetupTemporary ID="DroppedEntryPoint" Setters="{StaticResource DroppedSetters}"
+									NextSetup="DroppedAnimations"/>
 
-								<!-- State for when the control is collapsed, here the transition in will first animate out the expanded section
-									and then it will have invisibility set to collapsed -->
+								<!-- Animates in and out of dropped state -->
+								<xaml:VisualSetupDynamic ID="DroppedAnimations" 
+									TransitionInStoryboard="{StaticResource TransitionIntoDroppedStoryboard}"
+									TransitionOutStoryboard="{StaticResource TransitionOutOfDroppedStoryboard}"/>
+
+								<!-- State for when the control is collapsed, sets the visibility of the expanded content to collapsed -->
 								<xaml:VisualSetupDynamic ID="Collapsed"
-									TransitionInStoryboard="{StaticResource TransitionIntoCollapsedStoryboard}"
 									Setters="{StaticResource CollapsedSetters}"/>
 
 							</xaml:VisualSetupGroup>
