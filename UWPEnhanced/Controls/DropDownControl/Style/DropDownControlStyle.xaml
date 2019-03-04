@@ -13,12 +13,12 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:DropDownControl">
 
-					<Grid Background="Blue" Width="{TemplateBinding Width}">
+					<Grid x:Name="RootGrid" Background="Blue" Width="{TemplateBinding Width}">
 
 						<Grid.Resources>
 							<ResourceDictionary>
 
-								<!--#region Fade animations values -->
+								<!--#region Transition animations values -->
 
 								<Duration x:Key="TransitionDuration">0:0:0.08</Duration>
 								<x:Double x:Key="DroppedOpacity">1</x:Double>
@@ -26,6 +26,14 @@
 								<x:Double x:Key="DroppedIconRotationAngle">90</x:Double>
 								<x:Double x:Key="CollapsedIconRotationAngle">0</x:Double>
 								<ExponentialEase x:Key="TransitionEase" EasingMode="EaseInOut"/>
+
+								<!--#endregion-->
+
+								<!--#region Pointer animations values -->
+
+								<Duration x:Key="PointerAnimationDuration">0:0:0.05</Duration>
+								<x:Double x:Key="PointerPressedScale">0.95</x:Double>
+								<x:Double x:Key="PointerReleasedScale">1</x:Double>
 
 								<!--#endregion-->
 
@@ -69,7 +77,7 @@
 										EasingFunction="{StaticResource TransitionEase}"/>
 								</Storyboard>
 
-								<!--#endregion--> 
+								<!--#endregion-->
 
 								<!--#region VisualSetup setters -->
 
@@ -88,6 +96,38 @@
 
 								<!--#endregion-->
 
+								<!--#region Pointer animations storyboards -->
+
+								<!-- Scales down the header a little bit -->
+								<Storyboard x:Key="PointerPressedStoryboard">
+									<!-- ScaleX -->
+									<DoubleAnimation Storyboard.TargetName="HeaderScaleTransform"
+										Storyboard.TargetProperty="ScaleX"
+										Duration="{StaticResource PointerAnimationDuration}"
+										To="{StaticResource PointerPressedScale}"/>
+									<!-- ScaleY -->
+									<DoubleAnimation Storyboard.TargetName="HeaderScaleTransform"
+										Storyboard.TargetProperty="ScaleY"
+										Duration="{StaticResource PointerAnimationDuration}"
+										To="{StaticResource PointerPressedScale}"/>
+								</Storyboard>
+
+								<!-- Scales back the header a little bit -->
+								<Storyboard x:Key="PointerReleasedStoryboard" Duration="0:0:0.05">
+									<!-- ScaleX -->
+									<DoubleAnimation Storyboard.TargetName="HeaderScaleTransform"
+										Storyboard.TargetProperty="ScaleX"
+										Duration="{StaticResource PointerAnimationDuration}"
+										To="{StaticResource PointerReleasedScale}"/>
+									<!-- ScaleY -->
+									<DoubleAnimation Storyboard.TargetName="HeaderScaleTransform"
+										Storyboard.TargetProperty="ScaleY"
+										Duration="{StaticResource PointerAnimationDuration}"
+										To="{StaticResource PointerReleasedScale}"/>
+								</Storyboard>
+
+								<!--#endregion-->
+
 							</ResourceDictionary>
 						</Grid.Resources>
 
@@ -99,9 +139,11 @@
 						</Grid.RowDefinitions>
 
 						<xaml:VisualManager.VisualSetups>
+							
+							<!-- Group defining transitions for switching between dropped and collapsed states -->
 							<xaml:VisualSetupGroup Name="DropDownGroup">
 
-								<!-- Triggers for transitions between setups	-->
+								<!-- Triggers for transitions between setups -->
 								<xaml:VisualSetupGroup.Triggers>
 									<xaml:VisualTransitionCollection>
 
@@ -138,13 +180,50 @@
 						</xaml:VisualManager.VisualSetups>
 
 						<!-- Header -->
-						<Grid Background="BlueViolet">
+						<Grid x:Name="HeaderGrid" Background="BlueViolet" RenderTransformOrigin="0.5 0.5">
+
+							<!-- Transform used for animating pointer events -->
+							<Grid.RenderTransform>
+								<ScaleTransform x:Name="HeaderScaleTransform"/>
+							</Grid.RenderTransform>
 
 							<xaml:VisualAttachments.AttachedVisuals>
+								<!-- Toggle state of the control (drop / collapse) -->
 								<xaml:ParametrizedVisualCommand Command="{Binding ToggleControlStateCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+									<!-- Use Tapped event as trigger-->
 									<xaml:VisualTappedTrigger SetHandled="True"/>
 								</xaml:ParametrizedVisualCommand>
 							</xaml:VisualAttachments.AttachedVisuals>
+
+							<xaml:VisualManager.VisualSetups>
+
+								<!-- Group defining  -->
+								<xaml:VisualSetupGroup Name="PointerAnimations">
+									
+									<xaml:VisualSetupGroup.Triggers>
+										<xaml:VisualTransitionCollection>
+
+											<!-- Go to PointerPressed state on PointerPressed event -->
+											<xaml:VisualTransition TransitionTo="PointerPressed">
+												<xaml:VisualPointerTrigger PointerEvent="PointerPressed" Target="{Binding ElementName=HeaderGrid}"
+													SetHandled="True"/>
+											</xaml:VisualTransition>
+
+											<!-- Leave the current state on events that occur when pointer is released or otherwise lost -->
+											<xaml:VisualTransition TransitionTo="">
+												<xaml:VisualPointerTrigger PointerEvent="PointerReleased, PointerExited, PointerCanceled, PointerCaptureLost" Target="{Binding ElementName=HeaderGrid}"
+													SetHandled="True"/>
+											</xaml:VisualTransition>
+
+										</xaml:VisualTransitionCollection>
+									</xaml:VisualSetupGroup.Triggers>
+
+									<!-- Setup defining transition into and out of Pointer Pressed state -->
+									<xaml:VisualSetupDynamic ID="PointerPressed" TransitionInStoryboard="{StaticResource PointerPressedStoryboard}"
+										TransitionOutStoryboard="{StaticResource PointerReleasedStoryboard}"/>
+
+								</xaml:VisualSetupGroup>
+							</xaml:VisualManager.VisualSetups>
 
 							<Grid.ColumnDefinitions>
 								<!-- Arrow indicating if control is dropped down or not, bind the width to the height of the header
