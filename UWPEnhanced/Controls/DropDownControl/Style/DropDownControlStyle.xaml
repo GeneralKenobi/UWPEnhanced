@@ -8,15 +8,24 @@
 
 	<Style TargetType="controls:DropDownControl">
 		<Setter Property="FontSize" Value="18"/>
-		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="Foreground" Value="Black"/>
+		<Setter Property="HeaderBackground" Value="Gray"/>
+		<Setter Property="Background" Value="LightGray"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:DropDownControl">
 
-					<Grid x:Name="RootGrid" Background="Blue" Width="{TemplateBinding Width}">
+					<Grid Background="{TemplateBinding Background}"
+						Width="{TemplateBinding Width}">
 
 						<Grid.Resources>
 							<ResourceDictionary>
+
+								<!--#region Header resources -->
+
+								<x:String x:Key="HeaderIconGlyph">&#xE76C;</x:String>
+
+								<!--#endregion-->
 
 								<!--#region Transition animations values -->
 
@@ -180,7 +189,9 @@
 						</xaml:VisualManager.VisualSetups>
 
 						<!-- Header -->
-						<Grid x:Name="HeaderGrid" Background="BlueViolet" RenderTransformOrigin="0.5 0.5">
+						<Grid x:Name="HeaderGrid"
+							Background="{TemplateBinding HeaderBackground}"
+							RenderTransformOrigin="0.5 0.5">
 
 							<!-- Transform used for animating pointer events -->
 							<Grid.RenderTransform>
@@ -238,7 +249,7 @@
 							<!-- Icon used to represent the state of the drop down control -->
 							<FontIcon FontSize="{TemplateBinding FontSize}"
 								Foreground="{TemplateBinding Foreground}"
-								Glyph="&#xE76C;"
+								Glyph="{StaticResource HeaderIconGlyph}"
 								Margin="10 0 0 0"
 								RenderTransformOrigin="0.5 0.5">
 

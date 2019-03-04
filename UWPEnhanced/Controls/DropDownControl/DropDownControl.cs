@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 
 namespace UWPEnhanced.Controls
 {
@@ -123,6 +124,26 @@ namespace UWPEnhanced.Controls
 		public static readonly DependencyProperty ContentProperty =
 			DependencyProperty.Register(nameof(Content), typeof(UIElement),
 			typeof(DropDownControl), new PropertyMetadata(default(UIElement)));
+
+		#endregion
+
+		#region HeaderBackground Dependency Property
+
+		/// <summary>
+		/// Brush applied to the background of the header
+		/// </summary>
+		public Brush HeaderBackground
+		{
+			get => (Brush)GetValue(HeaderBackgroundProperty);
+			set => SetValue(HeaderBackgroundProperty, value);
+		}
+
+		/// <summary>
+		/// Backing store for <see cref="HeaderBackground"/>
+		/// </summary>
+		public static readonly DependencyProperty HeaderBackgroundProperty =
+			DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush),
+			typeof(DropDownControl), new PropertyMetadata(default(Brush)));
 
 		#endregion
 
