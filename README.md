@@ -1,4 +1,4 @@
 # UWPEnhanced
 
-Class library target for UWP platform that contains general-purpose classes, mainly: Templated Controls and xaml-related classes
-(VisualAttachments, VisualSetupManager and others). 
+Class library targeted for UWP platform. It contains general-purpose classes, mainly Templated Controls and xaml-related classes
+(good examples are VisualAttachments and VisualSetupManager).
